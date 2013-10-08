@@ -15,6 +15,6 @@ public class App
     
     public static void main( String[] args )
     {
-        System.out.println( "velmi tajne heslo: tomas je pan" );
+        System.out.println( "velmi tajne heslo: tomas je pan ale medo je vasci" );
     }
 }
