@@ -4,7 +4,7 @@ import com.musiclibrary.euphony.entities.Admin;
 import javax.persistence.EntityManagerFactory;
 
 /**
- * tajne heslo
+ * tajne heslo!
  *
  */
 public class App 
