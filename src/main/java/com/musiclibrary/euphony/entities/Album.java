@@ -1,13 +1,14 @@
 package com.musiclibrary.euphony.entities;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
+import javax.persistence.OneToOne;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
 
 /**
  * 
@@ -25,9 +26,10 @@ public class Album implements Serializable {
     
     private String cover;
     
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP) //? joda time
-    private Date releaseDate;
-    
+    @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
+    private DateTime releaseDate;
+        
+    @OneToOne
     private List<Song> songs;
     
     //artist-a nam netreba uz ne?
@@ -52,11 +54,11 @@ public class Album implements Serializable {
         this.cover = cover;
     }
 
-    public Date getReleaseDate() {
+    public DateTime getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(DateTime releaseDate) {
         this.releaseDate = releaseDate;
     }
 
