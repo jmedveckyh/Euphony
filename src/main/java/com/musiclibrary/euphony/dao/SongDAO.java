@@ -4,10 +4,12 @@
  */
 package com.musiclibrary.euphony.dao;
 
+import com.musiclibrary.euphony.entities.Song;
+
 /**
  *
- * @author Tomáš
+ * @author Sebastian
  */
-public interface SongDAO {
+public interface SongDAO extends DAO<Song>{
     
 }
