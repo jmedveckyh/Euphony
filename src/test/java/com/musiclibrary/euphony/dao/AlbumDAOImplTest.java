@@ -19,8 +19,9 @@ import junit.framework.TestCase;
 import org.joda.time.DateTime;
 
 /**
+ * Unit tests for Album DAO implementation.
  *
- * @author Sebastian
+ * @author Sebastian Lazon #396373
  */
 public class AlbumDAOImplTest extends TestCase{
     
@@ -41,6 +42,9 @@ public class AlbumDAOImplTest extends TestCase{
         super.tearDown();
     }
     
+    /**
+     * Tests of creating new album
+     */
     public void testCreateAlbum() {
         
         EntityManager em = emf.createEntityManager();
@@ -96,6 +100,9 @@ public class AlbumDAOImplTest extends TestCase{
         em.clear();
     }
     
+    /**
+     * Tests of getting an album
+     */
     public void testGetAlbum(){
         EntityManager em = emf.createEntityManager();
         AlbumDAOImpl albumDAOImpl = new AlbumDAOImpl();
@@ -119,6 +126,9 @@ public class AlbumDAOImplTest extends TestCase{
        
     }
     
+    /**
+     * Tests of updating album
+     */
     public void testUpdateAlbum(){
         EntityManager em = emf.createEntityManager();
         AlbumDAOImpl albumDAOImpl = new AlbumDAOImpl();
