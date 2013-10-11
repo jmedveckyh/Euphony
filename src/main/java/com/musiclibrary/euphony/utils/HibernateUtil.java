@@ -94,16 +94,11 @@ public class HibernateUtil {
         if ("".equals(playlist.getName())) {
             throw new IllegalArgumentException("Playlist's name is empty.");
         }
-    
-    
     }
 
     public static void checkSong(Song song) {
         if (song == null) {
             throw new IllegalArgumentException("Song cannot be null.");
-        }
-        if (song.getId() != null) {
-            throw new IllegalArgumentException("Song's id cannot be assigned");
         }
         if (song.getTitle() == null) {
             throw new IllegalArgumentException("Song's title cannot be null.");
@@ -115,9 +110,14 @@ public class HibernateUtil {
             throw new IllegalArgumentException("Song's genre cannot be null.");
         }
         if (song.getAlbum() == null) {
-            throw new IllegalArgumentException("Song's title cannot be null.");
+            throw new IllegalArgumentException("Song's album cannot be null.");
         }
-        
-        
+        if (song.getBitrate() < 0 || song.getBitrate() > 2500) {
+            throw new IllegalArgumentException("Song's bitrate must be between 0 and 2500.");
+        }
+        if (song.getTrackNumber() <= 0) {
+            throw new IllegalArgumentException("Song's track number must be bigger then 0.");
+        }
     }
+    
 }
