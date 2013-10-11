@@ -83,7 +83,7 @@ public abstract class DAOImpl<T> implements DAO<T> {
         Long id = null;
 
         try {
-            id = (Long) entity.getClass().getMethod("getId").invoke(entity, (Object) null);
+            id = (Long) entity.getClass().getMethod("getId").invoke(entity, null);
         } catch (NoSuchMethodException ex) {
             Logger.getLogger(DAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SecurityException ex) {
