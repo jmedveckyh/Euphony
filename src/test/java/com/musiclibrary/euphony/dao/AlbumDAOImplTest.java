@@ -21,7 +21,7 @@ import org.joda.time.DateTime;
 /**
  * Unit tests for Album DAO implementation.
  *
- * @author Sebastian Lazon #396373
+ * @author Sebastian Lazon #395990
  */
 public class AlbumDAOImplTest extends TestCase{
     
