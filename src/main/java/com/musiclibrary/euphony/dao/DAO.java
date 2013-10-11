@@ -1,5 +1,7 @@
 package com.musiclibrary.euphony.dao;
 
+import java.io.Serializable;
+
 
 /**
  * Generic CRUD DAO interface
@@ -8,8 +10,7 @@ package com.musiclibrary.euphony.dao;
  * 
  * @param <T> type of the entity
  */
-public interface DAO<T>
-{
+public interface DAO<T> {
     /**
      * Creates a new entity T in the database.
      * 
@@ -37,10 +38,11 @@ public interface DAO<T>
     /**
      * Returns entity T from the database.
      * 
+     * @param cls Class of the entity T. Cannot be null.
      * @param id Id of the entity T. Cannot be null.
      * @return entity T with the specified id or null when it does not exist.
      * @throws IllegalArgumentException if the argument is null.
      */
-    public T getById(Long id);
+    public T getById(Class cls, Long id);
 
 }

@@ -1,10 +1,12 @@
 package com.musiclibrary.euphony.dao.impl;
 
+import com.musiclibrary.euphony.entities.Genre;
+
 /**
- * 
- * 
- * @author Tomas Smetanka #396209
+ *
+ *
+ * @author Medo
  */
-public class GenreDAOImpl {
+public class GenreDAOImpl extends DAOImpl<Genre> {
 
 }
