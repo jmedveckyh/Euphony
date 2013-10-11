@@ -33,6 +33,13 @@ public class Album implements Serializable {
     @OneToMany
     private List<Song> songs;
 
+    public Album() {
+    }
+    
+    public Album(String title){
+        this.title=title;
+    }
+
     public Long getId() {
         return id;
     }
