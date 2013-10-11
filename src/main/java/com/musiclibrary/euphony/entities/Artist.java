@@ -8,11 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 /**
- * 
+ * Artist entity.
+ * Represents a musician with his own id, name and is mapped to a song
+ * with ManyToOne relationship because one musician can own many songs.
  * 
  * @author Jakub Medvecky-Heretik #396373
  */
-
 @Entity
 public class Artist implements Serializable {
     

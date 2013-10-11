@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.musiclibrary.euphony.dao.impl;
 
 import com.musiclibrary.euphony.dao.DAO;
@@ -18,7 +14,8 @@ import javax.persistence.EntityManager;
 
 /**
  *
- * @author Medo
+ * @author Jakub Medvecký-Heretik #396373
+ * @author Tomas Smetanka #396209
  */
 public abstract class DAOImpl<T> implements DAO<T> {
 
@@ -44,7 +41,10 @@ public abstract class DAOImpl<T> implements DAO<T> {
         checkEntity(entity);
         
         if (getIdOfEntity(entity) == null) {
-            throw new IllegalArgumentException(this.getClass().getName() + " entity does not exist in database.");
+            throw new IllegalArgumentException(this.getClass().getName() + " entity cannot have null id.");
+        }
+        if (em.find(entity.getClass(), getIdOfEntity(entity)) == null) {
+            throw new IllegalArgumentException("This " + this.getClass().getName() + " entity does not exist in database.");
         }
 
         em.merge(entity);
@@ -55,6 +55,9 @@ public abstract class DAOImpl<T> implements DAO<T> {
         
         checkEntity(entity);
 
+        if (getIdOfEntity(entity) == null) {
+            throw new IllegalArgumentException(this.getClass().getName() + " entity cannot have null id.");
+        }
         if (em.find(entity.getClass(), getIdOfEntity(entity)) == null) {
             throw new IllegalArgumentException("This " + this.getClass().getName() + " entity does not exist in database.");
         }

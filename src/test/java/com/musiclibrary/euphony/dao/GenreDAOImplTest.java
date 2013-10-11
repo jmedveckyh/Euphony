@@ -11,7 +11,7 @@ import org.junit.Test;
 
 /**
  * Unit tests for Genre DAO implementation.
- * 
+ *
  * @author Jakub Medvecky-Heretik #396373
  */
 public class GenreDAOImplTest {
@@ -19,24 +19,23 @@ public class GenreDAOImplTest {
     EntityManagerFactory emf;
     EntityManager em;
     GenreDAOImpl genreDAOImpl;
-    
+
     @Before
     public void setUp() {
         emf = Persistence.createEntityManagerFactory("testEuphonyPU");
         em = emf.createEntityManager();
         genreDAOImpl = new GenreDAOImpl();
     }
-    
+
     /**
-     * Test of createGenre method, of class genreDAOImpl with wrong
-     * attributes.
+     * Test of createGenre method, of class genreDAOImpl with wrong attributes.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void testCreateGenreWithNull() {  
+    public void testCreateGenreWithNull() {
         em.getTransaction().begin();
-        genreDAOImpl.create(null);              //genre je null
+        genreDAOImpl.create(null);              //genre is null
         em.getTransaction().commit();
-        em.clear();          
+        em.clear();
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -45,7 +44,7 @@ public class GenreDAOImplTest {
         Genre genre = new Genre();
         genreDAOImpl.create(genre);              //genre has null attributes
         em.getTransaction().commit();
-        em.clear();           
+        em.clear();
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -55,7 +54,7 @@ public class GenreDAOImplTest {
         genre.setName("");
         genreDAOImpl.create(genre);              //genre has empty name
         em.getTransaction().commit();
-        em.clear();  
+        em.clear();
     }
 
     /**
@@ -67,7 +66,7 @@ public class GenreDAOImplTest {
 
         em.getTransaction().begin();
         Genre genre = new Genre("Hip Hop");     //genre has not-empty name and null id
-        genreDAOImpl.create(genre);              
+        genreDAOImpl.create(genre);
         em.getTransaction().commit();
         em.clear();
 
@@ -80,40 +79,39 @@ public class GenreDAOImplTest {
         assertDeepEquals(expResult, genre);
     }
 
-     /**
-     * Test of getGenreById method, of class genreDAOImpl with wrong
-     * attributes.
+    /**
+     * Test of getGenreById method, of class genreDAOImpl with wrong attributes.
      */
     @Test(expected = IllegalArgumentException.class)
     public void testGetGenreWithNullBoth() {
         em.getTransaction().begin();
         genreDAOImpl.getById(null, null);              //id and class are null
         em.getTransaction().commit();
-        em.clear();     
+        em.clear();
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void testGetGenremWithNullId() {
         em.getTransaction().begin();
         genreDAOImpl.getById(Genre.class, null);              //id is null
         em.getTransaction().commit();
-        em.clear();     
+        em.clear();
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void testGetGenreWithNullClass() {
         em.getTransaction().begin();
         genreDAOImpl.getById(null, new Long(100));              //class is null
         em.getTransaction().commit();
-        em.clear();     
+        em.clear();
     }
 
     @Test
-    public void testGetGenremWithNotAssignedId() {
+    public void testGetGenreWithNotAssignedId() {
         em.getTransaction().begin();
         Genre nullResult = genreDAOImpl.getById(Genre.class, new Long(100));              //getGenre with not assigned id, should return null
         em.getTransaction().commit();
-        em.clear();   
+        em.clear();
         assertNull(nullResult);
     }
 
@@ -125,173 +123,140 @@ public class GenreDAOImplTest {
         System.out.println("getGenreById");
 
         em.getTransaction().begin();
-        Genre expResult = new Genre("Heavy metal");  
+        Genre expResult = new Genre("Heavy metal");
         genreDAOImpl.create(expResult);
         em.getTransaction().commit();
-        em.clear();   
+        em.clear();
 
         assertNotNull(expResult.getId());
         Long genreId = expResult.getId();
 
-        Genre result = genreDAOImpl.getById(Genre.class, genreId);              //spravne
+        Genre result = genreDAOImpl.getById(Genre.class, genreId);              //correct
         assertDeepEquals(expResult, result);
     }
 
     /**
-     * Test of updateGenre method, of class genreDAOImpl with wrong
-     * attributes.
+     * Test of updateGenre method, of class genreDAOImpl with wrong attributes.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void testUpdateItemWithNull() {
-        itemManager.updateItem(null);           //item je null
+    public void testUpdateGenreWithNull() {
+        em.getTransaction().begin();
+        genreDAOImpl.update(null);              //genre is null
+        em.getTransaction().commit();
+        em.clear();
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testUpdateItemWithNullAttributes() {
-        Item item = new Item();
-        itemManager.updateItem(item);           //item ma null atributy
+    public void testUpdateGenreWithNullAttributes() {
+        em.getTransaction().begin();
+        Genre genre = new Genre();
+        genreDAOImpl.update(genre);              //genre has null attributes
+        em.getTransaction().commit();
+        em.clear();
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testUpdateItemWithNullTitleTypeYear() {
-        Item item = new Item();
-        item.setAuthor("Charles Dickens");
-        itemManager.updateItem(item);           //item ma null title,type a year   
+    public void testUpdateGenreWithEmptyName() {
+        em.getTransaction().begin();
+        Genre genre = new Genre();
+        genre.setName("");
+        genreDAOImpl.update(genre);              //genre has empty name
+        em.getTransaction().commit();
+        em.clear();
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testUpdateItemWithNullTitleYear() {
-        Item item = new Item();
-        item.setAuthor("Charles Dickens");
-        item.setItemType(Type.BOOK);
-        itemManager.updateItem(item);           //item ma null title a year
+    public void testUpdateGenreWithNoId() {
+        em.getTransaction().begin();
+        Genre genre = new Genre();
+        genre.setName("Death metal");           //genre has null id
+        genreDAOImpl.update(genre);
+        em.getTransaction().commit();
+        em.clear();
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testUpdateItemWithNullYear() {
-        Item item = new Item();
-        item.setAuthor("Charles Dickens");
-        item.setItemType(Type.BOOK);
-        item.setTitle("A Christmas Carol");
-        itemManager.updateItem(item);           //item ma null year
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testCUpdateItemWithMinusYear() {
-        Item item = new Item();
-        item.setAuthor("Charles Dickens");
-        item.setItemType(Type.BOOK);
-        item.setTitle("A Christmas Carol");
-        item.setYear(-1843);
-        itemManager.updateItem(item);           //item ma zaporny rok 
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testUpdateItemWithInvalidYear() {
-        Item item = new Item();
-        item.setAuthor("Charles Dickens");
-        item.setItemType(Type.BOOK);
-        item.setTitle("A Christmas Carol");
-        item.setYear(4013);
-        itemManager.updateItem(item);           //item ma vacsi rok ako je aktualny      
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testUpdateItemWithEmptyAuthor() {
-        Item item = new Item();
-        item.setAuthor("");
-        item.setItemType(Type.BOOK);
-        item.setTitle("A Christmas Carol");
-        item.setYear(1843);
-        itemManager.updateItem(item);           //item ma prazdneho autora
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testUpdateItemWithEmptyTitle() {
-        Item item = new Item();
-        item.setAuthor("Charles Dickens");
-        item.setItemType(Type.BOOK);
-        item.setTitle("A Christmas Carol");
-        item.setYear(1843);
-        item.setTitle("");
-        itemManager.updateItem(item);           //item ma prazdny nazov
-
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testUpdateItemWithNoId() {
-        Item item = new Item();
-        item.setAuthor("Charles Dickens");
-        item.setItemType(Type.BOOK);
-        item.setTitle("A Christmas Carol");
-        item.setYear(1843);
-        itemManager.updateItem(item);           //item ma korektne atributy ale null id
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testUpdateItemWithNotAssignedId() {
-
-        Item item = new Item("A Christmas Carol", "Charles Dickens", 1843, Type.BOOK);
-        Item updatedItem = new Item("A Christmas Carol 2", "Charles Dickens", 1900, Type.BOOK);
-
-        updatedItem.setId(new Long(100));                     //updatedItem ma este nepriradene id
-
-        itemManager.updateItem(updatedItem);
+    public void testUpdateGenreWithNotAssignedId() {
+        em.getTransaction().begin();
+        Genre genre = new Genre("Death metal");
+        genre.setId(new Long(100));             //genre has not assigned id from db
+        genreDAOImpl.update(genre);
+        em.getTransaction().commit();
+        em.clear();
     }
 
     /**
-     * Test of updateItem method, of class ItemManagerImpl.
+     * Test of updateGenre method, of class genreDAOImpl.
      */
     @Test
-    public void testUpdateItem() {
-        System.out.println("updateItem");
+    public void testUpdateGenre() {
+        System.out.println("updateGenre");
 
-        Item item = new Item("A Christmas Carol", "Charles Dickens", 1843, Type.BOOK);
+        Genre genre = new Genre("Death metal");
 
-        Item updatedItem = new Item("A Christmas Carol 2", "Charles Dickens", 1900, Type.BOOK);
+        Genre updatedGenre = new Genre("Doom metal");
 
-        itemManager.createItem(item);
-        updatedItem.setId(item.getId());
+        em.getTransaction().begin();
+        genreDAOImpl.create(genre);
+        em.getTransaction().commit();
+        updatedGenre.setId(genre.getId());
 
-        itemManager.updateItem(updatedItem);                //spravne
-        assertDeepEquals(updatedItem, itemManager.getItem(item.getId()));
+        em.getTransaction().begin();
+        genreDAOImpl.update(updatedGenre);                //correct
+        em.getTransaction().commit();
+        assertDeepEquals(updatedGenre, genreDAOImpl.getById(Genre.class, genre.getId()));
+        em.clear();
 
     }
 
     /**
-     * Test of deleteItem method, of class ItemManagerImpl with wrong
-     * attributes.
+     * Test of deleteGenre method, of class genreDAOImpl with wrong attributes.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void testDeleteItemWithNull() {
-        itemManager.deleteItem(null);           //item je null
+    public void testDeleteGenreWithNull() {
+        em.getTransaction().begin();
+        genreDAOImpl.delete(null);           //genre is null
+        em.getTransaction().commit();
+        em.clear();
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testDeleteItemWithNullId() {
-        Item item = new Item("A Christmas Carol", "Charles Dickens", 1843, Type.BOOK);
-        itemManager.deleteItem(item);           //item ma null id
+    public void testDeleteGenreWithNullId() {
+        Genre genre = new Genre("Trip hop");
+        em.getTransaction().begin();
+        genreDAOImpl.delete(genre);           //genre has null id
+        em.getTransaction().commit();
+        em.clear();
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testDeleteItemWithNotAssignedId() {
-        Item item = new Item("A Christmas Carol", "Charles Dickens", 1843, Type.BOOK);
-        item.setId(new Long(100));
+    public void testDeleteGenreWithNotAssignedId() {
+        Genre genre = new Genre("Trip hop");
+        genre.setId(new Long(100));
 
-        itemManager.deleteItem(item);           //item ma nepriradene id  
+        em.getTransaction().begin();
+        genreDAOImpl.delete(genre);           //genre has not assigned id from db 
+        em.getTransaction().commit();
+        em.clear();
     }
 
     /**
-     * Test of deleteItem method, of class ItemManagerImpl.
+     * Test of deleteGenre method, of class genreDAOImpl.
      */
     @Test
-    public void testDeleteItem() {
-        System.out.println("deleteItem");
+    public void testDeleteGenre() {
+        System.out.println("deleteGenre");
 
-        Item item = new Item("A Christmas Carol", "Charles Dickens", 1843, Type.BOOK);
-
-        itemManager.createItem(item);
-        itemManager.deleteItem(item);               //spravne  
+        Genre genre = new Genre("Trip hop");
+        em.getTransaction().begin();
+        genreDAOImpl.create(genre);           //correct
+        em.getTransaction().commit();
+        em.clear();
+        
+        em.getTransaction().begin();
+        genreDAOImpl.delete(genre);           
+        em.getTransaction().commit();
+        em.clear();
     }
 
     private void assertDeepEquals(Genre expected, Genre actual) {

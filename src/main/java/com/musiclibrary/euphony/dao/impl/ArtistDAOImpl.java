@@ -5,7 +5,7 @@ import com.musiclibrary.euphony.entities.Artist;
 /**
  * 
  * 
- * @author Tomas Smetanka #396209
+ * @author Jakub Medvecký-Heretik #396373
  */
 public class ArtistDAOImpl extends DAOImpl<Artist>{
 

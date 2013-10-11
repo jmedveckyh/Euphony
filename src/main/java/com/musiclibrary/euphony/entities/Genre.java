@@ -8,7 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 /**
- * 
+ * Genre entity.
+ * Represents a musical genre with its own id, name and is mapped to a song
+ * with ManyToOne relationship because many songs can be of one genre.
  * 
  * @author Jakub Medvecky-Heretik #396373
  */
