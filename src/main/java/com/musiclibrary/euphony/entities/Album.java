@@ -6,12 +6,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
 /**
- * 
+ * Album entity.
  * 
  * @author Branislav Novotny
  */
@@ -19,7 +20,7 @@ import org.joda.time.DateTime;
 public class Album implements Serializable {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     
     private String title;
@@ -29,10 +30,8 @@ public class Album implements Serializable {
     @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
     private DateTime releaseDate;
         
-    @OneToOne
+    @OneToMany
     private List<Song> songs;
-    
-    //artist-a nam netreba uz ne?
 
     public Long getId() {
         return id;
@@ -69,10 +68,12 @@ public class Album implements Serializable {
     public void setSongs(List<Song> songs) {
         this.songs = songs;
     }
-    
+
     @Override
     public int hashCode() {
-        return (this.id != null ? this.id.hashCode() : 0);
+        int hash = 3;
+        hash = 47 * hash + (this.id != null ? this.id.hashCode() : 0);
+        return hash;
     }
 
     @Override
@@ -80,17 +81,19 @@ public class Album implements Serializable {
         if (obj == null) {
             return false;
         }
-        if (obj == this) {
-            return true;
-        }
         if (getClass() != obj.getClass()) {
             return false;
         }
         final Album other = (Album) obj;
-        if (this.id == null || !this.id.equals(other.id)) {
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Album{" + "id=" + id + ", title=" + title + ", cover=" + cover + ", releaseDate=" + releaseDate + ", songs=" + songs + '}';
     }
     
 }
