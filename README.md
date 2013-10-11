@@ -1,4 +1,4 @@
 Euphony
 =======
 
-Euphony the Music Library.
+Euphony, the Music Library.
