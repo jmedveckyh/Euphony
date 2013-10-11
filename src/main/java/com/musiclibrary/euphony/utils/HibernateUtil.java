@@ -124,8 +124,8 @@ public class HibernateUtil {
         if (song.getAlbum() == null) {
             throw new IllegalArgumentException("Song's album cannot be null.");
         }
-        if (song.getBitrate() < 0 || song.getBitrate() > 2500) {
-            throw new IllegalArgumentException("Song's bitrate must be between 0 and 2500.");
+        if (song.getBitrate() < 1 || song.getBitrate() > 2500) {
+            throw new IllegalArgumentException("Song's bitrate must be between 1 and 2500.");
         }
         if (song.getTrackNumber() <= 0) {
             throw new IllegalArgumentException("Song's track number must be bigger than 0.");
