@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Fri Oct 11 03:54:45 CEST 2013:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-0141-a539-1aad-000002a460f0 
-on database directory memory:D:\SkyDrive\Dokumenty\MUNI\Java\Projects\Euphony\test-euphony with class loader sun.misc.Launcher$AppClassLoader@3244331c 
-Loaded from file:/C:/Users/Tom%c3%a1%c5%a1/.m2/repository/org/apache/derby/derby/10.10.1.1/derby-10.10.1.1.jar
+Fri Oct 11 17:59:40 CEST 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-0141-a83e-a5c4-000002c54a18 
+on database directory memory:D:\Documents\skola\java ee PA165\Euphony\Euphony\test-euphony with class loader sun.misc.Launcher$AppClassLoader@1b186cf9 
+Loaded from file:/C:/Users/Jakub/.m2/repository/org/apache/derby/derby/10.10.1.1/derby-10.10.1.1.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.7.0_13-b20
-user.dir=D:\SkyDrive\Dokumenty\MUNI\Java\Projects\Euphony
+java.runtime.version=1.7.0_40-b43
+user.dir=D:\Documents\skola\java ee PA165\Euphony\Euphony
 os.name=Windows 8
 os.arch=amd64
 os.version=6.2

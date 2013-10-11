@@ -61,12 +61,20 @@ public class HibernateUtil {
     }
 
     public static void checkArtist(Artist artist) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (artist == null){
+            throw new IllegalArgumentException("Artist cannot be null");
+        }
+        if (artist.getName() == null) {
+            throw new IllegalArgumentException("Artist's name is null.");
+        }
+        if ("".equals(artist.getName())) {
+            throw new IllegalArgumentException("Artist's name is empty.");
+        }
     }
 
     public static void checkGenre(Genre genre) {
         if (genre == null){
-            throw new IllegalArgumentException("Genre cannot be null.");
+            throw new IllegalArgumentException("Genre cannot be null");
         }
         if (genre.getName() == null) {
             throw new IllegalArgumentException("Genre's name is null.");
