@@ -116,14 +116,7 @@ public class AlbumDAOImplTest extends TestCase{
         } catch (IllegalArgumentException e){
             //OK
         }
-        
-        try{
-            albumDAOImpl.getById(Album.class, new Long(999));
-            fail("Cant get album which is not in db");
-        } catch (IllegalArgumentException e){
-            //OK
-        }
-        em.getTransaction().commit();
+       
     }
     
     public void testUpdateAlbum(){
