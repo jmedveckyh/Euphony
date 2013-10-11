@@ -50,7 +50,7 @@ public class AlbumDAOImplTest extends TestCase{
         em.getTransaction().begin();
         try{
         albumDAOImpl.create(album);
-        fail();
+        fail("Album is null");
         } catch (Exception e){
             //OK
         }
@@ -61,7 +61,7 @@ public class AlbumDAOImplTest extends TestCase{
         em.getTransaction().begin();
         try{
         albumDAOImpl.create(album);
-        fail();
+        fail("Empty album");
         } catch (Exception e){
             //OK
         }
@@ -74,7 +74,7 @@ public class AlbumDAOImplTest extends TestCase{
         em.getTransaction().begin();
         try{
         albumDAOImpl.create(album);
-        fail();
+        fail("Empty title in album");
         } catch (Exception e){
             //OK
         }
@@ -88,7 +88,7 @@ public class AlbumDAOImplTest extends TestCase{
         em.getTransaction().begin();
         try{
         albumDAOImpl.create(album);
-        fail();
+        fail("Already in db");
         } catch (Exception e){
             //OK
         }
@@ -109,20 +109,21 @@ public class AlbumDAOImplTest extends TestCase{
         assertNotNull(album.getId());
         Album album2 = albumDAOImpl.getById(Album.class, new Long(album.getId()));
         assertEquals(album, album2);
-        
+        em.getTransaction().begin();
         try{
             albumDAOImpl.getById(Album.class, null);
-            fail();
+            fail("Cant get null from db");
         } catch (Exception e){
             //OK
         }
         
         try{
             albumDAOImpl.getById(Album.class, new Long(999));
-            fail();
+            fail("Cant get album which is not in db");
         } catch (Exception e){
             //OK
         }
+        em.getTransaction().commit();
     }
     
     public void testUpdateAlbum(){
@@ -133,7 +134,7 @@ public class AlbumDAOImplTest extends TestCase{
         em.getTransaction().begin();
         try{
         albumDAOImpl.update(album);
-        fail();
+        fail("Cant update null album");
         } catch (Exception e){
             //OK
         }
@@ -144,7 +145,7 @@ public class AlbumDAOImplTest extends TestCase{
         em.getTransaction().begin();
         try{
         albumDAOImpl.update(album);
-        fail();
+        fail("Cant update empty album");
         } catch (Exception e){
             //OK
         }
@@ -157,7 +158,7 @@ public class AlbumDAOImplTest extends TestCase{
         em.getTransaction().begin();
         try{
         albumDAOImpl.update(album);
-        fail();
+        fail("Cant update album with empty title");
         } catch (Exception e){
             //OK
         }
@@ -169,7 +170,7 @@ public class AlbumDAOImplTest extends TestCase{
         em.getTransaction().begin();
         try{
         albumDAOImpl.update(album);
-        fail();
+        fail("Cant update album without date");
         } catch (Exception e){
             //OK
         }
@@ -201,10 +202,7 @@ public class AlbumDAOImplTest extends TestCase{
         albumDAOImpl.update(album);
         em.getTransaction().commit();
         Album album2 = albumDAOImpl.getById(Album.class, album.getId());
-        Album album3 = new Album();
-        album3.setTitle("bbb");
-        album3.setReleaseDate(new DateTime(2011,11,11,0,0));
-        assertEquals(album2, album3); 
+        assertEquals(album, album2);
     }
     
     public void testDeleteAlbum(){
@@ -215,7 +213,7 @@ public class AlbumDAOImplTest extends TestCase{
         em.getTransaction().begin();
         try{
         albumDAOImpl.delete(album);
-        fail("");
+        fail("Cant delete null album");
         } catch (Exception e){
             //OK
         }
@@ -229,7 +227,7 @@ public class AlbumDAOImplTest extends TestCase{
         em.getTransaction().begin();
         try{
         albumDAOImpl.delete(album);
-        fail();
+        fail("Cant delete album which is not in db");
         } catch (Exception e){
             //OK
         }
@@ -243,7 +241,7 @@ public class AlbumDAOImplTest extends TestCase{
         em.getTransaction().begin();
         try{
         albumDAOImpl.delete(album);
-        fail();
+        fail("Cant delete album which is not in db");
         } catch (Exception e){
             //OK
         }
