@@ -117,7 +117,7 @@ public class HibernateUtil {
             throw new IllegalArgumentException("Song's bitrate must be between 0 and 2500.");
         }
         if (song.getTrackNumber() <= 0) {
-            throw new IllegalArgumentException("Song's track number must be bigger then 0.");
+            throw new IllegalArgumentException("Song's track number must be bigger than 0.");
         }
     }
     
