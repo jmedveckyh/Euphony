@@ -22,6 +22,10 @@ public class Album implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     
     private String title;
     
