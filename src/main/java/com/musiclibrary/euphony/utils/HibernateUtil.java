@@ -61,7 +61,15 @@ public class HibernateUtil {
     }
 
     public static void checkArtist(Artist artist) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (artist == null){
+            throw new IllegalArgumentException("Artist cannot be null.");
+        }
+        if (artist.getName() == null) {
+            throw new IllegalArgumentException("Artist's name is null.");
+        }
+        if ("".equals(artist.getName())) {
+            throw new IllegalArgumentException("Artist's name is empty.");
+        }
     }
 
     public static void checkGenre(Genre genre) {
@@ -77,7 +85,17 @@ public class HibernateUtil {
     }
 
     public static void checkPlaylist(Playlist playlist) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (playlist == null) {
+            throw new IllegalArgumentException("Playlist cannot be null.");
+        }
+        if (playlist.getName() == null) {
+            throw new IllegalArgumentException("Playlist's name is null.");
+        }
+        if ("".equals(playlist.getName())) {
+            throw new IllegalArgumentException("Playlist's name is empty.");
+        }
+    
+    
     }
 
     public static void checkSong(Song song) {

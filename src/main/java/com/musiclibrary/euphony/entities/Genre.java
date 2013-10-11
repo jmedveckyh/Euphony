@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * 
@@ -19,6 +20,9 @@ public class Genre implements Serializable {
     private Long id;
     
     private String name;
+    
+    @ManyToOne
+    private Song song;
 
     public Genre() {
     }
