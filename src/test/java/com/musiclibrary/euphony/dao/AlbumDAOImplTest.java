@@ -130,10 +130,16 @@ public class AlbumDAOImplTest extends TestCase{
         EntityManager em = emf.createEntityManager();
         AlbumDAOImpl albumDAOImpl = new AlbumDAOImpl();
         
-        Album album = null;
+        Album album = new Album();
+        album.setTitle("aaaa");
+        album.setReleaseDate(new DateTime(2011,11,11,0,0));
+        em.getTransaction().begin();
+        albumDAOImpl.create(album);
+        em.getTransaction().commit();
+        
         em.getTransaction().begin();
         try{
-        albumDAOImpl.update(album);
+        albumDAOImpl.update(null);
         fail("Cant update null album");
         } catch (Exception e){
             //OK
@@ -141,10 +147,9 @@ public class AlbumDAOImplTest extends TestCase{
         em.getTransaction().commit();
         em.clear();
         
-        album = new Album();
         em.getTransaction().begin();
         try{
-        albumDAOImpl.update(album);
+        albumDAOImpl.update(new Album());
         fail("Cant update empty album");
         } catch (Exception e){
             //OK
@@ -152,7 +157,6 @@ public class AlbumDAOImplTest extends TestCase{
         em.getTransaction().commit();
         em.clear();
         
-        album = new Album();
         album.setTitle("");
         album.setReleaseDate(new DateTime(2011,11,11,0,0));
         em.getTransaction().begin();
@@ -165,8 +169,8 @@ public class AlbumDAOImplTest extends TestCase{
         em.getTransaction().commit();
         em.clear();
         
-        album = new Album();
         album.setTitle("aaa");
+        album.setReleaseDate(null);
         em.getTransaction().begin();
         try{
         albumDAOImpl.update(album);
