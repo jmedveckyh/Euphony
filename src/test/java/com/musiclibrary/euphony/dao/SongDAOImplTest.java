@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.musiclibrary.euphony.dao;
 
 import com.musiclibrary.euphony.dao.impl.SongDAOImpl;
@@ -18,8 +14,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
+ * Unit tests for Song DAO implementation.
  *
- * @author PC
+ * @author Branislav Novotny #396152
  */
 public class SongDAOImplTest extends TestCase {
 
@@ -40,6 +37,9 @@ public class SongDAOImplTest extends TestCase {
         super.tearDown();
     }
 
+    /**
+     * Test of create song
+     */
     public void testCreateSong() {
 
         EntityManager em = emf.createEntityManager();
@@ -74,7 +74,7 @@ public class SongDAOImplTest extends TestCase {
             //OK
         }
 
-        //testCreateSongWithNullAttributes
+        //test Create Song With Null Attributes
         try {
             songDAOImpl.create(new Song(null, 320, 1, null, null, null));
             fail("song with null attributes!");
@@ -167,6 +167,9 @@ public class SongDAOImplTest extends TestCase {
         em.close();
     }
 
+    /**
+     * Test of update song
+     */
     public void testUpdateSong() {
 
         EntityManager em = emf.createEntityManager();
@@ -240,7 +243,7 @@ public class SongDAOImplTest extends TestCase {
 
         //test with negative bitrate
         try {
-            songDAOImpl.update(new Song("Salalaj", -1000, 1, "nehehe", new Genre(), new Album()));
+            songDAOImpl.update(new Song("Salalaj", -1234, 1, "nehehe", new Genre(), new Album()));
             fail("song with negative bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -301,16 +304,9 @@ public class SongDAOImplTest extends TestCase {
 
     }
 
-    private void assertDeepEquals(Song expected, Song actual) {
-        assertEquals(expected.getId(), actual.getId());
-        assertEquals(expected.getTitle(), actual.getTitle());
-        assertEquals(expected.getBitrate(), actual.getBitrate());
-        assertEquals(expected.getComment(), actual.getComment());
-        assertEquals(expected.getTrackNumber(), actual.getTrackNumber());
-        assertEquals(expected.getGenre(), actual.getGenre());
-        assertEquals(expected.getAlbum(), actual.getAlbum());
-    }
-
+    /**
+     * Test delete song
+     */
     public void testDeleteSong() {
 
         EntityManager em = emf.createEntityManager();
@@ -441,6 +437,9 @@ public class SongDAOImplTest extends TestCase {
         em3.clear();
     }
 
+    /**
+     * Test of getById method
+     */
     public void testGetSongById() {
 
         //test with null both
@@ -476,7 +475,7 @@ public class SongDAOImplTest extends TestCase {
         em3.getTransaction().commit();
         assertNull(res);
         em3.close();
-        
+
         //test get by id
         EntityManager em4 = emf.createEntityManager();
         Song dalibomba = new Song("Sandru - Dalibomba", 320, 1, "Yeah!!!", new Genre(), new Album());
@@ -489,9 +488,15 @@ public class SongDAOImplTest extends TestCase {
         Song res1 = songDAOImpl.getById(Song.class, songId);
         assertDeepEquals(dalibomba, res1);
         em4.clear();
+    }
 
-
-
-
+    private void assertDeepEquals(Song expected, Song actual) {
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getTitle(), actual.getTitle());
+        assertEquals(expected.getBitrate(), actual.getBitrate());
+        assertEquals(expected.getComment(), actual.getComment());
+        assertEquals(expected.getTrackNumber(), actual.getTrackNumber());
+        assertEquals(expected.getGenre(), actual.getGenre());
+        assertEquals(expected.getAlbum(), actual.getAlbum());
     }
 }
