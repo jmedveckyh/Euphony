@@ -14,8 +14,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 /**
- *
- * @author Medo
+ * DB tools and methods for verifying validity of entities.
+ * 
+ * @author Jakub Medvecký-Heretik #396373
  */
 public class HibernateUtil {
 
