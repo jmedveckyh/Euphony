@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Fri Oct 11 03:54:45 CEST 2013:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-0141-a539-1aad-000002a460f0 
-on database directory memory:D:\SkyDrive\Dokumenty\MUNI\Java\Projects\Euphony\test-euphony with class loader sun.misc.Launcher$AppClassLoader@3244331c 
-Loaded from file:/C:/Users/Tom%c3%a1%c5%a1/.m2/repository/org/apache/derby/derby/10.10.1.1/derby-10.10.1.1.jar
+Fri Oct 11 18:15:16 CEST 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-0141-a84c-ef0c-000002e289c0 
+on database directory memory:C:\Users\PC\Documents\A\Semester 5 podzim 2013\PA165 Vývoj programových systémù v jazyce Java\Euphony\test-euphony with class loader sun.misc.Launcher$AppClassLoader@4187a8e0 
+Loaded from file:/C:/Users/PC/.m2/repository/org/apache/derby/derby/10.10.1.1/derby-10.10.1.1.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.7.0_13-b20
-user.dir=D:\SkyDrive\Dokumenty\MUNI\Java\Projects\Euphony
-os.name=Windows 8
+java.runtime.version=1.7.0_40-b43
+user.dir=C:\Users\PC\Documents\A\Semester 5 podzim 2013\PA165 Vývoj programových systémù v jazyce Java\Euphony
+os.name=Windows 7
 os.arch=amd64
-os.version=6.2
+os.version=6.1
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

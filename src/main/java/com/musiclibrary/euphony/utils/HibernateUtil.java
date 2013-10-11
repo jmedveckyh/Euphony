@@ -81,6 +81,25 @@ public class HibernateUtil {
     }
 
     public static void checkSong(Song song) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (song == null) {
+            throw new IllegalArgumentException("Song cannot be null.");
+        }
+        if (song.getId() != null) {
+            throw new IllegalArgumentException("Song's id cannot be assigned");
+        }
+        if (song.getTitle() == null) {
+            throw new IllegalArgumentException("Song's title cannot be null.");
+        }
+        if ("".equals(song.getTitle())) {
+            throw new IllegalArgumentException("Song's title cannot be empty.");
+        }
+        if (song.getGenre() == null) {
+            throw new IllegalArgumentException("Song's genre cannot be null.");
+        }
+        if (song.getAlbum() == null) {
+            throw new IllegalArgumentException("Song's title cannot be null.");
+        }
+        
+        
     }
 }

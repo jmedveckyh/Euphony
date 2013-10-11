@@ -38,7 +38,7 @@ public class AlbumDAOImplTest extends TestCase {
         super.tearDown();
     }
     
-    public void testCreatePlaylist() {
+    public void testCreateAlbum() {
         
         EntityManager em = emf.createEntityManager();
         AlbumDAOImpl albumDAOImpl = new AlbumDAOImpl();
@@ -51,7 +51,7 @@ public class AlbumDAOImplTest extends TestCase {
         
         Long id = album.getId();
         assertNotNull(id);
-        Album album2 = albumDAOImpl.getById(Playlist.class, id);
+        Album album2 = albumDAOImpl.getById(Album.class, id);
         assertEquals(album, album2);
         
     }

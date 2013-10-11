@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
@@ -36,6 +35,17 @@ public class Song implements Serializable {
     @OneToOne
     private Album album;
 
+    public Song(){ }
+
+    public Song(String title, int bitrate, int trackNumber, String comment, Genre genre, Album album) {
+        this.title = title;
+        this.bitrate = bitrate;
+        this.trackNumber = trackNumber;
+        this.comment = comment;
+        this.genre = genre;
+        this.album = album;
+    }
+    
     public Long getId() {
         return id;
     }
