@@ -51,7 +51,7 @@ public class AlbumDAOImplTest extends TestCase{
         try{
         albumDAOImpl.create(album);
         fail("Album is null");
-        } catch (Exception e){
+        } catch (IllegalArgumentException e){
             //OK
         }
         em.getTransaction().commit();
@@ -62,7 +62,7 @@ public class AlbumDAOImplTest extends TestCase{
         try{
         albumDAOImpl.create(album);
         fail("Empty album");
-        } catch (Exception e){
+        } catch (IllegalArgumentException e){
             //OK
         }
         em.getTransaction().commit();
@@ -75,7 +75,7 @@ public class AlbumDAOImplTest extends TestCase{
         try{
         albumDAOImpl.create(album);
         fail("Empty title in album");
-        } catch (Exception e){
+        } catch (IllegalArgumentException e){
             //OK
         }
         em.getTransaction().commit();
@@ -89,7 +89,7 @@ public class AlbumDAOImplTest extends TestCase{
         try{
         albumDAOImpl.create(album);
         fail("Already in db");
-        } catch (Exception e){
+        } catch (IllegalArgumentException e){
             //OK
         }
         em.getTransaction().commit();
@@ -113,14 +113,14 @@ public class AlbumDAOImplTest extends TestCase{
         try{
             albumDAOImpl.getById(Album.class, null);
             fail("Cant get null from db");
-        } catch (Exception e){
+        } catch (IllegalArgumentException e){
             //OK
         }
         
         try{
             albumDAOImpl.getById(Album.class, new Long(999));
             fail("Cant get album which is not in db");
-        } catch (Exception e){
+        } catch (IllegalArgumentException e){
             //OK
         }
         em.getTransaction().commit();
@@ -141,7 +141,7 @@ public class AlbumDAOImplTest extends TestCase{
         try{
         albumDAOImpl.update(null);
         fail("Cant update null album");
-        } catch (Exception e){
+        } catch (IllegalArgumentException e){
             //OK
         }
         em.getTransaction().commit();
@@ -151,7 +151,7 @@ public class AlbumDAOImplTest extends TestCase{
         try{
         albumDAOImpl.update(new Album());
         fail("Cant update empty album");
-        } catch (Exception e){
+        } catch (IllegalArgumentException e){
             //OK
         }
         em.getTransaction().commit();
@@ -163,7 +163,7 @@ public class AlbumDAOImplTest extends TestCase{
         try{
         albumDAOImpl.update(album);
         fail("Cant update album with empty title");
-        } catch (Exception e){
+        } catch (IllegalArgumentException e){
             //OK
         }
         em.getTransaction().commit();
@@ -175,7 +175,7 @@ public class AlbumDAOImplTest extends TestCase{
         try{
         albumDAOImpl.update(album);
         fail("Cant update album without date");
-        } catch (Exception e){
+        } catch (IllegalArgumentException e){
             //OK
         }
         em.getTransaction().commit();
@@ -189,7 +189,7 @@ public class AlbumDAOImplTest extends TestCase{
         try{
         albumDAOImpl.update(album);
         fail("update with noID");
-        } catch (Exception e){
+        } catch (IllegalArgumentException e){
             //OK
         }
         em.getTransaction().commit();
@@ -218,7 +218,7 @@ public class AlbumDAOImplTest extends TestCase{
         try{
         albumDAOImpl.delete(album);
         fail("Cant delete null album");
-        } catch (Exception e){
+        } catch (IllegalArgumentException e){
             //OK
         }
         em.getTransaction().commit();
@@ -232,7 +232,7 @@ public class AlbumDAOImplTest extends TestCase{
         try{
         albumDAOImpl.delete(album);
         fail("Cant delete album which is not in db");
-        } catch (Exception e){
+        } catch (IllegalArgumentException e){
             //OK
         }
         em.getTransaction().commit();
@@ -246,7 +246,7 @@ public class AlbumDAOImplTest extends TestCase{
         try{
         albumDAOImpl.delete(album);
         fail("Cant delete album which is not in db");
-        } catch (Exception e){
+        } catch (IllegalArgumentException e){
             //OK
         }
         em.getTransaction().commit();
