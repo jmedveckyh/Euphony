@@ -1,12 +1,14 @@
 package com.musiclibrary.euphony.entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import org.hibernate.annotations.Cascade;
 
 /**
  * 
@@ -29,10 +31,10 @@ public class Song implements Serializable {
     
     private String comment;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Genre genre;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Album album;
 
     public Song(){ }

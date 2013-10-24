@@ -5,6 +5,7 @@ import com.musiclibrary.euphony.entities.Artist;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,17 +17,17 @@ import org.junit.Test;
  */
 public class ArtistDAOImplTest {
 
-    EntityManagerFactory emf;
-    EntityManager em;
-    ArtistDAOImpl artistDAOImpl;
+    private EntityManagerFactory emf;
+    private EntityManager em;
+    private ArtistDAOImpl artistDAOImpl;
 
     @Before
     public void setUp() {
         emf = Persistence.createEntityManagerFactory("testEuphonyPU");
         em = emf.createEntityManager();
-        artistDAOImpl = new ArtistDAOImpl();
+        artistDAOImpl = new ArtistDAOImpl(em);
     }
-
+    
     /**
      * Test of createArtist method, of class artistDAOImpl with wrong attributes.
      */

@@ -3,7 +3,6 @@ package com.musiclibrary.euphony.entities;
 import java.io.Serializable;
 import java.util.Map;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

@@ -21,15 +21,15 @@ import org.junit.Test;
  */
 public class PlaylistDAOImplTest {
 
-    EntityManagerFactory emf;
-    EntityManager em;
-    PlaylistDAOImpl playlistDAOImpl;
-    
+    private EntityManagerFactory emf;
+    private EntityManager em;
+    private PlaylistDAOImpl playlistDAOImpl;
+
     @Before
     public void setUp() {
         emf = Persistence.createEntityManagerFactory("testEuphonyPU");
         em = emf.createEntityManager();
-        playlistDAOImpl = new PlaylistDAOImpl();
+        playlistDAOImpl = new PlaylistDAOImpl(em);
     }
     
     private void assertDeepEquals(Playlist expected, Playlist actual) {

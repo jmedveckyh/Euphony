@@ -2,12 +2,12 @@ package com.musiclibrary.euphony.entities;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
@@ -31,10 +31,10 @@ public class Album implements Serializable {
     
     private String cover;
     
-    @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime releaseDate;
         
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Song> songs;
 
     public Album() {

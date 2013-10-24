@@ -20,7 +20,9 @@ import static org.junit.Assert.assertNotNull;
  */
 public class SongDAOImplTest extends TestCase {
 
-    EntityManagerFactory emf;
+    private EntityManagerFactory emf;
+    private EntityManager em;
+    private SongDAOImpl songDAOImpl;
 
     public SongDAOImplTest(String name) {
         super(name);
@@ -29,7 +31,9 @@ public class SongDAOImplTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        this.emf = Persistence.createEntityManagerFactory("testEuphonyPU");
+        emf = Persistence.createEntityManagerFactory("testEuphonyPU");
+        em = emf.createEntityManager();
+        songDAOImpl = new SongDAOImpl(em);
     }
 
     @Override
@@ -42,29 +46,31 @@ public class SongDAOImplTest extends TestCase {
      */
     public void testCreateSong() {
 
-        EntityManager em = emf.createEntityManager();
-        SongDAOImpl songDAOImpl = new SongDAOImpl();
-
         Song song = new Song("Salalaj", 320, 1, "Toto si spievam ked som dobre nehehee...", new Genre(), new Album());
         em.getTransaction().begin();
         songDAOImpl.create(song);
         em.getTransaction().commit();
-        em.clear();
 
         Long id = song.getId();
         assertNotNull(id);
         Song song2 = songDAOImpl.getById(Song.class, id);
-        assertEquals(song, song2);
+        assertDeepEquals(song, song2);
+
+        em.clear();
 
         //test null song
+        em.getTransaction().begin();
         try {
             songDAOImpl.create(null);
             fail("null song!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test song with not null id
+        em.getTransaction().begin();
         try {
             Song s = new Song("Salalaj", 300, 1, "nehehe", new Genre(), new Album());
             s.setId(new Long(1l));
@@ -73,98 +79,127 @@ public class SongDAOImplTest extends TestCase {
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test Create Song With Null Attributes
+        em.getTransaction().begin();
         try {
             songDAOImpl.create(new Song(null, 320, 1, null, null, null));
             fail("song with null attributes!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with null title
+        em.getTransaction().begin();
         try {
             songDAOImpl.create(new Song(null, 320, 1, "nehehe", new Genre(), new Album()));
             fail("song with null title!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with empty title
+        em.getTransaction().begin();
         try {
             songDAOImpl.create(new Song("", 320, 1, "nehehe", new Genre(), new Album()));
             fail("song with empty title!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with null genre 
+        em.getTransaction().begin();
         try {
             songDAOImpl.create(new Song("Salalaj", 320, 1, "nehehe", null, new Album()));
             fail("song with null genre!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with null album
+        em.getTransaction().begin();
         try {
             songDAOImpl.create(new Song("Salalaj", 320, 1, "nehehe", new Genre(), null));
             fail("song with null album!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with negative track number
+        em.getTransaction().begin();
         try {
             songDAOImpl.create(new Song("Salalaj", 320, -10, "nehehe", new Genre(), new Album()));
             fail("song with negative bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with zero bitrate
+        em.getTransaction().begin();
         try {
             songDAOImpl.create(new Song("Salalaj", 0, 1, "nehehe", new Genre(), new Album()));
             fail("song with zero bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with negative bitrate
+        em.getTransaction().begin();
         try {
             songDAOImpl.create(new Song("Salalaj", -1000, 1, "nehehe", new Genre(), new Album()));
             fail("song with negative bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with bitrate above 2500
+        em.getTransaction().begin();
         try {
             songDAOImpl.create(new Song("Salalaj", 10000, 1, "nehehe", new Genre(), new Album()));
             fail("song with 2500+ bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with null comment
+        em.getTransaction().begin();
         try {
-            em.getTransaction().begin();
             songDAOImpl.create(new Song("Salalaj", 320, 1, null, new Genre(), new Album()));
-            em.getTransaction().commit();
         } catch (IllegalArgumentException ex) {
             fail("song with null comment is OK!");
         }
+        em.getTransaction().commit();
         em.clear();
 
         //test with empty comment
+        em.getTransaction().begin();
         try {
-            em.getTransaction().begin();
             songDAOImpl.create(new Song("Salalaj", 320, 1, "", new Genre(), new Album()));
-            em.getTransaction().commit();
         } catch (IllegalArgumentException ex) {
             fail("song with empty comment is OK!");
         }
-        em.close();
+        em.getTransaction().commit();
+        em.clear();
     }
 
     /**
@@ -172,94 +207,122 @@ public class SongDAOImplTest extends TestCase {
      */
     public void testUpdateSong() {
 
-        EntityManager em = emf.createEntityManager();
-        SongDAOImpl songDAOImpl = new SongDAOImpl();
         //Song s = new Song("Salalaj", 320, 1, "", new Genre(), new Album());
         //s.setId(new Long(1l));
 
         //test null song
+        em.getTransaction().begin();
         try {
             songDAOImpl.update(null);
             fail("null song update!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //testCreateSongWithNullAttributes
+        em.getTransaction().begin();
         try {
             songDAOImpl.update(new Song(null, 320, 1, null, null, null));
             fail("song with null attributes!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with null title
+        em.getTransaction().begin();
         try {
             songDAOImpl.update(new Song(null, 320, 1, "nehehe", new Genre(), new Album()));
             fail("song with null title!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with empty title
+        em.getTransaction().begin();
         try {
             songDAOImpl.update(new Song("", 320, 1, "nehehe", new Genre(), new Album()));
             fail("song with empty title!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with null genre 
+        em.getTransaction().begin();
         try {
             songDAOImpl.update(new Song("Salalaj", 320, 1, "nehehe", null, new Album()));
             fail("song with null genre!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with null album
+        em.getTransaction().begin();
         try {
             songDAOImpl.update(new Song("Salalaj", 320, 1, "nehehe", new Genre(), null));
             fail("song with null album!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with negative track number
+        em.getTransaction().begin();
         try {
             songDAOImpl.update(new Song("Salalaj", 320, -10, "nehehe", new Genre(), new Album()));
             fail("song with negative bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with zero bitrate
+        em.getTransaction().begin();
         try {
             songDAOImpl.update(new Song("Salalaj", 0, 1, "nehehe", new Genre(), new Album()));
             fail("song with zero bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with negative bitrate
+        em.getTransaction().begin();
         try {
             songDAOImpl.update(new Song("Salalaj", -1234, 1, "nehehe", new Genre(), new Album()));
             fail("song with negative bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with bitrate above 2500
+        em.getTransaction().begin();
         try {
             songDAOImpl.update(new Song("Salalaj", 10000, 1, "nehehe", new Genre(), new Album()));
             fail("song with 2500+ bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test song with null id
+        em.getTransaction().begin();
         try {
-            em.getTransaction().begin();
             songDAOImpl.update(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album()));
             em.getTransaction().commit();
             fail("null id update!");
@@ -267,39 +330,39 @@ public class SongDAOImplTest extends TestCase {
         } catch (IllegalArgumentException ex) {
             //ok
         }
+        em.getTransaction().commit();
         em.clear();
 
         // test with id doesnt assigned by db
-        EntityManager em2 = emf.createEntityManager();
+        em.getTransaction().begin();
         try {
-
-            em2.getTransaction().begin();
             Song song = new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album());
             song.setId(new Long(1000));
             songDAOImpl.update(song);
-            em2.getTransaction().commit();
             fail("no assigned id by db update!");
 
         } catch (IllegalArgumentException ex) {
             //ok
         }
-        em2.close();
+        em.getTransaction().commit();
+        em.clear();
 
         //test update song
-        EntityManager em3 = emf.createEntityManager();
 
         Song blessed = new Song("Tim Hangs - Blessed", 320, 1, "Yeah", new Genre(), new Album());
         Song dalibomba = new Song("Sandru - Dalibomba", 320, 1, "Yeah!!!", new Genre(), new Album());
-        em3.getTransaction().begin();
+        em.getTransaction().begin();
         songDAOImpl.create(blessed);
-        em3.getTransaction().commit();
+        em.getTransaction().commit();
         dalibomba.setId(blessed.getId());
+        dalibomba.getGenre().setId(blessed.getGenre().getId());
+        dalibomba.getAlbum().setId(blessed.getAlbum().getId());
 
-        em3.getTransaction().begin();
+        em.getTransaction().begin();
         songDAOImpl.update(dalibomba);                //OK
-        em3.getTransaction().commit();
+        em.getTransaction().commit();
         assertDeepEquals(dalibomba, songDAOImpl.getById(Song.class, blessed.getId()));
-        em3.close();
+        em.clear();
 
 
     }
@@ -309,132 +372,156 @@ public class SongDAOImplTest extends TestCase {
      */
     public void testDeleteSong() {
 
-        EntityManager em = emf.createEntityManager();
-        SongDAOImpl songDAOImpl = new SongDAOImpl();
         //Song s = new Song("Salalaj", 320, 1, "", new Genre(), new Album());
         //s.setId(new Long(1l));
 
         //test null song
+        em.getTransaction().begin();
         try {
             songDAOImpl.delete(null);
             fail("null song delete!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //testCreateSongWithNullAttributes
+        em.getTransaction().begin();
         try {
             songDAOImpl.delete(new Song(null, 320, 1, null, null, null));
             fail("song with null attributes!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with null title
+        em.getTransaction().begin();
         try {
             songDAOImpl.delete(new Song(null, 320, 1, "nehehe", new Genre(), new Album()));
             fail("song with null title!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with empty title
+        em.getTransaction().begin();
         try {
             songDAOImpl.delete(new Song("", 320, 1, "nehehe", new Genre(), new Album()));
             fail("song with empty title!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with null genre 
+        em.getTransaction().begin();
         try {
             songDAOImpl.delete(new Song("Salalaj", 320, 1, "nehehe", null, new Album()));
             fail("song with null genre!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with null album
+        em.getTransaction().begin();
         try {
             songDAOImpl.delete(new Song("Salalaj", 320, 1, "nehehe", new Genre(), null));
             fail("song with null album!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with negative track number
+        em.getTransaction().begin();
         try {
             songDAOImpl.delete(new Song("Salalaj", 320, -10, "nehehe", new Genre(), new Album()));
             fail("song with negative bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with zero bitrate
+        em.getTransaction().begin();
         try {
             songDAOImpl.delete(new Song("Salalaj", 0, 1, "nehehe", new Genre(), new Album()));
             fail("song with zero bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with negative bitrate
+        em.getTransaction().begin();
         try {
             songDAOImpl.delete(new Song("Salalaj", -1000, 1, "nehehe", new Genre(), new Album()));
             fail("song with negative bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test with bitrate above 2500
+        em.getTransaction().begin();
         try {
             songDAOImpl.delete(new Song("Salalaj", 10000, 1, "nehehe", new Genre(), new Album()));
             fail("song with 2500+ bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
+        em.getTransaction().commit();
+        em.clear();
 
         //test song with null id
+        em.getTransaction().begin();
         try {
-            em.getTransaction().begin();
             songDAOImpl.delete(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album()));
-            em.getTransaction().commit();
             fail("null id delete!");
 
         } catch (IllegalArgumentException ex) {
             //ok
         }
+        em.getTransaction().commit();
         em.clear();
 
         // test with id doesnt assigned by db
-        EntityManager em2 = emf.createEntityManager();
+        em.getTransaction().begin();
         try {
-
-            em2.getTransaction().begin();
             Song song = new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album());
             song.setId(new Long(1000));
             songDAOImpl.delete(song);
-            em2.getTransaction().commit();
             fail("no assigned id by db delete!");
 
         } catch (IllegalArgumentException ex) {
             //ok
         }
-        em2.close();
+        em.getTransaction().commit();
+        em.clear();
 
         //test delete song
-        EntityManager em3 = emf.createEntityManager();
 
         Song dalibomba = new Song("Sandru - Dalibomba", 320, 1, "Yeah!!!", new Genre(), new Album());
-        em3.getTransaction().begin();
+        em.getTransaction().begin();
         songDAOImpl.create(dalibomba);
-        em3.getTransaction().commit();
-        em3.clear();
+        em.getTransaction().commit();
 
-        em3.getTransaction().begin();
+        em.getTransaction().begin();
         songDAOImpl.delete(dalibomba);
-        em3.getTransaction().commit();
-        em3.clear();
+        em.getTransaction().commit();
+        em.clear();
     }
 
     /**
@@ -443,51 +530,44 @@ public class SongDAOImplTest extends TestCase {
     public void testGetSongById() {
 
         //test with null both
-        EntityManager em = emf.createEntityManager();
-        SongDAOImpl songDAOImpl = new SongDAOImpl();
+        em.getTransaction().begin();
         try {
-            em.getTransaction().begin();
             songDAOImpl.getById(null, null);
-            em.getTransaction().commit();
             fail("both null get!");
         } catch (IllegalArgumentException ex) {
             //ok
         }
-        em.close();
+        em.getTransaction().commit();
+        em.clear();
 
         //test with null id
-        EntityManager em2 = emf.createEntityManager();
-
+        em.getTransaction().begin();
         try {
-            em2.getTransaction().begin();
             songDAOImpl.getById(Song.class, null);
-            em2.getTransaction().commit();
             fail("id null get!");
         } catch (IllegalArgumentException ex) {
             //ok
         }
-        em2.close();
+        em.getTransaction().commit();
+        em.clear();
 
         //test id not assigned by db
-        EntityManager em3 = emf.createEntityManager();
-        em3.getTransaction().begin();
+        em.getTransaction().begin();
         Song res = songDAOImpl.getById(Song.class, new Long(6543));
-        em3.getTransaction().commit();
+        em.getTransaction().commit();
         assertNull(res);
-        em3.close();
 
         //test get by id
-        EntityManager em4 = emf.createEntityManager();
         Song dalibomba = new Song("Sandru - Dalibomba", 320, 1, "Yeah!!!", new Genre(), new Album());
-        em4.getTransaction().begin();
+        em.getTransaction().begin();
         songDAOImpl.create(dalibomba);
-        em4.getTransaction().commit();
+        em.getTransaction().commit();
         assertNotNull(dalibomba.getId());
         Long songId = dalibomba.getId();
 
         Song res1 = songDAOImpl.getById(Song.class, songId);
         assertDeepEquals(dalibomba, res1);
-        em4.clear();
+        em.clear();
     }
 
     private void assertDeepEquals(Song expected, Song actual) {

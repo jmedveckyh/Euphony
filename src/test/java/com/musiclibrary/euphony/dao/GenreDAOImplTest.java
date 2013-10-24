@@ -16,15 +16,15 @@ import org.junit.Test;
  */
 public class GenreDAOImplTest {
 
-    EntityManagerFactory emf;
-    EntityManager em;
-    GenreDAOImpl genreDAOImpl;
+    private EntityManagerFactory emf;
+    private EntityManager em;
+    private GenreDAOImpl genreDAOImpl;
 
     @Before
     public void setUp() {
         emf = Persistence.createEntityManagerFactory("testEuphonyPU");
         em = emf.createEntityManager();
-        genreDAOImpl = new GenreDAOImpl();
+        genreDAOImpl = new GenreDAOImpl(em);
     }
 
     /**
