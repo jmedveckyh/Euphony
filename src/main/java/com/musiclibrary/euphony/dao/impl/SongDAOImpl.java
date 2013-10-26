@@ -81,12 +81,13 @@ public class SongDAOImpl implements DAO<Song> {
 
         return objectTemp;
     }
+    
     public List<Song> getAll(){
         Query q = em.createQuery("from Song");
         List<Song> songs = q.getResultList();
         return Collections.unmodifiableList(songs);
-
     }
+    
     public List<Song> getByTitle(String title){
         if(title == null) {
             throw new IllegalArgumentException("Title is NULL");
@@ -95,8 +96,8 @@ public class SongDAOImpl implements DAO<Song> {
         q.setParameter("title", title);
         List<Song> songs = q.getResultList();
         return Collections.unmodifiableList(songs);
-
     }
+    
     public List<Song> getByGenre(Genre genre){
         Util.validateGenre(genre);
         Query q = em.createQuery("from Song where genre=:genre");
@@ -104,6 +105,7 @@ public class SongDAOImpl implements DAO<Song> {
         List<Song> songs = q.getResultList();
         return Collections.unmodifiableList(songs);
     }
+    
     public List<Song> getByArtist(Artist artist){
         Util.validateArtist(artist);
         Query q = em.createQuery("from Song where artist=:artist");
@@ -111,6 +113,7 @@ public class SongDAOImpl implements DAO<Song> {
         List<Song> songs = q.getResultList();
         return Collections.unmodifiableList(songs);
     }
+    
     public List<Song> getByAlbum(Album album){
         Util.validateAlbum(album);
         Query q = em.createQuery("from Song where album=:album");
