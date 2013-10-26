@@ -99,14 +99,6 @@ public class ArtistDAOImplTest {
         em.clear();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetArtistWithNullClass() {
-        em.getTransaction().begin();
-        artistDAOImpl.getById(new Long(100));              //class is null
-        em.getTransaction().commit();
-        em.clear();
-    }
-
     @Test
     public void testGetArtistWithNotAssignedId() {
         em.getTransaction().begin();

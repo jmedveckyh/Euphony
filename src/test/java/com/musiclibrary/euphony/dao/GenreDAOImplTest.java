@@ -97,15 +97,7 @@ public class GenreDAOImplTest {
         em.getTransaction().commit();
         em.clear();
     }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetGenreWithNullClass() {
-        em.getTransaction().begin();
-        genreDAOImpl.getById(new Long(100));              //class is null
-        em.getTransaction().commit();
-        em.clear();
-    }
-
+    
     @Test
     public void testGetGenreWithNotAssignedId() {
         em.getTransaction().begin();

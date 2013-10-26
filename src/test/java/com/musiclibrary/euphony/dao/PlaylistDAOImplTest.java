@@ -289,20 +289,4 @@ public class PlaylistDAOImplTest {
         em.clear();
     }
     
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetByIdPlaylistWhithNoCls() {
-        em.getTransaction().begin();
-        playlistDAOImpl.getById(new Long(1));
-        em.getTransaction().commit();
-        em.clear();
-    }
-    
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetByIdPlaylistWhithNotExistingCls() {        
-        em.getTransaction().begin();
-        playlistDAOImpl.getById(new Long(1));
-        em.getTransaction().commit();
-        em.clear();
-    }
-    
 }
