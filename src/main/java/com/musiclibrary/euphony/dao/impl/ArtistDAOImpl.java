@@ -2,8 +2,12 @@ package com.musiclibrary.euphony.dao.impl;
 
 import com.musiclibrary.euphony.dao.DAO;
 import com.musiclibrary.euphony.entities.Artist;
+import com.musiclibrary.euphony.util.Util;
+import java.util.Collections;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -18,11 +22,11 @@ public class ArtistDAOImpl implements DAO<Artist> {
     public ArtistDAOImpl(EntityManager em) {
         this.em = em;
     }
-    
+
     @Override
     public void create(Artist entity) {
-        
-        checkArtist(entity);
+
+        Util.validateArtist(entity);
 
         if (entity.getId() != null) {
             throw new IllegalArgumentException("This artist entity is already in databse.");
@@ -33,9 +37,9 @@ public class ArtistDAOImpl implements DAO<Artist> {
 
     @Override
     public void update(Artist entity) {
-        
-        checkArtist(entity);
-        
+
+        Util.validateArtist(entity);
+
         if (entity.getId() == null) {
             throw new IllegalArgumentException("This artist entity cannot have null id.");
         }
@@ -48,8 +52,8 @@ public class ArtistDAOImpl implements DAO<Artist> {
 
     @Override
     public void delete(Artist entity) {
-        
-        checkArtist(entity);
+
+        Util.validateArtist(entity);
 
         if (entity.getId() == null) {
             throw new IllegalArgumentException("This artist entity cannot have null id.");
@@ -57,7 +61,7 @@ public class ArtistDAOImpl implements DAO<Artist> {
         if (em.find(Artist.class, entity.getId()) == null) {
             throw new IllegalArgumentException("This artist entity does not exist in database.");
         }
- 
+
         Artist objectTemp = em.merge(entity);
 
         em.remove(objectTemp);
@@ -65,25 +69,29 @@ public class ArtistDAOImpl implements DAO<Artist> {
 
     @Override
     public Artist getById(Long id) {
- 
+
         if (id == null) {
             throw new IllegalArgumentException("Id cannot be null.");
         }
 
-        Artist objectTemp = (Artist) em.find(Artist.class, id);
+        Artist artist = (Artist) em.find(Artist.class, id);
 
-        return objectTemp;
+        return artist;
     }
 
-    public static void checkArtist(Artist artist) {
-        if (artist == null) {
-            throw new IllegalArgumentException("Artist cannot be null.");
+    public List<Artist> getAll() {
+        Query q = em.createQuery("from Artist");
+        List<Artist> artists = q.getResultList();
+        return Collections.unmodifiableList(artists);
+    }
+
+    public Artist getByName(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("Title is NULL");
         }
-        if (artist.getName() == null) {
-            throw new IllegalArgumentException("Artist's name is null.");
-        }
-        if ("".equals(artist.getName())) {
-            throw new IllegalArgumentException("Artist's name is empty.");
-        }
+        Query q = em.createQuery("from Artist where name=:name");
+        q.setParameter("name", name);
+        Artist artist = (Artist) q.getSingleResult();
+        return artist;
     }
 }

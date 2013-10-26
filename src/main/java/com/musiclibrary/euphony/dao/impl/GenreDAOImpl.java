@@ -2,8 +2,12 @@ package com.musiclibrary.euphony.dao.impl;
 
 import com.musiclibrary.euphony.dao.DAO;
 import com.musiclibrary.euphony.entities.Genre;
+import com.musiclibrary.euphony.util.Util;
+import java.util.Collections;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -18,11 +22,11 @@ public class GenreDAOImpl implements DAO<Genre> {
     public GenreDAOImpl(EntityManager em) {
         this.em = em;
     }
-    
+
     @Override
     public void create(Genre entity) {
-        
-        checkGenre(entity);
+
+        Util.validateGenre(entity);
 
         if (entity.getId() != null) {
             throw new IllegalArgumentException("This genre entity is already in databse.");
@@ -33,9 +37,9 @@ public class GenreDAOImpl implements DAO<Genre> {
 
     @Override
     public void update(Genre entity) {
-        
-        checkGenre(entity);
-        
+
+        Util.validateGenre(entity);
+
         if (entity.getId() == null) {
             throw new IllegalArgumentException("This genre entity cannot have null id.");
         }
@@ -48,8 +52,8 @@ public class GenreDAOImpl implements DAO<Genre> {
 
     @Override
     public void delete(Genre entity) {
-        
-        checkGenre(entity);
+
+        Util.validateGenre(entity);
 
         if (entity.getId() == null) {
             throw new IllegalArgumentException("This genre entity cannot have null id.");
@@ -57,7 +61,7 @@ public class GenreDAOImpl implements DAO<Genre> {
         if (em.find(Genre.class, entity.getId()) == null) {
             throw new IllegalArgumentException("This genre entity does not exist in database.");
         }
- 
+
         Genre objectTemp = em.merge(entity);
 
         em.remove(objectTemp);
@@ -65,26 +69,29 @@ public class GenreDAOImpl implements DAO<Genre> {
 
     @Override
     public Genre getById(Long id) {
-        
+
         if (id == null) {
             throw new IllegalArgumentException("Id cannot be null.");
         }
 
-        Genre objectTemp = (Genre) em.find(Genre.class, id);
+        Genre genre = (Genre) em.find(Genre.class, id);
 
-        return objectTemp;
+        return genre;
     }
 
-    public static void checkGenre(Genre genre) {
-        if (genre == null){
-            throw new IllegalArgumentException("Genre cannot be null.");
-        }
-        if (genre.getName() == null) {
-            throw new IllegalArgumentException("Genre's name is null.");
-        }
-        if ("".equals(genre.getName())) {
-            throw new IllegalArgumentException("Genre's name is empty.");
-        }
+    public List<Genre> getAll() {
+        Query q = em.createQuery("from Genre");
+        List<Genre> genres = q.getResultList();
+        return Collections.unmodifiableList(genres);
     }
 
+    public Genre getByName(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("Title is NULL");
+        }
+        Query q = em.createQuery("from Genre where name=:name");
+        q.setParameter("name", name);
+        Genre genre = (Genre) q.getSingleResult();
+        return genre;
+    }
 }
