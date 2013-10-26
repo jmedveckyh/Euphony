@@ -52,22 +52,22 @@ public class SongServiceImpl implements SongService{
     
     @Override
     public List<SongDTO> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return DTOMapper.toDTO(songDao.getAll());
     }
 
     @Override
     public List<SongDTO> getByTitle(String title) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return DTOMapper.toDTO(songDao.getByTitle(title));
     }
 
     @Override
     public List<SongDTO> getByGenre(Genre genre) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return DTOMapper.toDTO(songDao.getByGenre(genre));
     }
 
     @Override
     public List<SongDTO> getByArtist(Artist artist) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return DTOMapper.toDTO(songDao.getByArtist(artist));
     }
 
     @Override

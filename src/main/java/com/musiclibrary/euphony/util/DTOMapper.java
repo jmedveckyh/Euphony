@@ -4,10 +4,12 @@
  */
 package com.musiclibrary.euphony.util;
 
-import com.musiclibrary.euphony.dto.GenreDTO;
+//import com.musiclibrary.euphony.dto.GenreDTO;
 import com.musiclibrary.euphony.dto.SongDTO;
 import com.musiclibrary.euphony.entities.Genre;
 import com.musiclibrary.euphony.entities.Song;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -44,6 +46,15 @@ public class DTOMapper {
         return songDto;
     }
     
+    public static List<SongDTO> toDTO(List<Song> songs){
+        List<SongDTO> songsDTO = new ArrayList();
+        for(Song song : songs){
+            songsDTO.add(DTOMapper.toDTO(song));
+        }
+        return songsDTO;
+    }
+    
+    /*
     public static Genre toEntity(GenreDTO genreDto) {
         if (genreDto == null) {
             return null;
@@ -63,4 +74,5 @@ public class DTOMapper {
         genreDTO.setName(genre.getName());
         return genreDTO;
     }
+    */
 }
