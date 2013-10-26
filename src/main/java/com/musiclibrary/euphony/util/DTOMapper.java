@@ -1,8 +1,10 @@
 package com.musiclibrary.euphony.util;
 
+import com.musiclibrary.euphony.dto.AlbumDTO;
 import com.musiclibrary.euphony.dto.GenreDTO;
 import com.musiclibrary.euphony.dto.PlaylistDTO;
 import com.musiclibrary.euphony.dto.SongDTO;
+import com.musiclibrary.euphony.entities.Album;
 import com.musiclibrary.euphony.entities.Genre;
 import com.musiclibrary.euphony.entities.Playlist;
 import com.musiclibrary.euphony.entities.Song;
@@ -16,7 +18,7 @@ import java.util.List;
 public class DTOMapper {
 
     public static Song toEntity(SongDTO songDto) {
-        
+
         if (songDto == null) {
             return null;
         }
@@ -29,11 +31,11 @@ public class DTOMapper {
         song.setTrackNumber(songDto.getTrackNumber());
         song.setId(songDto.getId());
         return song;
-        
+
     }
 
     public static SongDTO toDTO(Song song) {
-        
+
         if (song == null) {
             return null;
         }
@@ -46,19 +48,19 @@ public class DTOMapper {
         songDto.setTrackNumber(song.getTrackNumber());
         songDto.setId(song.getId());
         return songDto;
-        
+
     }
-    
-    public static List<SongDTO> toDTO(List<Song> songs){
+
+    public static List<SongDTO> toDTO(List<Song> songs) {
         List<SongDTO> songsDTO = new ArrayList();
-        for(Song song : songs){
+        for (Song song : songs) {
             songsDTO.add(DTOMapper.toDTO(song));
         }
         return songsDTO;
     }
 
     public static Genre toEntity(GenreDTO genreDto) {
-        
+
         if (genreDto == null) {
             return null;
         }
@@ -66,11 +68,11 @@ public class DTOMapper {
         genre.setName(genreDto.getName());
         genre.setId(genreDto.getId());
         return genre;
-        
+
     }
 
     public static GenreDTO toDTO(Genre genre) {
-        
+
         if (genre == null) {
             return null;
         }
@@ -78,11 +80,11 @@ public class DTOMapper {
         genreDTO.setId(genre.getId());
         genreDTO.setName(genre.getName());
         return genreDTO;
-    
+
     }
-    
+
     public static Playlist toEntity(PlaylistDTO playlistDto) {
-        
+
         if (playlistDto == null) {
             return null;
         }
@@ -91,11 +93,11 @@ public class DTOMapper {
         playlist.setId(playlistDto.getId());
         playlist.setSongs(playlistDto.getSongs());
         return playlist;
-        
+
     }
 
     public static PlaylistDTO toDTO(Playlist playlist) {
-        
+
         if (playlist == null) {
             return null;
         }
@@ -104,6 +106,32 @@ public class DTOMapper {
         playlistDTO.setName(playlist.getName());
         playlistDTO.setSongs(playlist.getSongs());
         return playlistDTO;
-    
+
+    }
+
+    public static Album toEntity(AlbumDTO albumDTO) {
+        if (albumDTO == null) {
+            return null;
+        }
+        Album album = new Album();
+        album.setId(albumDTO.getId());
+        album.setCover(albumDTO.getCover());
+        album.setReleaseDate(albumDTO.getReleaseDate());
+        album.setSongs(albumDTO.getSongs());
+        album.setTitle(albumDTO.getTitle());
+        return album;
+    }
+
+    public static AlbumDTO toDTO(Album album) {
+        if (album == null) {
+            return null;
+        }
+        AlbumDTO albumDTO = new AlbumDTO();
+        albumDTO.setId(album.getId());
+        albumDTO.setCover(album.getCover());
+        albumDTO.setReleaseDate(album.getReleaseDate());
+        albumDTO.setSongs(album.getSongs());
+        albumDTO.setTitle(album.getTitle());
+        return albumDTO;
     }
 }
