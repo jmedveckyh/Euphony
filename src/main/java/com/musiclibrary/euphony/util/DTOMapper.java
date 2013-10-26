@@ -1,10 +1,12 @@
 package com.musiclibrary.euphony.util;
 
 import com.musiclibrary.euphony.dto.AlbumDTO;
+import com.musiclibrary.euphony.dto.ArtistDTO;
 import com.musiclibrary.euphony.dto.GenreDTO;
 import com.musiclibrary.euphony.dto.PlaylistDTO;
 import com.musiclibrary.euphony.dto.SongDTO;
 import com.musiclibrary.euphony.entities.Album;
+import com.musiclibrary.euphony.entities.Artist;
 import com.musiclibrary.euphony.entities.Genre;
 import com.musiclibrary.euphony.entities.Playlist;
 import com.musiclibrary.euphony.entities.Song;
@@ -82,6 +84,14 @@ public class DTOMapper {
         return genreDTO;
 
     }
+    
+    public static List<GenreDTO> genresListToDTO(List<Genre> genres){
+        List<GenreDTO> genresDTO = new ArrayList();
+        for(Genre genre : genres){
+            genresDTO.add(DTOMapper.toDTO(genre));
+        }
+        return genresDTO;
+    }
 
     public static Playlist toEntity(PlaylistDTO playlistDto) {
 
@@ -133,5 +143,36 @@ public class DTOMapper {
         albumDTO.setSongs(album.getSongs());
         albumDTO.setTitle(album.getTitle());
         return albumDTO;
+    }
+    public static Artist toEntity(ArtistDTO artistDto) {
+        
+        if (artistDto == null) {
+            return null;
+        }
+        Artist artist = new Artist();
+        artist.setName(artistDto.getName());
+        artist.setId(artistDto.getId());
+        return artist;
+        
+    }
+
+    public static ArtistDTO toDTO(Artist artist) {
+        
+        if (artist == null) {
+            return null;
+        }
+        ArtistDTO artistDTO = new ArtistDTO();
+        artistDTO.setId(artist.getId());
+        artistDTO.setName(artist.getName());
+        return artistDTO;
+    
+    }
+    
+    public static List<ArtistDTO> artistsListToDTO(List<Artist> artists){
+        List<ArtistDTO> artistsDTO = new ArrayList();
+        for(Artist artist : artists){
+            artistsDTO.add(DTOMapper.toDTO(artist));
+        }
+        return artistsDTO;
     }
 }
