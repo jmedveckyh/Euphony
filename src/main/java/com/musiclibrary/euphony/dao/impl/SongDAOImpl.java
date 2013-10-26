@@ -1,6 +1,7 @@
 package com.musiclibrary.euphony.dao.impl;
 
 import com.musiclibrary.euphony.dao.DAO;
+import com.musiclibrary.euphony.dao.SongDAO;
 import com.musiclibrary.euphony.entities.Album;
 import com.musiclibrary.euphony.entities.Artist;
 import com.musiclibrary.euphony.entities.Genre;
@@ -17,7 +18,7 @@ import javax.persistence.Query;
  * 
  * @author Sebastian
  */
-public class SongDAOImpl implements DAO<Song> {
+public class SongDAOImpl implements SongDAO{
 
     @PersistenceContext
     private EntityManager em;
