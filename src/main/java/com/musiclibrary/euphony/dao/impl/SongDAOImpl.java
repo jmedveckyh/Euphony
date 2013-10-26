@@ -1,9 +1,16 @@
 package com.musiclibrary.euphony.dao.impl;
 
 import com.musiclibrary.euphony.dao.DAO;
+import com.musiclibrary.euphony.entities.Album;
+import com.musiclibrary.euphony.entities.Artist;
+import com.musiclibrary.euphony.entities.Genre;
 import com.musiclibrary.euphony.entities.Song;
+import com.musiclibrary.euphony.util.Util;
+import java.util.Collections;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  * 
@@ -22,7 +29,7 @@ public class SongDAOImpl implements DAO<Song> {
     @Override
     public void create(Song entity) {
         
-        checkSong(entity);
+        Util.validateSong(entity);
 
         if (entity.getId() != null) {
             throw new IllegalArgumentException("This song entity is already in databse.");
@@ -34,7 +41,7 @@ public class SongDAOImpl implements DAO<Song> {
     @Override
     public void update(Song entity) {
         
-        checkSong(entity);
+        Util.validateSong(entity);
         
         if (entity.getId() == null) {
             throw new IllegalArgumentException("This song entity cannot have null id.");
@@ -49,7 +56,7 @@ public class SongDAOImpl implements DAO<Song> {
     @Override
     public void delete(Song entity) {
         
-        checkSong(entity);
+        Util.validateSong(entity);
 
         if (entity.getId() == null) {
             throw new IllegalArgumentException("This song entity cannot have null id.");
@@ -74,29 +81,42 @@ public class SongDAOImpl implements DAO<Song> {
 
         return objectTemp;
     }
+    public List<Song> getAll(){
+        Query q = em.createQuery("from Song");
+        List<Song> songs = q.getResultList();
+        return Collections.unmodifiableList(songs);
 
-    public static void checkSong(Song song) {
-        if (song == null) {
-            throw new IllegalArgumentException("Song cannot be null.");
+    }
+    public List<Song> getByTitle(String title){
+        if(title == null) {
+            throw new IllegalArgumentException("Title is NULL");
         }
-        if (song.getTitle() == null) {
-            throw new IllegalArgumentException("Song's title cannot be null.");
-        }
-        if ("".equals(song.getTitle())) {
-            throw new IllegalArgumentException("Song's title cannot be empty.");
-        }
-        if (song.getGenre() == null) {
-            throw new IllegalArgumentException("Song's genre cannot be null.");
-        }
-        if (song.getAlbum() == null) {
-            throw new IllegalArgumentException("Song's album cannot be null.");
-        }
-        if (song.getBitrate() < 1 || song.getBitrate() > 2500) {
-            throw new IllegalArgumentException("Song's bitrate must be between 1 and 2500.");
-        }
-        if (song.getTrackNumber() <= 0) {
-            throw new IllegalArgumentException("Song's track number must be bigger than 0.");
-        }
+        Query q = em.createQuery("from Song where title=:title");
+        q.setParameter("title", title);
+        List<Song> songs = q.getResultList();
+        return Collections.unmodifiableList(songs);
+
+    }
+    public List<Song> getByGenre(Genre genre){
+        Util.validateGenre(genre);
+        Query q = em.createQuery("from Song where genre=:genre");
+        q.setParameter("genre", genre);
+        List<Song> songs = q.getResultList();
+        return Collections.unmodifiableList(songs);
+    }
+    public List<Song> getByArtist(Artist artist){
+        Util.validateArtist(artist);
+        Query q = em.createQuery("from Song where artist=:artist");
+        q.setParameter("artist", artist);
+        List<Song> songs = q.getResultList();
+        return Collections.unmodifiableList(songs);
+    }
+    public List<Song> getByAlbum(Album album){
+        Util.validateAlbum(album);
+        Query q = em.createQuery("from Song where album=:album");
+        q.setParameter("album", album);
+        List<Song> songs = q.getResultList();
+        return Collections.unmodifiableList(songs);
     }
 }
 
