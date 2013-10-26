@@ -26,4 +26,19 @@ public class DTOMapper {
         song.setId(songDto.getId());
         return song;
     }
+    
+    public static SongDTO toDTO(Song song){
+        if (song == null) {
+            return null;
+        }
+        SongDTO songDto = new SongDTO();
+        songDto.setAlbum(song.getAlbum());
+        songDto.setBitrate(song.getBitrate());
+        songDto.setComment(song.getComment());
+        songDto.setGenre(song.getGenre());
+        songDto.setTitle(song.getTitle());
+        songDto.setTrackNumber(song.getTrackNumber());
+        songDto.setId(song.getId());
+        return songDto;
+    }
 }
