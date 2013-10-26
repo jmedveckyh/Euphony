@@ -64,16 +64,13 @@ public class ArtistDAOImpl implements DAO<Artist> {
     }
 
     @Override
-    public Artist getById(Class cls, Long id) {
-        
-        if (cls == null) {
-            throw new IllegalArgumentException("Class cannot be null.");
-        }
+    public Artist getById(Long id) {
+ 
         if (id == null) {
             throw new IllegalArgumentException("Id cannot be null.");
         }
 
-        Artist objectTemp = (Artist) em.find(cls, id);
+        Artist objectTemp = (Artist) em.find(Artist.class, id);
 
         return objectTemp;
     }

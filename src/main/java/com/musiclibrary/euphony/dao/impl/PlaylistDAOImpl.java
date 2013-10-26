@@ -64,16 +64,13 @@ public class PlaylistDAOImpl implements DAO<Playlist> {
     }
 
     @Override
-    public Playlist getById(Class cls, Long id) {
+    public Playlist getById(Long id) {
         
-        if (cls == null) {
-            throw new IllegalArgumentException("Class cannot be null.");
-        }
         if (id == null) {
             throw new IllegalArgumentException("Id cannot be null.");
         }
 
-        Playlist objectTemp = (Playlist) em.find(cls, id);
+        Playlist objectTemp = (Playlist) em.find(Playlist.class, id);
 
         return objectTemp;
     }

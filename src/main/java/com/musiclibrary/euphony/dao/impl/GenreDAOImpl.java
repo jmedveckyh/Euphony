@@ -64,16 +64,13 @@ public class GenreDAOImpl implements DAO<Genre> {
     }
 
     @Override
-    public Genre getById(Class cls, Long id) {
+    public Genre getById(Long id) {
         
-        if (cls == null) {
-            throw new IllegalArgumentException("Class cannot be null.");
-        }
         if (id == null) {
             throw new IllegalArgumentException("Id cannot be null.");
         }
 
-        Genre objectTemp = (Genre) em.find(cls, id);
+        Genre objectTemp = (Genre) em.find(Genre.class, id);
 
         return objectTemp;
     }

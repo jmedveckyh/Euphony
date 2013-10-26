@@ -64,16 +64,13 @@ public class AlbumDAOImpl implements DAO<Album>{
     }
 
     @Override
-    public Album getById(Class cls, Long id) {
-        
-        if (cls == null) {
-            throw new IllegalArgumentException("Class cannot be null.");
-        }
+    public Album getById(Long id) {
+      
         if (id == null) {
             throw new IllegalArgumentException("Id cannot be null.");
         }
 
-        Album objectTemp = (Album) em.find(cls, id);
+        Album objectTemp = (Album) em.find(Album.class, id);
 
         return objectTemp;
     }

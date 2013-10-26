@@ -64,16 +64,13 @@ public class SongDAOImpl implements DAO<Song> {
     }
 
     @Override
-    public Song getById(Class cls, Long id) {
-        
-        if (cls == null) {
-            throw new IllegalArgumentException("Class cannot be null.");
-        }
+    public Song getById(Long id) {
+
         if (id == null) {
             throw new IllegalArgumentException("Id cannot be null.");
         }
 
-        Song objectTemp = (Song) em.find(cls, id);
+        Song objectTemp = (Song) em.find(Song.class, id);
 
         return objectTemp;
     }
