@@ -4,7 +4,7 @@
  */
 package com.musiclibrary.euphony.services.impl;
 
-import com.musiclibrary.euphony.dao.impl.SongDAOImpl;
+import com.musiclibrary.euphony.dao.SongDAO;
 import com.musiclibrary.euphony.dto.SongDTO;
 import com.musiclibrary.euphony.entities.Album;
 import com.musiclibrary.euphony.entities.Artist;
@@ -20,9 +20,9 @@ import java.util.List;
  */
 public class SongServiceImpl implements SongService{
     
-    private SongDAOImpl songDao;
+    private SongDAO songDao;
     
-    public void setDAO(SongDAOImpl songDao){
+    public void setDAO(SongDAO songDao){
         this.songDao=songDao;
     }
 

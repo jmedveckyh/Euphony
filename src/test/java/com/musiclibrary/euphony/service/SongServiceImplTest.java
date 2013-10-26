@@ -4,10 +4,18 @@
  */
 package com.musiclibrary.euphony.service;
 
+import com.musiclibrary.euphony.dao.SongDAO;
+import com.musiclibrary.euphony.services.SongService;
+import junit.framework.TestCase;
+
 /**
  *
  * @author Sebastian
  */
-public class SongServiceImplTest {
+public class SongServiceImplTest extends TestCase{
+    
+    private SongService service;
+    private SongDAO dao;
+
     
 }
