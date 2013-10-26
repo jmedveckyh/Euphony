@@ -8,7 +8,7 @@ import java.util.Map;
  * 
  * @author Tomas Smetanka #396209
  */
-public class PlaylistDTO {
+public class PlaylistDTO { 
     
     private Long id;
     

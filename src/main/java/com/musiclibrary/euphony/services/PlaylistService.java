@@ -21,6 +21,6 @@ public interface PlaylistService {
     
     PlaylistDTO getByName(String name);
     
-    List<PlaylistDTO> getBySong(SongDTO songDTO);
+    List<PlaylistDTO> getBySong(SongDTO songDTO); 
     
 }
