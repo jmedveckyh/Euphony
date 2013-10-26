@@ -4,7 +4,9 @@
  */
 package com.musiclibrary.euphony.util;
 
+import com.musiclibrary.euphony.dto.GenreDTO;
 import com.musiclibrary.euphony.dto.SongDTO;
+import com.musiclibrary.euphony.entities.Genre;
 import com.musiclibrary.euphony.entities.Song;
 
 /**
@@ -40,5 +42,25 @@ public class DTOMapper {
         songDto.setTrackNumber(song.getTrackNumber());
         songDto.setId(song.getId());
         return songDto;
+    }
+    
+    public static Genre toEntity(GenreDTO genreDto) {
+        if (genreDto == null) {
+            return null;
+        }
+        Genre genre = new Genre();
+        genre.setName(genreDto.getName());
+        genre.setId(genreDto.getId());
+        return genre;
+    }
+    
+    public static GenreDTO toDTO(Genre genre) {
+        if (genre == null) {
+            return null;
+        }
+        GenreDTO genreDTO = new GenreDTO();
+        genreDTO.setId(genre.getId());
+        genreDTO.setName(genre.getName());
+        return genreDTO;
     }
 }
