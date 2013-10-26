@@ -27,51 +27,51 @@ public class SongServiceImpl implements SongService{
     }
 
     @Override
-    public void createSong(SongDTO song) {
+    public void create(SongDTO song) {
         Song songEntity = DTOMapper.toEntity(song);
         songDao.create(songEntity);
         song.setId(songEntity.getId());
     }
 
     @Override
-    public void updateSong(SongDTO song) {
+    public void update(SongDTO song) {
         Song songEntity = DTOMapper.toEntity(song);
         songDao.update(songEntity);
         song = DTOMapper.toDTO(songEntity);
     }
 
     @Override
-    public void deleteSong(SongDTO song) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void delete(SongDTO song) {
+        songDao.delete(DTOMapper.toEntity(song));
     }
 
     @Override
-    public SongDTO get(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public SongDTO getById(Long id) {
+        return DTOMapper.toDTO(songDao.getById(id));
     }
-
-    @Override
-    public List<SongDTO> byTitle(String title) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     @Override
     public List<SongDTO> getAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<SongDTO> byGenre(Genre genre) {
+    public List<SongDTO> getByTitle(String title) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<SongDTO> byArtist(Artist artist) {
+    public List<SongDTO> getByGenre(Genre genre) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<SongDTO> byAlbum(Album album) {
+    public List<SongDTO> getByArtist(Artist artist) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<SongDTO> getByAlbum(Album album) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

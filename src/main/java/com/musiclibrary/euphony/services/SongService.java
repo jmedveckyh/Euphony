@@ -15,13 +15,13 @@ import java.util.List;
  * @author Sebastian Lazon
  */
 public interface SongService {
-    void createSong(SongDTO song);
-    void updateSong(SongDTO song);
-    void deleteSong(SongDTO song);
-    SongDTO get(Long id);
-    List<SongDTO> byTitle(String title);
+    void create(SongDTO song);
+    void update(SongDTO song);
+    void delete(SongDTO song);
+    SongDTO getById(Long id);
     List<SongDTO> getAll();
-    List<SongDTO> byGenre(Genre genre);
-    List<SongDTO> byArtist(Artist artist);
-    List<SongDTO> byAlbum(Album album);
+    List<SongDTO> getByTitle(String title);
+    List<SongDTO> getByGenre(Genre genre);
+    List<SongDTO> getByArtist(Artist artist);
+    List<SongDTO> getByAlbum(Album album);
 }
