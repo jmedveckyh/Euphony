@@ -85,7 +85,7 @@ public class GenreDAOImplTest {
     @Test(expected = IllegalArgumentException.class)
     public void testGetGenreWithNullBoth() {
         em.getTransaction().begin();
-        genreDAOImpl.getById(null, null);              //id and class are null
+        genreDAOImpl.getById(null);              //id and class are null
         em.getTransaction().commit();
         em.clear();
     }
@@ -93,7 +93,7 @@ public class GenreDAOImplTest {
     @Test(expected = IllegalArgumentException.class)
     public void testGetGenremWithNullId() {
         em.getTransaction().begin();
-        genreDAOImpl.getById(Genre.class, null);              //id is null
+        genreDAOImpl.getById(null);              //id is null
         em.getTransaction().commit();
         em.clear();
     }
@@ -101,7 +101,7 @@ public class GenreDAOImplTest {
     @Test(expected = IllegalArgumentException.class)
     public void testGetGenreWithNullClass() {
         em.getTransaction().begin();
-        genreDAOImpl.getById(null, new Long(100));              //class is null
+        genreDAOImpl.getById(new Long(100));              //class is null
         em.getTransaction().commit();
         em.clear();
     }
@@ -109,7 +109,7 @@ public class GenreDAOImplTest {
     @Test
     public void testGetGenreWithNotAssignedId() {
         em.getTransaction().begin();
-        Genre nullResult = genreDAOImpl.getById(Genre.class, new Long(100));              //getGenre with not assigned id, should return null
+        Genre nullResult = genreDAOImpl.getById(new Long(100));              //getGenre with not assigned id, should return null
         em.getTransaction().commit();
         em.clear();
         assertNull(nullResult);
@@ -131,7 +131,7 @@ public class GenreDAOImplTest {
         assertNotNull(expResult.getId());
         Long genreId = expResult.getId();
 
-        Genre result = genreDAOImpl.getById(Genre.class, genreId);              //correct
+        Genre result = genreDAOImpl.getById(genreId);              //correct
         assertDeepEquals(expResult, result);
     }
 
@@ -204,7 +204,7 @@ public class GenreDAOImplTest {
         em.getTransaction().begin();
         genreDAOImpl.update(updatedGenre);                //correct
         em.getTransaction().commit();
-        assertDeepEquals(updatedGenre, genreDAOImpl.getById(Genre.class, genre.getId()));
+        assertDeepEquals(updatedGenre, genreDAOImpl.getById(genre.getId()));
         em.clear();
 
     }

@@ -53,7 +53,7 @@ public class SongDAOImplTest extends TestCase {
 
         Long id = song.getId();
         assertNotNull(id);
-        Song song2 = songDAOImpl.getById(Song.class, id);
+        Song song2 = songDAOImpl.getById(id);
         assertDeepEquals(song, song2);
 
         em.clear();
@@ -361,7 +361,7 @@ public class SongDAOImplTest extends TestCase {
         em.getTransaction().begin();
         songDAOImpl.update(dalibomba);                //OK
         em.getTransaction().commit();
-        assertDeepEquals(dalibomba, songDAOImpl.getById(Song.class, blessed.getId()));
+        assertDeepEquals(dalibomba, songDAOImpl.getById(blessed.getId()));
         em.clear();
 
 
@@ -532,7 +532,7 @@ public class SongDAOImplTest extends TestCase {
         //test with null both
         em.getTransaction().begin();
         try {
-            songDAOImpl.getById(null, null);
+            songDAOImpl.getById(null);
             fail("both null get!");
         } catch (IllegalArgumentException ex) {
             //ok
@@ -543,7 +543,7 @@ public class SongDAOImplTest extends TestCase {
         //test with null id
         em.getTransaction().begin();
         try {
-            songDAOImpl.getById(Song.class, null);
+            songDAOImpl.getById(null);
             fail("id null get!");
         } catch (IllegalArgumentException ex) {
             //ok
@@ -553,7 +553,7 @@ public class SongDAOImplTest extends TestCase {
 
         //test id not assigned by db
         em.getTransaction().begin();
-        Song res = songDAOImpl.getById(Song.class, new Long(6543));
+        Song res = songDAOImpl.getById(new Long(6543));
         em.getTransaction().commit();
         assertNull(res);
 
@@ -565,7 +565,7 @@ public class SongDAOImplTest extends TestCase {
         assertNotNull(dalibomba.getId());
         Long songId = dalibomba.getId();
 
-        Song res1 = songDAOImpl.getById(Song.class, songId);
+        Song res1 = songDAOImpl.getById(songId);
         assertDeepEquals(dalibomba, res1);
         em.clear();
     }

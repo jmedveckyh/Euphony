@@ -86,7 +86,7 @@ public class ArtistDAOImplTest {
     @Test(expected = IllegalArgumentException.class)
     public void testGetArtistWithNullBoth() {
         em.getTransaction().begin();
-        artistDAOImpl.getById(null, null);              //id and class are null
+        artistDAOImpl.getById(null);              //id and class are null
         em.getTransaction().commit();
         em.clear();
     }
@@ -94,7 +94,7 @@ public class ArtistDAOImplTest {
     @Test(expected = IllegalArgumentException.class)
     public void testGetArtistmWithNullId() {
         em.getTransaction().begin();
-        artistDAOImpl.getById(Artist.class, null);              //id is null
+        artistDAOImpl.getById(null);              //id is null
         em.getTransaction().commit();
         em.clear();
     }
@@ -102,7 +102,7 @@ public class ArtistDAOImplTest {
     @Test(expected = IllegalArgumentException.class)
     public void testGetArtistWithNullClass() {
         em.getTransaction().begin();
-        artistDAOImpl.getById(null, new Long(100));              //class is null
+        artistDAOImpl.getById(new Long(100));              //class is null
         em.getTransaction().commit();
         em.clear();
     }
@@ -110,7 +110,7 @@ public class ArtistDAOImplTest {
     @Test
     public void testGetArtistWithNotAssignedId() {
         em.getTransaction().begin();
-        Artist nullResult = artistDAOImpl.getById(Artist.class, new Long(100));              //getArtist with not assigned id, should return null
+        Artist nullResult = artistDAOImpl.getById(new Long(100));              //getArtist with not assigned id, should return null
         em.getTransaction().commit();
         em.clear();
         assertNull(nullResult);
@@ -132,7 +132,7 @@ public class ArtistDAOImplTest {
         assertNotNull(expResult.getId());
         Long artistId = expResult.getId();
 
-        Artist result = artistDAOImpl.getById(Artist.class, artistId);              //correct
+        Artist result = artistDAOImpl.getById(artistId);              //correct
         assertDeepEquals(expResult, result);
     }
 
@@ -205,7 +205,7 @@ public class ArtistDAOImplTest {
         em.getTransaction().begin();
         artistDAOImpl.update(updatedArtist);                //correct
         em.getTransaction().commit();
-        assertDeepEquals(updatedArtist, artistDAOImpl.getById(Artist.class, artist.getId()));
+        assertDeepEquals(updatedArtist, artistDAOImpl.getById(artist.getId()));
         em.clear();
 
     }

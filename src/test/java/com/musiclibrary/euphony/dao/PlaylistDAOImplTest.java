@@ -132,7 +132,7 @@ public class PlaylistDAOImplTest {
         em.getTransaction().begin();
         playlistDAOImpl.update(playlistUpdated);
         em.getTransaction().commit();
-        assertDeepEquals(playlistUpdated, playlistDAOImpl.getById(Playlist.class, playlistR.getId()));
+        assertDeepEquals(playlistUpdated, playlistDAOImpl.getById(playlistR.getId()));
         em.clear();
     } 
     
@@ -208,7 +208,7 @@ public class PlaylistDAOImplTest {
         em.getTransaction().commit();
         em.clear();
         
-        if (playlistDAOImpl.getById(Playlist.class, id) != null) {
+        if (playlistDAOImpl.getById(id) != null) {
             throw new IllegalArgumentException("Delete failed.");
         }
         
@@ -278,13 +278,13 @@ public class PlaylistDAOImplTest {
         Long id = playlistR.getId();
         assertNotNull(id);
         
-        assertDeepEquals(playlistR, playlistDAOImpl.getById(Playlist.class, id));
+        assertDeepEquals(playlistR, playlistDAOImpl.getById(id));
     }
     
     @Test(expected = IllegalArgumentException.class)
     public void testGetByIdPlaylistWhithNoId() {
         em.getTransaction().begin();
-        playlistDAOImpl.getById(Playlist.class, null);
+        playlistDAOImpl.getById(null);
         em.getTransaction().commit();
         em.clear();
     }
@@ -292,7 +292,7 @@ public class PlaylistDAOImplTest {
     @Test(expected = IllegalArgumentException.class)
     public void testGetByIdPlaylistWhithNoCls() {
         em.getTransaction().begin();
-        playlistDAOImpl.getById(null, new Long(1));
+        playlistDAOImpl.getById(new Long(1));
         em.getTransaction().commit();
         em.clear();
     }
@@ -300,7 +300,7 @@ public class PlaylistDAOImplTest {
     @Test(expected = IllegalArgumentException.class)
     public void testGetByIdPlaylistWhithNotExistingCls() {        
         em.getTransaction().begin();
-        playlistDAOImpl.getById(PlaylistDAOImpl.class, new Long(1));
+        playlistDAOImpl.getById(new Long(1));
         em.getTransaction().commit();
         em.clear();
     }

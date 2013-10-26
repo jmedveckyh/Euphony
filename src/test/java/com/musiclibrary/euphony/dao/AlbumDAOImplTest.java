@@ -110,11 +110,11 @@ public class AlbumDAOImplTest extends TestCase {
         albumDAOImpl.create(album);
         em.getTransaction().commit();
         assertNotNull(album.getId());
-        Album album2 = albumDAOImpl.getById(Album.class, new Long(album.getId()));
+        Album album2 = albumDAOImpl.getById( new Long(album.getId()));
         assertEquals(album, album2);
         em.getTransaction().begin();
         try {
-            albumDAOImpl.getById(Album.class, null);
+            albumDAOImpl.getById(null);
             fail("Cant get null from db");
         } catch (IllegalArgumentException e) {
             //OK
@@ -202,7 +202,7 @@ public class AlbumDAOImplTest extends TestCase {
         em.getTransaction().begin();
         albumDAOImpl.update(album);
         em.getTransaction().commit();
-        Album album2 = albumDAOImpl.getById(Album.class, album.getId());
+        Album album2 = albumDAOImpl.getById(album.getId());
         assertEquals(album, album2);
     }
 
