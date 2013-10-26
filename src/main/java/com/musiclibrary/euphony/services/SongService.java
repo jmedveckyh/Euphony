@@ -19,7 +19,7 @@ public interface SongService {
     void updateSong(Song song);
     void deleteSong(Song song);
     Song get(Long id);
-    Song byTitle(String title);
+    List<Song> byTitle(String title);
     List<Song> getAll();
     List<Song> byGenre(Genre genre);
     List<Song> byArtist(Artist artist);
