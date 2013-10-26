@@ -1,16 +1,22 @@
 package com.musiclibrary.euphony.dao.impl;
 
 import com.musiclibrary.euphony.dao.DAO;
+import com.musiclibrary.euphony.dao.PlaylistDAO;
 import com.musiclibrary.euphony.entities.Playlist;
+import com.musiclibrary.euphony.entities.Song;
+import com.musiclibrary.euphony.util.Util;
+import java.util.Collections;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
- * 
+ * DAO implementation of Playlist.
  * 
  * @author Tomas Smetanka #396209
  */
-public class PlaylistDAOImpl implements DAO<Playlist> {
+public class PlaylistDAOImpl implements DAO<Playlist> , PlaylistDAO{
 
     @PersistenceContext
     private EntityManager em;
@@ -22,7 +28,7 @@ public class PlaylistDAOImpl implements DAO<Playlist> {
     @Override
     public void create(Playlist entity) {
         
-        checkPlaylist(entity);
+        Util.validatePlaylist(entity);
 
         if (entity.getId() != null) {
             throw new IllegalArgumentException("This playlist entity is already in databse.");
@@ -34,7 +40,7 @@ public class PlaylistDAOImpl implements DAO<Playlist> {
     @Override
     public void update(Playlist entity) {
         
-        checkPlaylist(entity);
+        Util.validatePlaylist(entity);
         
         if (entity.getId() == null) {
             throw new IllegalArgumentException("This playlist entity cannot have null id.");
@@ -49,7 +55,7 @@ public class PlaylistDAOImpl implements DAO<Playlist> {
     @Override
     public void delete(Playlist entity) {
         
-        checkPlaylist(entity);
+        Util.validatePlaylist(entity);
 
         if (entity.getId() == null) {
             throw new IllegalArgumentException("This playlist entity cannot have null id.");
@@ -75,16 +81,36 @@ public class PlaylistDAOImpl implements DAO<Playlist> {
         return objectTemp;
     }
 
-    public static void checkPlaylist(Playlist playlist) {
-        if (playlist == null) {
-            throw new IllegalArgumentException("Playlist cannot be null.");
+    @Override
+    public Playlist getByName(String name) {
+        
+        if(name == null) {
+            throw new IllegalArgumentException("Name cannot be null.");
         }
-        if (playlist.getName() == null) {
-            throw new IllegalArgumentException("Playlist's name is null.");
+        
+        Query q = em.createQuery("FROM Playlist WHERE name=:name");
+        q.setParameter("name", name);
+        Playlist playlist = (Playlist) q.getSingleResult();
+
+        return playlist;
+        
+    }
+
+    @Override
+    public List<Playlist> getBySong(Song song) {
+        
+        Util.validateSong(song);
+        
+        if(song.getId() == null) {
+            throw new IllegalArgumentException("This song entity cannot have null id.");
         }
-        if ("".equals(playlist.getName())) {
-            throw new IllegalArgumentException("Playlist's name is empty.");
-        }
+        
+        Query q = em.createQuery("FROM Playlist where song=:song");
+        q.setParameter("song", song);
+        List<Playlist> playlists = q.getResultList();
+        
+        return Collections.unmodifiableList(playlists);
+        
     }
 }
 

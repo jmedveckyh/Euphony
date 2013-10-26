@@ -14,8 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Sebastian
+ * DTO to Entity and Entity to DTO mapper.
+ * 
+ * @author Everyone
  */
 public class DTOMapper {
 
@@ -54,6 +55,7 @@ public class DTOMapper {
     }
 
     public static List<SongDTO> toDTO(List<Song> songs) {
+        
         List<SongDTO> songsDTO = new ArrayList();
         for (Song song : songs) {
             songsDTO.add(DTOMapper.toDTO(song));
@@ -84,10 +86,11 @@ public class DTOMapper {
         return genreDTO;
 
     }
-    
-    public static List<GenreDTO> genresListToDTO(List<Genre> genres){
+
+    public static List<GenreDTO> genresListToDTO(List<Genre> genres) {
+        
         List<GenreDTO> genresDTO = new ArrayList();
-        for(Genre genre : genres){
+        for (Genre genre : genres) {
             genresDTO.add(DTOMapper.toDTO(genre));
         }
         return genresDTO;
@@ -119,7 +122,18 @@ public class DTOMapper {
 
     }
 
+    public static List<PlaylistDTO> playlistListToDTO(List<Playlist> playlists) {
+
+        List<PlaylistDTO> playlistsDTO = new ArrayList();
+        for (Playlist playlist : playlists) {
+            playlistsDTO.add(DTOMapper.toDTO(playlist));
+        }
+        return playlistsDTO;
+
+    }
+
     public static Album toEntity(AlbumDTO albumDTO) {
+        
         if (albumDTO == null) {
             return null;
         }
@@ -130,9 +144,11 @@ public class DTOMapper {
         album.setSongs(albumDTO.getSongs());
         album.setTitle(albumDTO.getTitle());
         return album;
+        
     }
 
     public static AlbumDTO toDTO(Album album) {
+        
         if (album == null) {
             return null;
         }
@@ -143,9 +159,11 @@ public class DTOMapper {
         albumDTO.setSongs(album.getSongs());
         albumDTO.setTitle(album.getTitle());
         return albumDTO;
-    }
-    public static Artist toEntity(ArtistDTO artistDto) {
         
+    }
+
+    public static Artist toEntity(ArtistDTO artistDto) {
+
         if (artistDto == null) {
             return null;
         }
@@ -153,11 +171,11 @@ public class DTOMapper {
         artist.setName(artistDto.getName());
         artist.setId(artistDto.getId());
         return artist;
-        
+
     }
 
     public static ArtistDTO toDTO(Artist artist) {
-        
+
         if (artist == null) {
             return null;
         }
@@ -165,14 +183,16 @@ public class DTOMapper {
         artistDTO.setId(artist.getId());
         artistDTO.setName(artist.getName());
         return artistDTO;
-    
+
     }
-    
-    public static List<ArtistDTO> artistsListToDTO(List<Artist> artists){
+
+    public static List<ArtistDTO> artistsListToDTO(List<Artist> artists) {
+        
         List<ArtistDTO> artistsDTO = new ArrayList();
-        for(Artist artist : artists){
+        for (Artist artist : artists) {
             artistsDTO.add(DTOMapper.toDTO(artist));
         }
         return artistsDTO;
+        
     }
 }
