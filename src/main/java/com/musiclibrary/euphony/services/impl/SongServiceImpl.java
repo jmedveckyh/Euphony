@@ -72,7 +72,7 @@ public class SongServiceImpl implements SongService{
 
     @Override
     public List<SongDTO> getByAlbum(Album album) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return DTOMapper.toDTO(songDao.getByAlbum(album));
     }
     
 }
