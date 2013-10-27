@@ -41,13 +41,14 @@ public class Song implements Serializable {
 
     public Song(){ }
 
-    public Song(String title, int bitrate, int trackNumber, String comment, Genre genre, Album album) {
+    public Song(String title, int bitrate, int trackNumber, String comment, Genre genre, Album album, Artist artist) {
         this.title = title;
         this.bitrate = bitrate;
         this.trackNumber = trackNumber;
         this.comment = comment;
         this.genre = genre;
         this.album = album;
+        this.artist = artist;
     }
     
     public Long getId() {
