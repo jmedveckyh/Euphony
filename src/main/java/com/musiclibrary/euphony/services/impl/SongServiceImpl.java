@@ -52,27 +52,27 @@ public class SongServiceImpl implements SongService{
     
     @Override
     public List<SongDTO> getAll() {
-        return DTOMapper.toDTO(songDao.getAll());
+        return DTOMapper.songsListToDTO(songDao.getAll());
     }
 
     @Override
     public List<SongDTO> getByTitle(String title) {
-        return DTOMapper.toDTO(songDao.getByTitle(title));
+        return DTOMapper.songsListToDTO(songDao.getByTitle(title));
     }
 
     @Override
     public List<SongDTO> getByGenre(Genre genre) {
-        return DTOMapper.toDTO(songDao.getByGenre(genre));
+        return DTOMapper.songsListToDTO(songDao.getByGenre(genre));
     }
 
     @Override
     public List<SongDTO> getByArtist(Artist artist) {
-        return DTOMapper.toDTO(songDao.getByArtist(artist));
+        return DTOMapper.songsListToDTO(songDao.getByArtist(artist));
     }
 
     @Override
     public List<SongDTO> getByAlbum(Album album) {
-        return DTOMapper.toDTO(songDao.getByAlbum(album));
+        return DTOMapper.songsListToDTO(songDao.getByAlbum(album));
     }
     
 }

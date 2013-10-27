@@ -54,13 +54,22 @@ public class DTOMapper {
 
     }
 
-    public static List<SongDTO> toDTO(List<Song> songs) {
+    public static List<SongDTO> songsListToDTO(List<Song> songs) {
         
         List<SongDTO> songsDTO = new ArrayList();
         for (Song song : songs) {
             songsDTO.add(DTOMapper.toDTO(song));
         }
         return songsDTO;
+    }
+    
+    public static List<Song> songsListToEntity(List<SongDTO> songsDto) {
+        
+        List<Song> songs = new ArrayList();
+        for (SongDTO songDto : songsDto) {
+            songs.add(DTOMapper.toEntity(songDto));
+        }
+        return songs;
     }
 
     public static Genre toEntity(GenreDTO genreDto) {
