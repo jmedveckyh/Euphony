@@ -4,10 +4,10 @@
  */
 package com.musiclibrary.euphony.services;
 
+import com.musiclibrary.euphony.dto.AlbumDTO;
+import com.musiclibrary.euphony.dto.ArtistDTO;
+import com.musiclibrary.euphony.dto.GenreDTO;
 import com.musiclibrary.euphony.dto.SongDTO;
-import com.musiclibrary.euphony.entities.Album;
-import com.musiclibrary.euphony.entities.Artist;
-import com.musiclibrary.euphony.entities.Genre;
 import java.util.List;
 
 /**
@@ -21,7 +21,7 @@ public interface SongService {
     SongDTO getById(Long id);
     List<SongDTO> getAll();
     List<SongDTO> getByTitle(String title);
-    List<SongDTO> getByGenre(Genre genre);
-    List<SongDTO> getByArtist(Artist artist);
-    List<SongDTO> getByAlbum(Album album);
+    List<SongDTO> getByGenre(GenreDTO genre);
+    List<SongDTO> getByArtist(ArtistDTO artist);
+    List<SongDTO> getByAlbum(AlbumDTO album);
 }

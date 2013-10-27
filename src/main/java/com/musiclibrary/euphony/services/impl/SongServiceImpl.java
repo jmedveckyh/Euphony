@@ -5,10 +5,10 @@
 package com.musiclibrary.euphony.services.impl;
 
 import com.musiclibrary.euphony.dao.SongDAO;
+import com.musiclibrary.euphony.dto.AlbumDTO;
+import com.musiclibrary.euphony.dto.ArtistDTO;
+import com.musiclibrary.euphony.dto.GenreDTO;
 import com.musiclibrary.euphony.dto.SongDTO;
-import com.musiclibrary.euphony.entities.Album;
-import com.musiclibrary.euphony.entities.Artist;
-import com.musiclibrary.euphony.entities.Genre;
 import com.musiclibrary.euphony.entities.Song;
 import com.musiclibrary.euphony.services.SongService;
 import com.musiclibrary.euphony.util.DTOMapper;
@@ -61,18 +61,18 @@ public class SongServiceImpl implements SongService{
     }
 
     @Override
-    public List<SongDTO> getByGenre(Genre genre) {
-        return DTOMapper.songsListToDTO(songDao.getByGenre(genre));
+    public List<SongDTO> getByGenre(GenreDTO genre) {
+        return DTOMapper.songsListToDTO(songDao.getByGenre(DTOMapper.toEntity(genre)));
     }
 
     @Override
-    public List<SongDTO> getByArtist(Artist artist) {
-        return DTOMapper.songsListToDTO(songDao.getByArtist(artist));
+    public List<SongDTO> getByArtist(ArtistDTO artist) {
+        return DTOMapper.songsListToDTO(songDao.getByArtist(DTOMapper.toEntity(artist)));
     }
 
     @Override
-    public List<SongDTO> getByAlbum(Album album) {
-        return DTOMapper.songsListToDTO(songDao.getByAlbum(album));
+    public List<SongDTO> getByAlbum(AlbumDTO album) {
+        return DTOMapper.songsListToDTO(songDao.getByAlbum(DTOMapper.toEntity(album)));
     }
     
 }
