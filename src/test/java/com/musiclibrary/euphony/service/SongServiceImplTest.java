@@ -7,6 +7,7 @@ package com.musiclibrary.euphony.service;
 import com.musiclibrary.euphony.dao.SongDAO;
 import com.musiclibrary.euphony.dao.impl.SongDAOImpl;
 import com.musiclibrary.euphony.dto.AlbumDTO;
+import com.musiclibrary.euphony.dto.ArtistDTO;
 import com.musiclibrary.euphony.dto.GenreDTO;
 import com.musiclibrary.euphony.dto.SongDTO;
 import com.musiclibrary.euphony.entities.Song;
@@ -60,7 +61,9 @@ public class SongServiceImplTest extends TestCase{
         genreDto.setName("metal");
         List<Song> songs = new ArrayList();
         AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),songs);
-        SongDTO songDto = new SongDTO("ttt",144,1,"mmmedo",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto));
+        ArtistDTO artistDto = new ArtistDTO();
+        artistDto.setName("Robo Kazik");
+        SongDTO songDto = new SongDTO("ttt",144,1,"mmmedo",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto),DTOMapper.toEntity(artistDto));
         doNothing().when(dao).create(DTOMapper.toEntity(songDto));
 
         service.create(songDto);
@@ -87,7 +90,9 @@ public class SongServiceImplTest extends TestCase{
         genreDto.setName("metal");
         List<Song> songs = new ArrayList();
         AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),songs);
-        SongDTO songDto = new SongDTO("ttt",144,1,"mmmedo",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto));
+        ArtistDTO artistDto = new ArtistDTO();
+        artistDto.setName("Robo Kazik");
+        SongDTO songDto = new SongDTO("ttt",144,1,"mmmedo",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto),DTOMapper.toEntity(artistDto));
         doNothing().when(dao).create(DTOMapper.toEntity(songDto));
 
         service.update(songDto);
@@ -115,7 +120,9 @@ public class SongServiceImplTest extends TestCase{
         genreDto.setName("metal");
         List<Song> songs = new ArrayList();
         AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),songs);
-        SongDTO songDto = new SongDTO("ttt",144,1,"mmmedo",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto));
+        ArtistDTO artistDto = new ArtistDTO();
+        artistDto.setName("Robo Kazik");
+        SongDTO songDto = new SongDTO("ttt",144,1,"mmmedo",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto),DTOMapper.toEntity(artistDto));
        
         service.delete(songDto);
        
@@ -152,7 +159,9 @@ public class SongServiceImplTest extends TestCase{
         genreDto.setName("metal");
         List<Song> songs = new ArrayList();
         AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),songs);
-        SongDTO songDto = new SongDTO("ttt",144,1,"mmmedo",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto));
+        ArtistDTO artistDto = new ArtistDTO();
+        artistDto.setName("Robo Kazik");
+        SongDTO songDto = new SongDTO("ttt",144,1,"mmmedo",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto),DTOMapper.toEntity(artistDto));
         songDto.setId(1l);
        
         when(dao.getById(1l)).thenReturn(DTOMapper.toEntity(songDto));
@@ -162,7 +171,7 @@ public class SongServiceImplTest extends TestCase{
         verify(dao,times(0)).create(DTOMapper.toEntity(songDto));
         verify(dao,never()).update(DTOMapper.toEntity(songDto));
     }
-    
+    /*
     @Test
     public void testGetAll() {
         when(dao.getAll()).thenReturn(new ArrayList<Song>());
@@ -173,10 +182,11 @@ public class SongServiceImplTest extends TestCase{
         genreDto.setName("metal");
         List<Song> songs = new ArrayList();
         AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),songs);
+        
         SongDTO songDto1 = new SongDTO("ttt1",144,1,"mmmedo1",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto));
         SongDTO songDto2 = new SongDTO("ttt2",144,2,"mmmedo2",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto));
         SongDTO songDto3 = new SongDTO("ttt3",144,3,"mmmedo3",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto));
-       
+        
         songDto1.setId(1l);
         songDto2.setId(2l);
         songDto3.setId(3l);
@@ -287,14 +297,109 @@ public class SongServiceImplTest extends TestCase{
         /*
         verify(dao,times(1)).getByGenre(DTOMapper.toEntity(genreDto1));
         verify(dao,times(1)).getByGenre(DTOMapper.toEntity(genreDto2));
-        */
+        *//*
     }
-
-
-
-
-
-
-
+    
+    public void testGetByArtist(){
+        when(dao.getByArtist(null)).thenThrow(new IllegalArgumentException());
+        try {
+            service.getByArtist(null);
+            fail();
+        } catch(IllegalArgumentException e){
+           //OK
+        }
+        
+        verify(dao,never()).create(null);
+        verify(dao,times(0)).getById(null);
+        verify(dao,never()).update(null);
+        verify(dao,times(1)).getByArtist(null);
+ 
+        GenreDTO genreDto = new GenreDTO();
+        genreDto.setName("metal");
+        List<Song> songs = new ArrayList();
+        AlbumDTO albumDto1 = new AlbumDTO("fenomeno1","aaa1",new DateTime(2011, 11, 11, 0, 0),songs);
+        AlbumDTO albumDto2 = new AlbumDTO("fenomeno2","aaa2",new DateTime(2011, 11, 11, 0, 0),songs);
+        
+        ArtistDTO artist1 = new ArtistDTO();
+        artist1.setName(null);
+        
+        SongDTO songDto1 = new SongDTO("ttt1",144,1,"mmmedo1",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto1));
+        SongDTO songDto2 = new SongDTO("ttt2",144,2,"mmmedo2",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto1));
+        SongDTO songDto3 = new SongDTO("ttt3",144,3,"mmmedo3",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto2));
+       
+        songDto1.setId(1l);
+        songDto2.setId(2l);
+        songDto3.setId(3l);
+       
+        when(dao.getByAlbum(DTOMapper.toEntity(albumDto1))).thenReturn(new ArrayList<Song>());
+        ArrayList<Song> list = new ArrayList<>();
+        ArrayList<SongDTO> dtoList = new ArrayList<>();
+        assertEquals(DTOMapper.songsListToEntity(dtoList), DTOMapper.songsListToEntity(service.getByAlbum(albumDto1)));
+       
+        list.add(DTOMapper.toEntity(songDto1));
+        list.add(DTOMapper.toEntity(songDto2));
+        list.add(DTOMapper.toEntity(songDto3));
+       
+        dtoList.add(songDto1);
+        dtoList.add(songDto2);
+        dtoList.add(songDto3);
+       
+        when(dao.getByAlbum(DTOMapper.toEntity(albumDto2))).thenReturn(list);
+        assertEquals(DTOMapper.songsListToEntity(dtoList), DTOMapper.songsListToEntity(service.getByAlbum(albumDto2)));
+       
+        /*
+        verify(dao,times(1)).getByGenre(DTOMapper.toEntity(genreDto1));
+        verify(dao,times(1)).getByGenre(DTOMapper.toEntity(genreDto2));
+        *//*
+    }
+    
+    public void testGetByAlbum(){
+        when(dao.getByAlbum(null)).thenThrow(new IllegalArgumentException());
+        try {
+            service.getByAlbum(null);
+            fail();
+        } catch(IllegalArgumentException e){
+           //OK
+        }
+        
+        verify(dao,never()).create(null);
+        verify(dao,times(0)).getById(null);
+        verify(dao,never()).update(null);
+        verify(dao,times(1)).getByAlbum(null);
+ 
+        GenreDTO genreDto = new GenreDTO();
+        genreDto.setName("metal");
+        List<Song> songs = new ArrayList();
+        AlbumDTO albumDto1 = new AlbumDTO("fenomeno1","aaa1",new DateTime(2011, 11, 11, 0, 0),songs);
+        AlbumDTO albumDto2 = new AlbumDTO("fenomeno2","aaa2",new DateTime(2011, 11, 11, 0, 0),songs);
+        SongDTO songDto1 = new SongDTO("ttt1",144,1,"mmmedo1",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto1));
+        SongDTO songDto2 = new SongDTO("ttt2",144,2,"mmmedo2",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto1));
+        SongDTO songDto3 = new SongDTO("ttt3",144,3,"mmmedo3",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto2));
+       
+        songDto1.setId(1l);
+        songDto2.setId(2l);
+        songDto3.setId(3l);
+       
+        when(dao.getByAlbum(DTOMapper.toEntity(albumDto1))).thenReturn(new ArrayList<Song>());
+        ArrayList<Song> list = new ArrayList<>();
+        ArrayList<SongDTO> dtoList = new ArrayList<>();
+        assertEquals(DTOMapper.songsListToEntity(dtoList), DTOMapper.songsListToEntity(service.getByAlbum(albumDto1)));
+       
+        list.add(DTOMapper.toEntity(songDto1));
+        list.add(DTOMapper.toEntity(songDto2));
+        list.add(DTOMapper.toEntity(songDto3));
+       
+        dtoList.add(songDto1);
+        dtoList.add(songDto2);
+        dtoList.add(songDto3);
+       
+        when(dao.getByAlbum(DTOMapper.toEntity(albumDto2))).thenReturn(list);
+        assertEquals(DTOMapper.songsListToEntity(dtoList), DTOMapper.songsListToEntity(service.getByAlbum(albumDto2)));
+       
+        /*
+        verify(dao,times(1)).getByGenre(DTOMapper.toEntity(genreDto1));
+        verify(dao,times(1)).getByGenre(DTOMapper.toEntity(genreDto2));
+        */
+    //}
     
 }

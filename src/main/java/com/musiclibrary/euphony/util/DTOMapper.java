@@ -33,6 +33,7 @@ public class DTOMapper {
         song.setTitle(songDto.getTitle());
         song.setTrackNumber(songDto.getTrackNumber());
         song.setId(songDto.getId());
+        song.setArtist(songDto.getArtist());
         return song;
 
     }
@@ -50,6 +51,7 @@ public class DTOMapper {
         songDto.setTitle(song.getTitle());
         songDto.setTrackNumber(song.getTrackNumber());
         songDto.setId(song.getId());
+        songDto.setArtist(song.getArtist());
         return songDto;
 
     }

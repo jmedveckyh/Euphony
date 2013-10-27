@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import org.hibernate.annotations.Cascade;
 
 /**
  * 
@@ -36,6 +35,9 @@ public class Song implements Serializable {
     
     @OneToOne(cascade = CascadeType.ALL)
     private Album album;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    private Artist artist;
 
     public Song(){ }
 
@@ -103,6 +105,14 @@ public class Song implements Serializable {
     public void setAlbum(Album album) {
         this.album = album;
     }
+    
+    public Artist getArtist() {
+        return artist;
+    }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
+    }
 
     @Override
     public int hashCode() {
@@ -128,7 +138,7 @@ public class Song implements Serializable {
 
     @Override
     public String toString() {
-        return "Song{" + "id=" + id + ", title=" + title + ", bitrate=" + bitrate + ", trackNumber=" + trackNumber + ", comment=" + comment + ", genre=" + genre + ", album=" + album + '}';
+        return "Song{" + "id=" + id + ", title=" + title + ", bitrate=" + bitrate + ", trackNumber=" + trackNumber + ", comment=" + comment + ", genre=" + genre + ", album=" + album + ", artist=" + artist + '}';
     }
     
 }

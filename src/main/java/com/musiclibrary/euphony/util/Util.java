@@ -82,6 +82,9 @@ public class Util {
         if (song.getAlbum() == null) {
             throw new IllegalArgumentException("Song's album cannot be null.");
         }
+        if (song.getArtist() == null) {
+            throw new IllegalArgumentException("Song's artist cannot be null.");
+        }
         if (song.getBitrate() < 1 || song.getBitrate() > 2500) {
             throw new IllegalArgumentException("Song's bitrate must be between 1 and 2500.");
         }

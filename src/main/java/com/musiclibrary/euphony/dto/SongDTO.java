@@ -5,6 +5,7 @@
 package com.musiclibrary.euphony.dto;
 
 import com.musiclibrary.euphony.entities.Album;
+import com.musiclibrary.euphony.entities.Artist;
 import com.musiclibrary.euphony.entities.Genre;
 
 /**
@@ -20,16 +21,18 @@ public class SongDTO{
     private String comment;
     private Genre genre;
     private Album album;
+    private Artist artist;
 
     public SongDTO(){ }
 
-    public SongDTO(String title, int bitrate, int trackNumber, String comment, Genre genre, Album album) {
+    public SongDTO(String title, int bitrate, int trackNumber, String comment, Genre genre, Album album, Artist artist) {
         this.title = title;
         this.bitrate = bitrate;
         this.trackNumber = trackNumber;
         this.comment = comment;
         this.genre = genre;
         this.album = album;
+        this.artist = artist;
     }
     
     public Long getId() {
@@ -86,5 +89,13 @@ public class SongDTO{
 
     public void setAlbum(Album album) {
         this.album = album;
+    }
+    
+    public Artist getArtist() {
+        return artist;
+    }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
     }
 }
