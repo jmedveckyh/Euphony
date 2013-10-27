@@ -248,29 +248,30 @@ public class SongServiceImplTest extends TestCase{
         } catch(IllegalArgumentException e){
            //OK
         }
-       
+        
+        verify(dao,never()).create(null);
+        verify(dao,times(0)).getById(null);
+        verify(dao,never()).update(null);
+        verify(dao,times(1)).getByGenre(null);
+ 
         GenreDTO genreDto1 = new GenreDTO();
         genreDto1.setName("mental");
         GenreDTO genreDto2 = new GenreDTO();
         genreDto2.setName("HOP-HOP");
-        GenreDTO genreDto3 = new GenreDTO();
-        genreDto3.setName("shitstep");
         List<Song> songs = new ArrayList();
         AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),songs);
         SongDTO songDto1 = new SongDTO("ttt1",144,1,"mmmedo1",DTOMapper.toEntity(genreDto1),DTOMapper.toEntity(albumDto));
         SongDTO songDto2 = new SongDTO("ttt2",144,2,"mmmedo2",DTOMapper.toEntity(genreDto2),DTOMapper.toEntity(albumDto));
-        SongDTO songDto3 = new SongDTO("ttt3",144,3,"mmmedo3",DTOMapper.toEntity(genreDto3),DTOMapper.toEntity(albumDto));
-        SongDTO songDto4 = new SongDTO("ttt4",144,3,"mmmedo4",DTOMapper.toEntity(genreDto2),DTOMapper.toEntity(albumDto));
+        SongDTO songDto3 = new SongDTO("ttt3",144,3,"mmmedo3",DTOMapper.toEntity(genreDto1),DTOMapper.toEntity(albumDto));
        
         songDto1.setId(1l);
         songDto2.setId(2l);
         songDto3.setId(3l);
-        songDto3.setId(4l);
        
-        when(dao.getByGenre(DTOMapper.toEntity(genreDto2))).thenReturn(new ArrayList<Song>());
+        when(dao.getByGenre(DTOMapper.toEntity(genreDto1))).thenReturn(new ArrayList<Song>());
         ArrayList<Song> list = new ArrayList<>();
         ArrayList<SongDTO> dtoList = new ArrayList<>();
-        assertEquals(DTOMapper.songsListToEntity(dtoList), DTOMapper.songsListToEntity(service.getByGenre(genreDto2)));
+        assertEquals(DTOMapper.songsListToEntity(dtoList), DTOMapper.songsListToEntity(service.getByGenre(genreDto1)));
        
         list.add(DTOMapper.toEntity(songDto1));
         list.add(DTOMapper.toEntity(songDto2));
@@ -280,12 +281,13 @@ public class SongServiceImplTest extends TestCase{
         dtoList.add(songDto2);
         dtoList.add(songDto3);
        
-        when(dao.getByTitle("Name2")).thenReturn(list);
-        assertEquals(DTOMapper.songsListToEntity(dtoList), DTOMapper.songsListToEntity(service.getByTitle("Name2")));
+        when(dao.getByGenre(DTOMapper.toEntity(genreDto2))).thenReturn(list);
+        assertEquals(DTOMapper.songsListToEntity(dtoList), DTOMapper.songsListToEntity(service.getByGenre(genreDto2)));
        
-        verify(dao,times(1)).getByTitle(null);
-        verify(dao,times(1)).getByTitle("Name5");
-        verify(dao,times(1)).getByTitle("Name2");
+        /*
+        verify(dao,times(1)).getByGenre(DTOMapper.toEntity(genreDto1));
+        verify(dao,times(1)).getByGenre(DTOMapper.toEntity(genreDto2));
+        */
     }
 
 
