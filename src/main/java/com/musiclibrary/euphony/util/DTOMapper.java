@@ -106,6 +106,15 @@ public class DTOMapper {
         }
         return genresDTO;
     }
+    
+    public static List<Genre> genresListToEntity(List<GenreDTO> genresDto) {
+        
+        List<Genre> genres = new ArrayList();
+        for (GenreDTO genreDto : genresDto) {
+            genres.add(DTOMapper.toEntity(genreDto));
+        }
+        return genres;
+    }
 
     public static Playlist toEntity(PlaylistDTO playlistDto) {
 
@@ -205,5 +214,14 @@ public class DTOMapper {
         }
         return artistsDTO;
         
+    }
+    
+    public static List<Artist> artistsListToEntity(List<ArtistDTO> artistsDto) {
+        
+        List<Artist> artists = new ArrayList();
+        for (ArtistDTO artistDto : artistsDto) {
+            artists.add(DTOMapper.toEntity(artistDto));
+        }
+        return artists;
     }
 }

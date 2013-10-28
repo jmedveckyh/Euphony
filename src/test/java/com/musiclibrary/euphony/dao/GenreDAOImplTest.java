@@ -246,9 +246,11 @@ public class GenreDAOImplTest {
         em.clear();
         
         em.getTransaction().begin();
-        genreDAOImpl.delete(genre);           
+        genreDAOImpl.delete(genre);  
         em.getTransaction().commit();
         em.clear();
+        
+        assertNull(genre.getId());
     }
 
     private void assertDeepEquals(Genre expected, Genre actual) {

@@ -12,6 +12,10 @@ public class ArtistDTO {
     public ArtistDTO() {
     }
 
+    public ArtistDTO(String name) {
+        this.name = name;
+    }
+
     public ArtistDTO(Long id, String name) {
         this.id = id;
         this.name = name;

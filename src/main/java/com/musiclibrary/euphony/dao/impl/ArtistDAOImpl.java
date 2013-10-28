@@ -1,6 +1,6 @@
 package com.musiclibrary.euphony.dao.impl;
 
-import com.musiclibrary.euphony.dao.DAO;
+import com.musiclibrary.euphony.dao.ArtistDAO;
 import com.musiclibrary.euphony.entities.Artist;
 import com.musiclibrary.euphony.util.Util;
 import java.util.Collections;
@@ -14,7 +14,7 @@ import javax.persistence.Query;
  *
  * @author Jakub Medvecký-Heretik #396373
  */
-public class ArtistDAOImpl implements DAO<Artist> {
+public class ArtistDAOImpl implements ArtistDAO {
 
     @PersistenceContext
     private EntityManager em;
@@ -79,12 +79,14 @@ public class ArtistDAOImpl implements DAO<Artist> {
         return artist;
     }
 
+    @Override
     public List<Artist> getAll() {
         Query q = em.createQuery("from Artist");
         List<Artist> artists = q.getResultList();
         return Collections.unmodifiableList(artists);
     }
 
+    @Override
     public Artist getByName(String name) {
         if (name == null) {
             throw new IllegalArgumentException("Title is NULL");

@@ -250,6 +250,8 @@ public class ArtistDAOImplTest {
         artistDAOImpl.delete(artist);           
         em.getTransaction().commit();
         em.clear();
+        
+        assertNull(artist.getId());
     }
 
     private void assertDeepEquals(Artist expected, Artist actual) {

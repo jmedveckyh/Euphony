@@ -1,6 +1,6 @@
 package com.musiclibrary.euphony.dao.impl;
 
-import com.musiclibrary.euphony.dao.DAO;
+import com.musiclibrary.euphony.dao.GenreDAO;
 import com.musiclibrary.euphony.entities.Genre;
 import com.musiclibrary.euphony.util.Util;
 import java.util.Collections;
@@ -14,7 +14,7 @@ import javax.persistence.Query;
  *
  * @author Jakub Medvecký-Heretik #396373
  */
-public class GenreDAOImpl implements DAO<Genre> {
+public class GenreDAOImpl implements GenreDAO {
 
     @PersistenceContext
     private EntityManager em;
@@ -79,12 +79,14 @@ public class GenreDAOImpl implements DAO<Genre> {
         return genre;
     }
 
+    @Override
     public List<Genre> getAll() {
         Query q = em.createQuery("from Genre");
         List<Genre> genres = q.getResultList();
         return Collections.unmodifiableList(genres);
     }
 
+    @Override
     public Genre getByName(String name) {
         if (name == null) {
             throw new IllegalArgumentException("Title is NULL");
