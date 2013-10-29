@@ -14,12 +14,16 @@ public class PlaylistDTO {
     
     private String name;
     
-    private Map<Integer, Song> songs;
+    private Map<Integer, SongDTO> songs;
 
     public PlaylistDTO() {
     }
+
+    public PlaylistDTO(String name) {
+        this.name = name;
+    }
     
-    public PlaylistDTO(String name, Map<Integer, Song> songs) {
+    public PlaylistDTO(String name, Map<Integer, SongDTO> songs) {
         this.name = name;
         this.songs = songs;
     }
@@ -40,11 +44,11 @@ public class PlaylistDTO {
         this.name = name;
     }
 
-    public Map<Integer, Song> getSongs() {
+    public Map<Integer, SongDTO> getSongs() {
         return songs;
     }
 
-    public void setSongs(Map<Integer, Song> songs) {
+    public void setSongs(Map<Integer, SongDTO> songs) {
         this.songs = songs;
     }
     
