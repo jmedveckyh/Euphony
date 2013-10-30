@@ -6,6 +6,7 @@ import com.musiclibrary.euphony.util.Util;
 import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -93,7 +94,11 @@ public class ArtistDAOImpl implements ArtistDAO {
         }
         Query q = em.createQuery("from Artist where name=:name");
         q.setParameter("name", name);
-        Artist artist = (Artist) q.getSingleResult();
-        return artist;
+        try {
+            Artist artist = (Artist) q.getSingleResult();
+            return artist;
+        }catch (NoResultException ex){
+            return null;
+        }
     }
 }

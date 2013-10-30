@@ -2,10 +2,11 @@ package com.musiclibrary.euphony.dao;
 
 import com.musiclibrary.euphony.dao.impl.ArtistDAOImpl;
 import com.musiclibrary.euphony.entities.Artist;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -84,23 +85,15 @@ public class ArtistDAOImplTest {
      * Test of getArtistById method, of class artistDAOImpl with wrong attributes.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void testGetArtistWithNullBoth() {
+    public void testGetArtistByIdWithNull() {
         em.getTransaction().begin();
         artistDAOImpl.getById(null);              //id and class are null
         em.getTransaction().commit();
         em.clear();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetArtistmWithNullId() {
-        em.getTransaction().begin();
-        artistDAOImpl.getById(null);              //id is null
-        em.getTransaction().commit();
-        em.clear();
-    }
-
     @Test
-    public void testGetArtistWithNotAssignedId() {
+    public void testGetArtistByIdWithNotAssignedId() {
         em.getTransaction().begin();
         Artist nullResult = artistDAOImpl.getById(new Long(100));              //getArtist with not assigned id, should return null
         em.getTransaction().commit();
@@ -250,10 +243,81 @@ public class ArtistDAOImplTest {
         artistDAOImpl.delete(artist);           
         em.getTransaction().commit();
         em.clear();
-        
-        assertNull(artist.getId());
     }
 
+    /**
+     * Test of getArtistByName method, of class artistDAOImpl with wrong attributes.
+     */
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetArtistByNameWithNull() {
+        em.getTransaction().begin();
+        artistDAOImpl.getByName(null);              //name is null
+        em.getTransaction().commit();
+        em.clear();
+    }
+    
+    @Test
+    public void testGetArtistByNameWithNotAssignedName() {
+        em.getTransaction().begin();
+        Artist nullResult = artistDAOImpl.getByName("Nicki Minaj");              //getArtistByName with not assigned name, should return null
+        em.getTransaction().commit();
+        em.clear();
+        assertNull(nullResult);
+    }
+    
+    /**
+     * Test of getArtistById method, of class artistDAOImpl.
+     */
+    @Test
+    public void testGetArtistByName() {
+        System.out.println("getArtistByName");
+
+        em.getTransaction().begin();
+        Artist expResult = new Artist("Nicki Minaj");
+        artistDAOImpl.create(expResult);
+        em.getTransaction().commit();
+        em.clear();
+
+        assertNotNull(expResult.getId());
+
+        Artist result = artistDAOImpl.getByName(expResult.getName());              //correct
+        assertDeepEquals(expResult, result);
+    }
+    
+    /**
+     * Test of getArtistById method, of class artistDAOImpl.
+     */
+    @Test
+    public void testGetAllArtists() {
+        System.out.println("getAllArtists");
+
+        List<Artist> expResults = new ArrayList<Artist>();
+        assertEquals(expResults, artistDAOImpl.getAll());
+        
+        em.getTransaction().begin();
+        Artist expResult1 = new Artist("Nicki Minaj");
+        Artist expResult2 = new Artist("Robo Kazik");
+        Artist expResult3 = new Artist("Team");
+        artistDAOImpl.create(expResult1);
+        artistDAOImpl.create(expResult2);
+        artistDAOImpl.create(expResult3);
+        em.getTransaction().commit();
+        em.clear();
+
+        assertNotNull(expResult1.getId());
+        assertNotNull(expResult2.getId());
+        assertNotNull(expResult3.getId());
+        
+        expResults.add(expResult1);
+        expResults.add(expResult2);
+        expResults.add(expResult3);
+
+        List<Artist> results = artistDAOImpl.getAll();              //correct
+        assertEquals(expResults, results);
+        
+    }
+    
     private void assertDeepEquals(Artist expected, Artist actual) {
         assertEquals(expected.getId(), actual.getId());
         assertEquals(expected.getName(), actual.getName());

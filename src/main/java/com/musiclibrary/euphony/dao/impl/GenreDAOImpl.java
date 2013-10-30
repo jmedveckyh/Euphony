@@ -6,6 +6,7 @@ import com.musiclibrary.euphony.util.Util;
 import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -89,11 +90,15 @@ public class GenreDAOImpl implements GenreDAO {
     @Override
     public Genre getByName(String name) {
         if (name == null) {
-            throw new IllegalArgumentException("Title is NULL");
+            throw new IllegalArgumentException("Name is NULL");
         }
         Query q = em.createQuery("from Genre where name=:name");
         q.setParameter("name", name);
-        Genre genre = (Genre) q.getSingleResult();
-        return genre;
+        try {
+            Genre genre = (Genre) q.getSingleResult();
+            return genre;
+        }catch (NoResultException ex){
+            return null;
+        }
     }
 }

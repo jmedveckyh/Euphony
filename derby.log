@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Sun Oct 27 22:42:32 CET 2013:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-0141-fbde-4eff-000004183e38 
-on database directory memory:D:\Documents\skola\java ee PA165\Euphony\test-euphony with class loader sun.misc.Launcher$AppClassLoader@1b186cf9 
+Wed Oct 30 11:53:53 CET 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-0142-08ff-863b-000004183280 
+on database directory memory:D:\Documents\skola\java ee PA165\Euphony\test-euphony with class loader sun.misc.Launcher$AppClassLoader@20d75cf7 
 Loaded from file:/C:/Users/Jakub/.m2/repository/org/apache/derby/derby/10.10.1.1/derby-10.10.1.1.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.7.0_40-b43

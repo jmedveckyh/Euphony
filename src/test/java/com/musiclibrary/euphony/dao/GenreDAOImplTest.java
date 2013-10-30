@@ -2,6 +2,8 @@ package com.musiclibrary.euphony.dao;
 
 import com.musiclibrary.euphony.dao.impl.GenreDAOImpl;
 import com.musiclibrary.euphony.entities.Genre;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -83,15 +85,7 @@ public class GenreDAOImplTest {
      * Test of getGenreById method, of class genreDAOImpl with wrong attributes.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void testGetGenreWithNullBoth() {
-        em.getTransaction().begin();
-        genreDAOImpl.getById(null);              //id and class are null
-        em.getTransaction().commit();
-        em.clear();
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetGenremWithNullId() {
+    public void testGetGenreByIdWithNull() {
         em.getTransaction().begin();
         genreDAOImpl.getById(null);              //id is null
         em.getTransaction().commit();
@@ -99,7 +93,7 @@ public class GenreDAOImplTest {
     }
     
     @Test
-    public void testGetGenreWithNotAssignedId() {
+    public void testGetGenreByIdWithNotAssignedId() {
         em.getTransaction().begin();
         Genre nullResult = genreDAOImpl.getById(new Long(100));              //getGenre with not assigned id, should return null
         em.getTransaction().commit();
@@ -249,10 +243,81 @@ public class GenreDAOImplTest {
         genreDAOImpl.delete(genre);  
         em.getTransaction().commit();
         em.clear();
-        
-        assertNull(genre.getId());
     }
 
+    /**
+     * Test of getGenreByName method, of class genreDAOImpl with wrong attributes.
+     */
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetGenreByNameWithNull() {
+        em.getTransaction().begin();
+        genreDAOImpl.getByName(null);              //name is null
+        em.getTransaction().commit();
+        em.clear();
+    }
+    
+    @Test
+    public void testGetGenreByNameWithNotAssignedName() {
+        em.getTransaction().begin();
+        Genre nullResult = genreDAOImpl.getByName("Heavy Metal");              //getGenreByName with not assigned name, should return null
+        em.getTransaction().commit();
+        em.clear();
+        assertNull(nullResult);
+    }
+    
+    /**
+     * Test of getGenreById method, of class genreDAOImpl.
+     */
+    @Test
+    public void testGetGenreByName() {
+        System.out.println("getGenreByName");
+
+        em.getTransaction().begin();
+        Genre expResult = new Genre("Heavy metal");
+        genreDAOImpl.create(expResult);
+        em.getTransaction().commit();
+        em.clear();
+
+        assertNotNull(expResult.getId());
+
+        Genre result = genreDAOImpl.getByName(expResult.getName());              //correct
+        assertDeepEquals(expResult, result);
+    }
+    
+    /**
+     * Test of getGenreById method, of class genreDAOImpl.
+     */
+    @Test
+    public void testGetAllGenres() {
+        System.out.println("getAllGenres");
+
+        List<Genre> expResults = new ArrayList<Genre>();
+        assertEquals(expResults, genreDAOImpl.getAll());
+        
+        em.getTransaction().begin();
+        Genre expResult1 = new Genre("Heavy metal");
+        Genre expResult2 = new Genre("Doom metal");
+        Genre expResult3 = new Genre("Brutal death");
+        genreDAOImpl.create(expResult1);
+        genreDAOImpl.create(expResult2);
+        genreDAOImpl.create(expResult3);
+        em.getTransaction().commit();
+        em.clear();
+
+        assertNotNull(expResult1.getId());
+        assertNotNull(expResult2.getId());
+        assertNotNull(expResult3.getId());
+        
+        expResults.add(expResult1);
+        expResults.add(expResult2);
+        expResults.add(expResult3);
+
+        List<Genre> results = genreDAOImpl.getAll();              //correct
+        assertEquals(expResults, results);
+        
+    }
+    
     private void assertDeepEquals(Genre expected, Genre actual) {
         assertEquals(expected.getId(), actual.getId());
         assertEquals(expected.getName(), actual.getName());
