@@ -2,6 +2,7 @@ package com.musiclibrary.euphony.dao;
 
 import com.musiclibrary.euphony.dao.impl.SongDAOImpl;
 import com.musiclibrary.euphony.entities.Album;
+import com.musiclibrary.euphony.entities.Artist;
 import com.musiclibrary.euphony.entities.Genre;
 import com.musiclibrary.euphony.entities.Song;
 import javax.persistence.EntityManager;
@@ -46,7 +47,7 @@ public class SongDAOImplTest extends TestCase {
      */
     public void testCreateSong() {
 
-        Song song = new Song("Salalaj", 320, 1, "Toto si spievam ked som dobre nehehee...", new Genre(), new Album());
+        Song song = new Song("Salalaj", 320, 1, "Toto si spievam ked som dobre nehehee...", new Genre(), new Album(), new Artist());
         em.getTransaction().begin();
         songDAOImpl.create(song);
         em.getTransaction().commit();
@@ -72,7 +73,7 @@ public class SongDAOImplTest extends TestCase {
         //test song with not null id
         em.getTransaction().begin();
         try {
-            Song s = new Song("Salalaj", 300, 1, "nehehe", new Genre(), new Album());
+            Song s = new Song("Salalaj", 300, 1, "nehehe", new Genre(), new Album(), new Artist());
             s.setId(new Long(1l));
             songDAOImpl.create(s);
             fail("song id set!");
@@ -85,7 +86,7 @@ public class SongDAOImplTest extends TestCase {
         //test Create Song With Null Attributes
         em.getTransaction().begin();
         try {
-            songDAOImpl.create(new Song(null, 320, 1, null, null, null));
+            songDAOImpl.create(new Song(null, 320, 1, null, null, null, null));
             fail("song with null attributes!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -96,7 +97,7 @@ public class SongDAOImplTest extends TestCase {
         //test with null title
         em.getTransaction().begin();
         try {
-            songDAOImpl.create(new Song(null, 320, 1, "nehehe", new Genre(), new Album()));
+            songDAOImpl.create(new Song(null, 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with null title!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -107,7 +108,7 @@ public class SongDAOImplTest extends TestCase {
         //test with empty title
         em.getTransaction().begin();
         try {
-            songDAOImpl.create(new Song("", 320, 1, "nehehe", new Genre(), new Album()));
+            songDAOImpl.create(new Song("", 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with empty title!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -118,7 +119,7 @@ public class SongDAOImplTest extends TestCase {
         //test with null genre 
         em.getTransaction().begin();
         try {
-            songDAOImpl.create(new Song("Salalaj", 320, 1, "nehehe", null, new Album()));
+            songDAOImpl.create(new Song("Salalaj", 320, 1, "nehehe", null, new Album(), new Artist()));
             fail("song with null genre!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -129,8 +130,19 @@ public class SongDAOImplTest extends TestCase {
         //test with null album
         em.getTransaction().begin();
         try {
-            songDAOImpl.create(new Song("Salalaj", 320, 1, "nehehe", new Genre(), null));
+            songDAOImpl.create(new Song("Salalaj", 320, 1, "nehehe", new Genre(), null, new Artist()));
             fail("song with null album!");
+        } catch (IllegalArgumentException ex) {
+            //OK
+        }
+        em.getTransaction().commit();
+        em.clear();
+        
+        //test with null artist
+        em.getTransaction().begin();
+        try {
+            songDAOImpl.create(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), null));
+            fail("song with null artist!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
@@ -140,7 +152,7 @@ public class SongDAOImplTest extends TestCase {
         //test with negative track number
         em.getTransaction().begin();
         try {
-            songDAOImpl.create(new Song("Salalaj", 320, -10, "nehehe", new Genre(), new Album()));
+            songDAOImpl.create(new Song("Salalaj", 320, -10, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with negative bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -151,7 +163,7 @@ public class SongDAOImplTest extends TestCase {
         //test with zero bitrate
         em.getTransaction().begin();
         try {
-            songDAOImpl.create(new Song("Salalaj", 0, 1, "nehehe", new Genre(), new Album()));
+            songDAOImpl.create(new Song("Salalaj", 0, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with zero bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -162,7 +174,7 @@ public class SongDAOImplTest extends TestCase {
         //test with negative bitrate
         em.getTransaction().begin();
         try {
-            songDAOImpl.create(new Song("Salalaj", -1000, 1, "nehehe", new Genre(), new Album()));
+            songDAOImpl.create(new Song("Salalaj", -1000, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with negative bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -173,7 +185,7 @@ public class SongDAOImplTest extends TestCase {
         //test with bitrate above 2500
         em.getTransaction().begin();
         try {
-            songDAOImpl.create(new Song("Salalaj", 10000, 1, "nehehe", new Genre(), new Album()));
+            songDAOImpl.create(new Song("Salalaj", 10000, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with 2500+ bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -184,7 +196,7 @@ public class SongDAOImplTest extends TestCase {
         //test with null comment
         em.getTransaction().begin();
         try {
-            songDAOImpl.create(new Song("Salalaj", 320, 1, null, new Genre(), new Album()));
+            songDAOImpl.create(new Song("Salalaj", 320, 1, null, new Genre(), new Album(), new Artist()));
         } catch (IllegalArgumentException ex) {
             fail("song with null comment is OK!");
         }
@@ -194,7 +206,7 @@ public class SongDAOImplTest extends TestCase {
         //test with empty comment
         em.getTransaction().begin();
         try {
-            songDAOImpl.create(new Song("Salalaj", 320, 1, "", new Genre(), new Album()));
+            songDAOImpl.create(new Song("Salalaj", 320, 1, "", new Genre(), new Album(), new Artist()));
         } catch (IllegalArgumentException ex) {
             fail("song with empty comment is OK!");
         }
@@ -224,7 +236,7 @@ public class SongDAOImplTest extends TestCase {
         //testCreateSongWithNullAttributes
         em.getTransaction().begin();
         try {
-            songDAOImpl.update(new Song(null, 320, 1, null, null, null));
+            songDAOImpl.update(new Song(null, 320, 1, null, null, null, null));
             fail("song with null attributes!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -235,7 +247,7 @@ public class SongDAOImplTest extends TestCase {
         //test with null title
         em.getTransaction().begin();
         try {
-            songDAOImpl.update(new Song(null, 320, 1, "nehehe", new Genre(), new Album()));
+            songDAOImpl.update(new Song(null, 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with null title!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -246,7 +258,7 @@ public class SongDAOImplTest extends TestCase {
         //test with empty title
         em.getTransaction().begin();
         try {
-            songDAOImpl.update(new Song("", 320, 1, "nehehe", new Genre(), new Album()));
+            songDAOImpl.update(new Song("", 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with empty title!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -257,7 +269,7 @@ public class SongDAOImplTest extends TestCase {
         //test with null genre 
         em.getTransaction().begin();
         try {
-            songDAOImpl.update(new Song("Salalaj", 320, 1, "nehehe", null, new Album()));
+            songDAOImpl.update(new Song("Salalaj", 320, 1, "nehehe", null, new Album(), new Artist()));
             fail("song with null genre!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -268,7 +280,18 @@ public class SongDAOImplTest extends TestCase {
         //test with null album
         em.getTransaction().begin();
         try {
-            songDAOImpl.update(new Song("Salalaj", 320, 1, "nehehe", new Genre(), null));
+            songDAOImpl.update(new Song("Salalaj", 320, 1, "nehehe", new Genre(), null, new Artist()));
+            fail("song with null album!");
+        } catch (IllegalArgumentException ex) {
+            //OK
+        }
+        em.getTransaction().commit();
+        em.clear();
+        
+        //test with null artist
+        em.getTransaction().begin();
+        try {
+            songDAOImpl.update(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), null));
             fail("song with null album!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -279,7 +302,7 @@ public class SongDAOImplTest extends TestCase {
         //test with negative track number
         em.getTransaction().begin();
         try {
-            songDAOImpl.update(new Song("Salalaj", 320, -10, "nehehe", new Genre(), new Album()));
+            songDAOImpl.update(new Song("Salalaj", 320, -10, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with negative bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -290,7 +313,7 @@ public class SongDAOImplTest extends TestCase {
         //test with zero bitrate
         em.getTransaction().begin();
         try {
-            songDAOImpl.update(new Song("Salalaj", 0, 1, "nehehe", new Genre(), new Album()));
+            songDAOImpl.update(new Song("Salalaj", 0, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with zero bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -301,7 +324,7 @@ public class SongDAOImplTest extends TestCase {
         //test with negative bitrate
         em.getTransaction().begin();
         try {
-            songDAOImpl.update(new Song("Salalaj", -1234, 1, "nehehe", new Genre(), new Album()));
+            songDAOImpl.update(new Song("Salalaj", -1234, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with negative bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -312,7 +335,7 @@ public class SongDAOImplTest extends TestCase {
         //test with bitrate above 2500
         em.getTransaction().begin();
         try {
-            songDAOImpl.update(new Song("Salalaj", 10000, 1, "nehehe", new Genre(), new Album()));
+            songDAOImpl.update(new Song("Salalaj", 10000, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with 2500+ bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -323,7 +346,7 @@ public class SongDAOImplTest extends TestCase {
         //test song with null id
         em.getTransaction().begin();
         try {
-            songDAOImpl.update(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album()));
+            songDAOImpl.update(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
             em.getTransaction().commit();
             fail("null id update!");
 
@@ -336,7 +359,7 @@ public class SongDAOImplTest extends TestCase {
         // test with id doesnt assigned by db
         em.getTransaction().begin();
         try {
-            Song song = new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album());
+            Song song = new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), new Artist());
             song.setId(new Long(1000));
             songDAOImpl.update(song);
             fail("no assigned id by db update!");
@@ -349,8 +372,8 @@ public class SongDAOImplTest extends TestCase {
 
         //test update song
 
-        Song blessed = new Song("Tim Hangs - Blessed", 320, 1, "Yeah", new Genre(), new Album());
-        Song dalibomba = new Song("Sandru - Dalibomba", 320, 1, "Yeah!!!", new Genre(), new Album());
+        Song blessed = new Song("Tim Hangs - Blessed", 320, 1, "Yeah", new Genre(), new Album(), new Artist());
+        Song dalibomba = new Song("Sandru - Dalibomba", 320, 1, "Yeah!!!", new Genre(), new Album(), new Artist());
         em.getTransaction().begin();
         songDAOImpl.create(blessed);
         em.getTransaction().commit();
@@ -389,7 +412,7 @@ public class SongDAOImplTest extends TestCase {
         //testCreateSongWithNullAttributes
         em.getTransaction().begin();
         try {
-            songDAOImpl.delete(new Song(null, 320, 1, null, null, null));
+            songDAOImpl.delete(new Song(null, 320, 1, null, null, null, null));
             fail("song with null attributes!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -400,7 +423,7 @@ public class SongDAOImplTest extends TestCase {
         //test with null title
         em.getTransaction().begin();
         try {
-            songDAOImpl.delete(new Song(null, 320, 1, "nehehe", new Genre(), new Album()));
+            songDAOImpl.delete(new Song(null, 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with null title!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -411,7 +434,7 @@ public class SongDAOImplTest extends TestCase {
         //test with empty title
         em.getTransaction().begin();
         try {
-            songDAOImpl.delete(new Song("", 320, 1, "nehehe", new Genre(), new Album()));
+            songDAOImpl.delete(new Song("", 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with empty title!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -422,7 +445,7 @@ public class SongDAOImplTest extends TestCase {
         //test with null genre 
         em.getTransaction().begin();
         try {
-            songDAOImpl.delete(new Song("Salalaj", 320, 1, "nehehe", null, new Album()));
+            songDAOImpl.delete(new Song("Salalaj", 320, 1, "nehehe", null, new Album(), new Artist()));
             fail("song with null genre!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -433,8 +456,19 @@ public class SongDAOImplTest extends TestCase {
         //test with null album
         em.getTransaction().begin();
         try {
-            songDAOImpl.delete(new Song("Salalaj", 320, 1, "nehehe", new Genre(), null));
+            songDAOImpl.delete(new Song("Salalaj", 320, 1, "nehehe", new Genre(), null, new Artist()));
             fail("song with null album!");
+        } catch (IllegalArgumentException ex) {
+            //OK
+        }
+        em.getTransaction().commit();
+        em.clear();
+        
+        //test with null artist
+        em.getTransaction().begin();
+        try {
+            songDAOImpl.delete(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), null));
+            fail("song with null artist!");
         } catch (IllegalArgumentException ex) {
             //OK
         }
@@ -444,7 +478,7 @@ public class SongDAOImplTest extends TestCase {
         //test with negative track number
         em.getTransaction().begin();
         try {
-            songDAOImpl.delete(new Song("Salalaj", 320, -10, "nehehe", new Genre(), new Album()));
+            songDAOImpl.delete(new Song("Salalaj", 320, -10, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with negative bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -455,7 +489,7 @@ public class SongDAOImplTest extends TestCase {
         //test with zero bitrate
         em.getTransaction().begin();
         try {
-            songDAOImpl.delete(new Song("Salalaj", 0, 1, "nehehe", new Genre(), new Album()));
+            songDAOImpl.delete(new Song("Salalaj", 0, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with zero bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -466,7 +500,7 @@ public class SongDAOImplTest extends TestCase {
         //test with negative bitrate
         em.getTransaction().begin();
         try {
-            songDAOImpl.delete(new Song("Salalaj", -1000, 1, "nehehe", new Genre(), new Album()));
+            songDAOImpl.delete(new Song("Salalaj", -1000, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with negative bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -477,7 +511,7 @@ public class SongDAOImplTest extends TestCase {
         //test with bitrate above 2500
         em.getTransaction().begin();
         try {
-            songDAOImpl.delete(new Song("Salalaj", 10000, 1, "nehehe", new Genre(), new Album()));
+            songDAOImpl.delete(new Song("Salalaj", 10000, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with 2500+ bitrate!");
         } catch (IllegalArgumentException ex) {
             //OK
@@ -488,7 +522,7 @@ public class SongDAOImplTest extends TestCase {
         //test song with null id
         em.getTransaction().begin();
         try {
-            songDAOImpl.delete(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album()));
+            songDAOImpl.delete(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("null id delete!");
 
         } catch (IllegalArgumentException ex) {
@@ -500,7 +534,7 @@ public class SongDAOImplTest extends TestCase {
         // test with id doesnt assigned by db
         em.getTransaction().begin();
         try {
-            Song song = new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album());
+            Song song = new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), new Artist());
             song.setId(new Long(1000));
             songDAOImpl.delete(song);
             fail("no assigned id by db delete!");
@@ -513,7 +547,7 @@ public class SongDAOImplTest extends TestCase {
 
         //test delete song
 
-        Song dalibomba = new Song("Sandru - Dalibomba", 320, 1, "Yeah!!!", new Genre(), new Album());
+        Song dalibomba = new Song("Sandru - Dalibomba", 320, 1, "Yeah!!!", new Genre(), new Album(), new Artist());
         em.getTransaction().begin();
         songDAOImpl.create(dalibomba);
         em.getTransaction().commit();
@@ -558,7 +592,7 @@ public class SongDAOImplTest extends TestCase {
         assertNull(res);
 
         //test get by id
-        Song dalibomba = new Song("Sandru - Dalibomba", 320, 1, "Yeah!!!", new Genre(), new Album());
+        Song dalibomba = new Song("Sandru - Dalibomba", 320, 1, "Yeah!!!", new Genre(), new Album(), new Artist());
         em.getTransaction().begin();
         songDAOImpl.create(dalibomba);
         em.getTransaction().commit();
