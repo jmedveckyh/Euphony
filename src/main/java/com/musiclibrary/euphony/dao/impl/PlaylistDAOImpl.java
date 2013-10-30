@@ -112,5 +112,15 @@ public class PlaylistDAOImpl implements DAO<Playlist> , PlaylistDAO{
         return Collections.unmodifiableList(playlists);
         
     }
+
+    @Override
+    public List<Playlist> getAll() {
+                
+        Query q = em.createQuery("FROM Playlist");
+        List<Playlist> playlists = q.getResultList();
+        
+        return Collections.unmodifiableList(playlists);
+        
+    }
 }
 

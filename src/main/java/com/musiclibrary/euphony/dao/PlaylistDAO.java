@@ -5,14 +5,16 @@ import com.musiclibrary.euphony.entities.Song;
 import java.util.List;
 
 /**
- * 
+ * Interface for Playlist DAO layer.
  * 
  * @author Tomas Smetanka #396209
  */
 public interface PlaylistDAO extends DAO<Playlist> {
     
-    public Playlist getByName(String name);
+    Playlist getByName(String name);
     
-    public List<Playlist> getBySong(Song song);
+    List<Playlist> getBySong(Song song);
+    
+    List<Playlist> getAll();
     
 }

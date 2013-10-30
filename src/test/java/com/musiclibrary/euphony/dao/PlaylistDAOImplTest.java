@@ -2,6 +2,7 @@ package com.musiclibrary.euphony.dao;
 
 import com.musiclibrary.euphony.dao.impl.PlaylistDAOImpl;
 import com.musiclibrary.euphony.entities.Album;
+import com.musiclibrary.euphony.entities.Artist;
 import com.musiclibrary.euphony.entities.Genre;
 import com.musiclibrary.euphony.entities.Playlist;
 import com.musiclibrary.euphony.entities.Song;
@@ -60,9 +61,10 @@ public class PlaylistDAOImplTest {
         Map<Integer, Song> songs = new TreeMap<>();
         Genre genreTemp = new Genre("Pop");
         Album albumTemp = new Album("The Fox");
-        songs.put(1, new Song("The Fox", 180, 1, "", genreTemp, albumTemp));
-        songs.put(2, new Song("Someone Like Me", 180, 2, "", genreTemp, albumTemp));
-        songs.put(3, new Song("Stonehenge", 180, 3, "", genreTemp, albumTemp));
+        Artist artistTemp = new Artist("Ylvis");
+        songs.put(1, new Song("The Fox", 180, 1, "", genreTemp, albumTemp, artistTemp));
+        songs.put(2, new Song("Someone Like Me", 180, 2, "", genreTemp, albumTemp, artistTemp));
+        songs.put(3, new Song("Stonehenge", 180, 3, "", genreTemp, albumTemp, artistTemp));
         
         Playlist playlistR = new Playlist("Funny", songs);
         em.getTransaction().begin();
@@ -111,9 +113,10 @@ public class PlaylistDAOImplTest {
         Map<Integer, Song> songs = new TreeMap<>();
         Genre genreTemp = new Genre("Pop");
         Album albumTemp = new Album("The Fox");
-        songs.put(1, new Song("The Fox", 180, 1, "", genreTemp, albumTemp));
-        songs.put(2, new Song("Someone Like Me", 180, 2, "", genreTemp, albumTemp));
-        songs.put(3, new Song("Stonehenge", 180, 3, "", genreTemp, albumTemp));
+        Artist artistTemp = new Artist("Ylvis");
+        songs.put(1, new Song("The Fox", 180, 1, "", genreTemp, albumTemp, artistTemp));
+        songs.put(2, new Song("Someone Like Me", 180, 2, "", genreTemp, albumTemp, artistTemp));
+        songs.put(3, new Song("Stonehenge", 180, 3, "", genreTemp, albumTemp, artistTemp));
         
         Playlist playlistR = new Playlist("Funny", songs);
         em.getTransaction().begin();
@@ -125,7 +128,7 @@ public class PlaylistDAOImplTest {
         assertNotNull(id);
         
         Map<Integer, Song> songsUpdated = new TreeMap<>();
-        songsUpdated.put(1, new Song("Jan Egenland", 180, 1, "", genreTemp, albumTemp));
+        songsUpdated.put(1, new Song("Jan Egenland", 180, 1, "", genreTemp, albumTemp, artistTemp));
         Playlist playlistUpdated = new Playlist("Not funny at all", songsUpdated);
         playlistUpdated.setId(id);
         
@@ -167,9 +170,10 @@ public class PlaylistDAOImplTest {
         Map<Integer, Song> songs = new TreeMap<>();
         Genre genreTemp = new Genre("Pop");
         Album albumTemp = new Album("The Fox");
-        songs.put(1, new Song("The Fox", 180, 1, "", genreTemp, albumTemp));
-        songs.put(2, new Song("Someone Like Me", 180, 2, "", genreTemp, albumTemp));
-        songs.put(3, new Song("Stonehenge", 180, 3, "", genreTemp, albumTemp));
+        Artist artistTemp = new Artist("Ylvis");
+        songs.put(1, new Song("The Fox", 180, 1, "", genreTemp, albumTemp, artistTemp));
+        songs.put(2, new Song("Someone Like Me", 180, 2, "", genreTemp, albumTemp, artistTemp));
+        songs.put(3, new Song("Stonehenge", 180, 3, "", genreTemp, albumTemp, artistTemp));
         
         Playlist playlistR = new Playlist("Funny", songs);
         em.getTransaction().begin();
@@ -187,9 +191,10 @@ public class PlaylistDAOImplTest {
         Map<Integer, Song> songs = new TreeMap<>();
         Genre genreTemp = new Genre("Pop");
         Album albumTemp = new Album("The Fox");
-        songs.put(1, new Song("The Fox", 180, 1, "", genreTemp, albumTemp));
-        songs.put(2, new Song("Someone Like Me", 180, 2, "", genreTemp, albumTemp));
-        songs.put(3, new Song("Stonehenge", 180, 3, "", genreTemp, albumTemp));
+        Artist artistTemp = new Artist("Ylvis");
+        songs.put(1, new Song("The Fox", 180, 1, "", genreTemp, albumTemp, artistTemp));
+        songs.put(2, new Song("Someone Like Me", 180, 2, "", genreTemp, albumTemp, artistTemp));
+        songs.put(3, new Song("Stonehenge", 180, 3, "", genreTemp, albumTemp, artistTemp));
         
         Playlist playlistR = new Playlist("Funny", songs);
         em.getTransaction().begin();
@@ -245,9 +250,10 @@ public class PlaylistDAOImplTest {
         Map<Integer, Song> songs = new TreeMap<>();
         Genre genreTemp = new Genre("Pop");
         Album albumTemp = new Album("The Fox");
-        songs.put(1, new Song("The Fox", 180, 1, "", genreTemp, albumTemp));
-        songs.put(2, new Song("Someone Like Me", 180, 2, "", genreTemp, albumTemp));
-        songs.put(3, new Song("Stonehenge", 180, 3, "", genreTemp, albumTemp));
+        Artist artistTemp = new Artist("Ylvis");
+        songs.put(1, new Song("The Fox", 180, 1, "", genreTemp, albumTemp, artistTemp));
+        songs.put(2, new Song("Someone Like Me", 180, 2, "", genreTemp, albumTemp, artistTemp));
+        songs.put(3, new Song("Stonehenge", 180, 3, "", genreTemp, albumTemp, artistTemp));
         
         Playlist playlistR = new Playlist("Funny", songs);
         em.getTransaction().begin();
@@ -265,9 +271,10 @@ public class PlaylistDAOImplTest {
         Map<Integer, Song> songs = new TreeMap<>();
         Genre genreTemp = new Genre("Pop");
         Album albumTemp = new Album("The Fox");
-        songs.put(1, new Song("The Fox", 180, 1, "", genreTemp, albumTemp));
-        songs.put(2, new Song("Someone Like Me", 180, 2, "", genreTemp, albumTemp));
-        songs.put(3, new Song("Stonehenge", 180, 3, "", genreTemp, albumTemp));
+        Artist artistTemp = new Artist("Ylvis");
+        songs.put(1, new Song("The Fox", 180, 1, "", genreTemp, albumTemp, artistTemp));
+        songs.put(2, new Song("Someone Like Me", 180, 2, "", genreTemp, albumTemp, artistTemp));
+        songs.put(3, new Song("Stonehenge", 180, 3, "", genreTemp, albumTemp, artistTemp));
         
         Playlist playlistR = new Playlist("Funny", songs);
         em.getTransaction().begin();

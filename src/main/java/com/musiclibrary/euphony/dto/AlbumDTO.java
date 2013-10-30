@@ -33,6 +33,10 @@ public class AlbumDTO {
         this.releaseDate = releaseDate;
         this.songs = songs;
     }
+
+    public AlbumDTO(String cover) {
+        this.cover = cover;
+    }
     
     public Long getId() {
         return id;

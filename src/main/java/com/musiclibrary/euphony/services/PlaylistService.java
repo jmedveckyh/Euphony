@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.dao.DataAccessException;
 
 /**
- * 
+ * Interface for Playlist service layer.
  * 
  * @author Tomas Smetanka #396209
  */
@@ -23,5 +23,7 @@ public interface PlaylistService {
     PlaylistDTO getByName(String name) throws DataAccessException;
     
     List<PlaylistDTO> getBySong(SongDTO songDTO) throws DataAccessException;
+    
+    List<PlaylistDTO> getAll();
     
 }

@@ -4,10 +4,6 @@
  */
 package com.musiclibrary.euphony.dto;
 
-import com.musiclibrary.euphony.entities.Album;
-import com.musiclibrary.euphony.entities.Artist;
-import com.musiclibrary.euphony.entities.Genre;
-
 /**
  *
  * @author Sebastian Lazon
@@ -19,13 +15,13 @@ public class SongDTO{
     private int bitrate;
     private int trackNumber;
     private String comment;
-    private Genre genre;
-    private Album album;
-    private Artist artist;
+    private GenreDTO genre;
+    private AlbumDTO album;
+    private ArtistDTO artist;
 
     public SongDTO(){ }
 
-    public SongDTO(String title, int bitrate, int trackNumber, String comment, Genre genre, Album album, Artist artist) {
+    public SongDTO(String title, int bitrate, int trackNumber, String comment, GenreDTO genre, AlbumDTO album, ArtistDTO artist) {
         this.title = title;
         this.bitrate = bitrate;
         this.trackNumber = trackNumber;
@@ -75,27 +71,27 @@ public class SongDTO{
         this.comment = comment;
     }
 
-    public Genre getGenre() {
+    public GenreDTO getGenre() {
         return genre;
     }
 
-    public void setGenre(Genre genre) {
+    public void setGenre(GenreDTO genre) {
         this.genre = genre;
     }
 
-    public Album getAlbum() {
+    public AlbumDTO getAlbum() {
         return album;
     }
 
-    public void setAlbum(Album album) {
+    public void setAlbum(AlbumDTO album) {
         this.album = album;
     }
     
-    public Artist getArtist() {
+    public ArtistDTO getArtist() {
         return artist;
     }
 
-    public void setArtist(Artist artist) {
+    public void setArtist(ArtistDTO artist) {
         this.artist = artist;
     }
 }
