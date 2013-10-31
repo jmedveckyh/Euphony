@@ -28,6 +28,14 @@ public class Util {
         if (album.getTitle() == null) {
             throw new IllegalArgumentException("Album's title is null.");
         }
+        if (album.getSongs() == null) {
+            throw new IllegalArgumentException("Album's songs is null.");
+        }
+        for(Song s : album.getSongs()){
+            if (s == null) {
+                throw new IllegalArgumentException("Album's list of songs contains null song.");
+            }
+        }
     }
     
     public static void validateArtist(Artist artist) {
