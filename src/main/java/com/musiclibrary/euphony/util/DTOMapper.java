@@ -201,6 +201,9 @@ public class DTOMapper {
         album.setReleaseDate(albumDTO.getReleaseDate());
         album.setSongs(albumDTO.getSongs());
         album.setTitle(albumDTO.getTitle());
+        album.setArtists(albumDTO.getArtists());
+        album.setGenres(albumDTO.getGenres());
+        album.setComment(albumDTO.getComment());
         return album;
 
     }
@@ -216,6 +219,9 @@ public class DTOMapper {
         albumDTO.setReleaseDate(album.getReleaseDate());
         albumDTO.setSongs(album.getSongs());
         albumDTO.setTitle(album.getTitle());
+        albumDTO.setArtists(album.getArtists());
+        albumDTO.setGenres(album.getGenres());
+        albumDTO.setComment(album.getComment());
         return albumDTO;
 
     }
@@ -241,6 +247,26 @@ public class DTOMapper {
         artistDTO.setId(artist.getId());
         artistDTO.setName(artist.getName());
         return artistDTO;
+
+    }
+    
+    public static List<AlbumDTO> albumListToDTO(List<Album> albums) {
+
+        List<AlbumDTO> albumsDTO = new ArrayList();
+        for (Album album : albums) {
+            albumsDTO.add(DTOMapper.toDTO(album));
+        }
+        return albumsDTO;
+
+    }
+
+    public static List<Album> albumListToEntity(List<AlbumDTO> albumsDTO) {
+
+        List<Album> albums = new ArrayList();
+        for (AlbumDTO album : albumsDTO) {
+            albums.add(DTOMapper.toEntity(album));
+        }
+        return albums;
 
     }
 
