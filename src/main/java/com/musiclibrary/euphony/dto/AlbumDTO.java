@@ -20,6 +20,8 @@ public class AlbumDTO {
     
     private String cover;
     
+    private String comment;
+    
     private DateTime releaseDate;
         
     private List<Song> songs;
@@ -27,11 +29,12 @@ public class AlbumDTO {
     public AlbumDTO() {
     }
 
-    public AlbumDTO(String title, String cover, DateTime releaseDate, List<Song> songs) {
+    public AlbumDTO(String title, String cover, DateTime releaseDate, List<Song> songs, String comment) {
         this.title = title;
         this.cover = cover;
         this.releaseDate = releaseDate;
         this.songs = songs;
+        this.comment = comment;
     }
 
     public AlbumDTO(String cover) {
@@ -76,5 +79,13 @@ public class AlbumDTO {
 
     public void setSongs(List<Song> songs) {
         this.songs = songs;
+    }
+    
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

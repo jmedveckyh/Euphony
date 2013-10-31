@@ -1,16 +1,23 @@
 package com.musiclibrary.euphony.dao.impl;
 
-import com.musiclibrary.euphony.dao.DAO;
+import com.musiclibrary.euphony.dao.AlbumDAO;
 import com.musiclibrary.euphony.entities.Album;
+import com.musiclibrary.euphony.entities.Artist;
+import com.musiclibrary.euphony.entities.Genre;
+import com.musiclibrary.euphony.util.Util;
+import java.util.Collections;
+import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
- * 
- * 
+ *
+ *
  * @author Branislav Novotny
  */
-public class AlbumDAOImpl implements DAO<Album>{
+public class AlbumDAOImpl implements AlbumDAO {
 
     @PersistenceContext
     private EntityManager em;
@@ -18,11 +25,11 @@ public class AlbumDAOImpl implements DAO<Album>{
     public AlbumDAOImpl(EntityManager em) {
         this.em = em;
     }
-    
+
     @Override
     public void create(Album entity) {
-        
-        checkAlbum(entity);
+
+        Util.validateAlbum(entity);
 
         if (entity.getId() != null) {
             throw new IllegalArgumentException("This album entity is already in databse.");
@@ -33,9 +40,9 @@ public class AlbumDAOImpl implements DAO<Album>{
 
     @Override
     public void update(Album entity) {
-        
-        checkAlbum(entity);
-        
+
+        Util.validateAlbum(entity);
+
         if (entity.getId() == null) {
             throw new IllegalArgumentException("This album entity cannot have null id.");
         }
@@ -48,8 +55,8 @@ public class AlbumDAOImpl implements DAO<Album>{
 
     @Override
     public void delete(Album entity) {
-        
-        checkAlbum(entity);
+
+        Util.validateAlbum(entity);
 
         if (entity.getId() == null) {
             throw new IllegalArgumentException("This album entity cannot have null id.");
@@ -57,7 +64,7 @@ public class AlbumDAOImpl implements DAO<Album>{
         if (em.find(Album.class, entity.getId()) == null) {
             throw new IllegalArgumentException("This album entity does not exist in database.");
         }
- 
+
         Album objectTemp = em.merge(entity);
 
         em.remove(objectTemp);
@@ -65,7 +72,7 @@ public class AlbumDAOImpl implements DAO<Album>{
 
     @Override
     public Album getById(Long id) {
-      
+
         if (id == null) {
             throw new IllegalArgumentException("Id cannot be null.");
         }
@@ -75,18 +82,66 @@ public class AlbumDAOImpl implements DAO<Album>{
         return objectTemp;
     }
 
-    public static void checkAlbum(Album album) {
-        if (album == null){
-            throw new IllegalArgumentException("Album cannot be null.");
+    @Override
+    public List<Album> getAll() {
+        Query q = em.createQuery("from Album");
+        List<Album> albums = q.getResultList();
+        return Collections.unmodifiableList(albums);
+    }
+
+    @Override
+    public Album getByTitle(String title) {
+        /*if (title == null) {
+            throw new IllegalArgumentException("Title is null");
         }
-        if (album.getReleaseDate() == null) {
-            throw new IllegalArgumentException("Album's release date is null.");
+        Query q = em.createQuery("from Album where title=:title");
+        q.setParameter("title", title);
+        try {
+            Album album = (Album) q.getSingleResult();
+            return album;
+        } catch (NoResultException ex) {
+            return null;
+        }*/
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    }
+
+    @Override
+    public List<Album> getByGenre(Genre genre) {
+        /*if (genre == null) {
+            throw new IllegalArgumentException("Genre is null");
         }
-        if ("".equals(album.getTitle())) {
-            throw new IllegalArgumentException("Album's title is empty.");
+        Query q = em.createQuery("from Album where genre.name=:genre.name");
+        q.setParameter("genre", genre);
+        try {
+            List<Album> albums = q.getResultList();
+            return albums;
+        } catch (NoResultException ex) {
+            return null;
+        }*/
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    }
+
+    @Override
+    public List<Album> getByArtist(Artist artist) {
+        /*if (artist == null) {
+            throw new IllegalArgumentException("Artist is null");
         }
-        if (album.getTitle() == null) {
-            throw new IllegalArgumentException("Album's title is null.");
-        }
+        Query q = em.createQuery("from Album where artist.name=:artist.name");
+        q.setParameter("artist", artist);
+        try {
+            List<Album> albums = q.getResultList();
+            return albums;
+        } catch (NoResultException ex) {
+            return null;
+        }*/
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    }
+
+    @Override
+    public List<Album> getByReleaseYear(Integer year) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

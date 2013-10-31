@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
@@ -23,9 +24,7 @@ public class Album implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String comment;
     
     private String title;
     
@@ -36,6 +35,12 @@ public class Album implements Serializable {
         
     @OneToMany(cascade = CascadeType.ALL)
     private List<Song> songs;
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Genre> genres;
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Artist> artists;
 
     public Album() {
     }
@@ -43,9 +48,25 @@ public class Album implements Serializable {
     public Album(String title){
         this.title=title;
     }
+    
+    public Album(String title, String cover, DateTime releaseDate, List<Song> songs, String comment) {
+        this.title = title;
+        this.cover = cover;
+        this.releaseDate = releaseDate;
+        this.songs = songs;
+        this.comment = comment;
+        for (Song s : songs) {
+            genres.add(s.getGenre());
+            artists.add(s.getArtist());
+        }
+    }
 
     public Long getId() {
         return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -79,6 +100,23 @@ public class Album implements Serializable {
     public void setSongs(List<Song> songs) {
         this.songs = songs;
     }
+    
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+    
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public List<Artist> getArtists() {
+        return artists;
+    }
+    
 
     @Override
     public int hashCode() {
