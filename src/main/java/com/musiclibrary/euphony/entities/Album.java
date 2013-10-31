@@ -43,6 +43,11 @@ public class Album implements Serializable {
     private List<Artist> artists;
 
     public Album() {
+    
+    }
+
+    public Album(String title) {
+        this.title = title;
     }
     
     public Album(String title, String cover, DateTime releaseDate, List<Song> songs, 
