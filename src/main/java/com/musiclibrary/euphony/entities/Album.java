@@ -35,7 +35,7 @@ public class Album implements Serializable {
         
     @OneToMany(cascade = CascadeType.ALL)
     private List<Song> songs;
-    
+
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Genre> genres;
     
@@ -45,20 +45,15 @@ public class Album implements Serializable {
     public Album() {
     }
     
-    public Album(String title){
-        this.title=title;
-    }
-    
-    public Album(String title, String cover, DateTime releaseDate, List<Song> songs, String comment) {
+    public Album(String title, String cover, DateTime releaseDate, List<Song> songs, 
+            String comment, List<Artist> artists, List<Genre> genres) {
         this.title = title;
         this.cover = cover;
         this.releaseDate = releaseDate;
         this.songs = songs;
         this.comment = comment;
-        for (Song s : songs) {
-            genres.add(s.getGenre());
-            artists.add(s.getArtist());
-        }
+        this.artists = artists;
+        this.genres = genres;
     }
 
     public Long getId() {
@@ -116,6 +111,15 @@ public class Album implements Serializable {
     public List<Artist> getArtists() {
         return artists;
     }
+    
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
+    }
+
+    public void setArtists(List<Artist> artists) {
+        this.artists = artists;
+    }
+    
     
 
     @Override
