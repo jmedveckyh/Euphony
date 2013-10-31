@@ -63,7 +63,7 @@ public class SongServiceImplTest extends TestCase{
         AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),songs);
         ArtistDTO artistDto = new ArtistDTO();
         artistDto.setName("Robo Kazik");
-        SongDTO songDto = new SongDTO("ttt",144,1,"mmmedo",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto),DTOMapper.toEntity(artistDto));
+        SongDTO songDto = new SongDTO("ttt",144,1,"mmmedo",genreDto,albumDto,artistDto);
         doNothing().when(dao).create(DTOMapper.toEntity(songDto));
 
         service.create(songDto);
@@ -92,7 +92,7 @@ public class SongServiceImplTest extends TestCase{
         AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),songs);
         ArtistDTO artistDto = new ArtistDTO();
         artistDto.setName("Robo Kazik");
-        SongDTO songDto = new SongDTO("ttt",144,1,"mmmedo",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto),DTOMapper.toEntity(artistDto));
+        SongDTO songDto = new SongDTO("ttt",144,1,"mmmedo",genreDto,albumDto,artistDto);
         doNothing().when(dao).create(DTOMapper.toEntity(songDto));
 
         service.update(songDto);
@@ -122,7 +122,7 @@ public class SongServiceImplTest extends TestCase{
         AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),songs);
         ArtistDTO artistDto = new ArtistDTO();
         artistDto.setName("Robo Kazik");
-        SongDTO songDto = new SongDTO("ttt",144,1,"mmmedo",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto),DTOMapper.toEntity(artistDto));
+        SongDTO songDto = new SongDTO("ttt",144,1,"mmmedo",genreDto,albumDto,artistDto);
        
         service.delete(songDto);
        
@@ -161,7 +161,7 @@ public class SongServiceImplTest extends TestCase{
         AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),songs);
         ArtistDTO artistDto = new ArtistDTO();
         artistDto.setName("Robo Kazik");
-        SongDTO songDto = new SongDTO("ttt",144,1,"mmmedo",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto),DTOMapper.toEntity(artistDto));
+        SongDTO songDto = new SongDTO("ttt",144,1,"mmmedo",genreDto,albumDto,artistDto);
         songDto.setId(1l);
        
         when(dao.getById(1l)).thenReturn(DTOMapper.toEntity(songDto));
@@ -185,9 +185,9 @@ public class SongServiceImplTest extends TestCase{
         ArtistDTO artistDto = new ArtistDTO();
         artistDto.setName("Robo Kazik");
         
-        SongDTO songDto1 = new SongDTO("ttt1",144,1,"mmmedo1",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto),DTOMapper.toEntity(artistDto));
-        SongDTO songDto2 = new SongDTO("ttt2",144,2,"mmmedo2",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto),DTOMapper.toEntity(artistDto));
-        SongDTO songDto3 = new SongDTO("ttt3",144,3,"mmmedo3",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto),DTOMapper.toEntity(artistDto));
+        SongDTO songDto1 = new SongDTO("ttt1",144,1,"mmmedo1",genreDto,albumDto,artistDto);
+        SongDTO songDto2 = new SongDTO("ttt2",144,2,"mmmedo2",genreDto,albumDto,artistDto);
+        SongDTO songDto3 = new SongDTO("ttt3",144,3,"mmmedo3",genreDto,albumDto,artistDto);
         
         songDto1.setId(1l);
         songDto2.setId(2l);
@@ -224,9 +224,9 @@ public class SongServiceImplTest extends TestCase{
         AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),songs);
         ArtistDTO artistDto = new ArtistDTO();
         artistDto.setName("Robo Kazik");
-        SongDTO songDto1 = new SongDTO("ttt1",144,1,"mmmedo1",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto),DTOMapper.toEntity(artistDto));
-        SongDTO songDto2 = new SongDTO("ttt2",144,2,"mmmedo2",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto),DTOMapper.toEntity(artistDto));
-        SongDTO songDto3 = new SongDTO("ttt3",144,3,"mmmedo3",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto),DTOMapper.toEntity(artistDto));
+        SongDTO songDto1 = new SongDTO("ttt1",144,1,"mmmedo1",genreDto,albumDto,artistDto);
+        SongDTO songDto2 = new SongDTO("ttt2",144,2,"mmmedo2",genreDto,albumDto,artistDto);
+        SongDTO songDto3 = new SongDTO("ttt3",144,3,"mmmedo3",genreDto,albumDto,artistDto);
        
         songDto1.setId(1l);
         songDto2.setId(2l);
@@ -276,9 +276,9 @@ public class SongServiceImplTest extends TestCase{
         AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),songs);
         ArtistDTO artistDto = new ArtistDTO();
         artistDto.setName("Robo Kazik");
-        SongDTO songDto1 = new SongDTO("ttt1",144,1,"mmmedo1",DTOMapper.toEntity(genreDto1),DTOMapper.toEntity(albumDto),DTOMapper.toEntity(artistDto));
-        SongDTO songDto2 = new SongDTO("ttt2",144,2,"mmmedo2",DTOMapper.toEntity(genreDto2),DTOMapper.toEntity(albumDto),DTOMapper.toEntity(artistDto));
-        SongDTO songDto3 = new SongDTO("ttt3",144,3,"mmmedo3",DTOMapper.toEntity(genreDto1),DTOMapper.toEntity(albumDto),DTOMapper.toEntity(artistDto));
+        SongDTO songDto1 = new SongDTO("ttt1",144,1,"mmmedo1",genreDto1,albumDto,artistDto);
+        SongDTO songDto2 = new SongDTO("ttt2",144,2,"mmmedo2",genreDto2,albumDto,artistDto);
+        SongDTO songDto3 = new SongDTO("ttt3",144,3,"mmmedo3",genreDto1,albumDto,artistDto);
        
         songDto1.setId(1l);
         songDto2.setId(2l);
@@ -324,16 +324,15 @@ public class SongServiceImplTest extends TestCase{
         genreDto.setName("metal");
         List<Song> songs = new ArrayList();
         AlbumDTO albumDto1 = new AlbumDTO("fenomeno1","aaa1",new DateTime(2011, 11, 11, 0, 0),songs);
-        AlbumDTO albumDto2 = new AlbumDTO("fenomeno2","aaa2",new DateTime(2011, 11, 11, 0, 0),songs);
         
         ArtistDTO artistDto1 = new ArtistDTO();
         artistDto1.setName("Robo Kazik");
         ArtistDTO artistDto2 = new ArtistDTO();
         artistDto2.setName("Rytmaus");
         
-        SongDTO songDto1 = new SongDTO("ttt1",144,1,"mmmedo1",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto1),DTOMapper.toEntity(artistDto1));
-        SongDTO songDto2 = new SongDTO("ttt2",144,2,"mmmedo2",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto1),DTOMapper.toEntity(artistDto2));
-        SongDTO songDto3 = new SongDTO("ttt3",144,3,"mmmedo3",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto2),DTOMapper.toEntity(artistDto2));
+        SongDTO songDto1 = new SongDTO("ttt1",144,1,"mmmedo1",genreDto,albumDto1,artistDto1);
+        SongDTO songDto2 = new SongDTO("ttt2",144,2,"mmmedo2",genreDto,albumDto1,artistDto2);
+        SongDTO songDto3 = new SongDTO("ttt3",144,3,"mmmedo3",genreDto,albumDto1,artistDto2);
        
         songDto1.setId(1l);
         songDto2.setId(2l);
@@ -382,9 +381,9 @@ public class SongServiceImplTest extends TestCase{
         AlbumDTO albumDto2 = new AlbumDTO("fenomeno2","aaa2",new DateTime(2011, 11, 11, 0, 0),songs);
         ArtistDTO artistDto = new ArtistDTO();
         artistDto.setName("Robo Kazik");
-        SongDTO songDto1 = new SongDTO("ttt1",144,1,"mmmedo1",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto1),DTOMapper.toEntity(artistDto));
-        SongDTO songDto2 = new SongDTO("ttt2",144,2,"mmmedo2",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto1),DTOMapper.toEntity(artistDto));
-        SongDTO songDto3 = new SongDTO("ttt3",144,3,"mmmedo3",DTOMapper.toEntity(genreDto),DTOMapper.toEntity(albumDto2),DTOMapper.toEntity(artistDto));
+        SongDTO songDto1 = new SongDTO("ttt1",144,1,"mmmedo1",genreDto,albumDto1,artistDto);
+        SongDTO songDto2 = new SongDTO("ttt2",144,2,"mmmedo2",genreDto,albumDto1,artistDto);
+        SongDTO songDto3 = new SongDTO("ttt3",144,3,"mmmedo3",genreDto,albumDto2,artistDto);
        
         songDto1.setId(1l);
         songDto2.setId(2l);
