@@ -1,12 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.musiclibrary.euphony.dto;
 
-import com.musiclibrary.euphony.entities.Artist;
-import com.musiclibrary.euphony.entities.Genre;
-import com.musiclibrary.euphony.entities.Song;
 import java.util.List;
 import org.joda.time.DateTime;
 
@@ -26,17 +19,18 @@ public class AlbumDTO {
     
     private DateTime releaseDate;
         
-    private List<Song> songs;
+    private List<SongDTO> songs;
     
-    private List<Genre> genres;
+    private List<GenreDTO> genres;
     
-    private List<Artist> artists;
+    private List<ArtistDTO> artists;
 
     public AlbumDTO() {
+        
     }
 
-    public AlbumDTO(String title, String cover, DateTime releaseDate, List<Song> songs,
-            String comment, List<Artist> artists, List<Genre> genres) {
+    public AlbumDTO(String title, String cover, DateTime releaseDate, List<SongDTO> songs,
+            String comment, List<ArtistDTO> artists, List<GenreDTO> genres) {
         this.title = title;
         this.cover = cover;
         this.releaseDate = releaseDate;
@@ -47,8 +41,8 @@ public class AlbumDTO {
         
     }
 
-    public AlbumDTO(String cover) {
-        this.cover = cover;
+    public AlbumDTO(String title) {
+        this.title = title;
     }
     
     public Long getId() {
@@ -83,11 +77,11 @@ public class AlbumDTO {
         this.releaseDate = releaseDate;
     }
 
-    public List<Song> getSongs() {
+    public List<SongDTO> getSongs() {
         return songs;
     }
 
-    public void setSongs(List<Song> songs) {
+    public void setSongs(List<SongDTO> songs) {
         this.songs = songs;
     }
     
@@ -99,19 +93,20 @@ public class AlbumDTO {
         this.comment = comment;
     }
     
-    public List<Genre> getGenres() {
+    public List<GenreDTO> getGenres() {
         return genres;
     }
 
-    public void setGenres(List<Genre> genres) {
+    public void setGenres(List<GenreDTO> genres) {
         this.genres = genres;
     }
 
-    public List<Artist> getArtists() {
+    public List<ArtistDTO> getArtists() {
         return artists;
     }
 
-    public void setArtists(List<Artist> artists) {
+    public void setArtists(List<ArtistDTO> artists) {
         this.artists = artists;
     }
+    
 }

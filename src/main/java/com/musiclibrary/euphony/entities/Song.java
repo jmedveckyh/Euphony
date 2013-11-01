@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
@@ -39,6 +40,9 @@ public class Song implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private Artist artist;
 
+    @ManyToOne
+    private Playlist playlist;            
+            
     public Song(){ }
 
     public Song(String title, int bitrate, int trackNumber, String comment, Genre genre, Album album, Artist artist) {

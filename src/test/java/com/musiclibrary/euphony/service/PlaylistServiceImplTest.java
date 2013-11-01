@@ -6,8 +6,16 @@ import com.musiclibrary.euphony.dto.ArtistDTO;
 import com.musiclibrary.euphony.dto.GenreDTO;
 import com.musiclibrary.euphony.dto.PlaylistDTO;
 import com.musiclibrary.euphony.dto.SongDTO;
+import com.musiclibrary.euphony.services.AlbumService;
+import com.musiclibrary.euphony.services.ArtistService;
+import com.musiclibrary.euphony.services.GenreService;
 import com.musiclibrary.euphony.services.PlaylistService;
+import com.musiclibrary.euphony.services.SongService;
+import com.musiclibrary.euphony.services.impl.AlbumServiceImpl;
+import com.musiclibrary.euphony.services.impl.ArtistServiceImpl;
+import com.musiclibrary.euphony.services.impl.GenreServiceImpl;
 import com.musiclibrary.euphony.services.impl.PlaylistServiceImpl;
+import com.musiclibrary.euphony.services.impl.SongServiceImpl;
 import com.musiclibrary.euphony.util.DTOMapper;
 import java.util.Map;
 import java.util.TreeMap;
@@ -30,7 +38,7 @@ public class PlaylistServiceImplTest {
 
     @Before
     public void setUp() {        
-        playlistService = new PlaylistServiceImpl();
+        playlistService = new PlaylistServiceImpl();        
         playlistDAO = mock(PlaylistDAOImpl.class);
         ((PlaylistServiceImpl) playlistService).setPlaylistDAO(playlistDAO);
     }
@@ -52,23 +60,6 @@ public class PlaylistServiceImplTest {
         playlistService.create(playlistTemp);
         verify(playlistDAO, times(1)).create(DTOMapper.toEntity(playlistTemp));
         verifyNoMoreInteractions(playlistDAO);
-    }
-    
-    @Test
-    public void testCreatePlaylistWithNameAndSongs() {
-        Map<Integer, SongDTO> songsTemp = new TreeMap<>();
-        GenreDTO genreTemp = new GenreDTO("Pop");
-        AlbumDTO albumTemp = new AlbumDTO("The Fox");
-        ArtistDTO artistTemp = new ArtistDTO("Ylvis");
-        songsTemp.put(1, new SongDTO("The Fox", 180, 1, "", genreTemp, albumTemp, artistTemp));
-        songsTemp.put(2, new SongDTO("Someone Like Me", 180, 2, "", genreTemp, albumTemp, artistTemp));
-        songsTemp.put(3, new SongDTO("Stonehenge", 180, 3, "", genreTemp, albumTemp, artistTemp));
-        PlaylistDTO playlistTemp = new PlaylistDTO("Funny", songsTemp);
-        
-        doNothing().when(playlistDAO).create(DTOMapper.toEntity(playlistTemp));
-        playlistService.create(playlistTemp);
-        verify(playlistDAO, times(1)).create(DTOMapper.toEntity(playlistTemp));
-        verifyNoMoreInteractions(playlistDAO);        
     }
     
     @Test(expected = DataAccessException.class)
@@ -105,15 +96,8 @@ public class PlaylistServiceImplTest {
     
     @Test
     public void tetsUpdatePlaylistWithIdAndName() {
-        Map<Integer, SongDTO> songsTemp = new TreeMap<>();
-        GenreDTO genreTemp = new GenreDTO("Pop");
-        AlbumDTO albumTemp = new AlbumDTO("The Fox");
-        ArtistDTO artistTemp = new ArtistDTO("Ylvis");
-        songsTemp.put(1, new SongDTO("The Fox", 180, 1, "", genreTemp, albumTemp, artistTemp));
-        songsTemp.put(2, new SongDTO("Someone Like Me", 180, 2, "", genreTemp, albumTemp, artistTemp));
-        songsTemp.put(3, new SongDTO("Stonehenge", 180, 3, "", genreTemp, albumTemp, artistTemp));
-        PlaylistDTO playlistTemp = new PlaylistDTO("Funny", songsTemp);
-        PlaylistDTO playlistTempUpdated = new PlaylistDTO("Funny", songsTemp);
+        PlaylistDTO playlistTemp = new PlaylistDTO("Funny");
+        PlaylistDTO playlistTempUpdated = new PlaylistDTO("Not Funny");
         
         // creates a new playlist
         doNothing().when(playlistDAO).create(DTOMapper.toEntity(playlistTemp));
@@ -197,16 +181,9 @@ public class PlaylistServiceImplTest {
      */
     
     @Test
-    public void testDeletePlaylistWithIdAndDifferentAttributes() {
-        Map<Integer, SongDTO> songsTemp = new TreeMap<>();
-        GenreDTO genreTemp = new GenreDTO("Pop");
-        AlbumDTO albumTemp = new AlbumDTO("The Fox");
-        ArtistDTO artistTemp = new ArtistDTO("Ylvis");
-        songsTemp.put(1, new SongDTO("The Fox", 180, 1, "", genreTemp, albumTemp, artistTemp));
-        songsTemp.put(2, new SongDTO("Someone Like Me", 180, 2, "", genreTemp, albumTemp, artistTemp));
-        songsTemp.put(3, new SongDTO("Stonehenge", 180, 3, "", genreTemp, albumTemp, artistTemp));
-        PlaylistDTO playlistTemp = new PlaylistDTO("Funny", songsTemp);
-        PlaylistDTO playlistTempToDelete = new PlaylistDTO("Funny", songsTemp);
+    public void testDeletePlaylistWithId() {
+        PlaylistDTO playlistTemp = new PlaylistDTO("Funny");
+        PlaylistDTO playlistTempToDelete = new PlaylistDTO("Not Funny");
         
         doNothing().when(playlistDAO).create(DTOMapper.toEntity(playlistTemp));
         playlistService.create(playlistTemp);
@@ -287,14 +264,7 @@ public class PlaylistServiceImplTest {
     
     @Test
     public void testGetByIdPlaylistWithClsAndId() {
-        Map<Integer, SongDTO> songsTemp = new TreeMap<>();
-        GenreDTO genreTemp = new GenreDTO("Pop");
-        AlbumDTO albumTemp = new AlbumDTO("The Fox");
-        ArtistDTO artistTemp = new ArtistDTO("Ylvis");
-        songsTemp.put(1, new SongDTO("The Fox", 180, 1, "", genreTemp, albumTemp, artistTemp));
-        songsTemp.put(2, new SongDTO("Someone Like Me", 180, 2, "", genreTemp, albumTemp, artistTemp));
-        songsTemp.put(3, new SongDTO("Stonehenge", 180, 3, "", genreTemp, albumTemp, artistTemp));
-        PlaylistDTO playlistTemp = new PlaylistDTO("Funny", songsTemp);
+        PlaylistDTO playlistTemp = new PlaylistDTO("Funny");
         
         doNothing().when(playlistDAO).create(DTOMapper.toEntity(playlistTemp));
         playlistService.create(playlistTemp);

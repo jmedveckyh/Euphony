@@ -105,7 +105,7 @@ public class PlaylistDAOImpl implements DAO<Playlist> , PlaylistDAO{
             throw new IllegalArgumentException("This song entity cannot have null id.");
         }
         
-        Query q = em.createQuery("FROM Playlist where song=:song");
+        Query q = em.createQuery("FROM Playlist WHERE song=:song");
         q.setParameter("song", song);
         List<Playlist> playlists = q.getResultList();
         
