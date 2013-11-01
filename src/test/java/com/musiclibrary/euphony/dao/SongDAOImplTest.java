@@ -1,16 +1,23 @@
 package com.musiclibrary.euphony.dao;
 
+import com.musiclibrary.euphony.dao.impl.AlbumDAOImpl;
+import com.musiclibrary.euphony.dao.impl.ArtistDAOImpl;
+import com.musiclibrary.euphony.dao.impl.GenreDAOImpl;
 import com.musiclibrary.euphony.dao.impl.SongDAOImpl;
 import com.musiclibrary.euphony.entities.Album;
 import com.musiclibrary.euphony.entities.Artist;
 import com.musiclibrary.euphony.entities.Genre;
 import com.musiclibrary.euphony.entities.Song;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import junit.framework.TestCase;
+import org.joda.time.DateTime;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -24,6 +31,9 @@ public class SongDAOImplTest extends TestCase {
     private EntityManagerFactory emf;
     private EntityManager em;
     private SongDAOImpl songDAOImpl;
+    private ArtistDAOImpl artistDao;
+    private GenreDAOImpl genreDao;
+    private AlbumDAOImpl albumDao;
 
     public SongDAOImplTest(String name) {
         super(name);
@@ -35,6 +45,9 @@ public class SongDAOImplTest extends TestCase {
         emf = Persistence.createEntityManagerFactory("testEuphonyPU");
         em = emf.createEntityManager();
         songDAOImpl = new SongDAOImpl(em);
+        artistDao = new ArtistDAOImpl(em);
+        genreDao = new GenreDAOImpl(em);
+        albumDao = new AlbumDAOImpl(em);
     }
 
     @Override
@@ -602,6 +615,106 @@ public class SongDAOImplTest extends TestCase {
         Song res1 = songDAOImpl.getById(songId);
         assertDeepEquals(dalibomba, res1);
         em.clear();
+    }
+    
+    public void testGetByTitle(){
+        assertTrue(songDAOImpl.getByTitle("Prisoner").isEmpty());
+        
+        Song song = new Song("Prisoner", 320, 2, "Children of the Damned", new Genre(), new Album(), new Artist());
+        em.getTransaction().begin();
+        songDAOImpl.create(song);
+        em.getTransaction().commit();
+        
+        List<Song> songs1 = new ArrayList();
+        List<Song> songs2 = new ArrayList();
+        
+        songs1.add(song);
+        songs2 = songDAOImpl.getByTitle("Prisoner");
+        
+        assertEquals(songs1, songs2);
+        
+        em.getTransaction().begin();
+        songDAOImpl.delete(song);
+        em.getTransaction().commit();
+        assertTrue(songDAOImpl.getByTitle("Prisoner").isEmpty());
+    }
+    
+    public void testGetByAlbum(){
+        Album album = new Album("Title","cover.jpg", DateTime.now(),new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
+        em.getTransaction().begin();
+        albumDao.create(album);
+        em.getTransaction().commit();
+        assertTrue(songDAOImpl.getByAlbum(album).isEmpty());
+
+        Song song = new Song("Prisoner", 320, 2, "Children of the Damned", new Genre(), album, new Artist());
+        em.getTransaction().begin();
+        songDAOImpl.create(song);
+        em.getTransaction().commit();
+        
+        List<Song> songs1 = new ArrayList();
+        List<Song> songs2 = new ArrayList();
+        
+        songs1.add(song);
+        songs2 = songDAOImpl.getByAlbum(album);
+        
+        assertEquals(songs1, songs2);
+        
+        em.getTransaction().begin();
+        songDAOImpl.delete(song);
+        em.getTransaction().commit();
+        assertTrue(songDAOImpl.getByAlbum(album).isEmpty());
+    }
+    
+    public void testGetByGenre(){
+        Genre genre = new Genre("metal");
+        em.getTransaction().begin();
+        genreDao.create(genre);
+        em.getTransaction().commit();
+        assertTrue(songDAOImpl.getByGenre(genre).isEmpty());
+        
+        Song song = new Song("Prisoner", 320, 2, "Children of the Damned", genre, new Album(), new Artist());
+        em.getTransaction().begin();
+        songDAOImpl.create(song);
+        em.getTransaction().commit();
+        
+        List<Song> songs1 = new ArrayList();
+        List<Song> songs2 = new ArrayList();
+        
+        songs1.add(song);
+        songs2 = songDAOImpl.getByGenre(genre);
+        
+        assertEquals(songs1, songs2);
+        
+        em.getTransaction().begin();
+        songDAOImpl.delete(song);
+        em.getTransaction().commit();
+        assertTrue(songDAOImpl.getByGenre(genre).isEmpty());
+    }
+    
+    public void testGetByArtist(){
+        Artist artist = new Artist("Iron Maiden");
+        em.getTransaction().begin();
+        artistDao.create(artist);
+        em.getTransaction().commit();
+        assertTrue(songDAOImpl.getByArtist(artist).isEmpty());
+        
+        Song song = new Song("Prisoner", 320, 2, "Children of the Damned", new Genre(), new Album(), artist);
+        em.getTransaction().begin();
+        songDAOImpl.create(song);
+        em.getTransaction().commit();
+        
+        List<Song> songs1 = new ArrayList();
+        List<Song> songs2 = new ArrayList();
+        
+        songs1.add(song);
+        songs2 = songDAOImpl.getByArtist(artist);
+        
+        assertEquals(songs1, songs2);
+        
+        em.getTransaction().begin();
+        songDAOImpl.delete(song);
+        em.getTransaction().commit();
+        assertTrue(songDAOImpl.getByArtist(artist).isEmpty());
     }
 
     private void assertDeepEquals(Song expected, Song actual) {
