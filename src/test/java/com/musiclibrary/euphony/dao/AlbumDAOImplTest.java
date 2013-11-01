@@ -326,10 +326,8 @@ public class AlbumDAOImplTest extends TestCase {
         
         List<Album> resultList = albumDao.getByGenre(technoGen);
         assertEquals(1, resultList.size());
-        //Album result = resultList.get(0);
         List<Album> technoList = new ArrayList<Album>();
         technoList.add(expResult);
-        //assertNotNull(result);
         assertEquals(technoList, resultList);
         
         List<Album> resultList2 = albumDao.getByGenre(houseGen);
@@ -351,9 +349,6 @@ public class AlbumDAOImplTest extends TestCase {
         em.getTransaction().begin();
         Album expResult = new Album("Spaceman", "cover.jpg", new DateTime(2009,1,1,0,0), new ArrayList<Song>(), "nehehe",
                                       new ArrayList<Artist>(), new ArrayList<Genre>());
-        Genre tranceGen = new Genre("Trance");
-        Genre technoGen = new Genre("Techno");
-        Genre houseGen = new Genre("House");
         Artist tiesto = new Artist("Tiesto");
         Artist hardwell = new Artist("Hardwell");
         Artist dyro = new Artist("Dyro");
@@ -363,7 +358,6 @@ public class AlbumDAOImplTest extends TestCase {
         expResult.getArtists().add(dyro);
         albumDao.create(expResult);
         em.getTransaction().commit();
-        //em.clear();
         
         em.getTransaction().begin();
         Album expResult2 = new Album("Imagine", "cover1.jpg", new DateTime(2010,1,1,0,0), new ArrayList<Song>(), "hehe",
@@ -379,10 +373,8 @@ public class AlbumDAOImplTest extends TestCase {
         
         List<Album> resultList = albumDao.getByArtist(tiesto);
         assertEquals(1, resultList.size());
-        //Album result = resultList.get(0);
         List<Album> tiestosList = new ArrayList<Album>();
         tiestosList.add(expResult);
-        //assertNotNull(result);
         assertEquals(tiestosList, resultList);
         
         List<Album> resultList2 = albumDao.getByArtist(hardwell);
@@ -398,6 +390,68 @@ public class AlbumDAOImplTest extends TestCase {
         assertEquals(expResult.getReleaseDate(), result.getReleaseDate());
         assertEquals(expResult.getArtists(), result.getArtists());
         */
+    }
+    
+    public void testGetAlbumByReleaseYear(){
+        em.getTransaction().begin();
+        Album expResult = new Album("Club Life", "cover.jpg", new DateTime(2011,10,1,0,0), new ArrayList<Song>(), "nehehe",
+                                      new ArrayList<Artist>(), new ArrayList<Genre>());
+        expResult.getArtists().add(new Artist("Tiesto"));
+        albumDao.create(expResult);
+        em.getTransaction().commit();
+        em.clear();
+        
+        em.getTransaction().begin();
+        Album expResult2 = new Album("Club Life Alfa", "cover1.jpg", new DateTime(2011,1,1,0,0), new ArrayList<Song>(), "nehehe",
+                                      new ArrayList<Artist>(), new ArrayList<Genre>());
+        expResult.getArtists().add(new Artist("Tiesto"));
+        albumDao.create(expResult2);
+        em.getTransaction().commit();
+        em.clear();
+        
+        em.getTransaction().begin();
+        Album expResult3 = new Album("Club Life Final Release", "cover.jpg", new DateTime(2011,12,31,23,59), new ArrayList<Song>(), "nehehe",
+                                      new ArrayList<Artist>(), new ArrayList<Genre>());
+        expResult.getArtists().add(new Artist("Tiesto"));
+        albumDao.create(expResult3);
+        em.getTransaction().commit();
+        em.clear();
+        
+        em.getTransaction().begin();
+        Album expResult4 = new Album("Club Life Final Release 2010", "cover.jpg", new DateTime(2010,12,31,23,59), new ArrayList<Song>(), "nehehe",
+                                      new ArrayList<Artist>(), new ArrayList<Genre>());
+        expResult.getArtists().add(new Artist("Tiesto"));
+        albumDao.create(expResult4);
+        em.getTransaction().commit();
+        em.clear();
+        
+        em.getTransaction().begin();
+        Album expResult5 = new Album("Club Life Alfa 2012", "cover.jpg", new DateTime(2012,1,1,0,0), new ArrayList<Song>(), "nehehe",
+                                      new ArrayList<Artist>(), new ArrayList<Genre>());
+        expResult.getArtists().add(new Artist("Tiesto"));
+        albumDao.create(expResult5);
+        em.getTransaction().commit();
+        em.clear();
+        
+        assertNotNull(expResult.getId());  
+        assertNotNull(expResult2.getId());  
+        assertNotNull(expResult3.getId());  
+        assertNotNull(expResult4.getId());  
+        assertNotNull(expResult5.getId());  
+        
+        List<Album> resultList = albumDao.getByReleaseYear(new Integer(2011));
+        assertEquals(3, resultList.size());
+        List<Album> twoOelevenList = new ArrayList<Album>();
+        twoOelevenList.add(expResult);
+        twoOelevenList.add(expResult2);
+        twoOelevenList.add(expResult3);
+
+        assertEquals(twoOelevenList, resultList);
+        
+        List<Album> resultList2 = albumDao.getByReleaseYear(new Integer(2012));
+        List<Album> twoOtwelveList = new ArrayList<Album>();
+        twoOtwelveList.add(expResult5);
+        assertEquals(twoOtwelveList, resultList2);
     }
     
     private void assertDeepEquals(Album a1,Album a2){

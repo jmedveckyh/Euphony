@@ -147,8 +147,8 @@ public class AlbumDAOImpl implements AlbumDAO {
             throw new IllegalArgumentException("Year is null");
         }
         Query q = em.createQuery("select x from Album x WHERE x.releaseDate BETWEEN :from AND :to");
-        q.setParameter("from", new DateTime(year - 1, 31, 12, 59, 59));
-        q.setParameter("to", new DateTime(year + 1, 1, 1, 0, 0));
+        q.setParameter("from", new DateTime(year, 1, 1, 0, 0));
+        q.setParameter("to", new DateTime(year, 12, 31, 23, 59));
         try {
             List<Album> albums = q.getResultList();
             return albums;
