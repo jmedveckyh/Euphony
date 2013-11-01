@@ -19,6 +19,8 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.fail;
 import junit.framework.TestCase;
 import org.joda.time.DateTime;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Unit tests for Album DAO implementation.
@@ -38,9 +40,8 @@ public class AlbumDAOImplTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        emf = Persistence.createEntityManagerFactory("testEuphonyPU");
-        em = emf.createEntityManager();
-        albumDao = new AlbumDAOImpl(em);
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        albumDao = (AlbumDAO) applicationContext.getBean("albumDAO");
     }
 
     @Override

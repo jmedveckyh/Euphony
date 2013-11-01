@@ -11,18 +11,21 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
 import org.joda.time.DateTime;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  *
  * @author Branislav Novotny
  */
+@Repository
 public class AlbumDAOImpl implements AlbumDAO {
 
-    @PersistenceContext
+    @PersistenceContext(type= PersistenceContextType.EXTENDED)
     private EntityManager em;
 
     public AlbumDAOImpl(EntityManager em) {
