@@ -347,6 +347,59 @@ public class AlbumDAOImplTest extends TestCase {
         */
     }
     
+    public void testGetAlbumByArtist(){
+        em.getTransaction().begin();
+        Album expResult = new Album("Spaceman", "cover.jpg", new DateTime(2009,1,1,0,0), new ArrayList<Song>(), "nehehe",
+                                      new ArrayList<Artist>(), new ArrayList<Genre>());
+        Genre tranceGen = new Genre("Trance");
+        Genre technoGen = new Genre("Techno");
+        Genre houseGen = new Genre("House");
+        Artist tiesto = new Artist("Tiesto");
+        Artist hardwell = new Artist("Hardwell");
+        Artist dyro = new Artist("Dyro");
+        
+        expResult.getArtists().add(tiesto);
+        expResult.getArtists().add(hardwell);
+        expResult.getArtists().add(dyro);
+        albumDao.create(expResult);
+        em.getTransaction().commit();
+        //em.clear();
+        
+        em.getTransaction().begin();
+        Album expResult2 = new Album("Imagine", "cover1.jpg", new DateTime(2010,1,1,0,0), new ArrayList<Song>(), "hehe",
+                                      new ArrayList<Artist>(), new ArrayList<Genre>());
+        expResult2.getArtists().add(dyro);
+        expResult2.getArtists().add(hardwell);
+        albumDao.create(expResult2);
+        em.getTransaction().commit();
+        em.clear();
+
+        assertNotNull(expResult.getId());
+        assertNotNull(expResult2.getId());
+        
+        List<Album> resultList = albumDao.getByArtist(tiesto);
+        assertEquals(1, resultList.size());
+        //Album result = resultList.get(0);
+        List<Album> tiestosList = new ArrayList<Album>();
+        tiestosList.add(expResult);
+        //assertNotNull(result);
+        assertEquals(tiestosList, resultList);
+        
+        List<Album> resultList2 = albumDao.getByArtist(hardwell);
+        List<Album> hardwellList = new ArrayList<Album>();
+        hardwellList.add(expResult);
+        hardwellList.add(expResult2);
+        assertEquals(2, resultList2.size());
+        assertEquals(hardwellList, resultList2);
+
+        /*
+        assertEquals(expResult.getTitle(), result.getTitle());
+        assertEquals(expResult.getCover(), result.getCover());
+        assertEquals(expResult.getReleaseDate(), result.getReleaseDate());
+        assertEquals(expResult.getArtists(), result.getArtists());
+        */
+    }
+    
     private void assertDeepEquals(Album a1,Album a2){
         assertEquals(a1.getId(),a2.getId());
         assertEquals(a1.getArtists(),a2.getArtists());

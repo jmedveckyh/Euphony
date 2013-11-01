@@ -129,7 +129,7 @@ public class AlbumDAOImpl implements AlbumDAO {
         if (artist == null) {
          throw new IllegalArgumentException("Artist is null");
          }
-         Query q = em.createQuery("SELECT x FROM Album x WHERE :artist IN x.artists");
+         Query q = em.createQuery("SELECT x FROM Album x WHERE (:artist) IN elements(x.artists)");
          q.setParameter("artist", artist);
          try {
          List<Album> albums = q.getResultList();
