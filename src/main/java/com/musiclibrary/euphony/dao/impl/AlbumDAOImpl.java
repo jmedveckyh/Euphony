@@ -5,6 +5,7 @@ import com.musiclibrary.euphony.entities.Album;
 import com.musiclibrary.euphony.entities.Artist;
 import com.musiclibrary.euphony.entities.Genre;
 import com.musiclibrary.euphony.util.Util;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -111,7 +112,7 @@ public class AlbumDAOImpl implements AlbumDAO {
         if (genre == null) {
          throw new IllegalArgumentException("Genre is null");
          }
-         Query q = em.createQuery("SELECT x FROM Album x WHERE :genre IN x.genres");
+         Query q = em.createQuery("SELECT x FROM Album x WHERE (:genre) IN elements(x.genres)");
          q.setParameter("genre", genre);
          try {
          List<Album> albums = q.getResultList();
