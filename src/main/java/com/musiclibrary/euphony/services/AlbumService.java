@@ -5,6 +5,9 @@
 package com.musiclibrary.euphony.services;
 
 import com.musiclibrary.euphony.dto.AlbumDTO;
+import com.musiclibrary.euphony.entities.Album;
+import com.musiclibrary.euphony.entities.Artist;
+import com.musiclibrary.euphony.entities.Genre;
 import java.util.List;
 
 /**
@@ -22,8 +25,12 @@ public interface AlbumService {
     AlbumDTO getById(Long id);
     
     AlbumDTO getByTitle(String title);
+        
+    List<AlbumDTO> getByGenre(Genre genre);
+    
+    List<AlbumDTO> getByArtist(Artist artist);
     
     List<AlbumDTO> getAllAlbums();
     
-    List<AlbumDTO> getByReleaseYear(int year);    
+    List<AlbumDTO> getByReleaseYear(Integer year);    
 }

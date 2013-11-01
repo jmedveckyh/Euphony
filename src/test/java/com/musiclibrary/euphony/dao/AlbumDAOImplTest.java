@@ -6,6 +6,11 @@ package com.musiclibrary.euphony.dao;
 
 import com.musiclibrary.euphony.dao.impl.AlbumDAOImpl;
 import com.musiclibrary.euphony.entities.Album;
+import com.musiclibrary.euphony.entities.Artist;
+import com.musiclibrary.euphony.entities.Genre;
+import com.musiclibrary.euphony.entities.Song;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -257,5 +262,30 @@ public class AlbumDAOImplTest extends TestCase {
         albumDAOImpl.delete(album);
         em.getTransaction().commit();
         em.clear();
+    }
+    
+    public void testGetAllAlbums(){
+        List<Album> expResults = new ArrayList<Album>();
+        assertEquals(expResults, albumDAOImpl.getAll());
+        
+        em.getTransaction().begin();
+        Album expResult1 = new Album("Pribeh", "Daco", new DateTime(), new ArrayList<Song>(), "nehehe",
+                                      new ArrayList<Artist>(), new ArrayList<Genre>());
+        Album expResult2 = new Album("Mirage", "Daco", new DateTime(), new ArrayList<Song>(), "nehehe",
+                                      new ArrayList<Artist>(), new ArrayList<Genre>());
+        Album expResult3 = new Album("Imagine", "Daco", new DateTime(), new ArrayList<Song>(), "nehehe",
+                                      new ArrayList<Artist>(), new ArrayList<Genre>());
+        albumDAOImpl.create(expResult1);
+        albumDAOImpl.create(expResult2);
+        albumDAOImpl.create(expResult3);
+        em.getTransaction().commit();
+        em.clear();
+        
+        expResults.add(expResult1);
+        expResults.add(expResult2);
+        expResults.add(expResult3);
+
+        List<Album> results = albumDAOImpl.getAll(); //ok
+        assertEquals(expResults, results);
     }
 }
