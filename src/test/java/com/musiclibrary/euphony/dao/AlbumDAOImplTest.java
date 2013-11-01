@@ -254,10 +254,12 @@ public class AlbumDAOImplTest extends TestCase {
         List<Album> albums = new ArrayList();
         albums.add(album1);
         albums.add(album2);
+        em.getTransaction().begin();
         albumDao.create(album1);
         albumDao.create(album2);
+        em.getTransaction().commit();
         
-        //assertEquals(albums, albumDao.getAll()); 
+        assertEquals(albums, albumDao.getAll()); 
     }
     
     public void testGetByTitleWithNullName(){
