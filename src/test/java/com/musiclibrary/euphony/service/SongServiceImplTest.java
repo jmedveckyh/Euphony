@@ -22,6 +22,7 @@ import junit.framework.TestCase;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
+import org.springframework.dao.DataAccessException;
 
 /**
  *
@@ -51,7 +52,7 @@ public class SongServiceImplTest extends TestCase{
         try {
             service.create(null);
             fail();
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         verify(dao).create(null);
@@ -79,7 +80,7 @@ public class SongServiceImplTest extends TestCase{
         try{
             service.update(null);
             fail();
-        }catch(IllegalArgumentException ex){
+        }catch(DataAccessException ex){
             //OK
         }
          
@@ -108,7 +109,7 @@ public class SongServiceImplTest extends TestCase{
         try{
             service.delete(null);
             fail();
-        }catch(IllegalArgumentException ex){
+        }catch(DataAccessException ex){
             //OK
         }
          
@@ -139,14 +140,14 @@ public class SongServiceImplTest extends TestCase{
         try{
             service.getById(null);
             fail();
-        }catch(IllegalArgumentException ex){
+        }catch(DataAccessException ex){
             //OK
         }
        
         try{
             service.getById(-1l);
             fail();
-        }catch(IllegalArgumentException ex){
+        }catch(DataAccessException ex){
             //OK
         }
          
@@ -214,7 +215,7 @@ public class SongServiceImplTest extends TestCase{
         try {
             service.getByTitle(null);
             fail();
-        } catch(IllegalArgumentException e){
+        } catch(DataAccessException e){
            //OK
         }
        
@@ -259,7 +260,7 @@ public class SongServiceImplTest extends TestCase{
         try {
             service.getByGenre(null);
             fail();
-        } catch(IllegalArgumentException e){
+        } catch(DataAccessException e){
            //OK
         }
         
@@ -311,7 +312,7 @@ public class SongServiceImplTest extends TestCase{
         try {
             service.getByArtist(null);
             fail();
-        } catch(IllegalArgumentException e){
+        } catch(DataAccessException e){
            //OK
         }
         
@@ -365,7 +366,7 @@ public class SongServiceImplTest extends TestCase{
         try {
             service.getByAlbum(null);
             fail();
-        } catch(IllegalArgumentException e){
+        } catch(DataAccessException e){
            //OK
         }
         
