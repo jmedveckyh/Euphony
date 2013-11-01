@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
 
 /**
  *
- * @author Sebastian
+ * @author Sebastian Lazon 395990
  */
 public class SongServiceImplTest extends TestCase{
     
