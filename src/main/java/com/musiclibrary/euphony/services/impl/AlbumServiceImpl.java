@@ -28,7 +28,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
-    public void create(AlbumDTO albumDTO) {
+    public void create(AlbumDTO albumDTO) throws DataAccessException{
         Album albumEntity = DTOMapper.toEntity(albumDTO);
         try {
             albumDAO.create(albumEntity);
@@ -42,7 +42,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
-    public void update(AlbumDTO albumDTO) {
+    public void update(AlbumDTO albumDTO) throws DataAccessException{
         Album albumEntity = DTOMapper.toEntity(albumDTO);
         try {
             albumDAO.update(albumEntity);
@@ -54,7 +54,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
-    public void delete(AlbumDTO albumDTO) {
+    public void delete(AlbumDTO albumDTO) throws DataAccessException{
         try {
             albumDAO.delete(DTOMapper.toEntity(albumDTO));
         } catch (IllegalArgumentException | PersistenceException ex) {
@@ -64,7 +64,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
-    public AlbumDTO getById(Long id) {
+    public AlbumDTO getById(Long id) throws DataAccessException{
         try {
             return DTOMapper.toDTO(albumDAO.getById(id));
         } catch (IllegalArgumentException | PersistenceException ex) {
@@ -74,7 +74,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
     
     @Override
-    public AlbumDTO getByTitle(String title) {
+    public AlbumDTO getByTitle(String title) throws DataAccessException{
         try {
             return DTOMapper.toDTO(albumDAO.getByTitle(title));
         } catch (IllegalArgumentException | PersistenceException ex) {
@@ -84,7 +84,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
-    public List<AlbumDTO> getAllAlbums() {
+    public List<AlbumDTO> getAllAlbums() throws DataAccessException{
         try {
             return DTOMapper.albumListToDTO(albumDAO.getAll());
         } catch (IllegalArgumentException | PersistenceException ex) {
@@ -94,7 +94,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
-    public List<AlbumDTO> getByReleaseYear(Integer year) {
+    public List<AlbumDTO> getByReleaseYear(Integer year) throws DataAccessException{
         try {
             return DTOMapper.albumListToDTO(albumDAO.getByReleaseYear(year));
         } catch (IllegalArgumentException | PersistenceException ex) {
@@ -104,7 +104,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
-    public List<AlbumDTO> getByGenre(Genre genre) {
+    public List<AlbumDTO> getByGenre(Genre genre) throws DataAccessException{
         try {
             return DTOMapper.albumListToDTO(albumDAO.getByGenre(genre));
         } catch (IllegalArgumentException | PersistenceException ex) {
@@ -114,7 +114,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
-    public List<AlbumDTO> getByArtist(Artist artist) {
+    public List<AlbumDTO> getByArtist(Artist artist) throws DataAccessException{
         try {
             return DTOMapper.albumListToDTO(albumDAO.getByArtist(artist));
         } catch (IllegalArgumentException | PersistenceException ex) {
