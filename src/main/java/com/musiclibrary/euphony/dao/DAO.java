@@ -1,7 +1,5 @@
 package com.musiclibrary.euphony.dao;
 
-import java.io.Serializable;
-
 
 /**
  * Generic CRUD DAO interface

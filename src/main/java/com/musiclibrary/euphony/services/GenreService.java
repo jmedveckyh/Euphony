@@ -1,12 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.musiclibrary.euphony.services;
 
 import com.musiclibrary.euphony.dto.GenreDTO;
-import org.springframework.dao.DataAccessException;
 import java.util.List;
+import org.springframework.dao.DataAccessException;
 
 /**
  *

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.musiclibrary.euphony.dto;
 
 /**
@@ -20,6 +16,10 @@ public class SongDTO{
     private ArtistDTO artist;
 
     public SongDTO(){ }
+
+    public SongDTO(String title) {
+        this.title = title;
+    }
 
     public SongDTO(String title, int bitrate, int trackNumber, String comment, GenreDTO genre, AlbumDTO album, ArtistDTO artist) {
         this.title = title;

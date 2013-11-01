@@ -1,8 +1,8 @@
 package com.musiclibrary.euphony.services;
 
 import com.musiclibrary.euphony.dto.ArtistDTO;
-import org.springframework.dao.DataAccessException;
 import java.util.List;
+import org.springframework.dao.DataAccessException;
 
 /**
  *

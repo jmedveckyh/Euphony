@@ -3,7 +3,6 @@ package com.musiclibrary.euphony.facade;
 import com.musiclibrary.euphony.dto.AlbumDTO;
 import com.musiclibrary.euphony.dto.PlaylistDTO;
 import com.musiclibrary.euphony.dto.SongDTO;
-import java.util.Map;
 
 /**
  * Interface for facade layer. 

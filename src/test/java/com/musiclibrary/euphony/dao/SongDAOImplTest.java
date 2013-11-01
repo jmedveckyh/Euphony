@@ -18,8 +18,6 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import junit.framework.TestCase;
 import org.joda.time.DateTime;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * Unit tests for Song DAO implementation.
@@ -71,7 +69,7 @@ public class SongDAOImplTest extends TestCase {
         assertDeepEquals(song, song2);
 
         em.clear();
-
+        
         //test null song
         em.getTransaction().begin();
         try {
@@ -206,17 +204,6 @@ public class SongDAOImplTest extends TestCase {
         em.getTransaction().commit();
         em.clear();
 
-        //test with null comment
-        em.getTransaction().begin();
-        songDAOImpl.create(new Song("Salalaj", 320, 1, null, new Genre(), new Album(), new Artist()));
-        em.getTransaction().commit();
-        em.clear();
-
-        //test with empty comment
-        em.getTransaction().begin();
-        songDAOImpl.create(new Song("Salalaj", 320, 1, "", new Genre(), new Album(), new Artist()));
-        em.getTransaction().commit();
-        em.clear();
     }
 
     /**
@@ -374,25 +361,6 @@ public class SongDAOImplTest extends TestCase {
         }
         em.getTransaction().commit();
         em.clear();
-
-        //test update song
-
-        Song blessed = new Song("Tim Hangs - Blessed", 320, 1, "Yeah", new Genre(), new Album(), new Artist());
-        Song dalibomba = new Song("Sandru - Dalibomba", 320, 1, "Yeah!!!", new Genre(), new Album(), new Artist());
-        em.getTransaction().begin();
-        songDAOImpl.create(blessed);
-        em.getTransaction().commit();
-        dalibomba.setId(blessed.getId());
-        dalibomba.getGenre().setId(blessed.getGenre().getId());
-        dalibomba.getAlbum().setId(blessed.getAlbum().getId());
-
-        em.getTransaction().begin();
-        songDAOImpl.update(dalibomba);                //OK
-        em.getTransaction().commit();
-        assertDeepEquals(dalibomba, songDAOImpl.getById(blessed.getId()));
-        em.clear();
-
-
     }
 
     /**
