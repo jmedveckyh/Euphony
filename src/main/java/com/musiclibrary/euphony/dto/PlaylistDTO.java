@@ -22,6 +22,10 @@ public class PlaylistDTO {
     public PlaylistDTO(String name) {
         this.name = name;
     }
+
+    public PlaylistDTO(String name) {
+        this.name = name;
+    }
     
     public PlaylistDTO(String name, Map<Integer, SongDTO> songs) {
         this.name = name;
