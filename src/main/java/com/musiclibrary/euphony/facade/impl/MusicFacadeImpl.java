@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Implementation of facade layer.
  * 
- * @author Tomas Smetanka #396209
+ * @author Tomas Smetanka
  */
 @Service
 public class MusicFacadeImpl implements MusicFacade {

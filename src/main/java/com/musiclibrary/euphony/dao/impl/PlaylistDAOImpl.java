@@ -1,6 +1,5 @@
 package com.musiclibrary.euphony.dao.impl;
 
-import com.musiclibrary.euphony.dao.DAO;
 import com.musiclibrary.euphony.dao.PlaylistDAO;
 import com.musiclibrary.euphony.entities.Playlist;
 import com.musiclibrary.euphony.entities.Song;
@@ -16,7 +15,7 @@ import javax.persistence.Query;
  * 
  * @author Tomas Smetanka
  */
-public class PlaylistDAOImpl implements DAO<Playlist> , PlaylistDAO{
+public class PlaylistDAOImpl implements PlaylistDAO{
 
     @PersistenceContext
     private EntityManager em;

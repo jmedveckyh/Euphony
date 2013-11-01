@@ -9,7 +9,15 @@ import java.util.List;
  * 
  * @author Tomas Smetanka
  */
-public interface PlaylistDAO extends DAO<Playlist> {
+public interface PlaylistDAO {
+    
+    public void create(Playlist entity);
+
+    public void update(Playlist entity);
+
+    public void delete(Playlist entity);
+
+    public Playlist getById(Long id);
     
     Playlist getByName(String name);
     

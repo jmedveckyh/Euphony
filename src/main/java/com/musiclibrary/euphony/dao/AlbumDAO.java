@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.musiclibrary.euphony.dao;
 
 import com.musiclibrary.euphony.entities.Album;
@@ -14,6 +10,7 @@ import java.util.List;
  * @author Branislav Novotny <br.novotny@gmail.com> #396152
  */
 public interface AlbumDAO {
+    
     public void create(Album entity);
 
     public void update(Album entity);
@@ -31,4 +28,5 @@ public interface AlbumDAO {
     public List<Album> getByArtist(Artist artist);
     
     public List<Album> getByReleaseYear(Integer year);
+    
 }
