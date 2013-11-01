@@ -59,8 +59,8 @@ public class SongServiceImplTest extends TestCase{
 
         GenreDTO genreDto = new GenreDTO();
         genreDto.setName("metal");
-        List<Song> songs = new ArrayList();
-        AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),songs);
+        List<SongDTO> songs = new ArrayList();
+        AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),songs,"comment",new ArrayList<ArtistDTO>(), new ArrayList<GenreDTO>());
         ArtistDTO artistDto = new ArtistDTO();
         artistDto.setName("Robo Kazik");
         SongDTO songDto = new SongDTO("ttt",144,1,"mmmedo",genreDto,albumDto,artistDto);
@@ -89,7 +89,7 @@ public class SongServiceImplTest extends TestCase{
         GenreDTO genreDto = new GenreDTO();
         genreDto.setName("metal");
         List<Song> songs = new ArrayList();
-        AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),songs);
+        AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),new ArrayList<SongDTO>(),"comment",new ArrayList<ArtistDTO>(), new ArrayList<GenreDTO>());
         ArtistDTO artistDto = new ArtistDTO();
         artistDto.setName("Robo Kazik");
         SongDTO songDto = new SongDTO("ttt",144,1,"mmmedo",genreDto,albumDto,artistDto);
@@ -119,7 +119,7 @@ public class SongServiceImplTest extends TestCase{
         GenreDTO genreDto = new GenreDTO();
         genreDto.setName("metal");
         List<Song> songs = new ArrayList();
-        AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),songs);
+        AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),new ArrayList<SongDTO>(),"comment",new ArrayList<ArtistDTO>(), new ArrayList<GenreDTO>());
         ArtistDTO artistDto = new ArtistDTO();
         artistDto.setName("Robo Kazik");
         SongDTO songDto = new SongDTO("ttt",144,1,"mmmedo",genreDto,albumDto,artistDto);
@@ -158,7 +158,7 @@ public class SongServiceImplTest extends TestCase{
         GenreDTO genreDto = new GenreDTO();
         genreDto.setName("metal");
         List<Song> songs = new ArrayList();
-        AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),songs);
+        AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),new ArrayList<SongDTO>(),"comment",new ArrayList<ArtistDTO>(), new ArrayList<GenreDTO>());
         ArtistDTO artistDto = new ArtistDTO();
         artistDto.setName("Robo Kazik");
         SongDTO songDto = new SongDTO("ttt",144,1,"mmmedo",genreDto,albumDto,artistDto);
@@ -181,7 +181,7 @@ public class SongServiceImplTest extends TestCase{
         GenreDTO genreDto = new GenreDTO();
         genreDto.setName("metal");
         List<Song> songs = new ArrayList();
-        AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),songs);
+        AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),new ArrayList<SongDTO>(),"comment",new ArrayList<ArtistDTO>(), new ArrayList<GenreDTO>());
         ArtistDTO artistDto = new ArtistDTO();
         artistDto.setName("Robo Kazik");
         
@@ -221,7 +221,7 @@ public class SongServiceImplTest extends TestCase{
         GenreDTO genreDto = new GenreDTO();
         genreDto.setName("metal");
         List<Song> songs = new ArrayList();
-        AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),songs);
+        AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),new ArrayList<SongDTO>(),"comment",new ArrayList<ArtistDTO>(), new ArrayList<GenreDTO>());
         ArtistDTO artistDto = new ArtistDTO();
         artistDto.setName("Robo Kazik");
         SongDTO songDto1 = new SongDTO("ttt1",144,1,"mmmedo1",genreDto,albumDto,artistDto);
@@ -273,7 +273,7 @@ public class SongServiceImplTest extends TestCase{
         GenreDTO genreDto2 = new GenreDTO();
         genreDto2.setName("HOP-HOP");
         List<Song> songs = new ArrayList();
-        AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),songs);
+        AlbumDTO albumDto = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),new ArrayList<SongDTO>(),"comment",new ArrayList<ArtistDTO>(), new ArrayList<GenreDTO>());
         ArtistDTO artistDto = new ArtistDTO();
         artistDto.setName("Robo Kazik");
         SongDTO songDto1 = new SongDTO("ttt1",144,1,"mmmedo1",genreDto1,albumDto,artistDto);
@@ -323,7 +323,7 @@ public class SongServiceImplTest extends TestCase{
         GenreDTO genreDto = new GenreDTO();
         genreDto.setName("metal");
         List<Song> songs = new ArrayList();
-        AlbumDTO albumDto1 = new AlbumDTO("fenomeno1","aaa1",new DateTime(2011, 11, 11, 0, 0),songs);
+        AlbumDTO albumDto1 = new AlbumDTO("fenomeno","aaa",new DateTime(2011, 11, 11, 0, 0),new ArrayList<SongDTO>(),"comment",new ArrayList<ArtistDTO>(), new ArrayList<GenreDTO>());
         
         ArtistDTO artistDto1 = new ArtistDTO();
         artistDto1.setName("Robo Kazik");
@@ -377,8 +377,8 @@ public class SongServiceImplTest extends TestCase{
         GenreDTO genreDto = new GenreDTO();
         genreDto.setName("metal");
         List<Song> songs = new ArrayList();
-        AlbumDTO albumDto1 = new AlbumDTO("fenomeno1","aaa1",new DateTime(2011, 11, 11, 0, 0),songs);
-        AlbumDTO albumDto2 = new AlbumDTO("fenomeno2","aaa2",new DateTime(2011, 11, 11, 0, 0),songs);
+        AlbumDTO albumDto1 = new AlbumDTO("fenomeno1","aaa",new DateTime(2011, 11, 11, 0, 0),new ArrayList<SongDTO>(),"comment",new ArrayList<ArtistDTO>(), new ArrayList<GenreDTO>());
+        AlbumDTO albumDto2 = new AlbumDTO("fenomeno2","aaa",new DateTime(2011, 11, 11, 0, 0),new ArrayList<SongDTO>(),"comment",new ArrayList<ArtistDTO>(), new ArrayList<GenreDTO>());
         ArtistDTO artistDto = new ArtistDTO();
         artistDto.setName("Robo Kazik");
         SongDTO songDto1 = new SongDTO("ttt1",144,1,"mmmedo1",genreDto,albumDto1,artistDto);

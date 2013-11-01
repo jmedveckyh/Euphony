@@ -29,7 +29,7 @@ public class AlbumDAOImplTest extends TestCase {
 
     private EntityManagerFactory emf;
     private EntityManager em;
-    private AlbumDAOImpl albumDAOImpl;
+    private AlbumDAO albumDao;
 
     public AlbumDAOImplTest(String name) {
         super(name);
@@ -40,7 +40,7 @@ public class AlbumDAOImplTest extends TestCase {
         super.setUp();
         emf = Persistence.createEntityManagerFactory("testEuphonyPU");
         em = emf.createEntityManager();
-        albumDAOImpl = new AlbumDAOImpl(em);
+        albumDao = new AlbumDAOImpl(em);
     }
 
     @Override
@@ -53,54 +53,91 @@ public class AlbumDAOImplTest extends TestCase {
      */
     public void testCreateAlbum() {
 
+        try {
+            albumDao.create(null);
+            fail("Null album create");
+        } catch (IllegalArgumentException e) {
+            //OK
+        }
+        
         Album album = null;
-        em.getTransaction().begin();
         try {
-            albumDAOImpl.create(album);
-            fail("Album is null");
+            albumDao.create(album);
+            fail("Empty album create");
         } catch (IllegalArgumentException e) {
             //OK
         }
-        em.getTransaction().commit();
-        em.clear();
 
-        album = new Album();
-        em.getTransaction().begin();
+        album = new Album(null, "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
         try {
-            albumDAOImpl.create(album);
-            fail("Empty album");
+            albumDao.create(album);
+            fail("Album title null");
         } catch (IllegalArgumentException e) {
             //OK
         }
-        em.getTransaction().commit();
-        em.clear();
-
-        album = new Album();
-        album.setTitle("");
-        album.setReleaseDate(new DateTime(2011, 11, 11, 0, 0));
-        em.getTransaction().begin();
+        
+        album = new Album("", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
         try {
-            albumDAOImpl.create(album);
-            fail("Empty title in album");
+            albumDao.create(album);
+            fail("Album title empty");
         } catch (IllegalArgumentException e) {
             //OK
         }
-        em.getTransaction().commit();
-        em.clear();
-
-        album = new Album();
-        album.setTitle("aaaa");
-        album.setReleaseDate(new DateTime(2011, 11, 11, 0, 0));
-        album.setId(new Long(1));
-        em.getTransaction().begin();
+        
+        album = new Album("title", "cover.jpg", null, new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
         try {
-            albumDAOImpl.create(album);
-            fail("Already in db");
+            albumDao.create(album);
+            fail("Album date null");
         } catch (IllegalArgumentException e) {
             //OK
         }
-        em.getTransaction().commit();
-        em.clear();
+        
+        album = new Album("title", "cover.jpg", DateTime.now(), null, "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
+        try {
+            albumDao.create(album);
+            fail("Album songs null");
+        } catch (IllegalArgumentException e) {
+            //OK
+        }
+        
+        album = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", null, new ArrayList<Genre>());
+        try {
+            albumDao.create(album);
+            fail("Album artists null");
+        } catch (IllegalArgumentException e) {
+            //OK
+        }
+        
+        album = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), null);
+        try {
+            albumDao.create(album);
+            fail("Album genres null");
+        } catch (IllegalArgumentException e) {
+            //OK
+        }
+        
+        album = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
+        albumDao.create(album);
+        Long id = album.getId();
+        assertNotNull(id);
+        assertDeepEquals(album, albumDao.getById(id));
+        
+        try {
+            albumDao.create(album);
+            fail("Album already in db");
+        } catch (IllegalArgumentException e) {
+            //OK
+        }
+        
+        /*
+        List<Artist> artists = new ArrayList();
+        List<Genre> genres = new ArrayList();
+        artists.add(new Artist("Iron Maiden"));
+        genres.add(new Genre("heavy metal"));
+        album = new Album("The Number of the Beast", "cover1.jpg", DateTime.now(), new ArrayList<Song>(), "comment1", artists, genres);
+        
+        List<Song> songs = new ArrayList();
+        songs.add(new Song("The Prisoner",320,2,"comment",genre,album,artist));*/
     }
 
     /**
@@ -108,22 +145,20 @@ public class AlbumDAOImplTest extends TestCase {
      */
     public void testGetAlbum() {
 
-        Album album = new Album();
-        album.setTitle("aaaa");
-        album.setReleaseDate(new DateTime(2011, 11, 11, 0, 0));
-        em.getTransaction().begin();
-        albumDAOImpl.create(album);
-        em.getTransaction().commit();
-        assertNotNull(album.getId());
-        Album album2 = albumDAOImpl.getById( new Long(album.getId()));
-        assertEquals(album, album2);
-        em.getTransaction().begin();
-        try {
-            albumDAOImpl.getById(null);
-            fail("Cant get null from db");
-        } catch (IllegalArgumentException e) {
-            //OK
-        }
+        try{
+            albumDao.getById(null);
+            fail("null id");
+        } catch (IllegalArgumentException ex){}
+        
+        Album album = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
+        
+        try{
+            albumDao.getById(album.getId());
+            fail("id not in db");
+        } catch (IllegalArgumentException ex){}
+        
+        albumDao.create(album);
+        assertDeepEquals(album,albumDao.getById(album.getId()));
 
     }
 
@@ -131,161 +166,102 @@ public class AlbumDAOImplTest extends TestCase {
      * Tests of updating album
      */
     public void testUpdateAlbum() {
-
-        Album album = new Album();
-        album.setTitle("aaaa");
-        album.setReleaseDate(new DateTime(2011, 11, 11, 0, 0));
-        em.getTransaction().begin();
-        albumDAOImpl.create(album);
-        em.getTransaction().commit();
-
-        em.getTransaction().begin();
         try {
-            albumDAOImpl.update(null);
-            fail("Cant update null album");
-        } catch (IllegalArgumentException e) {
-            //OK
+            albumDao.update(null);
+            fail("null album update");
+        } catch (IllegalArgumentException ex) {
+           
         }
-        em.getTransaction().commit();
-        em.clear();
-
-        em.getTransaction().begin();
+        
         try {
-            albumDAOImpl.update(new Album());
-            fail("Cant update empty album");
-        } catch (IllegalArgumentException e) {
-            //OK
+            albumDao.update(new Album());
+            fail("empty album update");
+        } catch (IllegalArgumentException ex) {
+           
         }
-        em.getTransaction().commit();
-        em.clear();
-
-        album.setTitle("");
-        album.setReleaseDate(new DateTime(2011, 11, 11, 0, 0));
-        em.getTransaction().begin();
+        
+        Album album = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
         try {
-            albumDAOImpl.update(album);
-            fail("Cant update album with empty title");
-        } catch (IllegalArgumentException e) {
-            //OK
+            albumDao.update(album);
+            fail("Item not in db");
+        } catch (IllegalArgumentException ex) {
+           
         }
-        em.getTransaction().commit();
-        em.clear();
+        albumDao.create(album);
+        albumDao.update(album);
+        assertDeepEquals(album, albumDao.getById(album.getId()));
 
-        album.setTitle("aaa");
-        album.setReleaseDate(null);
-        em.getTransaction().begin();
-        try {
-            albumDAOImpl.update(album);
-            fail("Cant update album without date");
-        } catch (IllegalArgumentException e) {
-            //OK
-        }
-        em.getTransaction().commit();
-        em.clear();
-
-        album = new Album();
-        album.setTitle("aaa");
-        album.setReleaseDate(new DateTime(2011, 11, 11, 0, 0));
-        album.setId(null);
-        em.getTransaction().begin();
-        try {
-            albumDAOImpl.update(album);
-            fail("update with noID");
-        } catch (IllegalArgumentException e) {
-            //OK
-        }
-        em.getTransaction().commit();
-        em.clear();
-
-        album = new Album();
-        album.setTitle("aaa");
-        album.setReleaseDate(new DateTime(2011, 11, 11, 0, 0));
-        em.getTransaction().begin();
-        albumDAOImpl.create(album);
-        em.getTransaction().commit();
-        album.setTitle("bbb");
-        em.getTransaction().begin();
-        albumDAOImpl.update(album);
-        em.getTransaction().commit();
-        Album album2 = albumDAOImpl.getById(album.getId());
-        assertEquals(album, album2);
+        album = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
+        albumDao.create(album);
+        album.setTitle("title2");
+        albumDao.update(album);
+        assertDeepEquals(album, albumDao.getById(album.getId()));
+        
+        album = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
+        albumDao.create(album);
+        album.setCover("cover2.jpg");
+        albumDao.update(album);
+        assertDeepEquals(album, albumDao.getById(album.getId()));
+        
+        album = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
+        albumDao.create(album);
+        album.setReleaseDate(DateTime.now());
+        albumDao.update(album);
+        assertDeepEquals(album, albumDao.getById(album.getId()));
+        
+        album = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
+        albumDao.create(album);
+        album.setComment("comment2");
+        albumDao.update(album);
+        assertDeepEquals(album, albumDao.getById(album.getId()));
+        
     }
 
     public void testDeleteAlbum() {
-
-        Album album = null;
-        em.getTransaction().begin();
         try {
-            albumDAOImpl.delete(album);
-            fail("Cant delete null album");
-        } catch (IllegalArgumentException e) {
-            //OK
+            albumDao.delete(null);
+            fail("deleting null album");
+        } catch (IllegalArgumentException ex) {
+           
         }
-        em.getTransaction().commit();
-        em.clear();
-
-        album = new Album();
-        album.setTitle("aaa");
-        album.setReleaseDate(new DateTime(2011, 11, 11, 0, 0));
-        album.setId(null);
-        em.getTransaction().begin();
-        try {
-            albumDAOImpl.delete(album);
-            fail("Cant delete album which is not in db");
-        } catch (IllegalArgumentException e) {
-            //OK
+        
+        Album album = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
+        try{
+            albumDao.delete(album);
+            fail("album not in db");
+        } catch (IllegalArgumentException ex) {
+            
         }
-        em.getTransaction().commit();
-        em.clear();
-
-        album = new Album();
-        album.setTitle("aaa");
-        album.setReleaseDate(new DateTime(2011, 11, 11, 0, 0));
-        album.setId(new Long(999));
-        em.getTransaction().begin();
-        try {
-            albumDAOImpl.delete(album);
-            fail("Cant delete album which is not in db");
-        } catch (IllegalArgumentException e) {
-            //OK
-        }
-        em.getTransaction().commit();
-        em.clear();
-
-        album = new Album();
-        album.setTitle("aaa");
-        album.setReleaseDate(new DateTime(2011, 11, 11, 0, 0));
-        em.getTransaction().begin();
-        albumDAOImpl.create(album);
-        em.getTransaction().commit();
-        em.getTransaction().begin();
-        albumDAOImpl.delete(album);
-        em.getTransaction().commit();
-        em.clear();
+        
+        albumDao.create(album);
+        Long id = album.getId();
+        albumDao.delete(album);
+        assertNull(albumDao.getById(id));
     }
     
     public void testGetAllAlbums(){
-        List<Album> expResults = new ArrayList<Album>();
-        assertEquals(expResults, albumDAOImpl.getAll());
-        
-        em.getTransaction().begin();
-        Album expResult1 = new Album("Pribeh", "Daco", new DateTime(), new ArrayList<Song>(), "nehehe",
-                                      new ArrayList<Artist>(), new ArrayList<Genre>());
-        Album expResult2 = new Album("Mirage", "Daco", new DateTime(), new ArrayList<Song>(), "nehehe",
-                                      new ArrayList<Artist>(), new ArrayList<Genre>());
-        Album expResult3 = new Album("Imagine", "Daco", new DateTime(), new ArrayList<Song>(), "nehehe",
-                                      new ArrayList<Artist>(), new ArrayList<Genre>());
-        albumDAOImpl.create(expResult1);
-        albumDAOImpl.create(expResult2);
-        albumDAOImpl.create(expResult3);
-        em.getTransaction().commit();
-        em.clear();
-        
-        expResults.add(expResult1);
-        expResults.add(expResult2);
-        expResults.add(expResult3);
+        assertTrue(albumDao.getAll().isEmpty());
 
-        List<Album> results = albumDAOImpl.getAll(); //ok
-        assertEquals(expResults, results);
+        Album album1 = new Album("title1", "cover1.jpg", DateTime.now(), new ArrayList<Song>(), "comment1", new ArrayList<Artist>(), new ArrayList<Genre>());
+        Album album2 = new Album("title2", "cover2.jpg", DateTime.now(), new ArrayList<Song>(), "comment2", new ArrayList<Artist>(), new ArrayList<Genre>());
+        
+        List<Album> albums = new ArrayList();
+        albums.add(album1);
+        albums.add(album2);
+        albumDao.create(album1);
+        albumDao.create(album2);
+        
+        //assertEquals(albums, albumDao.getAll()); 
+    }
+    
+    private void assertDeepEquals(Album a1,Album a2){
+        assertEquals(a1.getId(),a2.getId());
+        assertEquals(a1.getArtists(),a2.getArtists());
+        assertEquals(a1.getComment(),a2.getComment());
+        assertEquals(a1.getCover(),a2.getCover());
+        assertEquals(a1.getGenres(),a2.getGenres());
+        assertEquals(a1.getReleaseDate(),a2.getReleaseDate());
+        assertEquals(a1.getSongs(),a2.getSongs());
+        assertEquals(a1.getTitle(),a2.getTitle());
     }
 }
