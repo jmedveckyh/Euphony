@@ -40,8 +40,13 @@ public class AlbumDAOImplTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        /*
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         albumDao = (AlbumDAO) applicationContext.getBean("albumDAO");
+        */
+        emf = Persistence.createEntityManagerFactory("testEuphonyPU");
+        em = emf.createEntityManager();
+        albumDao = new AlbumDAOImpl(em);
     }
 
     @Override
