@@ -11,14 +11,20 @@ import com.musiclibrary.euphony.services.GenreService;
 import com.musiclibrary.euphony.util.DTOMapper;
 import java.util.List;
 import javax.persistence.PersistenceException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Medo
  */
+
+@Service
 public class GenreServiceImpl implements GenreService {
 
+    @Autowired
     private GenreDAOImpl genreDao;
 
     public void setDAO(GenreDAOImpl genreDao) {
@@ -26,6 +32,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
+    @Transactional
     public void create(GenreDTO genre) throws DataAccessException {
         Genre genreEntity = DTOMapper.toEntity(genre);
         try {
@@ -39,6 +46,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
+    @Transactional
     public void update(GenreDTO genre) throws DataAccessException {
         Genre genreEntity = DTOMapper.toEntity(genre);
         try {
@@ -51,6 +59,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
+    @Transactional
     public void delete(GenreDTO genre) throws DataAccessException {
         try {
             genreDao.delete(DTOMapper.toEntity(genre));
@@ -61,6 +70,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
+    @Transactional
     public GenreDTO getById(Long id) throws DataAccessException {
         try {
             return DTOMapper.toDTO(genreDao.getById(id));
@@ -71,6 +81,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
+    @Transactional
     public List<GenreDTO> getAll() throws DataAccessException {
         try {
             return DTOMapper.genresListToDTO(genreDao.getAll());
@@ -81,6 +92,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
+    @Transactional
     public GenreDTO getByName(String name) throws DataAccessException {
         try {
             return DTOMapper.toDTO(genreDao.getByName(name));

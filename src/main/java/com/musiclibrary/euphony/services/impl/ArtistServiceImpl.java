@@ -11,14 +11,20 @@ import com.musiclibrary.euphony.services.ArtistService;
 import com.musiclibrary.euphony.util.DTOMapper;
 import java.util.List;
 import javax.persistence.PersistenceException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Medo
  */
+
+@Service
 public class ArtistServiceImpl implements ArtistService {
 
+    @Autowired
     private ArtistDAOImpl artistDao;
 
     public void setDAO(ArtistDAOImpl artistDao) {
@@ -26,6 +32,7 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
+    @Transactional
     public void create(ArtistDTO artist) throws DataAccessException {
         Artist artistEntity = DTOMapper.toEntity(artist);
         try {
@@ -39,6 +46,7 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
+    @Transactional
     public void update(ArtistDTO artist) throws DataAccessException {
         Artist artistEntity = DTOMapper.toEntity(artist);
         try {
@@ -51,6 +59,7 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
+    @Transactional
     public void delete(ArtistDTO artist) throws DataAccessException {
         try {
             artistDao.delete(DTOMapper.toEntity(artist));
@@ -61,6 +70,7 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
+    @Transactional
     public ArtistDTO getById(Long id) throws DataAccessException {
         try {
             return DTOMapper.toDTO(artistDao.getById(id));
@@ -71,6 +81,7 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
+    @Transactional
     public List<ArtistDTO> getAll() throws DataAccessException {
         try {
             return DTOMapper.artistsListToDTO(artistDao.getAll());
@@ -81,6 +92,7 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
+    @Transactional
     public ArtistDTO getByName(String name) throws DataAccessException {
         try {
             return DTOMapper.toDTO(artistDao.getByName(name));
