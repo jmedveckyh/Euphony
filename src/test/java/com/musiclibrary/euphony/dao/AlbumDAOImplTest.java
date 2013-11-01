@@ -223,6 +223,9 @@ public class AlbumDAOImplTest extends TestCase {
         
     }
 
+    /*
+     * Testing of deleting album
+     */
     public void testDeleteAlbum() {
         try {
             albumDao.delete(null);
@@ -245,6 +248,9 @@ public class AlbumDAOImplTest extends TestCase {
         assertNull(albumDao.getById(id));
     }
     
+    /*
+     * Testing of getting all albums
+     */
     public void testGetAllAlbums(){
         assertTrue(albumDao.getAll().isEmpty());
 
@@ -262,6 +268,9 @@ public class AlbumDAOImplTest extends TestCase {
         assertEquals(albums, albumDao.getAll()); 
     }
     
+    /*
+     * Get with null name
+     */
     public void testGetByTitleWithNullName(){
         em.getTransaction().begin();
         try{
