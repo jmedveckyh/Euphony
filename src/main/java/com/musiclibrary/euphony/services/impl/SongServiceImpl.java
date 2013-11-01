@@ -35,7 +35,7 @@ public class SongServiceImpl implements SongService{
 
     @Override
     @Transactional
-    public void create(SongDTO song) {
+    public void create(SongDTO song) throws DataAccessException {
         Song songEntity = DTOMapper.toEntity(song);
         try {
             songDao.create(songEntity);
@@ -48,7 +48,7 @@ public class SongServiceImpl implements SongService{
 
     @Override
     @Transactional
-    public void update(SongDTO song) {
+    public void update(SongDTO song) throws DataAccessException{
         Song songEntity = DTOMapper.toEntity(song);
         try {
             songDao.update(songEntity);
@@ -61,7 +61,7 @@ public class SongServiceImpl implements SongService{
 
     @Override
     @Transactional
-    public void delete(SongDTO song) {
+    public void delete(SongDTO song) throws DataAccessException{
         try {
             songDao.delete(DTOMapper.toEntity(song));
             } catch (IllegalArgumentException | PersistenceException ex) {
@@ -72,7 +72,7 @@ public class SongServiceImpl implements SongService{
 
     @Override
     @Transactional
-    public SongDTO getById(Long id) {
+    public SongDTO getById(Long id) throws DataAccessException{
         try {
         return DTOMapper.toDTO(songDao.getById(id));
         } catch (IllegalArgumentException | PersistenceException ex) {
@@ -82,7 +82,7 @@ public class SongServiceImpl implements SongService{
     
     @Override
     @Transactional
-    public List<SongDTO> getAll() {
+    public List<SongDTO> getAll() throws DataAccessException{
         try {
         return DTOMapper.songsListToDTO(songDao.getAll());
         } catch (IllegalArgumentException | PersistenceException ex) {
@@ -92,7 +92,7 @@ public class SongServiceImpl implements SongService{
 
     @Override
     @Transactional
-    public List<SongDTO> getByTitle(String title) {
+    public List<SongDTO> getByTitle(String title) throws DataAccessException{
         try {
         return DTOMapper.songsListToDTO(songDao.getByTitle(title));
         } catch (IllegalArgumentException | PersistenceException ex) {
@@ -102,7 +102,7 @@ public class SongServiceImpl implements SongService{
 
     @Override
     @Transactional
-    public List<SongDTO> getByGenre(GenreDTO genre) {
+    public List<SongDTO> getByGenre(GenreDTO genre) throws DataAccessException{
         try {
         return DTOMapper.songsListToDTO(songDao.getByGenre(DTOMapper.toEntity(genre)));
         } catch (IllegalArgumentException | PersistenceException ex) {
@@ -112,7 +112,7 @@ public class SongServiceImpl implements SongService{
 
     @Override
     @Transactional
-    public List<SongDTO> getByArtist(ArtistDTO artist) {
+    public List<SongDTO> getByArtist(ArtistDTO artist) throws DataAccessException{
         try {
         return DTOMapper.songsListToDTO(songDao.getByArtist(DTOMapper.toEntity(artist)));
         } catch (IllegalArgumentException | PersistenceException ex) {
@@ -122,7 +122,7 @@ public class SongServiceImpl implements SongService{
 
     @Override
     @Transactional
-    public List<SongDTO> getByAlbum(AlbumDTO album) {
+    public List<SongDTO> getByAlbum(AlbumDTO album) throws DataAccessException{
         try {
         return DTOMapper.songsListToDTO(songDao.getByAlbum(DTOMapper.toEntity(album)));
         } catch (IllegalArgumentException | PersistenceException ex) {
