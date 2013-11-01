@@ -208,21 +208,13 @@ public class SongDAOImplTest extends TestCase {
 
         //test with null comment
         em.getTransaction().begin();
-        try {
-            songDAOImpl.create(new Song("Salalaj", 320, 1, null, new Genre(), new Album(), new Artist()));
-        } catch (IllegalArgumentException ex) {
-            fail("song with null comment is OK!");
-        }
+        songDAOImpl.create(new Song("Salalaj", 320, 1, null, new Genre(), new Album(), new Artist()));
         em.getTransaction().commit();
         em.clear();
 
         //test with empty comment
         em.getTransaction().begin();
-        try {
-            songDAOImpl.create(new Song("Salalaj", 320, 1, "", new Genre(), new Album(), new Artist()));
-        } catch (IllegalArgumentException ex) {
-            fail("song with empty comment is OK!");
-        }
+        songDAOImpl.create(new Song("Salalaj", 320, 1, "", new Genre(), new Album(), new Artist()));
         em.getTransaction().commit();
         em.clear();
     }
