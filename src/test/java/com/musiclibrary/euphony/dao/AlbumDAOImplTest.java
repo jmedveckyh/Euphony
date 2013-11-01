@@ -254,6 +254,48 @@ public class AlbumDAOImplTest extends TestCase {
         //assertEquals(albums, albumDao.getAll()); 
     }
     
+    public void testGetByTitleWithNullName(){
+        em.getTransaction().begin();
+        try{
+            albumDao.getByTitle(null);              //title is null
+        } catch(IllegalArgumentException e){
+            //ok
+        }
+        em.getTransaction().commit();
+        em.clear();
+    }
+    
+    public void testGetArtistByNameWithNotAssignedName() {
+        em.getTransaction().begin();
+        Album nullResult = albumDao.getByTitle("Mirage");              //getAlbumByName with not assigned name, should return null
+        em.getTransaction().commit();
+        em.clear();
+        assertNull(nullResult);
+    }
+    
+    public void testGetAlbumByTitle(){
+        
+        em.getTransaction().begin();
+        Album expResult = new Album("Kaleidoscope", "cover.jpg", new DateTime(2009,1,1,0,0), new ArrayList<Song>(), "nehehe",
+                                      new ArrayList<Artist>(), new ArrayList<Genre>());
+        expResult.getArtists().add(new Artist("Tiesto"));
+        albumDao.create(expResult);
+        em.getTransaction().commit();
+        em.clear();
+
+        assertNotNull(expResult.getId());
+
+        Album result = albumDao.getByTitle(expResult.getTitle());              //correct
+        //assertDeepEquals(expResult, result);
+        assertEquals(expResult.getTitle(), result.getTitle());
+        assertEquals(expResult.getCover(), result.getCover());
+        assertEquals(expResult.getReleaseDate(), result.getReleaseDate());
+        //assertEquals(expResult.getArtists(), result.getArtists());
+        assertEquals(expResult.getComment(), result.getComment());
+        //assertEquals(expResult.getSongs(), result.getSongs());
+        //assertEquals(expResult.getGenres(), result.getGenres());
+    }
+    
     private void assertDeepEquals(Album a1,Album a2){
         assertEquals(a1.getId(),a2.getId());
         assertEquals(a1.getArtists(),a2.getArtists());
