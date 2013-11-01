@@ -13,7 +13,9 @@ import com.musiclibrary.euphony.services.AlbumService;
 import com.musiclibrary.euphony.util.DTOMapper;
 import java.util.List;
 import javax.persistence.PersistenceException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -21,6 +23,7 @@ import org.springframework.dao.DataAccessException;
  */
 public class AlbumServiceImpl implements AlbumService{
     
+    @Autowired
     private AlbumDAOImpl albumDAO;
     
     public void setDAO(AlbumDAOImpl albumDAO){
@@ -28,6 +31,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
+    @Transactional
     public void create(AlbumDTO albumDTO) throws DataAccessException{
         Album albumEntity = DTOMapper.toEntity(albumDTO);
         try {
@@ -41,6 +45,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
+    @Transactional
     public void update(AlbumDTO albumDTO) throws DataAccessException{
         Album albumEntity = DTOMapper.toEntity(albumDTO);
         try {
@@ -53,6 +58,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
+    @Transactional
     public void delete(AlbumDTO albumDTO) throws DataAccessException{
         try {
             albumDAO.delete(DTOMapper.toEntity(albumDTO));
@@ -63,6 +69,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
+    @Transactional
     public AlbumDTO getById(Long id) throws DataAccessException{
         try {
             return DTOMapper.toDTO(albumDAO.getById(id));
@@ -73,6 +80,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
     
     @Override
+    @Transactional
     public AlbumDTO getByTitle(String title) throws DataAccessException{
         try {
             return DTOMapper.toDTO(albumDAO.getByTitle(title));
@@ -83,6 +91,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
+    @Transactional
     public List<AlbumDTO> getAllAlbums() throws DataAccessException{
         try {
             return DTOMapper.albumListToDTO(albumDAO.getAll());
@@ -93,6 +102,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
+    @Transactional
     public List<AlbumDTO> getByReleaseYear(Integer year) throws DataAccessException{
         try {
             return DTOMapper.albumListToDTO(albumDAO.getByReleaseYear(year));
@@ -103,6 +113,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
+    @Transactional
     public List<AlbumDTO> getByGenre(Genre genre) throws DataAccessException{
         try {
             return DTOMapper.albumListToDTO(albumDAO.getByGenre(genre));
@@ -113,6 +124,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
+    @Transactional
     public List<AlbumDTO> getByArtist(Artist artist) throws DataAccessException{
         try {
             return DTOMapper.albumListToDTO(albumDAO.getByArtist(artist));
