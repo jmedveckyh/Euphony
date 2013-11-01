@@ -29,6 +29,23 @@ public class MusicFacadeImpl implements MusicFacade {
     @Autowired
     private AlbumService albumService;
 
+    public void setPlaylistService(PlaylistService playlistService) {
+        this.playlistService = playlistService;
+    }
+
+    public void setAlbumService(AlbumService albumService) {
+        this.albumService = albumService;
+    }
+
+    public void createPlaylist(PlaylistDTO playlist) {
+        playlistService.create(playlist);
+    }    
+
+    public void createAlbum(AlbumDTO album) {
+        albumService.create(album);
+    }
+    
+    
     @Override
     public Boolean isSongInPlaylist(SongDTO song, PlaylistDTO playlist) throws DataAccessException {
 

@@ -14,7 +14,7 @@ import javax.persistence.Query;
 /**
  * DAO implementation of Playlist.
  * 
- * @author Tomas Smetanka #396209
+ * @author Tomas Smetanka
  */
 public class PlaylistDAOImpl implements DAO<Playlist> , PlaylistDAO{
 

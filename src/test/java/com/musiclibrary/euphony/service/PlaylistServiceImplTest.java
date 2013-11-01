@@ -1,24 +1,10 @@
 package com.musiclibrary.euphony.service;
 
 import com.musiclibrary.euphony.dao.impl.PlaylistDAOImpl;
-import com.musiclibrary.euphony.dto.AlbumDTO;
-import com.musiclibrary.euphony.dto.ArtistDTO;
-import com.musiclibrary.euphony.dto.GenreDTO;
 import com.musiclibrary.euphony.dto.PlaylistDTO;
-import com.musiclibrary.euphony.dto.SongDTO;
-import com.musiclibrary.euphony.services.AlbumService;
-import com.musiclibrary.euphony.services.ArtistService;
-import com.musiclibrary.euphony.services.GenreService;
 import com.musiclibrary.euphony.services.PlaylistService;
-import com.musiclibrary.euphony.services.SongService;
-import com.musiclibrary.euphony.services.impl.AlbumServiceImpl;
-import com.musiclibrary.euphony.services.impl.ArtistServiceImpl;
-import com.musiclibrary.euphony.services.impl.GenreServiceImpl;
 import com.musiclibrary.euphony.services.impl.PlaylistServiceImpl;
-import com.musiclibrary.euphony.services.impl.SongServiceImpl;
 import com.musiclibrary.euphony.util.DTOMapper;
-import java.util.Map;
-import java.util.TreeMap;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;

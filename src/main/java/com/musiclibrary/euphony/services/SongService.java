@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.musiclibrary.euphony.services;
 
 import com.musiclibrary.euphony.dto.AlbumDTO;
@@ -15,13 +11,23 @@ import java.util.List;
  * @author Sebastian Lazon
  */
 public interface SongService {
+
     void create(SongDTO song);
+
     void update(SongDTO song);
+
     void delete(SongDTO song);
+
     SongDTO getById(Long id);
+
     List<SongDTO> getAll();
+
     List<SongDTO> getByTitle(String title);
+
     List<SongDTO> getByGenre(GenreDTO genre);
+
     List<SongDTO> getByArtist(ArtistDTO artist);
+
     List<SongDTO> getByAlbum(AlbumDTO album);
+    
 }

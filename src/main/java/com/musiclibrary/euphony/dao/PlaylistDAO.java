@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Interface for Playlist DAO layer.
  * 
- * @author Tomas Smetanka #396209
+ * @author Tomas Smetanka
  */
 public interface PlaylistDAO extends DAO<Playlist> {
     

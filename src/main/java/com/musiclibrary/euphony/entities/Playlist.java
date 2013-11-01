@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 /**
  * Playlist entity.
  * 
- * @author Tomas Smetanka #396209
+ * @author Tomas Smetanka
  */
 @Entity
 public class Playlist implements Serializable {

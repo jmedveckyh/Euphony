@@ -1,6 +1,5 @@
 package com.musiclibrary.euphony.dao.impl;
 
-import com.musiclibrary.euphony.dao.DAO;
 import com.musiclibrary.euphony.dao.SongDAO;
 import com.musiclibrary.euphony.entities.Album;
 import com.musiclibrary.euphony.entities.Artist;

@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * Playlist DTO layer.
  * 
- * @author Tomas Smetanka #396209
+ * @author Tomas Smetanka
  */
 public class PlaylistDTO { 
     

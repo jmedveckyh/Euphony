@@ -5,7 +5,6 @@
 package com.musiclibrary.euphony.services;
 
 import com.musiclibrary.euphony.dto.AlbumDTO;
-import com.musiclibrary.euphony.entities.Album;
 import com.musiclibrary.euphony.entities.Artist;
 import com.musiclibrary.euphony.entities.Genre;
 import java.util.List;
