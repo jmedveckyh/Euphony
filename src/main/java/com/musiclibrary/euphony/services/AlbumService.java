@@ -12,7 +12,7 @@ import org.springframework.dao.DataAccessException;
 
 /**
  *
- * @author Branislav Novotny
+ * @author Branislav Novotny #396152
  */
 public interface AlbumService {
     

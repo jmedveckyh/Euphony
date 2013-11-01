@@ -37,7 +37,6 @@ public class AlbumServiceImpl implements AlbumService{
             throw new DataAccessException(ex.getMessage(), ex) {
             };
         }
-
         albumDTO.setId(albumEntity.getId());
     }
 
