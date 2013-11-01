@@ -4,28 +4,20 @@
  */
 package com.musiclibrary.euphony.service;
 
-import com.musiclibrary.euphony.dao.AlbumDAO;
 import com.musiclibrary.euphony.dao.impl.AlbumDAOImpl;
 import com.musiclibrary.euphony.dto.AlbumDTO;
 import com.musiclibrary.euphony.dto.ArtistDTO;
 import com.musiclibrary.euphony.dto.GenreDTO;
 import com.musiclibrary.euphony.dto.SongDTO;
 import com.musiclibrary.euphony.entities.Album;
-import com.musiclibrary.euphony.entities.Artist;
-import com.musiclibrary.euphony.entities.Genre;
-import com.musiclibrary.euphony.entities.Song;
 import com.musiclibrary.euphony.services.AlbumService;
 import com.musiclibrary.euphony.services.impl.AlbumServiceImpl;
 import com.musiclibrary.euphony.util.DTOMapper;
 import java.util.ArrayList;
 import java.util.List;
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
 import junit.framework.TestCase;
 import org.joda.time.DateTime;
-import org.junit.Before;
-import org.junit.Test;
-import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import org.springframework.dao.DataAccessException;
@@ -57,7 +49,7 @@ public class AlbumServiceImplTest extends TestCase{
         doThrow(new IllegalArgumentException()).when(dao).create(null);
 
         try{
-            service.create(null);              //artist is null
+            service.create(null);              
             fail();
         } catch(DataAccessException e){
             //ok
@@ -80,7 +72,7 @@ public class AlbumServiceImplTest extends TestCase{
         expResult.setId(1l);
 
         when(dao.getByTitle("Club Life")).thenReturn(DTOMapper.toEntity(expResult));
-        AlbumDTO result = service.getByTitle(expResult.getTitle());              //correct
+        AlbumDTO result = service.getByTitle(expResult.getTitle());              //ok
         verify(dao, times(1)).getByTitle(expResult.getTitle());
         
         assertDeepEquals(expResult, result);
@@ -130,7 +122,7 @@ public class AlbumServiceImplTest extends TestCase{
         upAlbum.setId(album.getId());
 
         doNothing().when(dao).update(DTOMapper.toEntity(album));
-        service.update(upAlbum);              //correct
+        service.update(upAlbum);              //ok
         verify(dao, times(1)).update(DTOMapper.toEntity(upAlbum));
         
         when(dao.getById(1l)).thenReturn(DTOMapper.toEntity(upAlbum));
@@ -168,7 +160,7 @@ public class AlbumServiceImplTest extends TestCase{
         expResult.setId(1l);
 
         when(dao.getById(1l)).thenReturn(DTOMapper.toEntity(expResult));
-        AlbumDTO result = service.getById(expResult.getId());              //correct
+        AlbumDTO result = service.getById(expResult.getId());              //ok
         verify(dao, times(1)).getById(expResult.getId());
         
         assertDeepEquals(expResult, result);
@@ -209,7 +201,6 @@ public class AlbumServiceImplTest extends TestCase{
         when(dao.getByGenre(DTOMapper.toEntity(houseGen))).thenReturn(houseList);
         
         List<Album> resultList2 = dao.getByGenre(DTOMapper.toEntity(houseGen));
-        //List<AlbumDTO> houseList = new ArrayList<AlbumDTO>();
         
         assertEquals(2, resultList2.size());
         assertEquals(houseList, resultList2);
