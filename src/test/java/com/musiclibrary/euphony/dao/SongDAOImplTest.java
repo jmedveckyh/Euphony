@@ -715,6 +715,7 @@ public class SongDAOImplTest extends TestCase {
         songDAOImpl.delete(song);
         em.getTransaction().commit();
         assertTrue(songDAOImpl.getByArtist(artist).isEmpty());
+        
     }
 
     private void assertDeepEquals(Song expected, Song actual) {
