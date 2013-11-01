@@ -11,6 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -91,7 +93,7 @@ public class AlbumDAOImpl implements AlbumDAO {
 
     @Override
     public Album getByTitle(String title) {
-        /*if (title == null) {
+        if (title == null) {
             throw new IllegalArgumentException("Title is null");
         }
         Query q = em.createQuery("from Album where title=:title");
@@ -101,47 +103,56 @@ public class AlbumDAOImpl implements AlbumDAO {
             return album;
         } catch (NoResultException ex) {
             return null;
-        }*/
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
+        }
     }
 
     @Override
     public List<Album> getByGenre(Genre genre) {
-        /*if (genre == null) {
-            throw new IllegalArgumentException("Genre is null");
-        }
-        Query q = em.createQuery("from Album where genre.name=:genre.name");
-        q.setParameter("genre", genre);
-        try {
-            List<Album> albums = q.getResultList();
-            return albums;
-        } catch (NoResultException ex) {
-            return null;
-        }*/
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (genre == null) {
+         throw new IllegalArgumentException("Genre is null");
+         }
+         Query q = em.createQuery("SELECT x FROM Album x WHERE :genre IN x.genres");
+         q.setParameter("genre", genre);
+         try {
+         List<Album> albums = q.getResultList();
+         return albums;
+         } catch (NoResultException ex) {
+         return null;
+         }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
     }
 
     @Override
     public List<Album> getByArtist(Artist artist) {
-        /*if (artist == null) {
-            throw new IllegalArgumentException("Artist is null");
+        if (artist == null) {
+         throw new IllegalArgumentException("Artist is null");
+         }
+         Query q = em.createQuery("SELECT x FROM Album x WHERE :artist IN x.artists");
+         q.setParameter("artist", artist);
+         try {
+         List<Album> albums = q.getResultList();
+         return albums;
+         } catch (NoResultException ex) {
+         return null;
+         }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    }
+
+    @Override
+    public List<Album> getByReleaseYear(Integer year) { //ceknut si je to spravne
+        if (year == null) {
+            throw new IllegalArgumentException("Year is null");
         }
-        Query q = em.createQuery("from Album where artist.name=:artist.name");
-        q.setParameter("artist", artist);
+        Query q = em.createQuery("select x from Album x WHERE x.releaseDate BETWEEN :from AND :to");
+        q.setParameter("from", new DateTime(year - 1, 31, 12, 59, 59));
+        q.setParameter("to", new DateTime(year + 1, 1, 1, 0, 0));
         try {
             List<Album> albums = q.getResultList();
             return albums;
         } catch (NoResultException ex) {
             return null;
-        }*/
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
-    }
-
-    @Override
-    public List<Album> getByReleaseYear(Integer year) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
     }
 }
