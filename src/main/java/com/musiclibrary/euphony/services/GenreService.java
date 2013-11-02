@@ -1,5 +1,6 @@
 package com.musiclibrary.euphony.services;
 
+import com.musiclibrary.euphony.dao.GenreDAO;
 import com.musiclibrary.euphony.dto.GenreDTO;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
@@ -21,4 +22,6 @@ public interface GenreService {
     List<GenreDTO> getAll() throws DataAccessException;
 
     GenreDTO getByName(String name) throws DataAccessException;
+
+    void setDAO(GenreDAO genreDAO);
 }

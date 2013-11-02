@@ -4,6 +4,7 @@
  */
 package com.musiclibrary.euphony.service;
 
+import com.musiclibrary.euphony.dao.AlbumDAO;
 import com.musiclibrary.euphony.dao.impl.AlbumDAOImpl;
 import com.musiclibrary.euphony.dto.AlbumDTO;
 import com.musiclibrary.euphony.dto.ArtistDTO;
@@ -11,7 +12,6 @@ import com.musiclibrary.euphony.dto.GenreDTO;
 import com.musiclibrary.euphony.dto.SongDTO;
 import com.musiclibrary.euphony.entities.Album;
 import com.musiclibrary.euphony.services.AlbumService;
-import com.musiclibrary.euphony.services.impl.AlbumServiceImpl;
 import com.musiclibrary.euphony.util.DTOMapper;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +20,8 @@ import junit.framework.TestCase;
 import org.joda.time.DateTime;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataAccessException;
 
 
@@ -30,14 +32,15 @@ import org.springframework.dao.DataAccessException;
 public class AlbumServiceImplTest extends TestCase{
     
     private AlbumService service;
-    private AlbumDAOImpl dao;
+    private AlbumDAO dao;
     
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        service = new AlbumServiceImpl();
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("/applicationContext.xml");
+        service = (AlbumService) ctx.getBean("albumServiceImpl");
         dao = mock(AlbumDAOImpl.class);
-        ((AlbumServiceImpl) service).setDAO(dao);
+        service.setDAO(dao);
     }
     
     @Override

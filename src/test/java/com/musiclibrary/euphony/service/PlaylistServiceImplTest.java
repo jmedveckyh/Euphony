@@ -1,5 +1,6 @@
 package com.musiclibrary.euphony.service;
 
+import com.musiclibrary.euphony.dao.PlaylistDAO;
 import com.musiclibrary.euphony.dao.impl.PlaylistDAOImpl;
 import com.musiclibrary.euphony.dto.PlaylistDTO;
 import com.musiclibrary.euphony.services.PlaylistService;
@@ -9,6 +10,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataAccessException;
 
 
@@ -20,13 +23,14 @@ import org.springframework.dao.DataAccessException;
 public class PlaylistServiceImplTest {
 
     private PlaylistService playlistService;
-    private PlaylistDAOImpl playlistDAO;
+    private PlaylistDAO playlistDAO;
 
     @Before
     public void setUp() {        
-        playlistService = new PlaylistServiceImpl();        
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("/applicationContext.xml");
+        playlistService = (PlaylistService) ctx.getBean("playlistServiceImpl");        
         playlistDAO = mock(PlaylistDAOImpl.class);
-        ((PlaylistServiceImpl) playlistService).setPlaylistDAO(playlistDAO);
+        playlistService.setPlaylistDAO(playlistDAO);
     }
     
     private void assertDeepEquals(PlaylistDTO expected, PlaylistDTO actual) {

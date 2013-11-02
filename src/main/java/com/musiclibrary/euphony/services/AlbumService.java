@@ -4,6 +4,7 @@
  */
 package com.musiclibrary.euphony.services;
 
+import com.musiclibrary.euphony.dao.AlbumDAO;
 import com.musiclibrary.euphony.dto.AlbumDTO;
 import com.musiclibrary.euphony.entities.Artist;
 import com.musiclibrary.euphony.entities.Genre;
@@ -33,4 +34,6 @@ public interface AlbumService {
     List<AlbumDTO> getAllAlbums() throws DataAccessException;
     
     List<AlbumDTO> getByReleaseYear(Integer year) throws DataAccessException;    
+
+    void setDAO(AlbumDAO dao);
 }

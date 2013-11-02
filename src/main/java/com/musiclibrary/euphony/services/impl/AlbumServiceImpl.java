@@ -4,7 +4,7 @@
  */
 package com.musiclibrary.euphony.services.impl;
 
-import com.musiclibrary.euphony.dao.impl.AlbumDAOImpl;
+import com.musiclibrary.euphony.dao.AlbumDAO;
 import com.musiclibrary.euphony.dto.AlbumDTO;
 import com.musiclibrary.euphony.entities.Album;
 import com.musiclibrary.euphony.entities.Artist;
@@ -15,18 +15,21 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Branislav Novotny <br.novotny@gmail.com> #396152
  */
+@Service
 public class AlbumServiceImpl implements AlbumService{
     
     @Autowired
-    private AlbumDAOImpl albumDAO;
+    private AlbumDAO albumDAO;
     
-    public void setDAO(AlbumDAOImpl albumDAO){
+    @Override
+    public void setDAO(AlbumDAO albumDAO){
         this.albumDAO = albumDAO;
     }
 

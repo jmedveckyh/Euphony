@@ -9,12 +9,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  *
  * @author Jakub Medvecký-Heretik #396373
  */
+
+@Repository
 public class ArtistDAOImpl implements ArtistDAO {
 
     @PersistenceContext
@@ -22,6 +25,13 @@ public class ArtistDAOImpl implements ArtistDAO {
 
     public ArtistDAOImpl(EntityManager em) {
         this.em = em;
+    }
+
+    public void setEm(EntityManager em) {
+        this.em = em;
+    }
+
+    public ArtistDAOImpl() {
     }
 
     @Override

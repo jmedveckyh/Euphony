@@ -4,6 +4,7 @@
  */
 package com.musiclibrary.euphony.service;
 
+import com.musiclibrary.euphony.dao.ArtistDAO;
 import com.musiclibrary.euphony.dao.impl.ArtistDAOImpl;
 import com.musiclibrary.euphony.dto.ArtistDTO;
 import com.musiclibrary.euphony.entities.Artist;
@@ -15,6 +16,8 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -24,13 +27,14 @@ import org.springframework.dao.DataAccessException;
 public class ArtistServiceImplTest {
 
     private ArtistService artistService;
-    private ArtistDAOImpl artistDAO;
+    private ArtistDAO artistDAO;
 
     @Before
     public void setUp() {
-        artistService = new ArtistServiceImpl();
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("/applicationContext.xml");
+        artistService = (ArtistService) ctx.getBean("artistServiceImpl");
         artistDAO = mock(ArtistDAOImpl.class);
-        ((ArtistServiceImpl) artistService).setDAO(artistDAO);
+        artistService.setDAO(artistDAO);
     }
 
     //treba??

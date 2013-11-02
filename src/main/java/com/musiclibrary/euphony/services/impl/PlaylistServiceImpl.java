@@ -1,7 +1,6 @@
 package com.musiclibrary.euphony.services.impl;
 
 import com.musiclibrary.euphony.dao.PlaylistDAO;
-import com.musiclibrary.euphony.dao.impl.PlaylistDAOImpl;
 import com.musiclibrary.euphony.dto.PlaylistDTO;
 import com.musiclibrary.euphony.dto.SongDTO;
 import com.musiclibrary.euphony.entities.Playlist;
@@ -27,7 +26,8 @@ public class PlaylistServiceImpl implements PlaylistService {
     @Autowired
     private PlaylistDAO playlistDAO;      // TODO Dao<Playlist>?
     
-    public void setPlaylistDAO(PlaylistDAOImpl playlistDAO) {
+    @Override
+    public void setPlaylistDAO(PlaylistDAO playlistDAO) {
         this.playlistDAO = playlistDAO;
     }
     

@@ -11,16 +11,26 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  * 
  * 
  * @author Sebastian
  */
+
+@Repository
 public class SongDAOImpl implements SongDAO{
 
     @PersistenceContext
     private EntityManager em;
+
+    public void setEm(EntityManager em) {
+        this.em = em;
+    }
+
+    public SongDAOImpl() {
+    }
 
     public SongDAOImpl(EntityManager em) {
         this.em = em;

@@ -4,7 +4,7 @@
  */
 package com.musiclibrary.euphony.services.impl;
 
-import com.musiclibrary.euphony.dao.impl.ArtistDAOImpl;
+import com.musiclibrary.euphony.dao.ArtistDAO;
 import com.musiclibrary.euphony.dto.ArtistDTO;
 import com.musiclibrary.euphony.entities.Artist;
 import com.musiclibrary.euphony.services.ArtistService;
@@ -25,9 +25,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class ArtistServiceImpl implements ArtistService {
 
     @Autowired
-    private ArtistDAOImpl artistDao;
+    private ArtistDAO artistDao;
 
-    public void setDAO(ArtistDAOImpl artistDao) {
+    @Override
+    public void setDAO(ArtistDAO artistDao) {
         this.artistDao = artistDao;
     }
 

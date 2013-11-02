@@ -29,10 +29,12 @@ public class MusicFacadeImpl implements MusicFacade {
     @Autowired
     private AlbumService albumService;
 
+    @Override
     public void setPlaylistService(PlaylistService playlistService) {
         this.playlistService = playlistService;
     }
 
+    @Override
     public void setAlbumService(AlbumService albumService) {
         this.albumService = albumService;
     }

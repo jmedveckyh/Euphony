@@ -1,5 +1,6 @@
 package com.musiclibrary.euphony.services;
 
+import com.musiclibrary.euphony.dao.PlaylistDAO;
 import com.musiclibrary.euphony.dto.PlaylistDTO;
 import com.musiclibrary.euphony.dto.SongDTO;
 import java.util.List;
@@ -25,5 +26,7 @@ public interface PlaylistService {
     List<PlaylistDTO> getBySong(SongDTO songDTO) throws DataAccessException;
     
     List<PlaylistDTO> getAll();
+
+    void setPlaylistDAO(PlaylistDAO playlistDAO);
     
 }

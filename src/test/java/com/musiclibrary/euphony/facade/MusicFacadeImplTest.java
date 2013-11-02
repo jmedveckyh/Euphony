@@ -3,7 +3,6 @@ package com.musiclibrary.euphony.facade;
 import com.musiclibrary.euphony.dto.AlbumDTO;
 import com.musiclibrary.euphony.dto.PlaylistDTO;
 import com.musiclibrary.euphony.dto.SongDTO;
-import com.musiclibrary.euphony.facade.impl.MusicFacadeImpl;
 import com.musiclibrary.euphony.services.AlbumService;
 import com.musiclibrary.euphony.services.PlaylistService;
 import com.musiclibrary.euphony.services.SongService;
@@ -11,9 +10,11 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * Tests for Music facade layer imlpementation.
+ * Tests for Music facade layer implementation.
  * 
  * @author Tomas Smetanka #396209
  */
@@ -28,10 +29,11 @@ public class MusicFacadeImplTest {
     
     @Before
     public void setUp() {   
-        facade = new MusicFacadeImpl();
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("/applicationContext.xml");
+        facade = (MusicFacade) ctx.getBean("musicFacadeImpl");
         
-        ((MusicFacadeImpl) facade).setPlaylistService(playlistService);
-        ((MusicFacadeImpl) facade).setAlbumService(albumService);
+        facade.setPlaylistService(playlistService);
+        facade.setAlbumService(albumService);
 
         facade = mock(MusicFacade.class);
         playlistService = mock(PlaylistService.class);

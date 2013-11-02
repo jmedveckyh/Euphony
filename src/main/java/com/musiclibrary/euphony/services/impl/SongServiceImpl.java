@@ -29,6 +29,7 @@ public class SongServiceImpl implements SongService{
     @Autowired
     private SongDAO songDao;
     
+    @Override
     public void setDAO(SongDAO songDao){
         this.songDao=songDao;
     }

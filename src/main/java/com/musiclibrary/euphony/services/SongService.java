@@ -1,5 +1,6 @@
 package com.musiclibrary.euphony.services;
 
+import com.musiclibrary.euphony.dao.SongDAO;
 import com.musiclibrary.euphony.dto.AlbumDTO;
 import com.musiclibrary.euphony.dto.ArtistDTO;
 import com.musiclibrary.euphony.dto.GenreDTO;
@@ -30,5 +31,7 @@ public interface SongService {
     List<SongDTO> getByArtist(ArtistDTO artist) throws DataAccessException;
 
     List<SongDTO> getByAlbum(AlbumDTO album) throws DataAccessException;
+
+    void setDAO(SongDAO dao);
     
 }

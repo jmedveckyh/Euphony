@@ -1,5 +1,6 @@
 package com.musiclibrary.euphony.services;
 
+import com.musiclibrary.euphony.dao.ArtistDAO;
 import com.musiclibrary.euphony.dto.ArtistDTO;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
@@ -21,4 +22,6 @@ public interface ArtistService {
     List<ArtistDTO> getAll() throws DataAccessException;
 
     ArtistDTO getByName(String name) throws DataAccessException;
+
+    void setDAO(ArtistDAO artistDAO);
 }

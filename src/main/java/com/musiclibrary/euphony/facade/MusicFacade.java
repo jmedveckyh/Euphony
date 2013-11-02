@@ -3,6 +3,8 @@ package com.musiclibrary.euphony.facade;
 import com.musiclibrary.euphony.dto.AlbumDTO;
 import com.musiclibrary.euphony.dto.PlaylistDTO;
 import com.musiclibrary.euphony.dto.SongDTO;
+import com.musiclibrary.euphony.services.AlbumService;
+import com.musiclibrary.euphony.services.PlaylistService;
 
 /**
  * Interface for facade layer. 
@@ -61,5 +63,9 @@ public interface MusicFacade {
      * @param album to be removed from, cannot be null.
      */
     public void removeSongFromAlbum(SongDTO song, AlbumDTO album);
+
+    public void setPlaylistService(PlaylistService playlistService);
+
+    public void setAlbumService(AlbumService albumService);
     
 }

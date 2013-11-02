@@ -9,16 +9,26 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  * DAO implementation of Playlist.
  * 
  * @author Tomas Smetanka
  */
+
+@Repository
 public class PlaylistDAOImpl implements PlaylistDAO{
 
     @PersistenceContext
     private EntityManager em;
+
+    public PlaylistDAOImpl() {
+    }
+
+    public void setEm(EntityManager em) {
+        this.em = em;
+    }
 
     public PlaylistDAOImpl(EntityManager em) {
         this.em = em;

@@ -22,6 +22,8 @@ import junit.framework.TestCase;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -36,9 +38,10 @@ public class SongServiceImplTest extends TestCase{
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        service = new SongServiceImpl();
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("/applicationContext.xml");
+        service = (SongService) ctx.getBean("songServiceImpl");
         dao = mock(SongDAOImpl.class);
-        ((SongServiceImpl) service).setDAO(dao);
+        service.setDAO(dao);
     }
     
     @Override

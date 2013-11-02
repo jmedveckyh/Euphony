@@ -4,7 +4,7 @@
  */
 package com.musiclibrary.euphony.services.impl;
 
-import com.musiclibrary.euphony.dao.impl.GenreDAOImpl;
+import com.musiclibrary.euphony.dao.GenreDAO;
 import com.musiclibrary.euphony.dto.GenreDTO;
 import com.musiclibrary.euphony.entities.Genre;
 import com.musiclibrary.euphony.services.GenreService;
@@ -25,9 +25,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class GenreServiceImpl implements GenreService {
 
     @Autowired
-    private GenreDAOImpl genreDao;
+    private GenreDAO genreDao;
 
-    public void setDAO(GenreDAOImpl genreDao) {
+    @Override
+    public void setDAO(GenreDAO genreDao) {
         this.genreDao = genreDao;
     }
 
