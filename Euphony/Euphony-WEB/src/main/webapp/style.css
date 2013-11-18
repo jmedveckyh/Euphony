@@ -1,0 +1,12 @@
+/* 
+    Document   : style
+    Created on : 18-Nov-2013, 02:26:00
+    Author     : Tomáš Smetanka
+    Description:
+        Global style definition.
+*/
+
+root { 
+    display: block;
+}
+
