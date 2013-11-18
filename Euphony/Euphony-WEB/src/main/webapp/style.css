@@ -5,8 +5,89 @@
     Description:
         Global style definition.
 */
+body {
+    background-color: #ebebeb;
+    font-family: "wf_SegoeUI", "Segoe", "Segoe UI", HelveticaNeue, Droid Sans, Arial, Sans-Serif;
+    font-size: 13px;
+}
 
-root { 
-    display: block;
+.cl {
+    clear: both;
+}
+
+.navigation { 
+    float: left;
+    width: 300px;
+    height: 100%;
+    position: absolute;
+    background-image: url("./img/euphony-logo-small.png");
+    background-repeat: no-repeat;
+    background-position: center 40px;
+    background-color: #222;
+    top: 0;
+    left: 0;
+}
+
+.logo {
+    display: none;
+    width: 260px;
+    height: 67px;
+    float: top;
+}
+
+.search {
+    margin: 70px 0px 20px 12px;
+    z-index: 1;
+}
+
+.search input[type=text] {
+    width: 174px;
+    height: 40px;
+    line-height: 35px;
+    background-color: #393939;
+    padding: 0 15px 0 15px;
+    border: 2px solid #393939;
+    color: #c2c2c2;
+    font-size: 16px;
+}
+
+.search input[type=submit] {
+    margin-top: 51px;
+    width: 44px;
+    height: 44px;
+    background-image: url("./img/loupe.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: #771e87;
+    border: 0;
+}
+
+input, textarea, keygen, select, button, isindex {
+    margin: 0em;
+    font: -webkit-small-control;
+    color: initial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+}
+
+.userPanel {    
+    position: relative;
+    float: right;
+    margin-top: 0px;
+    margin-right: 20px;
+    width: 250px;
+    height: 60px;
+    background-color: #e2e2e2;
+}
+
+.context {
+    background-color: #ebebeb;
+    padding-left: 400px;
+    width: 100%;
 }
 

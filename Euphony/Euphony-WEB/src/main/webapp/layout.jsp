@@ -13,15 +13,28 @@
 <html lang="${pageContext.request.locale}">
     <head>
         <title><f:message key="${titlekey}"/></title>
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/style.css" />
+        <link rel="stylesheet" type="text/css" href="./style.css" />
         <s:layout-component name="header"/>
     </head>
     <body>
-        <h1><f:message key="${titlekey}"/></h1>
-        <div id="navigation">
-            <br><br><br><br><br><br><br>
+        <div class="navigation">
+            <div class="logo"><h1>Euphony</h1></div>
+            <div class="cl"></div>
+            <div class="search">
+                <table border="0">
+                    <tr>
+                        <td><input type="text" name="search" class="search"></td>
+                        <td><input type="submit" value=""></td>
+                    </tr>
+                </table>
+                
+            </div>
+            <br>some<br>thing<br><br><br><br><br>
         </div>
-        <div id="content">
+        <div class="userPanel">
+            Login
+        </div>
+        <div class="content">
             <s:messages/>
             <s:layout-component name="body"/>
         </div>
