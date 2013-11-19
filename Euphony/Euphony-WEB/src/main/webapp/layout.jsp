@@ -29,10 +29,39 @@
                 </table>
                 
             </div>
-            <br>some<br>thing<br><br><br><br><br>
+            <div class="menu">
+            <ul>
+                <li><a href="#"><span><f:message key="menu.explore"/></span></a></li>
+                <li><a href="#"><span><f:message key="menu.newplaylist"/></span></a></li>
+            </ul>
+                <h2><f:message key="menu.playlists"/></h2>
+                <hr>
+                <ul>
+                    <li><a href="#"><span>for each</span></a></li>
+                    <li><a href="#"><span>for each</span></a></li>
+                    <li><a href="#"><span>for each</span></a></li>
+                    <li><a href="#"><span>for each</span></a></li>
+                    <li><a href="#"><span>for each</span></a></li>
+                    <li><a href="#"><span>for each</span></a></li>
+            </div>
         </div>
         <div class="userPanel">
-            Login
+        <ul>
+            <li class="drop">
+                <a href="#">Admin</a>
+                <div class="dropdownContain">
+                    <div class="dropOut">
+                        <div class="triangle"></div>
+                        <ul>
+                            <li><f:message key="menu.admin.newgenre"/></li>
+                            <li><f:message key="menu.admin.newartist"/></li>
+                            <li><f:message key="menu.admin.newalbum"/></li>
+                            <li><f:message key="menu.admin.newsong"/></li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
         </div>
         <div class="content">
             <s:messages/>
