@@ -32,7 +32,7 @@
         <init-param>
             <description>where Stripes searches for ActionBeans</description>
             <param-name>ActionResolver.Packages</param-name>
-            <param-value>com.musiclibrary.euphonyweb</param-value>
+            <param-value>com.musiclibrary.euphonyweb,com.musiclibrary.euphonybusinesslogicimplementation</param-value>
         </init-param>
         <init-param>
             <description>locales and encodings in the app</description>

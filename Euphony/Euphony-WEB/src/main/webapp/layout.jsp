@@ -14,6 +14,7 @@
     <head>
         <title><f:message key="${titlekey}"/></title>
         <link rel="stylesheet" type="text/css" href="./style.css" />
+        <link rel="icon" href="./img/favicon.ico" type="image/x-icon">
         <s:layout-component name="header"/>
     </head>
     <body>

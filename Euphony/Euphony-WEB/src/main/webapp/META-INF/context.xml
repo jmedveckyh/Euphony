@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/pa165"/>
+<Context antiJARLocking="true" path="/pa165">
+<Resource
+    name="jdbc/testDB"
+    auth="Container"
+    type="javax.sql.DataSource"
+    username="pa165"
+    password="pa165"
+    driverClassName="org.apache.derby.jdbc.EmbeddedDriver"
+    url="jdbc:derby://localhost:1527/pa165"/>
+</Context>
