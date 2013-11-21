@@ -1,61 +1,52 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
-
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app 
+        PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd">
 <web-app>
     <display-name>Euphony, the music library</display-name>
-    
-    <!-- Spring -->
-    <listener>
-        <description>activates Spring IoC container during start</description>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-    <context-param>
-        <description>config file for Spring</description>
+    <context-param>  
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/spring-context.xml</param-value>
+        <description>config file for Spring</description>
     </context-param>
-
     <!-- JSTL -->
     <context-param>
-        <description>JSTL tags will use localized string from the same source as Stripes</description>
         <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
         <param-value>StripesResources</param-value>
+        <description>JSTL tags will use localized string from the same source as Stripes</description>
     </context-param>
-
+    <filter>
+        <filter-name>DynamicMappingFilter</filter-name>
+        <display-name>Stripes Dynamic Mapping Filter</display-name>
+        <filter-class>net.sourceforge.stripes.controller.DynamicMappingFilter</filter-class>
+    </filter>
     <!-- Stripes -->
     <filter>
-        <description>Stripes main conf</description>
-        <display-name>Stripes Filter</display-name>
         <filter-name>StripesFilter</filter-name>
+        <display-name>Stripes Filter</display-name>
+        <description>Stripes main conf</description>
         <filter-class>net.sourceforge.stripes.controller.StripesFilter</filter-class>
         <init-param>
-            <description>where Stripes searches for ActionBeans</description>
             <param-name>ActionResolver.Packages</param-name>
             <param-value>com.musiclibrary.euphonyweb,com.musiclibrary.euphonybusinesslogicimplementation</param-value>
+            <description>where Stripes searches for ActionBeans</description>
         </init-param>
         <init-param>
-            <description>locales and encodings in the app</description>
             <param-name>LocalePicker.Locales</param-name>
             <param-value>sk:utf-8,en:utf-8</param-value>
+            <description>locales and encodings in the app</description>
         </init-param>
         <init-param>
-            <description>Stripes injects Spring beans</description>
             <param-name>Interceptor.Classes</param-name>
             <param-value>net.sourceforge.stripes.integration.spring.SpringInterceptor</param-value>
+            <description>Stripes injects Spring beans</description>
         </init-param>
     </filter>
     <filter-mapping>
         <filter-name>StripesFilter</filter-name>
-        <url-pattern>*.jsp</url-pattern>
         <dispatcher>REQUEST</dispatcher>
+        <url-pattern>*.jsp</url-pattern>
     </filter-mapping>
-
-    <filter>
-        <display-name>Stripes Dynamic Mapping Filter</display-name>
-        <filter-name>DynamicMappingFilter</filter-name>
-        <filter-class>net.sourceforge.stripes.controller.DynamicMappingFilter</filter-class>
-    </filter>
     <filter-mapping>
         <filter-name>DynamicMappingFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -63,4 +54,8 @@
         <dispatcher>FORWARD</dispatcher>
         <dispatcher>INCLUDE</dispatcher>
     </filter-mapping>
+    <!-- Spring -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>  
 </web-app>

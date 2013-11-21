@@ -54,7 +54,7 @@
                     <div class="dropOut">
                         <div class="triangle"></div>
                         <ul>
-                            <li><f:message key="menu.admin.newgenre"/></li>
+                            <li><s:link beanclass="com.musiclibrary.euphonyweb.GenreActionBean"><f:message key="menu.admin.newgenre"/></s:link></li>
                             <li><f:message key="menu.admin.newartist"/></li>
                             <li><f:message key="menu.admin.newalbum"/></li>
                             <li><f:message key="menu.admin.newsong"/></li>
