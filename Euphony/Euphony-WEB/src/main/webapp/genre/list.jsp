@@ -21,9 +21,9 @@
                     <td>${genre.id}</td>
                     <td><c:out value="${genre.name}"/></td>
                     <td>
-                     <s:link beanclass="com.musiclibrary.euphonyweb.GenreActionBean" event="edit"><s:param name="genre.id" value="${genre.id}"/>edit</s:link>
-                    </td>
-                    <td>
+                        <s:link beanclass="com.musiclibrary.euphonyweb.GenreActionBean" event="edit"><s:param name="genre.id" value="${genre.id}"/>edit</s:link>
+                        </td>
+                        <td>
                         <s:form beanclass="com.musiclibrary.euphonyweb.GenreActionBean">
                             <s:hidden name="genre.id" value="${genre.id}"/>
                             <s:submit name="delete"><f:message key="genre.list.delete"/></s:submit>
@@ -37,7 +37,7 @@
             <fieldset><legend><f:message key="genre.list.newgenre"/></legend>
                 <%@include file="form.jsp"%>
                 <s:submit name="add"><f:message key="genre.list.createnewgenre"/></s:submit>
-            </fieldset>
+                </fieldset>
         </s:form>
     </s:layout-component>
 </s:layout-render>

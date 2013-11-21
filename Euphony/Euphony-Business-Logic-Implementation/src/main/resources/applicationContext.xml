@@ -16,17 +16,22 @@
 
     <tx:annotation-driven/>
     <context:component-scan base-package="com.musiclibrary.euphonybusinesslogicimplementation" />
-    <aop:config proxy-target-class="true" />
+    <aop:aspectj-autoproxy/>
         
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <!--<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="EuphonyPU"/>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>-->
+
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver"/>
-        <property name="url" value="jdbc:derby:memory:test-euphony;create=true"/>
-        <property name="username" value=""/>
-        <property name="password" value=""/>
+        <property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver"/>
+        <property name="url" value="jdbc:derby://localhost:1527/pa165"/>
+        <property name="username" value="pa165"/>
+        <property name="password" value="pa165"/>
     </bean>
 
 </beans>

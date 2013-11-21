@@ -20,7 +20,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class GenreDAOImpl implements GenreDAO {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "EuphonyPU")
     private EntityManager em;
 
     public void setEm(EntityManager em) {

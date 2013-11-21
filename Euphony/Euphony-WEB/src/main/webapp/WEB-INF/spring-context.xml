@@ -11,7 +11,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     <!--
     <context:component-scan base-package="com.musiclibrary.euphonyweb" /> 
     <context:component-scan base-package="com.musiclibrary.euphonybusinesslogicimplementation" /> 
-    -->
-    <bean id="genreService" class="com.musiclibrary.euphonybusinesslogicimplementation.services.impl.GenreServiceImpl" />
     
+    <bean id="genreService" class="com.musiclibrary.euphonybusinesslogicimplementation.services.impl.GenreServiceImpl" />
+    -->
 </beans>

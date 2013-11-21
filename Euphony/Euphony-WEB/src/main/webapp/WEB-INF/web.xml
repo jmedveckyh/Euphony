@@ -6,7 +6,10 @@
     <display-name>Euphony, the music library</display-name>
     <context-param>  
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/spring-context.xml</param-value>
+        <param-value>
+            /WEB-INF/spring-context.xml
+            classpath:applicationContext.xml    
+        </param-value>
         <description>config file for Spring</description>
     </context-param>
     <!-- JSTL -->
@@ -28,7 +31,7 @@
         <filter-class>net.sourceforge.stripes.controller.StripesFilter</filter-class>
         <init-param>
             <param-name>ActionResolver.Packages</param-name>
-            <param-value>com.musiclibrary.euphonyweb,com.musiclibrary.euphonybusinesslogicimplementation</param-value>
+            <param-value>com.musiclibrary.euphonyweb</param-value>
             <description>where Stripes searches for ActionBeans</description>
         </init-param>
         <init-param>

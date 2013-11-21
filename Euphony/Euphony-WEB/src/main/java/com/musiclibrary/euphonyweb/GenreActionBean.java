@@ -18,7 +18,7 @@ import net.sourceforge.stripes.validation.ValidationErrors;
 
 /**
  * Action bean for Genre.
- * 
+ *
  * @author Tomas Smetanka
  */
 @UrlBinding("/genres/{$event}/{genre.id}")
@@ -90,7 +90,7 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
         if (ids == null) {
             return;
         }
-        genre = genreService.getById(Long.parseLong(ids));
+        genre = genreService.getById(new Long(Long.parseLong(ids)));
     }
 
     public Resolution edit() {
