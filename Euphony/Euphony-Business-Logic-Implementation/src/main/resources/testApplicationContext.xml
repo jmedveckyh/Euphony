@@ -22,20 +22,11 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <!--<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="EuphonyPU"/>
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
-
-    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-
-    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />-->
-
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver"/>
-        <property name="url" value="jdbc:derby://localhost:1527/pa165"/>
-        <property name="username" value="pa165"/>
-        <property name="password" value="pa165"/>
+        <property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+        <property name="url" value="jdbc:derby:memory:test-euphony;create=true"/>
+        <property name="username" value=""/>
+        <property name="password" value=""/>
     </bean>
-   
+
 </beans>
