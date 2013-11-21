@@ -14,7 +14,7 @@
         
         
        index poďjebaný
-       <s:link beanclass="com.musiclibrary.euphonyweb.GenreActionBean">genres</s:link>
+       
 
     </s:layout-component>
 </s:layout-render>
