@@ -1,7 +1,7 @@
 package com.musiclibrary.euphonyweb;
 
-import com.musiclibrary.euphonyapi.dto.GenreDTO;
-import com.musiclibrary.euphonyapi.services.GenreService;
+import com.musiclibrary.euphonyapi.dto.ArtistDTO;
+import com.musiclibrary.euphonyapi.services.ArtistService;
 import java.util.List;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -18,30 +18,30 @@ import net.sourceforge.stripes.validation.ValidationErrorHandler;
 import net.sourceforge.stripes.validation.ValidationErrors;
 
 /**
- * Action bean for Genre.
+ * Action bean for Artist.
  *
  * @author Tomas Smetanka
  */
-@UrlBinding("/genres/{$event}/{genre.id}")
-public class GenreActionBean extends BaseActionBean implements ValidationErrorHandler {
+@UrlBinding("/artists/{$event}/{artist.id}")
+public class ArtistActionBean extends BaseActionBean implements ValidationErrorHandler {
     
     @SpringBean
-    protected GenreService genreService;
+    protected ArtistService artistService;
     
-    private GenreDTO genre;
-    //--- part for showing a list of genres ----
-    private List<GenreDTO> genres;
+    private ArtistDTO artist;
+    //--- part for showing a list of artists ----
+    private List<ArtistDTO> artists;
     
     
     @DefaultHandler
     public Resolution list() {
         //log.debug("list()");
-        genres = genreService.getAll();
-        return new ForwardResolution("/genre/list.jsp");
+        artists = artistService.getAll();
+        return new ForwardResolution("/artist/list.jsp");
     }
 
-    public List<GenreDTO> getGenres() {
-        return genres;
+    public List<ArtistDTO> getArtists() {
+        return artists;
     }
 
     //--- part for adding ----
@@ -49,59 +49,59 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
         @Validate(on = {"add", "save"}, field = "name", required = true)
     })
     public Resolution add() {
-//        log.debug("add() genre={}", genre);
-        genreService.create(genre);
-//        getContext().getMessages().add(new LocalizableMessage("genre.add.message",escapeHTML(genre.getName())));
+//        log.debug("add() artist={}", artist);
+        artistService.create(artist);
+//        getContext().getMessages().add(new LocalizableMessage("artist.add.message",escapeHTML(artist.getName())));
         return new RedirectResolution(this.getClass(), "list");
     }
     
     public Resolution cancel() {
-//        log.debug("cancel() genre={}", genre);
+//        log.debug("cancel() artist={}", artist);
         return new RedirectResolution(this.getClass(), "list");
     }
 
     @Override
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
-        genres = genreService.getAll();
+        artists = artistService.getAll();
         return null;
     }
 
-    public GenreDTO getGenre() {
-        return genre;
+    public ArtistDTO getArtist() {
+        return artist;
     }
 
-    public void setGenre(GenreDTO genre) {
-        this.genre = genre;
+    public void setArtist(ArtistDTO artist) {
+        this.artist = artist;
     }
     
-    //--- part for deleting a genre ----
+    //--- part for deleting a artist ----
     public Resolution delete() {
-        //log.debug("delete({})", genre.getId());
+        //log.debug("delete({})", artist.getId());
         //only id is filled by the form
-        genre = genreService.getById(genre.getId());
-        genreService.delete(genre);
-        //getContext().getMessages().add(new LocalizableMessage("genre.delete.message", escapeHTML(genre.getTitle()), escapeHTML(genre.getAuthor())));
+        artist = artistService.getById(artist.getId());
+        artistService.delete(artist);
+        //getContext().getMessages().add(new LocalizableMessage("artist.delete.message", escapeHTML(artist.getTitle()), escapeHTML(artist.getAuthor())));
         return new RedirectResolution(this.getClass(), "list");
     }
 
-    //--- part for editing a genre ----
+    //--- part for editing a artist ----
     @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
-    public void loadGenreFromDatabase() {
-        String ids = getContext().getRequest().getParameter("genre.id");
+    public void loadArtistFromDatabase() {
+        String ids = getContext().getRequest().getParameter("artist.id");
         if (ids == null) {
             return;
         }
-        genre = genreService.getById(Long.parseLong(ids));
+        artist = artistService.getById(Long.parseLong(ids));
     }
 
     public Resolution edit() {
-        //log.debug("edit() genre={}", genre);
-        return new ForwardResolution("/genre/edit.jsp");
+        //log.debug("edit() artist={}", artist);
+        return new ForwardResolution("/artist/edit.jsp");
     }
 
     public Resolution save() {
-        //log.debug("save() genre={}", genre);
-        genreService.update(genre);
+        //log.debug("save() artist={}", artist);
+        artistService.update(artist);
         return new RedirectResolution(this.getClass(), "list");
     }
 }
