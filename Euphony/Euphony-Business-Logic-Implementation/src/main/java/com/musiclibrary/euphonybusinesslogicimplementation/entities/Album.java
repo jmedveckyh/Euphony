@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
@@ -33,13 +36,16 @@ public class Album implements Serializable {
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime releaseDate;
         
-    @OneToMany(cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(fetch= FetchType.EAGER,cascade= CascadeType.REFRESH)
     private List<Song> songs;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(fetch= FetchType.EAGER,cascade= CascadeType.REFRESH)
     private List<Genre> genres;
     
-    @ManyToMany(cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(fetch= FetchType.EAGER,cascade= CascadeType.REFRESH)
     private List<Artist> artists;
 
     public Album() {

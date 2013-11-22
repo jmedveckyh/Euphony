@@ -15,6 +15,7 @@ import com.musiclibrary.euphonyapi.services.SongService;
 import java.util.ArrayList;
 import java.util.List;
 import net.sourceforge.stripes.action.*;
+import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
@@ -42,7 +43,11 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
     private List<AlbumDTO> albums;
     private List<GenreDTO> genres;
     private List<ArtistDTO> artists;
+    
     private SongDTO song;
+    private long album;
+    private long genre;
+    private long artist;
 
     @DefaultHandler
     public Resolution list() {
@@ -56,6 +61,30 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
     public List<SongDTO> getSongs() {
         return songs;
     }
+    
+    public List<GenreDTO> getGenres() {
+        return genres;
+    }
+    
+    public List<AlbumDTO> getAlbums() {
+        return albums;
+    }
+    
+    public List<ArtistDTO> getArtists() {
+        return artists;
+    }
+    
+    public void setAlbum(long album){
+        this.album=album;
+    }
+    
+    public void setArtist(long artist){
+        this.artist=artist;
+    }
+    
+    public void setGenre(long genre){
+        this.genre=genre;
+    }
 
     //--- part for adding a book ----
 
@@ -68,9 +97,12 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
     * */
 
     public Resolution add() {
-        song.setArtist(new ArtistDTO("Jozo Psenica"));
-        song.setGenre(new GenreDTO("DNB"));
-        song.setAlbum(new AlbumDTO("title", "cover.jpg", DateTime.now() , new ArrayList<SongDTO>(), "" ,new ArrayList<ArtistDTO>(), new ArrayList<GenreDTO>()));
+        /*
+        song.setAlbum(albumService.getById(album));
+        song.setArtist(artistService.getById(artist));
+        song.setGenre(genreService.getById(genre));
+        */
+        
         songService.create(song);
         //getContext().getMessages().add(new LocalizableMessage("book.add.message",escapeHTML(book.getTitle()),escapeHTML(book.getAuthor())));
         return new RedirectResolution(this.getClass(), "list");
@@ -94,36 +126,27 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
 
     //--- part for deleting a book ----
 
-    /*
     public Resolution delete() {
-        log.debug("delete({})", book.getId());
-        //only id is filled by the form
-        book = bookLibrary.getBook(book.getId());
-        bookLibrary.deleteBook(book.getId());
-        getContext().getMessages().add(new LocalizableMessage("book.delete.message",escapeHTML(book.getTitle()),escapeHTML(book.getAuthor())));
+        song = songService.getById(song.getId());
+        songService.delete(song);
         return new RedirectResolution(this.getClass(), "list");
     }
-    */
 
     //--- part for editing a book ----
 
-    /*
     @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
     public void loadBookFromDatabase() {
         String ids = getContext().getRequest().getParameter("book.id");
         if (ids == null) return;
-        book = bookLibrary.getBook(Long.parseLong(ids));
+        song = songService.getById(Long.parseLong(ids));
     }
 
     public Resolution edit() {
-        log.debug("edit() book={}", book);
-        return new ForwardResolution("/book/edit.jsp");
+        return new ForwardResolution("/song/edit.jsp");
     }
 
     public Resolution save() {
-        log.debug("save() book={}", book);
-        bookLibrary.updateBook(book);
+        songService.update(song);
         return new RedirectResolution(this.getClass(), "list");
     }
-    */
 }

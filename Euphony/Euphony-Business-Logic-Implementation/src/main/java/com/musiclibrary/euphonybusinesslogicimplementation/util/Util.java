@@ -97,6 +97,7 @@ public class Util {
         if ("".equals(song.getTitle())) {
             throw new DataAccessException("Song's title cannot be empty.") {};
         }
+        /*
         if (song.getGenre() == null) {
             throw new DataAccessException("Song's genre cannot be null.") {};
         }
@@ -106,6 +107,7 @@ public class Util {
         if (song.getArtist() == null) {
             throw new DataAccessException("Song's artist cannot be null.") {};
         }
+        */
         if (song.getBitrate() < 1 || song.getBitrate() > 2500) {
             throw new DataAccessException("Song's bitrate must be between 1 and 2500.") {};
         }

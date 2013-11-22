@@ -5,14 +5,14 @@
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
 <s:layout-render name="/layout.jsp" titlekey="genre.edit.title">
     <s:layout-component name="body">
-        <s:useActionBean beanclass="com.musiclibrary.euphony.GenreActionBean" var="actionBean"/>
+        <s:useActionBean beanclass="com.musiclibrary.euphony.SongActionBean" var="actionBean"/>
 
-        <s:form beanclass="com.musiclibrary.euphonyweb.GenreActionBean">
-            <s:hidden name="genre.id"/>
-            <fieldset><legend><f:message key="genre.edit.edit"/></legend>
+        <s:form beanclass="com.musiclibrary.euphonyweb.SongActionBean">
+            <s:hidden name="song.id"/>
+            <fieldset><legend><f:message key="song.edit.edit"/></legend>
                 <%@include file="form.jsp"%>
-                <s:submit name="save"><f:message key="genre.edit.save"/></s:submit>
-                <s:submit name="cancel"><f:message key="genre.edit.cancel"/></s:submit>
+                <s:submit name="save"><f:message key="song.edit.save"/></s:submit>
+                <s:submit name="cancel"><f:message key="song.edit.cancel"/></s:submit>
             </fieldset>
         </s:form>
 

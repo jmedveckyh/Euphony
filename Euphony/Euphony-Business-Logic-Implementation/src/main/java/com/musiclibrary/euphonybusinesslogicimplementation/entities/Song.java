@@ -31,13 +31,13 @@ public class Song implements Serializable {
     
     private String comment;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne (optional=true,cascade= CascadeType.REFRESH)
     private Genre genre;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne (optional=true,cascade= CascadeType.REFRESH)
     private Album album;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne (optional=true,cascade= CascadeType.REFRESH)
     private Artist artist;
 
     @ManyToOne
