@@ -45,12 +45,11 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
     }
 
     //--- part for adding ----
-    @ValidateNestedProperties(value = {
+    /*@ValidateNestedProperties(value = {
         @Validate(on = {"add", "save"}, field = "name", required = true)
-    })
+    })*/
     public Resolution add() {
 //        log.debug("add() book={}", book);
-        System.out.println("nieco by malo vypisat" + genre.toString());
         genreService.create(genre);
 //        getContext().getMessages().add(new LocalizableMessage("book.add.message",escapeHTML(genre.getName())));
         return new RedirectResolution(this.getClass(), "list");
@@ -86,7 +85,7 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
     }
 
     //--- part for editing a book ----
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
+    //@Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
     public void loadGenreFromDatabase() {
         String ids = getContext().getRequest().getParameter("genre.id");
         if (ids == null) {

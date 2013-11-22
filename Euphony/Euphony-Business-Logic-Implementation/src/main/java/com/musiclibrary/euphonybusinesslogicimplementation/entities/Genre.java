@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 /**
  * Genre entity.
@@ -24,9 +23,6 @@ public class Genre implements Serializable {
     
     @Column(unique = true)
     private String name;
-    
-    @ManyToOne
-    private Song song;
 
     public Genre() {
     }

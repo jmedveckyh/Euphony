@@ -12,6 +12,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -36,6 +37,7 @@ public class GenreDAOImpl implements GenreDAO {
     }
 
     @Override
+    @Transactional
     public void create(Genre entity) {
         try {
             Util.validateGenre(entity);
@@ -45,6 +47,7 @@ public class GenreDAOImpl implements GenreDAO {
             }
 
             em.persist(entity);
+            em.flush();
         } catch (IllegalArgumentException | PersistenceException ex) {
             throw new DataAccessException(ex.getMessage(), ex) {
             };
