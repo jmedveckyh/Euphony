@@ -10,6 +10,7 @@ import javax.persistence.Persistence;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.dao.DataAccessException;
 
 /**
  * Unit tests for Artist DAO implementation.
@@ -32,7 +33,7 @@ public class ArtistDAOImplTest {
     /**
      * Test of createArtist method, of class artistDAOImpl with wrong attributes.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testCreateArtistWithNull() {
         em.getTransaction().begin();
         artistDAOImpl.create(null);              //artist is null
@@ -40,7 +41,7 @@ public class ArtistDAOImplTest {
         em.clear();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testCreateArtistWithNullAttributes() {
         em.getTransaction().begin();
         Artist artist = new Artist();
@@ -49,7 +50,7 @@ public class ArtistDAOImplTest {
         em.clear();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testCreateArtistWithEmptyName() {
         em.getTransaction().begin();
         Artist artist = new Artist();
@@ -84,7 +85,7 @@ public class ArtistDAOImplTest {
     /**
      * Test of getArtistById method, of class artistDAOImpl with wrong attributes.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testGetArtistByIdWithNull() {
         em.getTransaction().begin();
         artistDAOImpl.getById(null);              //id and class are null
@@ -124,7 +125,7 @@ public class ArtistDAOImplTest {
     /**
      * Test of updateArtist method, of class artistDAOImpl with wrong attributes.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testUpdateArtistWithNull() {
         em.getTransaction().begin();
         artistDAOImpl.update(null);              //artist is null
@@ -132,7 +133,7 @@ public class ArtistDAOImplTest {
         em.clear();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testUpdateArtistWithNullAttributes() {
         em.getTransaction().begin();
         Artist artist = new Artist();
@@ -141,7 +142,7 @@ public class ArtistDAOImplTest {
         em.clear();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testUpdateArtistWithEmptyName() {
         em.getTransaction().begin();
         Artist artist = new Artist();
@@ -151,7 +152,7 @@ public class ArtistDAOImplTest {
         em.clear();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testUpdateArtistWithNoId() {
         em.getTransaction().begin();
         Artist artist = new Artist();
@@ -161,7 +162,7 @@ public class ArtistDAOImplTest {
         em.clear();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testUpdateArtistWithNotAssignedId() {
         em.getTransaction().begin();
         Artist artist = new Artist("Marika Gombitova");
@@ -198,7 +199,7 @@ public class ArtistDAOImplTest {
     /**
      * Test of deleteArtist method, of class artistDAOImpl with wrong attributes.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testDeleteArtistWithNull() {
         em.getTransaction().begin();
         artistDAOImpl.delete(null);           //artist is null
@@ -206,7 +207,7 @@ public class ArtistDAOImplTest {
         em.clear();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testDeleteArtistWithNullId() {
         Artist artist = new Artist("Marika Gombitova");
         em.getTransaction().begin();
@@ -215,7 +216,7 @@ public class ArtistDAOImplTest {
         em.clear();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testDeleteArtistWithNotAssignedId() {
         Artist artist = new Artist("Marika Gombitova");
         artist.setId(new Long(100));
@@ -249,7 +250,7 @@ public class ArtistDAOImplTest {
      * Test of getArtistByName method, of class artistDAOImpl with wrong attributes.
      */
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testGetArtistByNameWithNull() {
         em.getTransaction().begin();
         artistDAOImpl.getByName(null);              //name is null

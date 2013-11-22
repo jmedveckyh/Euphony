@@ -14,6 +14,7 @@ import javax.persistence.Persistence;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.dao.DataAccessException;
 
 /**
  * Unit tests for Playlist DAO implementation.
@@ -78,7 +79,7 @@ public class PlaylistDAOImplTest {
         assertDeepEquals(playlistR, playlistE);
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testCreateNullPlaylist() {
         em.getTransaction().begin();
         playlistDAOImpl.create(null);
@@ -86,7 +87,7 @@ public class PlaylistDAOImplTest {
         em.clear();
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testCreatePlaylistWithNoName() {
         Playlist playlistR = new Playlist();
         em.getTransaction().begin();
@@ -95,7 +96,7 @@ public class PlaylistDAOImplTest {
         em.clear();
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testCreatePlaylistWithEmptyName() {
         Playlist playlistR = new Playlist("");
         em.getTransaction().begin();
@@ -139,7 +140,7 @@ public class PlaylistDAOImplTest {
         em.clear();
     } 
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testUpdateNullPlaylist() {
         em.getTransaction().begin();
         playlistDAOImpl.update(null);
@@ -147,7 +148,7 @@ public class PlaylistDAOImplTest {
         em.clear();
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testUpdatePlaylistWithEmptyName() {
         Playlist playlistR = new Playlist("");
         em.getTransaction().begin();
@@ -156,7 +157,7 @@ public class PlaylistDAOImplTest {
         em.clear();
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testUpdatePlaylistWithNoId() {
         Playlist playlistR = new Playlist(null, "New");
         em.getTransaction().begin();
@@ -165,7 +166,7 @@ public class PlaylistDAOImplTest {
         em.clear();
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testUpdatePlaylistWhichIsNotInDatabase() {
         Map<Integer, Song> songs = new TreeMap<>();
         Genre genreTemp = new Genre("Pop");
@@ -219,7 +220,7 @@ public class PlaylistDAOImplTest {
         
     } 
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testDeleteNullPlaylist() {
         em.getTransaction().begin();
         playlistDAOImpl.delete(null);
@@ -227,7 +228,7 @@ public class PlaylistDAOImplTest {
         em.clear();
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testDeletePlaylistWithEmptyName() {
         Playlist playlistR = new Playlist("");
         em.getTransaction().begin();
@@ -236,7 +237,7 @@ public class PlaylistDAOImplTest {
         em.clear();
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testDeletePlaylistWithNoId() {
         Playlist playlistR = new Playlist(null, "New");
         em.getTransaction().begin();
@@ -245,7 +246,7 @@ public class PlaylistDAOImplTest {
         em.clear();
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testDeletePlaylistWhichIsNotInDatabase() {
         Map<Integer, Song> songs = new TreeMap<>();
         Genre genreTemp = new Genre("Pop");
@@ -288,7 +289,7 @@ public class PlaylistDAOImplTest {
         assertDeepEquals(playlistR, playlistDAOImpl.getById(id));
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testGetByIdPlaylistWhithNoId() {
         em.getTransaction().begin();
         playlistDAOImpl.getById(null);

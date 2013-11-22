@@ -10,6 +10,7 @@ import javax.persistence.Persistence;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.dao.DataAccessException;
 
 /**
  * Unit tests for Genre DAO implementation.
@@ -32,7 +33,7 @@ public class GenreDAOImplTest {
     /**
      * Test of createGenre method, of class genreDAOImpl with wrong attributes.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testCreateGenreWithNull() {
         em.getTransaction().begin();
         genreDAOImpl.create(null);              //genre is null
@@ -40,7 +41,7 @@ public class GenreDAOImplTest {
         em.clear();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testCreateGenreWithNullAttributes() {
         em.getTransaction().begin();
         Genre genre = new Genre();
@@ -49,7 +50,7 @@ public class GenreDAOImplTest {
         em.clear();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testCreateGenreWithEmptyName() {
         em.getTransaction().begin();
         Genre genre = new Genre();
@@ -84,7 +85,7 @@ public class GenreDAOImplTest {
     /**
      * Test of getGenreById method, of class genreDAOImpl with wrong attributes.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testGetGenreByIdWithNull() {
         em.getTransaction().begin();
         genreDAOImpl.getById(null);              //id is null
@@ -124,7 +125,7 @@ public class GenreDAOImplTest {
     /**
      * Test of updateGenre method, of class genreDAOImpl with wrong attributes.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testUpdateGenreWithNull() {
         em.getTransaction().begin();
         genreDAOImpl.update(null);              //genre is null
@@ -132,7 +133,7 @@ public class GenreDAOImplTest {
         em.clear();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testUpdateGenreWithNullAttributes() {
         em.getTransaction().begin();
         Genre genre = new Genre();
@@ -141,7 +142,7 @@ public class GenreDAOImplTest {
         em.clear();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testUpdateGenreWithEmptyName() {
         em.getTransaction().begin();
         Genre genre = new Genre();
@@ -151,7 +152,7 @@ public class GenreDAOImplTest {
         em.clear();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testUpdateGenreWithNoId() {
         em.getTransaction().begin();
         Genre genre = new Genre();
@@ -161,7 +162,7 @@ public class GenreDAOImplTest {
         em.clear();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testUpdateGenreWithNotAssignedId() {
         em.getTransaction().begin();
         Genre genre = new Genre("Death metal");
@@ -198,7 +199,7 @@ public class GenreDAOImplTest {
     /**
      * Test of deleteGenre method, of class genreDAOImpl with wrong attributes.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testDeleteGenreWithNull() {
         em.getTransaction().begin();
         genreDAOImpl.delete(null);           //genre is null
@@ -206,7 +207,7 @@ public class GenreDAOImplTest {
         em.clear();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testDeleteGenreWithNullId() {
         Genre genre = new Genre("Trip hop");
         em.getTransaction().begin();
@@ -215,7 +216,7 @@ public class GenreDAOImplTest {
         em.clear();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testDeleteGenreWithNotAssignedId() {
         Genre genre = new Genre("Trip hop");
         genre.setId(new Long(100));
@@ -249,7 +250,7 @@ public class GenreDAOImplTest {
      * Test of getGenreByName method, of class genreDAOImpl with wrong attributes.
      */
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataAccessException.class)
     public void testGetGenreByNameWithNull() {
         em.getTransaction().begin();
         genreDAOImpl.getByName(null);              //name is null

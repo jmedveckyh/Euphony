@@ -1,6 +1,7 @@
 package com.musiclibrary.euphonybusinesslogicimplementation.service;
 
 import com.musiclibrary.euphonyapi.dto.GenreDTO;
+import com.musiclibrary.euphonyapi.services.GenreService;
 import com.musiclibrary.euphonybusinesslogicimplementation.dao.GenreDAO;
 import com.musiclibrary.euphonybusinesslogicimplementation.dao.impl.GenreDAOImpl;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Genre;
@@ -11,8 +12,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -21,21 +20,20 @@ import org.springframework.dao.DataAccessException;
  */
 public class GenreServiceImplTest {
 
-    private GenreServiceImpl genreService;
+    private GenreService genreService;
     private GenreDAO genreDAO;
 
     @Before
     public void setUp() {
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("/applicationContext.xml");
-        genreService = ctx.getBean(GenreServiceImpl.class);
+        genreService = new GenreServiceImpl();
         genreDAO = mock(GenreDAOImpl.class);
-        genreService.setDAO(genreDAO);
+        ((GenreServiceImpl) genreService).setDAO(genreDAO);
     }
 
     //treba??
     @Test(expected = DataAccessException.class)
     public void testCreateGenreWithNull() {
-        doThrow(new IllegalArgumentException()).when(genreDAO).create(null);
+        doThrow(new DataAccessException("null album") {}).when(genreDAO).create(null);
 
         genreService.create(null);              //genre is null
         verify(genreDAO, times(1)).create(null);

@@ -4,6 +4,7 @@ import com.musiclibrary.euphonyapi.dto.AlbumDTO;
 import com.musiclibrary.euphonyapi.dto.ArtistDTO;
 import com.musiclibrary.euphonyapi.dto.GenreDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
+import com.musiclibrary.euphonyapi.services.AlbumService;
 import com.musiclibrary.euphonybusinesslogicimplementation.dao.AlbumDAO;
 import com.musiclibrary.euphonybusinesslogicimplementation.dao.impl.AlbumDAOImpl;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Album;
@@ -15,8 +16,6 @@ import static junit.framework.Assert.assertEquals;
 import junit.framework.TestCase;
 import org.joda.time.DateTime;
 import static org.mockito.Mockito.*;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataAccessException;
 
 
@@ -26,16 +25,15 @@ import org.springframework.dao.DataAccessException;
  */
 public class AlbumServiceImplTest extends TestCase {
     
-    private AlbumServiceImpl service;
+    private AlbumService service;
     private AlbumDAO dao;
     
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("/applicationContext.xml");
-        service = ctx.getBean(AlbumServiceImpl.class);
+        service = new AlbumServiceImpl();
         dao = mock(AlbumDAOImpl.class);
-        service.setDAO(dao);
+        ((AlbumServiceImpl) service).setDAO(dao);
     }
     
     @Override
@@ -44,8 +42,8 @@ public class AlbumServiceImplTest extends TestCase {
     }
     
     public void testCreateAlbum(){
-        doThrow(new IllegalArgumentException()).when(dao).create(null);
-
+        doThrow(new DataAccessException("null album") {}).when(dao).create(null);
+        
         try{
             service.create(null);              
             fail();

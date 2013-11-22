@@ -4,6 +4,7 @@ import com.musiclibrary.euphonyapi.dto.AlbumDTO;
 import com.musiclibrary.euphonyapi.dto.ArtistDTO;
 import com.musiclibrary.euphonyapi.dto.GenreDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
+import com.musiclibrary.euphonyapi.services.SongService;
 import com.musiclibrary.euphonybusinesslogicimplementation.dao.SongDAO;
 import com.musiclibrary.euphonybusinesslogicimplementation.dao.impl.SongDAOImpl;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Song;
@@ -27,17 +28,16 @@ import org.springframework.dao.DataAccessException;
  */
 public class SongServiceImplTest extends TestCase{
     
-    private SongServiceImpl service;
+    private SongService service;
     private SongDAO dao;
     
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("/applicationContext.xml");
-        service = ctx.getBean(SongServiceImpl.class);
+        service = new SongServiceImpl();
         dao = mock(SongDAOImpl.class);
 
-        service.setDAO(dao);
+        ((SongServiceImpl) service).setDAO(dao);
     }
     
     @Override
@@ -47,7 +47,7 @@ public class SongServiceImplTest extends TestCase{
 
     @Test
     public void testCreate(){
-        doThrow(new IllegalArgumentException()).when(dao).create(null);
+        doThrow(new DataAccessException("null album") {}).when(dao).create(null);
         try {
             service.create(null);
             fail();
@@ -74,7 +74,7 @@ public class SongServiceImplTest extends TestCase{
     
     @Test
     public void testUpdate() {
-        doThrow(new IllegalArgumentException()).when(dao).update(null);
+        doThrow(new DataAccessException("null album") {}).when(dao).update(null);
        
         try{
             service.update(null);
@@ -103,7 +103,7 @@ public class SongServiceImplTest extends TestCase{
     
     @Test
     public void testRemove() {
-        doThrow(new IllegalArgumentException()).when(dao).delete(null);
+        doThrow(new DataAccessException("null album") {}).when(dao).delete(null);
        
         try{
             service.delete(null);
@@ -133,8 +133,8 @@ public class SongServiceImplTest extends TestCase{
     
     @Test
     public void testGetById() {
-        doThrow(new IllegalArgumentException()).when(dao).getById(null);
-        doThrow(new IllegalArgumentException()).when(dao).getById(-1l);
+        doThrow(new DataAccessException("null album") {}).when(dao).getById(null);
+        doThrow(new DataAccessException("null album") {}).when(dao).getById(-1l);
        
         try{
             service.getById(null);
@@ -210,7 +210,7 @@ public class SongServiceImplTest extends TestCase{
     
     @Test
     public void testGetByTitle() {
-        when(dao.getByTitle(null)).thenThrow(new IllegalArgumentException());
+        when(dao.getByTitle(null)).thenThrow(new DataAccessException("null album") {});
         try {
             service.getByTitle(null);
             fail();
@@ -255,7 +255,7 @@ public class SongServiceImplTest extends TestCase{
 
     @Test
     public void testGetByGenre() {
-        when(dao.getByGenre(null)).thenThrow(new IllegalArgumentException());
+        when(dao.getByGenre(null)).thenThrow(new DataAccessException("null album") {});
         try {
             service.getByGenre(null);
             fail();
@@ -307,7 +307,7 @@ public class SongServiceImplTest extends TestCase{
     }
     
     public void testGetByArtist(){
-        when(dao.getByArtist(null)).thenThrow(new IllegalArgumentException());
+        when(dao.getByArtist(null)).thenThrow(new DataAccessException("null album") {});
         try {
             service.getByArtist(null);
             fail();
@@ -361,7 +361,7 @@ public class SongServiceImplTest extends TestCase{
     }
     
     public void testGetByAlbum(){
-        when(dao.getByAlbum(null)).thenThrow(new IllegalArgumentException());
+        when(dao.getByAlbum(null)).thenThrow(new DataAccessException("null album") {});
         try {
             service.getByAlbum(null);
             fail();

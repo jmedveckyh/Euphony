@@ -18,6 +18,7 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import junit.framework.TestCase;
 import org.joda.time.DateTime;
+import org.springframework.dao.DataAccessException;
 
 /**
  * Unit tests for Song DAO implementation.
@@ -75,7 +76,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.create(null);
             fail("null song!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -88,7 +89,7 @@ public class SongDAOImplTest extends TestCase {
             s.setId(new Long(1l));
             songDAOImpl.create(s);
             fail("song id set!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -99,7 +100,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.create(new Song(null, 320, 1, null, null, null, null));
             fail("song with null attributes!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -110,7 +111,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.create(new Song(null, 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with null title!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -121,7 +122,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.create(new Song("", 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with empty title!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -132,7 +133,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.create(new Song("Salalaj", 320, 1, "nehehe", null, new Album(), new Artist()));
             fail("song with null genre!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -143,7 +144,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.create(new Song("Salalaj", 320, 1, "nehehe", new Genre(), null, new Artist()));
             fail("song with null album!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -154,7 +155,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.create(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), null));
             fail("song with null artist!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -165,7 +166,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.create(new Song("Salalaj", 320, -10, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with negative bitrate!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -176,7 +177,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.create(new Song("Salalaj", 0, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with zero bitrate!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -187,7 +188,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.create(new Song("Salalaj", -1000, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with negative bitrate!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -198,7 +199,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.create(new Song("Salalaj", 10000, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with 2500+ bitrate!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -219,7 +220,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.update(null);
             fail("null song update!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -230,7 +231,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.update(new Song(null, 320, 1, null, null, null, null));
             fail("song with null attributes!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -241,7 +242,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.update(new Song(null, 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with null title!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -252,7 +253,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.update(new Song("", 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with empty title!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -263,7 +264,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.update(new Song("Salalaj", 320, 1, "nehehe", null, new Album(), new Artist()));
             fail("song with null genre!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -274,7 +275,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.update(new Song("Salalaj", 320, 1, "nehehe", new Genre(), null, new Artist()));
             fail("song with null album!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -285,7 +286,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.update(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), null));
             fail("song with null album!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -296,7 +297,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.update(new Song("Salalaj", 320, -10, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with negative bitrate!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -307,7 +308,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.update(new Song("Salalaj", 0, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with zero bitrate!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -318,7 +319,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.update(new Song("Salalaj", -1234, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with negative bitrate!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -329,7 +330,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.update(new Song("Salalaj", 10000, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with 2500+ bitrate!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -342,7 +343,7 @@ public class SongDAOImplTest extends TestCase {
             em.getTransaction().commit();
             fail("null id update!");
 
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //ok
         }
         em.getTransaction().commit();
@@ -356,7 +357,7 @@ public class SongDAOImplTest extends TestCase {
             songDAOImpl.update(song);
             fail("no assigned id by db update!");
 
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //ok
         }
         em.getTransaction().commit();
@@ -376,7 +377,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.delete(null);
             fail("null song delete!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -387,7 +388,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.delete(new Song(null, 320, 1, null, null, null, null));
             fail("song with null attributes!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -398,7 +399,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.delete(new Song(null, 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with null title!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -409,7 +410,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.delete(new Song("", 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with empty title!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -420,7 +421,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.delete(new Song("Salalaj", 320, 1, "nehehe", null, new Album(), new Artist()));
             fail("song with null genre!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -431,7 +432,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.delete(new Song("Salalaj", 320, 1, "nehehe", new Genre(), null, new Artist()));
             fail("song with null album!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -442,7 +443,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.delete(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), null));
             fail("song with null artist!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -453,7 +454,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.delete(new Song("Salalaj", 320, -10, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with negative bitrate!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -464,7 +465,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.delete(new Song("Salalaj", 0, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with zero bitrate!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -475,7 +476,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.delete(new Song("Salalaj", -1000, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with negative bitrate!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -486,7 +487,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.delete(new Song("Salalaj", 10000, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("song with 2500+ bitrate!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //OK
         }
         em.getTransaction().commit();
@@ -498,7 +499,7 @@ public class SongDAOImplTest extends TestCase {
             songDAOImpl.delete(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
             fail("null id delete!");
 
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //ok
         }
         em.getTransaction().commit();
@@ -512,7 +513,7 @@ public class SongDAOImplTest extends TestCase {
             songDAOImpl.delete(song);
             fail("no assigned id by db delete!");
 
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //ok
         }
         em.getTransaction().commit();
@@ -541,7 +542,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.getById(null);
             fail("both null get!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //ok
         }
         em.getTransaction().commit();
@@ -552,7 +553,7 @@ public class SongDAOImplTest extends TestCase {
         try {
             songDAOImpl.getById(null);
             fail("id null get!");
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             //ok
         }
         em.getTransaction().commit();

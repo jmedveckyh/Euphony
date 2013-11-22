@@ -1,6 +1,7 @@
 package com.musiclibrary.euphonybusinesslogicimplementation.service;
 
 import com.musiclibrary.euphonyapi.dto.ArtistDTO;
+import com.musiclibrary.euphonyapi.services.ArtistService;
 import com.musiclibrary.euphonybusinesslogicimplementation.dao.ArtistDAO;
 import com.musiclibrary.euphonybusinesslogicimplementation.dao.impl.ArtistDAOImpl;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Artist;
@@ -11,8 +12,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -21,21 +20,20 @@ import org.springframework.dao.DataAccessException;
  */
 public class ArtistServiceImplTest {
 
-    private ArtistServiceImpl artistService;
+    private ArtistService artistService;
     private ArtistDAO artistDAO;
 
     @Before
     public void setUp() {
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("/applicationContext.xml");
-        artistService = ctx.getBean(ArtistServiceImpl.class);
+        artistService = new ArtistServiceImpl();
         artistDAO = mock(ArtistDAOImpl.class);
-        artistService.setDAO(artistDAO);
+        ((ArtistServiceImpl) artistService).setDAO(artistDAO);
     }
 
     //treba??
     @Test(expected = DataAccessException.class)
     public void testCreateArtistWithNull() {
-        doThrow(new IllegalArgumentException()).when(artistDAO).create(null);
+        doThrow(new DataAccessException("null album") {}).when(artistDAO).create(null);
 
         artistService.create(null);              //artist is null
         verify(artistDAO, times(1)).create(null);

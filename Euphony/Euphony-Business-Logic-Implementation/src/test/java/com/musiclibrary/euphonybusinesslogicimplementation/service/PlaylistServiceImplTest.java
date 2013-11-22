@@ -10,8 +10,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataAccessException;
 
 
@@ -22,15 +20,14 @@ import org.springframework.dao.DataAccessException;
  */
 public class PlaylistServiceImplTest {
 
-    private PlaylistServiceImpl playlistService;
+    private PlaylistService playlistService;
     private PlaylistDAO playlistDAO;
 
     @Before
-    public void setUp() {        
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("/applicationContext.xml");
-        playlistService = ctx.getBean(PlaylistServiceImpl.class);        
+    public void setUp() {
+        playlistService = new PlaylistServiceImpl();
         playlistDAO = mock(PlaylistDAOImpl.class);
-        playlistService.setPlaylistDAO(playlistDAO);
+        ((PlaylistServiceImpl) playlistService).setPlaylistDAO(playlistDAO);
     }
     
     private void assertDeepEquals(PlaylistDTO expected, PlaylistDTO actual) {
@@ -54,7 +51,7 @@ public class PlaylistServiceImplTest {
     
     @Test(expected = DataAccessException.class)
     public void testCreateNullPlaylist() {
-        doThrow(new IllegalArgumentException()).when(playlistDAO).create(null);
+        doThrow(new DataAccessException("null album") {}).when(playlistDAO).create(null);
         playlistService.create(null);
         verify(playlistDAO, times(1)).create(null);
         verifyNoMoreInteractions(playlistDAO);
@@ -64,7 +61,7 @@ public class PlaylistServiceImplTest {
     public void testCreatePlaylistWithNoName() {
         PlaylistDTO playlistTemp = new PlaylistDTO();
         
-        doThrow(new IllegalArgumentException()).when(playlistDAO).create(DTOMapper.toEntity(playlistTemp));
+        doThrow(new DataAccessException("null album") {}).when(playlistDAO).create(DTOMapper.toEntity(playlistTemp));
         playlistService.create(playlistTemp);
         verify(playlistDAO, times(1)).create(DTOMapper.toEntity(playlistTemp));
         verifyNoMoreInteractions(playlistDAO);
@@ -74,7 +71,7 @@ public class PlaylistServiceImplTest {
     public void testCreatePlaylistWithEmptyName() {
         PlaylistDTO playlistTemp = new PlaylistDTO("");
         
-        doThrow(new IllegalArgumentException()).when(playlistDAO).create(DTOMapper.toEntity(playlistTemp));
+        doThrow(new DataAccessException("null album") {}).when(playlistDAO).create(DTOMapper.toEntity(playlistTemp));
         playlistService.create(playlistTemp);
         verify(playlistDAO, times(1)).create(DTOMapper.toEntity(playlistTemp));
         verifyNoMoreInteractions(playlistDAO);
@@ -113,7 +110,7 @@ public class PlaylistServiceImplTest {
     
     @Test(expected = DataAccessException.class)
     public void testUpdateNullPlaylist() {
-       doThrow(new IllegalArgumentException()).when(playlistDAO).update(null);
+       doThrow(new DataAccessException("null album") {}).when(playlistDAO).update(null);
        playlistService.update(null);
        verify(playlistDAO, times(1)).update(null);
        
@@ -131,7 +128,7 @@ public class PlaylistServiceImplTest {
         
         playlistTempUpdated.setId(playlistTemp.getId());
         
-        doThrow(new IllegalArgumentException()).when(playlistDAO).update(DTOMapper.toEntity(playlistTempUpdated));
+        doThrow(new DataAccessException("null album") {}).when(playlistDAO).update(DTOMapper.toEntity(playlistTempUpdated));
         playlistService.update(playlistTempUpdated);
         verify(playlistDAO, times(1)).update(DTOMapper.toEntity(playlistTempUpdated));
         
@@ -147,7 +144,7 @@ public class PlaylistServiceImplTest {
         playlistService.create(playlistTemp);
         verify(playlistDAO, times(1)).create(DTOMapper.toEntity(playlistTemp));
         
-        doThrow(new IllegalArgumentException()).when(playlistDAO).update(DTOMapper.toEntity(playlistTempUpdated));
+        doThrow(new DataAccessException("null album") {}).when(playlistDAO).update(DTOMapper.toEntity(playlistTempUpdated));
         playlistService.update(playlistTempUpdated);
         verify(playlistDAO, times(1)).update(DTOMapper.toEntity(playlistTempUpdated));
         
@@ -159,7 +156,7 @@ public class PlaylistServiceImplTest {
         PlaylistDTO playlistTemp = new PlaylistDTO("Not empty name");        
         playlistTemp.setId(1L);
 
-        doThrow(new IllegalArgumentException()).when(playlistDAO).update(DTOMapper.toEntity(playlistTemp));
+        doThrow(new DataAccessException("null album") {}).when(playlistDAO).update(DTOMapper.toEntity(playlistTemp));
         playlistService.update(playlistTemp);
         verify(playlistDAO, times(1)).update(DTOMapper.toEntity(playlistTemp));
         
@@ -195,7 +192,7 @@ public class PlaylistServiceImplTest {
     
     @Test(expected = DataAccessException.class)
     public void testDeleteNullPlaylist() {
-        doThrow(new IllegalArgumentException()).when(playlistDAO).delete(null);
+        doThrow(new DataAccessException("null album") {}).when(playlistDAO).delete(null);
         playlistService.delete(null);
         verify(playlistDAO, times(1)).delete(null);
 
@@ -213,7 +210,7 @@ public class PlaylistServiceImplTest {
         
         playlistTempUpdated.setId(playlistTemp.getId());
         
-        doThrow(new IllegalArgumentException()).when(playlistDAO).delete(DTOMapper.toEntity(playlistTempUpdated));
+        doThrow(new DataAccessException("null album") {}).when(playlistDAO).delete(DTOMapper.toEntity(playlistTempUpdated));
         playlistService.delete(playlistTempUpdated);
         verify(playlistDAO, times(1)).delete(DTOMapper.toEntity(playlistTempUpdated));
         
@@ -229,7 +226,7 @@ public class PlaylistServiceImplTest {
         playlistService.create(playlistTemp);
         verify(playlistDAO, times(1)).create(DTOMapper.toEntity(playlistTemp));
         
-        doThrow(new IllegalArgumentException()).when(playlistDAO).delete(DTOMapper.toEntity(playlistTempUpdated));
+        doThrow(new DataAccessException("null album") {}).when(playlistDAO).delete(DTOMapper.toEntity(playlistTempUpdated));
         playlistService.delete(playlistTempUpdated);
         verify(playlistDAO, times(1)).delete(DTOMapper.toEntity(playlistTempUpdated));
         
@@ -241,7 +238,7 @@ public class PlaylistServiceImplTest {
         PlaylistDTO playlistTemp = new PlaylistDTO("Not empty name");        
         playlistTemp.setId(1L);
 
-        doThrow(new IllegalArgumentException()).when(playlistDAO).delete(DTOMapper.toEntity(playlistTemp));
+        doThrow(new DataAccessException("null album") {}).when(playlistDAO).delete(DTOMapper.toEntity(playlistTemp));
         playlistService.delete(playlistTemp);
         verify(playlistDAO, times(1)).delete(DTOMapper.toEntity(playlistTemp));
         
@@ -280,7 +277,7 @@ public class PlaylistServiceImplTest {
     
     @Test(expected = DataAccessException.class)
     public void testGetByIdPlaylistWhithNotExistingId() {
-        doThrow(new IllegalArgumentException()).when(playlistDAO).getById(null);
+        doThrow(new DataAccessException("null album") {}).when(playlistDAO).getById(null);
         playlistService.getById(null);
         verify(playlistDAO, times(1)).getById(null);
         
