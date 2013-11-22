@@ -6,6 +6,7 @@ import java.util.List;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
+import net.sourceforge.stripes.action.LocalizableMessage;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
@@ -49,8 +50,9 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
     })
     public Resolution add() {
 //        log.debug("add() book={}", book);
+        System.out.println("nieco by malo vypisat" + genre.toString());
         genreService.create(genre);
-//        getContext().getMessages().add(new LocalizableMessage("book.add.message",escapeHTML(book.getTitle()),escapeHTML(book.getAuthor())));
+//        getContext().getMessages().add(new LocalizableMessage("book.add.message",escapeHTML(genre.getName())));
         return new RedirectResolution(this.getClass(), "list");
     }
     

@@ -13,7 +13,7 @@
 <html lang="${pageContext.request.locale}">
     <head>
         <title><f:message key="${titlekey}"/></title>
-        <link rel="stylesheet" type="text/css" href="./style.css" />
+        <link rel="stylesheet" type="text/css" href="<c:url value="/style.css"/>" />
         <link rel="icon" href="./img/favicon.ico" type="image/x-icon">
         <s:layout-component name="header"/>
     </head>
@@ -49,15 +49,15 @@
         <div class="userPanel">
         <ul>
             <li class="drop">
-                <a href="#">Admin</a>
+                <a href="#" class="username">Admin</a>
                 <div class="dropdownContain">
                     <div class="dropOut">
                         <div class="triangle"></div>
                         <ul>
                             <li><s:link beanclass="com.musiclibrary.euphonyweb.GenreActionBean"><f:message key="menu.admin.newgenre"/></s:link></li>
-                            <li><f:message key="menu.admin.newartist"/></li>
-                            <li><f:message key="menu.admin.newalbum"/></li>
-                            <li><f:message key="menu.admin.newsong"/></li>
+                            <li><a href=""><f:message key="menu.admin.newartist"/></a></li>
+                            <li><a href=""><f:message key="menu.admin.newalbum"/></a></li>
+                            <li><a href=""><f:message key="menu.admin.newsong"/></a></li>
                         </ul>
                     </div>
                 </div>

@@ -23,7 +23,7 @@ body {
     width: 300px;
     height: auto;
     position: absolute;
-    background-image: url("./img/euphony-logo-small-white2.png");
+    background-image: url("./img/euphony-logo-small-white.png");
     background-repeat: no-repeat;
     background-position: center 40px;
     background-color: #222;
@@ -169,7 +169,7 @@ body {
     display: inline-block;
 }
 
-.userPanel ul li a {    
+.userPanel ul li a.username {    
     padding-left: 60px;
     text-decoration: none;
     color: #000000;
@@ -217,7 +217,8 @@ body {
     padding: 10px 0;
 }
 
-.userPanel .dropOut ul li {
+.userPanel .dropOut ul li a {
+    text-decoration: none;
     text-align: left;
     float: left;
     width: 125px;
