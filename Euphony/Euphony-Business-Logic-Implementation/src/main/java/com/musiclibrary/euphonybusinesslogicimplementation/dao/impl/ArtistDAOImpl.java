@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import org.springframework.dao.DataAccessException;
@@ -21,7 +22,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ArtistDAOImpl implements ArtistDAO {
 
-    @PersistenceContext
+    @PersistenceContext(type = PersistenceContextType.EXTENDED)
     private EntityManager em;
 
     public ArtistDAOImpl(EntityManager em) {
@@ -41,11 +42,13 @@ public class ArtistDAOImpl implements ArtistDAO {
             Util.validateArtist(entity);
 
             if (entity.getId() != null) {
-                throw new IllegalArgumentException("This artist entity is already in databse.");
+                throw new DataAccessException("This artist entity is already in databse.") {};
             }
 
             em.persist(entity);
-        } catch (IllegalArgumentException | PersistenceException ex) {
+            em.flush();
+            em.detach(entity);
+        } catch (PersistenceException ex) {
             throw new DataAccessException(ex.getMessage(), ex) {
             };
         }
@@ -57,14 +60,16 @@ public class ArtistDAOImpl implements ArtistDAO {
             Util.validateArtist(entity);
 
             if (entity.getId() == null) {
-                throw new IllegalArgumentException("This artist entity cannot have null id.");
+                throw new DataAccessException("This artist entity cannot have null id.") {};
             }
             if (em.find(Artist.class, entity.getId()) == null) {
-                throw new IllegalArgumentException("This artist entity does not exist in database.");
+                throw new DataAccessException("This artist entity does not exist in database.") {};
             }
 
             em.merge(entity);
-        } catch (IllegalArgumentException | PersistenceException ex) {
+            em.flush();
+            em.detach(entity);
+        } catch (PersistenceException ex) {
             throw new DataAccessException(ex.getMessage(), ex) {
             };
         }
@@ -76,16 +81,16 @@ public class ArtistDAOImpl implements ArtistDAO {
             Util.validateArtist(entity);
 
             if (entity.getId() == null) {
-                throw new IllegalArgumentException("This artist entity cannot have null id.");
+                throw new DataAccessException("This artist entity cannot have null id.") {};
             }
             if (em.find(Artist.class, entity.getId()) == null) {
-                throw new IllegalArgumentException("This artist entity does not exist in database.");
+                throw new DataAccessException("This artist entity does not exist in database.") {};
             }
 
             Artist objectTemp = em.merge(entity);
 
             em.remove(objectTemp);
-        } catch (IllegalArgumentException | PersistenceException ex) {
+        } catch (PersistenceException ex) {
             throw new DataAccessException(ex.getMessage(), ex) {
             };
         }
@@ -93,49 +98,35 @@ public class ArtistDAOImpl implements ArtistDAO {
 
     @Override
     public Artist getById(Long id) {
-        try {
-            if (id == null) {
-                throw new IllegalArgumentException("Id cannot be null.");
-            }
-
-            Artist artist = (Artist) em.find(Artist.class, id);
-
-            return artist;
-        } catch (IllegalArgumentException | PersistenceException ex) {
-            throw new DataAccessException(ex.getMessage(), ex) {
+        if (id == null) {
+            throw new DataAccessException("Id cannot be null.") {
             };
         }
+
+        Artist artist = (Artist) em.find(Artist.class, id);
+        return artist;
     }
 
     @Override
     public List<Artist> getAll() {
-        try {
-            Query q = em.createQuery("from Artist");
-            List<Artist> artists = q.getResultList();
-            return Collections.unmodifiableList(artists);
-        } catch (IllegalArgumentException | PersistenceException ex) {
-            throw new DataAccessException(ex.getMessage(), ex) {
-            };
-        }
+        Query q = em.createQuery("from Artist");
+        List<Artist> artists = q.getResultList();
+        return Collections.unmodifiableList(artists);
     }
 
     @Override
     public Artist getByName(String name) {
-        try {
-            if (name == null) {
-                throw new IllegalArgumentException("Title is NULL");
-            }
-            Query q = em.createQuery("from Artist where name=:name");
-            q.setParameter("name", name);
-            try {
-                Artist artist = (Artist) q.getSingleResult();
-                return artist;
-            } catch (NoResultException ex) {
-                return null;
-            }
-        } catch (IllegalArgumentException | PersistenceException ex) {
-            throw new DataAccessException(ex.getMessage(), ex) {
+        if (name == null) {
+            throw new DataAccessException("Title is NULL") {
             };
+        }
+        Query q = em.createQuery("from Artist where name=:name");
+        q.setParameter("name", name);
+        try {
+            Artist artist = (Artist) q.getSingleResult();
+            return artist;
+        } catch (NoResultException ex) {
+            return null;
         }
     }
 }

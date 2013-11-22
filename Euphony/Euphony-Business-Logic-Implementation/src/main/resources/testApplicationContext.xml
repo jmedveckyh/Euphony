@@ -15,41 +15,43 @@
     http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 "> 
-    <aop:aspectj-autoproxy/>
-    <tx:annotation-driven/>
-    <context:annotation-config/>
-    <context:component-scan base-package="com.musiclibrary.euphonybusinesslogicimplementation, com.musiclibrary.euphonyapi" />
     
-    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+    <context:annotation-config/>
+    <context:component-scan base-package="com.musiclibrary.euphonybusinesslogicimplementation" />
+    <aop:aspectj-autoproxy/>
     
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <constructor-arg ref="dataSource"/>
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="EuphonyPU"/>
+        <property name="persistenceUnitName" value="testEuphonyPU"/>
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver"/>
-        <property name="url" value="jdbc:derby://localhost:1527/pa165"/>
-        <property name="username" value="pa165"/>
-        <property name="password" value="pa165"/>
+        <property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+        <property name="url" value="jdbc:derby:memory:test-euphony;create=true"/>
+        <property name="username" value=""/>
+        <property name="password" value=""/>
     </bean>
+    
+    <aop:config>
+        <aop:pointcut id="myPointcut" expression="execution(* com.euphonybusinesslogicimplementation.dao.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut"/>
+    </aop:config>
+
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
     
     <bean id="albumDAO" class="com.musiclibrary.euphonybusinesslogicimplementation.dao.impl.AlbumDAOImpl" />
     <bean id="artistDAO" class="com.musiclibrary.euphonybusinesslogicimplementation.dao.impl.ArtistDAOImpl"/>
     <bean id="genreDAO" class="com.musiclibrary.euphonybusinesslogicimplementation.dao.impl.GenreDAOImpl"/>
     <bean id="playlistDAO" class="com.musiclibrary.euphonybusinesslogicimplementation.dao.impl.PlaylistDAOImpl"/>
     <bean id="songDAO" class="com.musiclibrary.euphonybusinesslogicimplementation.dao.impl.SongDAOImpl"/>
-   
-    <bean id="albumService" class="com.musiclibrary.euphonybusinesslogicimplementation.services.impl.AlbumServiceImpl" />
-    <bean id="artistService" class="com.musiclibrary.euphonybusinesslogicimplementation.services.impl.ArtistServiceImpl"/>
-    <bean id="genreService" class="com.musiclibrary.euphonybusinesslogicimplementation.services.impl.GenreServiceImpl"/>
-    <bean id="playlistService" class="com.musiclibrary.euphonybusinesslogicimplementation.services.impl.PlaylistServiceImpl"/>
-    <bean id="songService" class="com.musiclibrary.euphonybusinesslogicimplementation.services.impl.SongServiceImpl"/>    
-    
-    <bean id="musicFacadeImpl" class="com.musiclibrary.euphonybusinesslogicimplementation.facade.impl.MusicFacadeImpl" />
 
 </beans>

@@ -53,7 +53,7 @@ public class MusicFacadeImpl implements MusicFacade {
 
         try {
             Util.validatePlaylist(DTOMapper.toEntity(playlist));
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             throw new DataAccessException(ex.getMessage()) {};
         }
 
@@ -77,7 +77,7 @@ public class MusicFacadeImpl implements MusicFacade {
 
         try {
             Util.validateAlbum(DTOMapper.toEntity(album));
-        } catch (IllegalArgumentException ex) {
+        } catch (DataAccessException ex) {
             throw new DataAccessException(ex.getMessage()) {};
         }
 

@@ -16,65 +16,60 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Medo
  */
 @Service
+@Transactional
 public class GenreServiceImpl implements GenreService {
 
     @Autowired
-    private GenreDAO genreDao;
+    private GenreDAO genreDAO;
 
-    public void setDAO(GenreDAO genreDao) {
-        this.genreDao = genreDao;
+    public void setDAO(GenreDAO genreDAO) {
+        this.genreDAO = genreDAO;
     }
 
     @Override
-    @Transactional
     public void create(GenreDTO genre) throws DataAccessException {
         Genre genreEntity = DTOMapper.toEntity(genre);
 
-        genreDao.create(genreEntity);
+        genreDAO.create(genreEntity);
 
 
         genre.setId(genreEntity.getId());
     }
 
     @Override
-    @Transactional
     public void update(GenreDTO genre) throws DataAccessException {
         Genre genreEntity = DTOMapper.toEntity(genre);
 
-        genreDao.update(genreEntity);
+        genreDAO.update(genreEntity);
 
         genre = DTOMapper.toDTO(genreEntity);
     }
 
     @Override
-    @Transactional
     public void delete(GenreDTO genre) throws DataAccessException {
 
-        genreDao.delete(DTOMapper.toEntity(genre));
+        genreDAO.delete(DTOMapper.toEntity(genre));
 
     }
 
     @Override
-    @Transactional
     public GenreDTO getById(Long id) throws DataAccessException {
 
-        return DTOMapper.toDTO(genreDao.getById(id));
+        return DTOMapper.toDTO(genreDAO.getById(id));
 
     }
 
     @Override
-    @Transactional
     public List<GenreDTO> getAll() throws DataAccessException {
 
-        return DTOMapper.genresListToDTO(genreDao.getAll());
+        return DTOMapper.genresListToDTO(genreDAO.getAll());
 
     }
 
     @Override
-    @Transactional
     public GenreDTO getByName(String name) throws DataAccessException {
 
-        return DTOMapper.toDTO(genreDao.getByName(name));
+        return DTOMapper.toDTO(genreDAO.getByName(name));
 
     }
 }

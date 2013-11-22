@@ -16,64 +16,59 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Medo
  */
 @Service
+@Transactional
 public class ArtistServiceImpl implements ArtistService {
 
     @Autowired
-    private ArtistDAO artistDao;
+    private ArtistDAO artistDAO;
 
-    public void setDAO(ArtistDAO artistDao) {
-        this.artistDao = artistDao;
+    public void setDAO(ArtistDAO artistDAO) {
+        this.artistDAO = artistDAO;
     }
 
     @Override
-    @Transactional
     public void create(ArtistDTO artist) throws DataAccessException {
         Artist artistEntity = DTOMapper.toEntity(artist);
 
-        artistDao.create(artistEntity);
+        artistDAO.create(artistEntity);
 
         artist.setId(artistEntity.getId());
     }
 
     @Override
-    @Transactional
     public void update(ArtistDTO artist) throws DataAccessException {
         Artist artistEntity = DTOMapper.toEntity(artist);
 
-        artistDao.update(artistEntity);
+        artistDAO.update(artistEntity);
 
         artist = DTOMapper.toDTO(artistEntity);
     }
 
     @Override
-    @Transactional
     public void delete(ArtistDTO artist) throws DataAccessException {
 
-        artistDao.delete(DTOMapper.toEntity(artist));
+        artistDAO.delete(DTOMapper.toEntity(artist));
 
     }
 
     @Override
-    @Transactional
     public ArtistDTO getById(Long id) throws DataAccessException {
 
-        return DTOMapper.toDTO(artistDao.getById(id));
+        return DTOMapper.toDTO(artistDAO.getById(id));
 
     }
 
     @Override
-    @Transactional
     public List<ArtistDTO> getAll() throws DataAccessException {
 
-        return DTOMapper.artistsListToDTO(artistDao.getAll());
+        return DTOMapper.artistsListToDTO(artistDAO.getAll());
 
     }
 
     @Override
-    @Transactional
     public ArtistDTO getByName(String name) throws DataAccessException {
 
-        return DTOMapper.toDTO(artistDao.getByName(name));
+        return DTOMapper.toDTO(artistDAO.getByName(name));
 
     }
 }

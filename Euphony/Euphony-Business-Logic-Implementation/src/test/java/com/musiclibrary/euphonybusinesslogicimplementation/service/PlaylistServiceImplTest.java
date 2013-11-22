@@ -27,7 +27,7 @@ public class PlaylistServiceImplTest {
     public void setUp() {
         playlistService = new PlaylistServiceImpl();
         playlistDAO = mock(PlaylistDAOImpl.class);
-        ((PlaylistServiceImpl) playlistService).setPlaylistDAO(playlistDAO);
+        ((PlaylistServiceImpl) playlistService).setDAO(playlistDAO);
     }
     
     private void assertDeepEquals(PlaylistDTO expected, PlaylistDTO actual) {

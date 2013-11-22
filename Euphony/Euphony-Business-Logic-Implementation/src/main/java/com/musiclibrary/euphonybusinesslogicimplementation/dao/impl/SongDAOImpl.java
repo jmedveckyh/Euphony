@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import org.springframework.dao.DataAccessException;
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class SongDAOImpl implements SongDAO {
 
-    @PersistenceContext
+    @PersistenceContext(type = PersistenceContextType.EXTENDED)
     private EntityManager em;
 
     public void setEm(EntityManager em) {
@@ -43,11 +44,13 @@ public class SongDAOImpl implements SongDAO {
             Util.validateSong(entity);
 
             if (entity.getId() != null) {
-                throw new IllegalArgumentException("This song entity is already in databse.");
+                throw new DataAccessException("This song entity is already in databse.") {};
             }
 
             em.persist(entity);
-        } catch (IllegalArgumentException | PersistenceException ex) {
+            em.flush();
+            em.detach(entity);
+        } catch (PersistenceException ex) {
             throw new DataAccessException(ex.getMessage(), ex) {
             };
         }
@@ -59,14 +62,16 @@ public class SongDAOImpl implements SongDAO {
             Util.validateSong(entity);
 
             if (entity.getId() == null) {
-                throw new IllegalArgumentException("This song entity cannot have null id.");
+                throw new DataAccessException("This song entity cannot have null id.") {};
             }
             if (em.find(Song.class, entity.getId()) == null) {
-                throw new IllegalArgumentException("This song entity does not exist in database.");
+                throw new DataAccessException("This song entity does not exist in database.") {};
             }
 
             em.merge(entity);
-        } catch (IllegalArgumentException | PersistenceException ex) {
+            em.flush();
+            em.detach(entity);
+        } catch (PersistenceException ex) {
             throw new DataAccessException(ex.getMessage(), ex) {
             };
         }
@@ -78,16 +83,16 @@ public class SongDAOImpl implements SongDAO {
             Util.validateSong(entity);
 
             if (entity.getId() == null) {
-                throw new IllegalArgumentException("This song entity cannot have null id.");
+                throw new DataAccessException("This song entity cannot have null id.") {};
             }
             if (em.find(Song.class, entity.getId()) == null) {
-                throw new IllegalArgumentException("This song entity does not exist in database.");
+                throw new DataAccessException("This song entity does not exist in database.") {};
             }
 
             Song objectTemp = em.merge(entity);
 
             em.remove(objectTemp);
-        } catch (IllegalArgumentException | PersistenceException ex) {
+        } catch (PersistenceException ex) {
             throw new DataAccessException(ex.getMessage(), ex) {
             };
         }
@@ -95,82 +100,56 @@ public class SongDAOImpl implements SongDAO {
 
     @Override
     public Song getById(Long id) {
-        try {
             if (id == null) {
-                throw new IllegalArgumentException("Id cannot be null.");
+                throw new DataAccessException("Id cannot be null.") {};
             }
 
             Song objectTemp = (Song) em.find(Song.class, id);
-
             return objectTemp;
-        } catch (IllegalArgumentException | PersistenceException ex) {
-            throw new DataAccessException(ex.getMessage(), ex) {
-            };
-        }
     }
 
+    @Override
     public List<Song> getAll() {
-        try {
             Query q = em.createQuery("from Song");
             List<Song> songs = q.getResultList();
             return Collections.unmodifiableList(songs);
-        } catch (IllegalArgumentException | PersistenceException ex) {
-            throw new DataAccessException(ex.getMessage(), ex) {
-            };
-        }
     }
 
+    @Override
     public List<Song> getByTitle(String title) {
-        try {
             if (title == null) {
-                throw new IllegalArgumentException("Title is NULL");
+                throw new DataAccessException("Title is NULL") {};
             }
             Query q = em.createQuery("from Song where title=:title");
             q.setParameter("title", title);
             List<Song> songs = q.getResultList();
             return Collections.unmodifiableList(songs);
-        } catch (IllegalArgumentException | PersistenceException ex) {
-            throw new DataAccessException(ex.getMessage(), ex) {
-            };
-        }
     }
 
+    @Override
     public List<Song> getByGenre(Genre genre) {
-        try {
             Util.validateGenre(genre);
             Query q = em.createQuery("from Song where genre=:genre");
             q.setParameter("genre", genre);
             List<Song> songs = q.getResultList();
             return Collections.unmodifiableList(songs);
-        } catch (IllegalArgumentException | PersistenceException ex) {
-            throw new DataAccessException(ex.getMessage(), ex) {
-            };
-        }
     }
 
+    @Override
     public List<Song> getByArtist(Artist artist) {
-        try {
             Util.validateArtist(artist);
             Query q = em.createQuery("from Song where artist=:artist");
             q.setParameter("artist", artist);
             List<Song> songs = q.getResultList();
             return Collections.unmodifiableList(songs);
-        } catch (IllegalArgumentException | PersistenceException ex) {
-            throw new DataAccessException(ex.getMessage(), ex) {
-            };
-        }
     }
 
+    @Override
     public List<Song> getByAlbum(Album album) {
-        try {
             Util.validateAlbum(album);
             Query q = em.createQuery("from Song where album=:album");
             q.setParameter("album", album);
             List<Song> songs = q.getResultList();
             return Collections.unmodifiableList(songs);
-        } catch (IllegalArgumentException | PersistenceException ex) {
-            throw new DataAccessException(ex.getMessage(), ex) {
-            };
-        }
     }
 }
