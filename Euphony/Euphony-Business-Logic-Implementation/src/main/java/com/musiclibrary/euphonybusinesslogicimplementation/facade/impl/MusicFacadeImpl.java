@@ -7,11 +7,11 @@ import com.musiclibrary.euphonyapi.facade.MusicFacade;
 import com.musiclibrary.euphonyapi.services.AlbumService;
 import com.musiclibrary.euphonyapi.services.PlaylistService;
 import com.musiclibrary.euphonybusinesslogicimplementation.util.DTOMapper;
+import com.musiclibrary.euphonybusinesslogicimplementation.util.MusicErrorException;
 import com.musiclibrary.euphonybusinesslogicimplementation.util.Util;
 import java.util.Map;
 import java.util.TreeMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,19 +49,15 @@ public class MusicFacadeImpl implements MusicFacade {
     
     
     @Override
-    public Boolean isSongInPlaylist(SongDTO song, PlaylistDTO playlist) throws DataAccessException {
+    public Boolean isSongInPlaylist(SongDTO song, PlaylistDTO playlist) {
 
-        try {
-            Util.validatePlaylist(DTOMapper.toEntity(playlist));
-        } catch (DataAccessException ex) {
-            throw new DataAccessException(ex.getMessage()) {};
-        }
+        Util.validatePlaylist(DTOMapper.toEntity(playlist));
 
         if (song.getId() == null) {
-            throw new DataAccessException("Song's id is null.") {};
+            throw new IllegalArgumentException("Song's id is null.");
         }
         if (playlist.getId() == null) {
-            throw new DataAccessException("Playlist's id is null.") {};
+            throw new IllegalArgumentException("Playlist's id is null.");
         }
 
         if (playlist.getSongs() == null) {
@@ -75,17 +71,13 @@ public class MusicFacadeImpl implements MusicFacade {
     @Override
     public Boolean isSongInAlbum(SongDTO song, AlbumDTO album) {
 
-        try {
-            Util.validateAlbum(DTOMapper.toEntity(album));
-        } catch (DataAccessException ex) {
-            throw new DataAccessException(ex.getMessage()) {};
-        }
-
+        Util.validateAlbum(DTOMapper.toEntity(album));
+        
         if (song.getId() == null) {
-            throw new DataAccessException("Song's id is null.") {};
+            throw new IllegalArgumentException("Song's id is null.");
         }
         if (album.getId() == null) {
-            throw new DataAccessException("Playlist's id is null.") {};
+            throw new IllegalArgumentException("Playlist's id is null.");
         }
 
         if (album.getSongs() == null) {
@@ -101,7 +93,7 @@ public class MusicFacadeImpl implements MusicFacade {
     public void addSongToPlaylist(SongDTO song, PlaylistDTO playlist) {
 
         if (isSongInPlaylist(song, playlist)) {
-            throw new DataAccessException("The song is already in playlist.") {};
+            throw new MusicErrorException("The song is already in playlist.");
         } else {
             TreeMap<Integer, SongDTO> songs = new TreeMap<>();
             songs.putAll(playlist.getSongs());
@@ -116,7 +108,7 @@ public class MusicFacadeImpl implements MusicFacade {
     public void addSongToAlbum(SongDTO song, AlbumDTO album) {
 
         if (isSongInAlbum(song, album)) {
-            throw new DataAccessException("The song is already in album.") {};
+            throw new MusicErrorException("The song is already in album.");
         } else {
             album.getSongs().add(song);
             albumService.update(album);
@@ -141,7 +133,7 @@ public class MusicFacadeImpl implements MusicFacade {
             playlist.getSongs().remove(keyToRemove);
             playlistService.update(playlist);
         } else {
-            throw new DataAccessException("The song is not in playlist.") {};
+            throw new MusicErrorException("The song is not in playlist.");
         }
 
     }
@@ -154,7 +146,7 @@ public class MusicFacadeImpl implements MusicFacade {
             album.getSongs().remove(song);
             albumService.update(album);
         } else {
-            throw new DataAccessException("The song is not in album.") {};
+            throw new MusicErrorException("The song is not in album.");
         }
 
     }
