@@ -57,8 +57,8 @@
                         <ul>
                             <li><s:link beanclass="com.musiclibrary.euphonyweb.GenreActionBean"><f:message key="menu.admin.newgenre"/></s:link></li>
                             <li><s:link beanclass="com.musiclibrary.euphonyweb.ArtistActionBean"><f:message key="menu.admin.newartist"/></s:link></li>
-                            <li><a href=""><f:message key="menu.admin.newalbum"/></a></li>
-                            <li><a href=""><f:message key="menu.admin.newsong"/></a></li>
+                            <li><s:link beanclass="com.musiclibrary.euphonyweb.AlbumActionBean"><f:message key="menu.admin.newalbum"/></s:link></li>
+                            <li><s:link beanclass="com.musiclibrary.euphonyweb.SongActionBean"><f:message key="menu.admin.newsong"/></s:link></li>
                         </ul>
                     </div>
                 </div>
