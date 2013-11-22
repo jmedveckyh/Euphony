@@ -4,6 +4,9 @@
         "http://java.sun.com/dtd/web-app_2_3.dtd">
 <web-app>
     <display-name>Euphony, the music library</display-name>
+    <welcome-file-list>
+        <welcome-file>explore/songs.jsp</welcome-file>
+    </welcome-file-list>
     <context-param>  
         <param-name>contextConfigLocation</param-name>
         <param-value>

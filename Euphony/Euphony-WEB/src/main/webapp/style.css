@@ -21,7 +21,6 @@ body {
 .navigation { 
     float: left;
     width: 300px;
-    height: auto;
     position: absolute;
     background-image: url("./img/euphony-logo-small-white.png");
     background-repeat: no-repeat;

@@ -7,11 +7,7 @@
     <s:layout-component name="body">
         <h3><f:message key="menu.explore"/></h3>
         
-        <a href="#"><span><f:message key="menu.songs"/></span></a>
-        <a href="#"><span><f:message key="menu.albums"/></span></a>
-        <a href="#"><span><f:message key="menu.artists"/></span></a>
-        <div class="cl"></div>
-        <br><br>
+        <%@include file="/explore/menuUp.jsp"%>
         
         
        index poďjebaný
