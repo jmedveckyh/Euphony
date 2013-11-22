@@ -135,8 +135,8 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
     //--- part for editing a book ----
 
     @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
-    public void loadBookFromDatabase() {
-        String ids = getContext().getRequest().getParameter("book.id");
+    public void loadSongFromDatabase() {
+        String ids = getContext().getRequest().getParameter("song.id");
         if (ids == null) return;
         song = songService.getById(Long.parseLong(ids));
     }

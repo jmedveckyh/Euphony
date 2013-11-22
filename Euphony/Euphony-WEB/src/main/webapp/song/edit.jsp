@@ -3,9 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
-<s:layout-render name="/layout.jsp" titlekey="genre.edit.title">
+<s:layout-render name="/layout.jsp" titlekey="song.edit.title">
     <s:layout-component name="body">
-        <s:useActionBean beanclass="com.musiclibrary.euphony.SongActionBean" var="actionBean"/>
+        <s:useActionBean beanclass="com.musiclibrary.euphonyweb.SongActionBean" var="actionBean"/>
 
         <s:form beanclass="com.musiclibrary.euphonyweb.SongActionBean">
             <s:hidden name="song.id"/>
