@@ -86,15 +86,11 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
         this.genre=genre;
     }
 
-    //--- part for adding a book ----
-
-    /*
     @ValidateNestedProperties(value = {
-            @Validate(on = {"add", "save"}, field = "author", required = true),
             @Validate(on = {"add", "save"}, field = "title", required = true),
-            @Validate(on = {"add", "save"}, field = "year", required = true, minvalue = 800)
+            @Validate(on = {"add", "save"}, field = "bitrate", required = true, minvalue = 1, maxvalue=2000),
+            @Validate(on = {"add", "save"}, field = "trackNumber", required = true, minvalue = 1)
     })
-    * */
 
     public Resolution add() {
         /*
@@ -124,15 +120,11 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
         this.song = song;
     }
 
-    //--- part for deleting a book ----
-
     public Resolution delete() {
         song = songService.getById(song.getId());
         songService.delete(song);
         return new RedirectResolution(this.getClass(), "list");
     }
-
-    //--- part for editing a book ----
 
     @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
     public void loadSongFromDatabase() {
@@ -142,10 +134,16 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
     }
 
     public Resolution edit() {
+        albums = albumService.getAllAlbums();
+        genres = genreService.getAll();
+        artists = artistService.getAll();
         return new ForwardResolution("/song/edit.jsp");
     }
 
     public Resolution save() {
+        song.setAlbum(albumService.getById(album));
+        song.setArtist(artistService.getById(artist));
+        song.setGenre(genreService.getById(genre));
         songService.update(song);
         return new RedirectResolution(this.getClass(), "list");
     }
