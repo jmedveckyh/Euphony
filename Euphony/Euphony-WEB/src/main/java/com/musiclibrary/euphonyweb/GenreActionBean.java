@@ -45,9 +45,9 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
     }
 
     //--- part for adding ----
-    /*@ValidateNestedProperties(value = {
+    @ValidateNestedProperties(value = {
         @Validate(on = {"add", "save"}, field = "name", required = true)
-    })*/
+    })
     public Resolution add() {
 //        log.debug("add() book={}", book);
         genreService.create(genre);
@@ -85,13 +85,13 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
     }
 
     //--- part for editing a book ----
-    //@Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
     public void loadGenreFromDatabase() {
         String ids = getContext().getRequest().getParameter("genre.id");
         if (ids == null) {
             return;
         }
-        genre = genreService.getById(new Long(Long.parseLong(ids)));
+        genre = genreService.getById(Long.parseLong(ids));
     }
 
     public Resolution edit() {
