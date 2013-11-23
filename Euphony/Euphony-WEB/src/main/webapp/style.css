@@ -114,6 +114,29 @@ body {
     margin: 15px 27px;
 }
 
+#quickAddPlaylist { 
+    display: none;
+}
+
+.menu .quickAddPlaylist {
+    width: 150px;
+    height: 30px;
+    line-height: 25px;
+    background-color: #393939;
+    padding: 0 15px 0 15px;
+    margin: 5px 0 0 0;
+    border: 2px solid #393939;
+    color: #c2c2c2;
+    font-size: 14px;
+}
+
+.menu .quickAddPlaylistSubmit {
+    height: 35px;
+    background-color: #771e87;
+    color: #ffffff;
+    border: 0;
+}
+
 /**** CONTENT ****/
 .content {
     position: absolute;

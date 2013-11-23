@@ -1,36 +1,66 @@
 //package com.musiclibrary.euphonybusinesslogicimplementation.dao;
 //
-//import com.musiclibrary.euphonybusinesslogicimplementation.dao.impl.PlaylistDAOImpl;
 //import com.musiclibrary.euphonybusinesslogicimplementation.entities.Album;
 //import com.musiclibrary.euphonybusinesslogicimplementation.entities.Artist;
 //import com.musiclibrary.euphonybusinesslogicimplementation.entities.Genre;
 //import com.musiclibrary.euphonybusinesslogicimplementation.entities.Playlist;
 //import com.musiclibrary.euphonybusinesslogicimplementation.entities.Song;
+//import java.util.ArrayList;
 //import java.util.Map;
 //import java.util.TreeMap;
-//import javax.persistence.EntityManager;
-//import javax.persistence.EntityManagerFactory;
-//import javax.persistence.Persistence;
+//import org.joda.time.DateTime;
 //import static org.junit.Assert.*;
-//import org.junit.Before;
 //import org.junit.Test;
-//import org.springframework.context.ApplicationContext;
-//import org.springframework.context.support.ClassPathXmlApplicationContext;
+//import org.junit.runner.RunWith;
+//import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.dao.DataAccessException;
+//import org.springframework.test.context.ContextConfiguration;
+//import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+//import org.springframework.transaction.annotation.Transactional;
 //
 ///**
 // * Unit tests for Playlist DAO implementation.
 // * 
 // * @author Tomas Smetanka #396209
 // */
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration("/testApplicationContext.xml" ) 
+//@Transactional
 //public class PlaylistDAOImplTest {
 //
-//    private PlaylistDAO playlistDAOImpl;
+//    @Autowired
+//    private SongDAO songDAO;
+//    
+//    @Autowired
+//    private ArtistDAO artistDAO;
+//    
+//    @Autowired
+//    private GenreDAO genreDAO;
+//    
+//    @Autowired
+//    private AlbumDAO albumDAO;
 //
-//    @Before
-//    public void setUp() {
-//        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("testApplicationContext.xml");
-//        playlistDAOImpl = (PlaylistDAO) applicationContext.getBean("playlistDAO");
+//    public void setSongDAO(SongDAO songDAO) {
+//        this.songDAO = songDAO;
+//    }
+//
+//    public void setArtistDAO(ArtistDAO artistDAO) {
+//        this.artistDAO = artistDAO;
+//    }
+//
+//    public void setGenreDAO(GenreDAO genreDAO) {
+//        this.genreDAO = genreDAO;
+//    }
+//
+//    public void setAlbumDAO(AlbumDAO albumDAO) {
+//        this.albumDAO = albumDAO;
+//    }
+//    
+//    @Autowired
+//    private PlaylistDAO playlistDAO;
+//
+//    public void setPlaylistDAO(PlaylistDAO playlistDAO) {
+//        this.playlistDAO = playlistDAO;
 //    }
 //    
 //    private void assertDeepEquals(Playlist expected, Playlist actual) {
@@ -46,7 +76,7 @@
 //    public void testCreatePlaylistWithName() {    
 //        Playlist playlistR = new Playlist("My favourite songs");
 //        
-//        playlistDAOImpl.create(playlistR);
+//        playlistDAO.create(playlistR);
 //        
 //        
 //        
@@ -60,7 +90,7 @@
 //    public void testCreatePlaylistWithNameAndSongs() {
 //        Map<Integer, Song> songs = new TreeMap<>();
 //        Genre genreTemp = new Genre("Pop");
-//        Album albumTemp = new Album("The Fox");
+//        Album albumTemp = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
 //        Artist artistTemp = new Artist("Ylvis");
 //        songs.put(1, new Song("The Fox", 180, 1, "", genreTemp, albumTemp, artistTemp));
 //        songs.put(2, new Song("Someone Like Me", 180, 2, "", genreTemp, albumTemp, artistTemp));
@@ -68,7 +98,10 @@
 //        
 //        Playlist playlistR = new Playlist("Funny", songs);
 //        
-//        playlistDAOImpl.create(playlistR);
+//        genreDAO.create(genreTemp);
+//        albumDAO.create(albumTemp);
+//        artistDAO.create(artistTemp);
+//        playlistDAO.create(playlistR);
 //        
 //        
 //        
@@ -81,7 +114,7 @@
 //    @Test(expected = DataAccessException.class)
 //    public void testCreateNullPlaylist() {
 //        
-//        playlistDAOImpl.create(null);
+//        playlistDAO.create(null);
 //        
 //        
 //    }
@@ -90,7 +123,7 @@
 //    public void testCreatePlaylistWithNoName() {
 //        Playlist playlistR = new Playlist();
 //        
-//        playlistDAOImpl.create(playlistR);
+//        playlistDAO.create(playlistR);
 //        
 //        
 //    }
@@ -99,7 +132,7 @@
 //    public void testCreatePlaylistWithEmptyName() {
 //        Playlist playlistR = new Playlist("");
 //        
-//        playlistDAOImpl.create(playlistR);
+//        playlistDAO.create(playlistR);
 //        
 //        
 //    }
@@ -120,7 +153,7 @@
 //        
 //        Playlist playlistR = new Playlist("Funny", songs);
 //        
-//        playlistDAOImpl.create(playlistR);
+//        playlistDAO.create(playlistR);
 //        
 //        
 //        
@@ -133,16 +166,16 @@
 //        playlistUpdated.setId(id);
 //        
 //        
-//        playlistDAOImpl.update(playlistUpdated);
+//        playlistDAO.update(playlistUpdated);
 //        
-//        assertDeepEquals(playlistUpdated, playlistDAOImpl.getById(playlistR.getId()));
+//        assertDeepEquals(playlistUpdated, playlistDAO.getById(playlistR.getId()));
 //        
 //    } 
 //    
 //    @Test(expected = DataAccessException.class)
 //    public void testUpdateNullPlaylist() {
 //        
-//        playlistDAOImpl.update(null);
+//        playlistDAO.update(null);
 //        
 //        
 //    }
@@ -151,7 +184,7 @@
 //    public void testUpdatePlaylistWithEmptyName() {
 //        Playlist playlistR = new Playlist("");
 //        
-//        playlistDAOImpl.update(playlistR);
+//        playlistDAO.update(playlistR);
 //        
 //        
 //    }
@@ -160,7 +193,7 @@
 //    public void testUpdatePlaylistWithNoId() {
 //        Playlist playlistR = new Playlist(null, "New");
 //        
-//        playlistDAOImpl.update(playlistR);
+//        playlistDAO.update(playlistR);
 //        
 //        
 //    }
@@ -177,7 +210,7 @@
 //        
 //        Playlist playlistR = new Playlist("Funny", songs);
 //        
-//        playlistDAOImpl.update(playlistR);
+//        playlistDAO.update(playlistR);
 //        
 //        
 //    }
@@ -198,7 +231,7 @@
 //        
 //        Playlist playlistR = new Playlist("Funny", songs);
 //        
-//        playlistDAOImpl.create(playlistR);
+//        playlistDAO.create(playlistR);
 //        
 //        
 //        
@@ -209,11 +242,11 @@
 //        playlistToDelete.setId(id);
 //        
 //        
-//        playlistDAOImpl.delete(playlistToDelete);
+//        playlistDAO.delete(playlistToDelete);
 //        
 //        
 //        
-//        if (playlistDAOImpl.getById(id) != null) {
+//        if (playlistDAO.getById(id) != null) {
 //            throw new DataAccessException("Delete failed.") {};
 //        }
 //        
@@ -222,7 +255,7 @@
 //    @Test(expected = DataAccessException.class)
 //    public void testDeleteNullPlaylist() {
 //        
-//        playlistDAOImpl.delete(null);
+//        playlistDAO.delete(null);
 //        
 //        
 //    }
@@ -231,7 +264,7 @@
 //    public void testDeletePlaylistWithEmptyName() {
 //        Playlist playlistR = new Playlist("");
 //        
-//        playlistDAOImpl.delete(playlistR);
+//        playlistDAO.delete(playlistR);
 //        
 //        
 //    }
@@ -240,7 +273,7 @@
 //    public void testDeletePlaylistWithNoId() {
 //        Playlist playlistR = new Playlist(null, "New");
 //        
-//        playlistDAOImpl.delete(playlistR);
+//        playlistDAO.delete(playlistR);
 //        
 //        
 //    }
@@ -257,7 +290,7 @@
 //        
 //        Playlist playlistR = new Playlist("Funny", songs);
 //        
-//        playlistDAOImpl.delete(playlistR);
+//        playlistDAO.delete(playlistR);
 //        
 //        
 //    }
@@ -278,20 +311,20 @@
 //        
 //        Playlist playlistR = new Playlist("Funny", songs);
 //        
-//        playlistDAOImpl.create(playlistR);
+//        playlistDAO.create(playlistR);
 //        
 //        
 //        
 //        Long id = playlistR.getId();
 //        assertNotNull(id);
 //        
-//        assertDeepEquals(playlistR, playlistDAOImpl.getById(id));
+//        assertDeepEquals(playlistR, playlistDAO.getById(id));
 //    }
 //    
 //    @Test(expected = DataAccessException.class)
 //    public void testGetByIdPlaylistWhithNoId() {
 //        
-//        playlistDAOImpl.getById(null);
+//        playlistDAO.getById(null);
 //        
 //        
 //    }

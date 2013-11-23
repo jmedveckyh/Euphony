@@ -49,6 +49,7 @@ public class MusicFacadeImpl implements MusicFacade {
     
     
     @Override
+    @Transactional
     public Boolean isSongInPlaylist(SongDTO song, PlaylistDTO playlist) {
 
         Util.validatePlaylist(DTOMapper.toEntity(playlist));
@@ -69,6 +70,7 @@ public class MusicFacadeImpl implements MusicFacade {
     }
 
     @Override
+    @Transactional
     public Boolean isSongInAlbum(SongDTO song, AlbumDTO album) {
 
         Util.validateAlbum(DTOMapper.toEntity(album));

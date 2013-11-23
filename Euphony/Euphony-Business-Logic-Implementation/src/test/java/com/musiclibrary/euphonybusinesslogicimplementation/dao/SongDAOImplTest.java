@@ -1,71 +1,82 @@
 //package com.musiclibrary.euphonybusinesslogicimplementation.dao;
 //
-//import com.musiclibrary.euphonybusinesslogicimplementation.dao.impl.AlbumDAOImpl;
-//import com.musiclibrary.euphonybusinesslogicimplementation.dao.impl.ArtistDAOImpl;
-//import com.musiclibrary.euphonybusinesslogicimplementation.dao.impl.GenreDAOImpl;
-//import com.musiclibrary.euphonybusinesslogicimplementation.dao.impl.SongDAOImpl;
 //import com.musiclibrary.euphonybusinesslogicimplementation.entities.Album;
 //import com.musiclibrary.euphonybusinesslogicimplementation.entities.Artist;
 //import com.musiclibrary.euphonybusinesslogicimplementation.entities.Genre;
 //import com.musiclibrary.euphonybusinesslogicimplementation.entities.Song;
 //import java.util.ArrayList;
 //import java.util.List;
-//import javax.persistence.EntityManager;
-//import javax.persistence.EntityManagerFactory;
-//import javax.persistence.Persistence;
 //import static junit.framework.Assert.assertEquals;
 //import static junit.framework.Assert.assertTrue;
 //import static junit.framework.Assert.fail;
 //import junit.framework.TestCase;
 //import org.joda.time.DateTime;
-//import org.springframework.context.ApplicationContext;
-//import org.springframework.context.support.ClassPathXmlApplicationContext;
+//import org.junit.Test;
+//import org.junit.runner.RunWith;
+//import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.dao.DataAccessException;
+//import org.springframework.test.context.ContextConfiguration;
+//import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+//import org.springframework.transaction.annotation.Transactional;
 //
 ///**
 // * Unit tests for Song DAO implementation.
 // *
 // * @author Branislav Novotny #396152
 // */
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration("/testApplicationContext.xml" ) 
+//@Transactional
 //public class SongDAOImplTest extends TestCase {
 //
-//    private SongDAO songDAOImpl;
-//    private ArtistDAO artistDao;
-//    private GenreDAO genreDao;
-//    private AlbumDAO albumDao;
+//    @Autowired
+//    private SongDAO songDAO;
+//    
+//    @Autowired
+//    private ArtistDAO artistDAO;
+//    
+//    @Autowired
+//    private GenreDAO genreDAO;
+//    
+//    @Autowired
+//    private AlbumDAO albumDAO;
 //
-//    public SongDAOImplTest(String name) {
-//        super(name);
+//    public void setSongDAO(SongDAO songDAO) {
+//        this.songDAO = songDAO;
 //    }
 //
-//    @Override
-//    protected void setUp() throws Exception {
-//        super.setUp();
-//        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("testApplicationContext.xml");
-//        songDAOImpl = (SongDAO) applicationContext.getBean("songDAO");
-//        artistDao = (ArtistDAO) applicationContext.getBean("artistDAO");
-//        genreDao = (GenreDAO) applicationContext.getBean("genreDAO");
-//        albumDao = (AlbumDAO) applicationContext.getBean("albumDAO");
+//    public void setArtistDAO(ArtistDAO artistDAO) {
+//        this.artistDAO = artistDAO;
 //    }
 //
-//    @Override
-//    protected void tearDown() throws Exception {
-//        super.tearDown();
+//    public void setGenreDAO(GenreDAO genreDAO) {
+//        this.genreDAO = genreDAO;
+//    }
+//
+//    public void setAlbumDAO(AlbumDAO albumDAO) {
+//        this.albumDAO = albumDAO;
 //    }
 //
 //    /**
 //     * Test of create song
 //     */
+//    @Test
 //    public void testCreateSong() {
 //
-//        Song song = new Song("Salalaj", 320, 1, "Toto si spievam ked som dobre nehehee...", new Genre(), new Album(), new Artist());
+//        Genre g = new Genre("m"); 
+//        genreDAO.create(g);
+//        Album al = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
+//        albumDAO.create(al);
+//        Artist ar = new Artist("a");
+//        artistDAO.create(ar);
+//        Song song = new Song("Salalaj", 320, 1, "Toto si spievam ked som dobre nehehee...", g,al,ar);
 //        
-//        songDAOImpl.create(song);
+//        songDAO.create(song);
 //        
 //
 //        Long id = song.getId();
 //        assertNotNull(id);
-//        Song song2 = songDAOImpl.getById(id);
+//        Song song2 = songDAO.getById(id);
 //        assertDeepEquals(song, song2);
 //
 //        
@@ -73,7 +84,7 @@
 //        //test null song
 //        
 //        try {
-//            songDAOImpl.create(null);
+//            songDAO.create(null);
 //            fail("null song!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -86,7 +97,7 @@
 //        try {
 //            Song s = new Song("Salalaj", 300, 1, "nehehe", new Genre(), new Album(), new Artist());
 //            s.setId(new Long(1l));
-//            songDAOImpl.create(s);
+//            songDAO.create(s);
 //            fail("song id set!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -97,7 +108,7 @@
 //        //test Create Song With Null Attributes
 //        
 //        try {
-//            songDAOImpl.create(new Song(null, 320, 1, null, null, null, null));
+//            songDAO.create(new Song(null, 320, 1, null, null, null, null));
 //            fail("song with null attributes!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -108,7 +119,7 @@
 //        //test with null title
 //        
 //        try {
-//            songDAOImpl.create(new Song(null, 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
+//            songDAO.create(new Song(null, 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
 //            fail("song with null title!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -119,7 +130,7 @@
 //        //test with empty title
 //        
 //        try {
-//            songDAOImpl.create(new Song("", 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
+//            songDAO.create(new Song("", 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
 //            fail("song with empty title!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -130,7 +141,7 @@
 //        //test with null genre 
 //        
 //        try {
-//            songDAOImpl.create(new Song("Salalaj", 320, 1, "nehehe", null, new Album(), new Artist()));
+//            songDAO.create(new Song("Salalaj", 320, 1, "nehehe", null, new Album(), new Artist()));
 //            fail("song with null genre!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -141,7 +152,7 @@
 //        //test with null album
 //        
 //        try {
-//            songDAOImpl.create(new Song("Salalaj", 320, 1, "nehehe", new Genre(), null, new Artist()));
+//            songDAO.create(new Song("Salalaj", 320, 1, "nehehe", new Genre(), null, new Artist()));
 //            fail("song with null album!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -152,7 +163,7 @@
 //        //test with null artist
 //        
 //        try {
-//            songDAOImpl.create(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), null));
+//            songDAO.create(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), null));
 //            fail("song with null artist!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -163,7 +174,7 @@
 //        //test with negative track number
 //        
 //        try {
-//            songDAOImpl.create(new Song("Salalaj", 320, -10, "nehehe", new Genre(), new Album(), new Artist()));
+//            songDAO.create(new Song("Salalaj", 320, -10, "nehehe", new Genre(), new Album(), new Artist()));
 //            fail("song with negative bitrate!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -174,7 +185,7 @@
 //        //test with zero bitrate
 //        
 //        try {
-//            songDAOImpl.create(new Song("Salalaj", 0, 1, "nehehe", new Genre(), new Album(), new Artist()));
+//            songDAO.create(new Song("Salalaj", 0, 1, "nehehe", new Genre(), new Album(), new Artist()));
 //            fail("song with zero bitrate!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -185,7 +196,7 @@
 //        //test with negative bitrate
 //        
 //        try {
-//            songDAOImpl.create(new Song("Salalaj", -1000, 1, "nehehe", new Genre(), new Album(), new Artist()));
+//            songDAO.create(new Song("Salalaj", -1000, 1, "nehehe", new Genre(), new Album(), new Artist()));
 //            fail("song with negative bitrate!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -196,7 +207,7 @@
 //        //test with bitrate above 2500
 //        
 //        try {
-//            songDAOImpl.create(new Song("Salalaj", 10000, 1, "nehehe", new Genre(), new Album(), new Artist()));
+//            songDAO.create(new Song("Salalaj", 10000, 1, "nehehe", new Genre(), new Album(), new Artist()));
 //            fail("song with 2500+ bitrate!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -209,6 +220,7 @@
 //    /**
 //     * Test of update song
 //     */
+//    @Test
 //    public void testUpdateSong() {
 //
 //        //Song s = new Song("Salalaj", 320, 1, "", new Genre(), new Album());
@@ -217,7 +229,7 @@
 //        //test null song
 //        
 //        try {
-//            songDAOImpl.update(null);
+//            songDAO.update(null);
 //            fail("null song update!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -228,7 +240,7 @@
 //        //testCreateSongWithNullAttributes
 //        
 //        try {
-//            songDAOImpl.update(new Song(null, 320, 1, null, null, null, null));
+//            songDAO.update(new Song(null, 320, 1, null, null, null, null));
 //            fail("song with null attributes!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -239,7 +251,7 @@
 //        //test with null title
 //        
 //        try {
-//            songDAOImpl.update(new Song(null, 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
+//            songDAO.update(new Song(null, 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
 //            fail("song with null title!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -250,7 +262,7 @@
 //        //test with empty title
 //        
 //        try {
-//            songDAOImpl.update(new Song("", 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
+//            songDAO.update(new Song("", 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
 //            fail("song with empty title!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -261,7 +273,7 @@
 //        //test with null genre 
 //        
 //        try {
-//            songDAOImpl.update(new Song("Salalaj", 320, 1, "nehehe", null, new Album(), new Artist()));
+//            songDAO.update(new Song("Salalaj", 320, 1, "nehehe", null, new Album(), new Artist()));
 //            fail("song with null genre!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -272,7 +284,7 @@
 //        //test with null album
 //        
 //        try {
-//            songDAOImpl.update(new Song("Salalaj", 320, 1, "nehehe", new Genre(), null, new Artist()));
+//            songDAO.update(new Song("Salalaj", 320, 1, "nehehe", new Genre(), null, new Artist()));
 //            fail("song with null album!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -283,7 +295,7 @@
 //        //test with null artist
 //        
 //        try {
-//            songDAOImpl.update(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), null));
+//            songDAO.update(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), null));
 //            fail("song with null album!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -294,7 +306,7 @@
 //        //test with negative track number
 //        
 //        try {
-//            songDAOImpl.update(new Song("Salalaj", 320, -10, "nehehe", new Genre(), new Album(), new Artist()));
+//            songDAO.update(new Song("Salalaj", 320, -10, "nehehe", new Genre(), new Album(), new Artist()));
 //            fail("song with negative bitrate!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -305,7 +317,7 @@
 //        //test with zero bitrate
 //        
 //        try {
-//            songDAOImpl.update(new Song("Salalaj", 0, 1, "nehehe", new Genre(), new Album(), new Artist()));
+//            songDAO.update(new Song("Salalaj", 0, 1, "nehehe", new Genre(), new Album(), new Artist()));
 //            fail("song with zero bitrate!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -316,7 +328,7 @@
 //        //test with negative bitrate
 //        
 //        try {
-//            songDAOImpl.update(new Song("Salalaj", -1234, 1, "nehehe", new Genre(), new Album(), new Artist()));
+//            songDAO.update(new Song("Salalaj", -1234, 1, "nehehe", new Genre(), new Album(), new Artist()));
 //            fail("song with negative bitrate!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -327,7 +339,7 @@
 //        //test with bitrate above 2500
 //        
 //        try {
-//            songDAOImpl.update(new Song("Salalaj", 10000, 1, "nehehe", new Genre(), new Album(), new Artist()));
+//            songDAO.update(new Song("Salalaj", 10000, 1, "nehehe", new Genre(), new Album(), new Artist()));
 //            fail("song with 2500+ bitrate!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -338,7 +350,7 @@
 //        //test song with null id
 //        
 //        try {
-//            songDAOImpl.update(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
+//            songDAO.update(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
 //            
 //            fail("null id update!");
 //
@@ -353,7 +365,7 @@
 //        try {
 //            Song song = new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), new Artist());
 //            song.setId(new Long(1000));
-//            songDAOImpl.update(song);
+//            songDAO.update(song);
 //            fail("no assigned id by db update!");
 //
 //        } catch (DataAccessException ex) {
@@ -366,6 +378,7 @@
 //    /**
 //     * Test delete song
 //     */
+//    @Test
 //    public void testDeleteSong() {
 //
 //        //Song s = new Song("Salalaj", 320, 1, "", new Genre(), new Album());
@@ -374,7 +387,7 @@
 //        //test null song
 //        
 //        try {
-//            songDAOImpl.delete(null);
+//            songDAO.delete(null);
 //            fail("null song delete!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -385,7 +398,7 @@
 //        //testCreateSongWithNullAttributes
 //        
 //        try {
-//            songDAOImpl.delete(new Song(null, 320, 1, null, null, null, null));
+//            songDAO.delete(new Song(null, 320, 1, null, null, null, null));
 //            fail("song with null attributes!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -396,7 +409,7 @@
 //        //test with null title
 //        
 //        try {
-//            songDAOImpl.delete(new Song(null, 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
+//            songDAO.delete(new Song(null, 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
 //            fail("song with null title!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -407,7 +420,7 @@
 //        //test with empty title
 //        
 //        try {
-//            songDAOImpl.delete(new Song("", 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
+//            songDAO.delete(new Song("", 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
 //            fail("song with empty title!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -418,7 +431,7 @@
 //        //test with null genre 
 //        
 //        try {
-//            songDAOImpl.delete(new Song("Salalaj", 320, 1, "nehehe", null, new Album(), new Artist()));
+//            songDAO.delete(new Song("Salalaj", 320, 1, "nehehe", null, new Album(), new Artist()));
 //            fail("song with null genre!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -429,7 +442,7 @@
 //        //test with null album
 //        
 //        try {
-//            songDAOImpl.delete(new Song("Salalaj", 320, 1, "nehehe", new Genre(), null, new Artist()));
+//            songDAO.delete(new Song("Salalaj", 320, 1, "nehehe", new Genre(), null, new Artist()));
 //            fail("song with null album!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -440,7 +453,7 @@
 //        //test with null artist
 //        
 //        try {
-//            songDAOImpl.delete(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), null));
+//            songDAO.delete(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), null));
 //            fail("song with null artist!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -451,7 +464,7 @@
 //        //test with negative track number
 //        
 //        try {
-//            songDAOImpl.delete(new Song("Salalaj", 320, -10, "nehehe", new Genre(), new Album(), new Artist()));
+//            songDAO.delete(new Song("Salalaj", 320, -10, "nehehe", new Genre(), new Album(), new Artist()));
 //            fail("song with negative bitrate!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -462,7 +475,7 @@
 //        //test with zero bitrate
 //        
 //        try {
-//            songDAOImpl.delete(new Song("Salalaj", 0, 1, "nehehe", new Genre(), new Album(), new Artist()));
+//            songDAO.delete(new Song("Salalaj", 0, 1, "nehehe", new Genre(), new Album(), new Artist()));
 //            fail("song with zero bitrate!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -473,7 +486,7 @@
 //        //test with negative bitrate
 //        
 //        try {
-//            songDAOImpl.delete(new Song("Salalaj", -1000, 1, "nehehe", new Genre(), new Album(), new Artist()));
+//            songDAO.delete(new Song("Salalaj", -1000, 1, "nehehe", new Genre(), new Album(), new Artist()));
 //            fail("song with negative bitrate!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -484,7 +497,7 @@
 //        //test with bitrate above 2500
 //        
 //        try {
-//            songDAOImpl.delete(new Song("Salalaj", 10000, 1, "nehehe", new Genre(), new Album(), new Artist()));
+//            songDAO.delete(new Song("Salalaj", 10000, 1, "nehehe", new Genre(), new Album(), new Artist()));
 //            fail("song with 2500+ bitrate!");
 //        } catch (DataAccessException ex) {
 //            //OK
@@ -495,7 +508,7 @@
 //        //test song with null id
 //        
 //        try {
-//            songDAOImpl.delete(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
+//            songDAO.delete(new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), new Artist()));
 //            fail("null id delete!");
 //
 //        } catch (DataAccessException ex) {
@@ -509,7 +522,7 @@
 //        try {
 //            Song song = new Song("Salalaj", 320, 1, "nehehe", new Genre(), new Album(), new Artist());
 //            song.setId(new Long(1000));
-//            songDAOImpl.delete(song);
+//            songDAO.delete(song);
 //            fail("no assigned id by db delete!");
 //
 //        } catch (DataAccessException ex) {
@@ -522,11 +535,11 @@
 //
 //        Song dalibomba = new Song("Sandru - Dalibomba", 320, 1, "Yeah!!!", new Genre(), new Album(), new Artist());
 //        
-//        songDAOImpl.create(dalibomba);
+//        songDAO.create(dalibomba);
 //        
 //
 //        
-//        songDAOImpl.delete(dalibomba);
+//        songDAO.delete(dalibomba);
 //        
 //        
 //    }
@@ -534,12 +547,13 @@
 //    /**
 //     * Test of getById method
 //     */
+//    @Test
 //    public void testGetSongById() {
 //
 //        //test with null both
 //        
 //        try {
-//            songDAOImpl.getById(null);
+//            songDAO.getById(null);
 //            fail("both null get!");
 //        } catch (DataAccessException ex) {
 //            //ok
@@ -550,7 +564,7 @@
 //        //test with null id
 //        
 //        try {
-//            songDAOImpl.getById(null);
+//            songDAO.getById(null);
 //            fail("id null get!");
 //        } catch (DataAccessException ex) {
 //            //ok
@@ -560,121 +574,125 @@
 //
 //        //test id not assigned by db
 //        
-//        Song res = songDAOImpl.getById(new Long(6543));
+//        Song res = songDAO.getById(new Long(6543));
 //        
 //        assertNull(res);
 //
 //        //test get by id
 //        Song dalibomba = new Song("Sandru - Dalibomba", 320, 1, "Yeah!!!", new Genre(), new Album(), new Artist());
 //        
-//        songDAOImpl.create(dalibomba);
+//        songDAO.create(dalibomba);
 //        
 //        assertNotNull(dalibomba.getId());
 //        Long songId = dalibomba.getId();
 //
-//        Song res1 = songDAOImpl.getById(songId);
+//        Song res1 = songDAO.getById(songId);
 //        assertDeepEquals(dalibomba, res1);
 //        
 //    }
 //    
+//    @Test
 //    public void testGetByTitle(){
-//        assertTrue(songDAOImpl.getByTitle("Prisoner").isEmpty());
+//        assertTrue(songDAO.getByTitle("Prisoner").isEmpty());
 //        
 //        Song song = new Song("Prisoner", 320, 2, "Children of the Damned", new Genre(), new Album(), new Artist());
 //        
-//        songDAOImpl.create(song);
+//        songDAO.create(song);
 //        
 //        
 //        List<Song> songs1 = new ArrayList();
 //        List<Song> songs2 = new ArrayList();
 //        
 //        songs1.add(song);
-//        songs2 = songDAOImpl.getByTitle("Prisoner");
+//        songs2 = songDAO.getByTitle("Prisoner");
 //        
 //        assertEquals(songs1, songs2);
 //        
 //        
-//        songDAOImpl.delete(song);
+//        songDAO.delete(song);
 //        
-//        assertTrue(songDAOImpl.getByTitle("Prisoner").isEmpty());
+//        assertTrue(songDAO.getByTitle("Prisoner").isEmpty());
 //    }
 //    
+//    @Test
 //    public void testGetByAlbum(){
 //        Album album = new Album("Title","cover.jpg", DateTime.now(),new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
 //        
-//        albumDao.create(album);
+//        albumDAO.create(album);
 //        
-//        assertTrue(songDAOImpl.getByAlbum(album).isEmpty());
+//        assertTrue(songDAO.getByAlbum(album).isEmpty());
 //
 //        Song song = new Song("Prisoner", 320, 2, "Children of the Damned", new Genre(), album, new Artist());
 //        
-//        songDAOImpl.create(song);
+//        songDAO.create(song);
 //        
 //        
 //        List<Song> songs1 = new ArrayList();
 //        List<Song> songs2 = new ArrayList();
 //        
 //        songs1.add(song);
-//        songs2 = songDAOImpl.getByAlbum(album);
+//        songs2 = songDAO.getByAlbum(album);
 //        
 //        assertEquals(songs1, songs2);
 //        
 //        
-//        songDAOImpl.delete(song);
+//        songDAO.delete(song);
 //        
-//        assertTrue(songDAOImpl.getByAlbum(album).isEmpty());
+//        assertTrue(songDAO.getByAlbum(album).isEmpty());
 //    }
 //    
+//    @Test
 //    public void testGetByGenre(){
 //        Genre genre = new Genre("metal");
 //        
-//        genreDao.create(genre);
+//        genreDAO.create(genre);
 //        
-//        assertTrue(songDAOImpl.getByGenre(genre).isEmpty());
+//        assertTrue(songDAO.getByGenre(genre).isEmpty());
 //        
 //        Song song = new Song("Prisoner", 320, 2, "Children of the Damned", genre, new Album(), new Artist());
 //        
-//        songDAOImpl.create(song);
+//        songDAO.create(song);
 //        
 //        
 //        List<Song> songs1 = new ArrayList();
 //        List<Song> songs2 = new ArrayList();
 //        
 //        songs1.add(song);
-//        songs2 = songDAOImpl.getByGenre(genre);
+//        songs2 = songDAO.getByGenre(genre);
 //        
 //        assertEquals(songs1, songs2);
 //        
 //        
-//        songDAOImpl.delete(song);
+//        songDAO.delete(song);
 //        
-//        assertTrue(songDAOImpl.getByGenre(genre).isEmpty());
+//        assertTrue(songDAO.getByGenre(genre).isEmpty());
 //    }
 //    
+//    @Test
 //    public void testGetByArtist(){
 //        Artist artist = new Artist("Iron Maiden");
 //        
-//        artistDao.create(artist);
+//        artistDAO.create(artist);
 //        
-//        assertTrue(songDAOImpl.getByArtist(artist).isEmpty());
+//        assertTrue(songDAO.getByArtist(artist).isEmpty());
 //        
 //        Song song = new Song("Prisoner", 320, 2, "Children of the Damned", new Genre(), new Album(), artist);
 //        
-//        songDAOImpl.create(song);
+//        songDAO.create(song);
 //        
 //        
 //        List<Song> songs1 = new ArrayList();
 //        List<Song> songs2 = new ArrayList();
 //        
 //        songs1.add(song);
-//        songs2 = songDAOImpl.getByArtist(artist);
+//        songs2 = songDAO.getByArtist(artist);
 //        
 //        assertEquals(songs1, songs2);
 //        
 //        
-//        songDAOImpl.delete(song);
+//        songDAO.delete(song);
 //        
-//        assertTrue(songDAOImpl.getByArtist(artist).isEmpty());
+//        assertTrue(songDAO.getByArtist(artist).isEmpty());
 //        
 //    }
 //
