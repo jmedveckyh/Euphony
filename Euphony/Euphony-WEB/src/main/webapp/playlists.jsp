@@ -15,7 +15,7 @@
 <ul>
     <c:forEach items="${actionBean.playlists}" var="playlist">
         <li>
-            <s:link beanclass="com.musiclibrary.euphonyweb.PlaylistActionBean" event="id">
+            <s:link beanclass="com.musiclibrary.euphonyweb.PlaylistActionBean" event="show">
                 <s:param name="playlist.id" value="${playlist.id}"/><span>${playlist.name}</span>
             </s:link>
         </li>

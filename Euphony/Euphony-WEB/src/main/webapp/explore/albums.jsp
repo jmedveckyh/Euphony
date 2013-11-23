@@ -19,7 +19,7 @@
             <c:forEach items="${actionBean.albums}" var="album">
                 <tr>
                     <td><c:out value="${album.id}"/></td>
-                    <td><c:out value="${album.name}"/></td>
+                    <td><c:out value="${album.title}"/></td>
                 </tr>
             </c:forEach>
         </table>

@@ -21,7 +21,7 @@ import net.sourceforge.stripes.validation.ValidationErrors;
  *
  * @author Tomas Smetanka
  */
-@UrlBinding("/playlist/{playlist.id}")
+@UrlBinding("/playlist/{$event}/{playlist.id}")
 public class PlaylistActionBean extends BaseActionBean implements ValidationErrorHandler {
     
     @SpringBean
@@ -60,12 +60,12 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
 //        log.debug("add() genre={}", genre);
         playlistService.create(playlist);
 //        getContext().getMessages().add(new LocalizableMessage("genre.add.message",escapeHTML(genre.getName())));
-        return new RedirectResolution(this.getClass(), "/explore");
+        return new RedirectResolution("/explore");
     }
     
     public Resolution cancel() {
 //        log.debug("cancel() genre={}", genre);
-        return new RedirectResolution(this.getClass(), "/explore");
+        return new RedirectResolution("/explore");
     }
 
     @Override
@@ -81,7 +81,7 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
         playlist = playlistService.getById(playlist.getId());
         playlistService.delete(playlist);
         //getContext().getMessages().add(new LocalizableMessage("genre.delete.message", escapeHTML(genre.getTitle()), escapeHTML(genre.getAuthor())));
-        return new RedirectResolution(this.getClass(), "/explore");
+        return new RedirectResolution("/explore");
     }
 
     //--- part for editing a genre ----
