@@ -11,42 +11,39 @@
 //import static junit.framework.Assert.fail;
 //import junit.framework.TestCase;
 //import org.joda.time.DateTime;
-//import org.springframework.context.ApplicationContext;
-//import org.springframework.context.support.ClassPathXmlApplicationContext;
+//import org.junit.Test;
+//import org.junit.runner.RunWith;
+//import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.dao.DataAccessException;
+//import org.springframework.test.context.ContextConfiguration;
+//import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+//import org.springframework.transaction.annotation.Transactional;
 //
 ///**
 // * Unit tests for Album DAO implementation.
 // *
 // * @author Sebastian Lazon #395990
 // */
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration("/testApplicationContext.xml" ) 
+//@Transactional
 //public class AlbumDAOImplTest extends TestCase {
 //
-//    private AlbumDAO albumDao;
+//    @Autowired
+//    private AlbumDAO albumDAO;
 //
-//    public AlbumDAOImplTest(String name) {
-//        super(name);
-//    }
-//
-//    @Override
-//    protected void setUp() throws Exception {
-//        super.setUp();
-//        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("testApplicationContext.xml");
-//        albumDao = (AlbumDAO) applicationContext.getBean("albumDAO");
-//    }
-//
-//    @Override
-//    protected void tearDown() throws Exception {
-//        super.tearDown();
+//    public void setAlbumDAO(AlbumDAO albumDAO) {
+//        this.albumDAO = albumDAO;
 //    }
 //
 //    /**
 //     * Tests of creating new album
 //     */
+//    @Test
 //    public void testCreateAlbum() {
 //
 //        try {
-//            albumDao.create(null);
+//            albumDAO.create(null);
 //            fail("Null album create");
 //        } catch (DataAccessException e) {
 //            //OK
@@ -54,7 +51,7 @@
 //
 //        Album album = null;
 //        try {
-//            albumDao.create(album);
+//            albumDAO.create(album);
 //            fail("Empty album create");
 //        } catch (DataAccessException e) {
 //            //OK
@@ -62,7 +59,7 @@
 //
 //        album = new Album(null, "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
 //        try {
-//            albumDao.create(album);
+//            albumDAO.create(album);
 //            fail("Album title null");
 //        } catch (DataAccessException e) {
 //            //OK
@@ -70,7 +67,7 @@
 //
 //        album = new Album("", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
 //        try {
-//            albumDao.create(album);
+//            albumDAO.create(album);
 //            fail("Album title empty");
 //        } catch (DataAccessException e) {
 //            //OK
@@ -78,7 +75,7 @@
 //
 //        album = new Album("title", "cover.jpg", null, new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
 //        try {
-//            albumDao.create(album);
+//            albumDAO.create(album);
 //            fail("Album date null");
 //        } catch (DataAccessException e) {
 //            //OK
@@ -86,7 +83,7 @@
 //
 //        album = new Album("title", "cover.jpg", DateTime.now(), null, "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
 //        try {
-//            albumDao.create(album);
+//            albumDAO.create(album);
 //            fail("Album songs null");
 //        } catch (DataAccessException e) {
 //            //OK
@@ -94,7 +91,7 @@
 //
 //        album = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", null, new ArrayList<Genre>());
 //        try {
-//            albumDao.create(album);
+//            albumDAO.create(album);
 //            fail("Album artists null");
 //        } catch (DataAccessException e) {
 //            //OK
@@ -102,20 +99,20 @@
 //
 //        album = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), null);
 //        try {
-//            albumDao.create(album);
+//            albumDAO.create(album);
 //            fail("Album genres null");
 //        } catch (DataAccessException e) {
 //            //OK
 //        }
 //
 //        album = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
-//        albumDao.create(album);
+//        albumDAO.create(album);
 //        Long id = album.getId();
 //        assertNotNull(id);
-//        assertDeepEquals(album, albumDao.getById(id));
+//        assertDeepEquals(album, albumDAO.getById(id));
 //
 //        try {
-//            albumDao.create(album);
+//            albumDAO.create(album);
 //            fail("Album already in db");
 //        } catch (DataAccessException e) {
 //            //OK
@@ -135,10 +132,12 @@
 //    /**
 //     * Tests of getting an album
 //     */
+//    
+//    @Test
 //    public void testGetAlbum() {
 //
 //        try {
-//            albumDao.getById(null);
+//            albumDAO.getById(null);
 //            fail("null id");
 //        } catch (DataAccessException ex) {
 //        }
@@ -146,96 +145,102 @@
 //        Album album = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
 //
 //        try {
-//            albumDao.getById(album.getId());
+//            albumDAO.getById(album.getId());
 //            fail("id not in db");
 //        } catch (DataAccessException ex) {
 //        }
 //
-//        albumDao.create(album);
-//        assertDeepEquals(album, albumDao.getById(album.getId()));
+//        albumDAO.create(album);
+//        assertDeepEquals(album, albumDAO.getById(album.getId()));
 //
 //    }
 //
 //    /**
 //     * Tests of updating album
 //     */
+//    
+//    @Test
 //    public void testUpdateAlbum() {
 //        try {
-//            albumDao.update(null);
+//            albumDAO.update(null);
 //            fail("null album update");
 //        } catch (DataAccessException ex) {
 //        }
 //
 //        try {
-//            albumDao.update(new Album());
+//            albumDAO.update(new Album());
 //            fail("empty album update");
 //        } catch (DataAccessException ex) {
 //        }
 //
 //        Album album = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
 //        try {
-//            albumDao.update(album);
+//            albumDAO.update(album);
 //            fail("Item not in db");
 //        } catch (DataAccessException ex) {
 //        }
-//        albumDao.create(album);
-//        albumDao.update(album);
-//        assertDeepEquals(album, albumDao.getById(album.getId()));
+//        albumDAO.create(album);
+//        albumDAO.update(album);
+//        assertDeepEquals(album, albumDAO.getById(album.getId()));
 //
 //        album = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
-//        albumDao.create(album);
+//        albumDAO.create(album);
 //        album.setTitle("title2");
-//        albumDao.update(album);
-//        assertDeepEquals(album, albumDao.getById(album.getId()));
+//        albumDAO.update(album);
+//        assertDeepEquals(album, albumDAO.getById(album.getId()));
 //
 //        album = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
-//        albumDao.create(album);
+//        albumDAO.create(album);
 //        album.setCover("cover2.jpg");
-//        albumDao.update(album);
-//        assertDeepEquals(album, albumDao.getById(album.getId()));
+//        albumDAO.update(album);
+//        assertDeepEquals(album, albumDAO.getById(album.getId()));
 //
 //        album = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
-//        albumDao.create(album);
+//        albumDAO.create(album);
 //        album.setReleaseDate(DateTime.now());
-//        albumDao.update(album);
-//        assertDeepEquals(album, albumDao.getById(album.getId()));
+//        albumDAO.update(album);
+//        assertDeepEquals(album, albumDAO.getById(album.getId()));
 //
 //        album = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
-//        albumDao.create(album);
+//        albumDAO.create(album);
 //        album.setComment("comment2");
-//        albumDao.update(album);
-//        assertDeepEquals(album, albumDao.getById(album.getId()));
+//        albumDAO.update(album);
+//        assertDeepEquals(album, albumDAO.getById(album.getId()));
 //
 //    }
 //
 //    /*
 //     * Testing of deleting album
 //     */
+//    
+//    @Test
 //    public void testDeleteAlbum() {
 //        try {
-//            albumDao.delete(null);
+//            albumDAO.delete(null);
 //            fail("deleting null album");
 //        } catch (DataAccessException ex) {
 //        }
 //
 //        Album album = new Album("title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
 //        try {
-//            albumDao.delete(album);
+//            albumDAO.delete(album);
 //            fail("album not in db");
 //        } catch (DataAccessException ex) {
 //        }
 //
-//        albumDao.create(album);
+//        albumDAO.create(album);
 //        Long id = album.getId();
-//        albumDao.delete(album);
-//        assertNull(albumDao.getById(id));
+//        albumDAO.delete(album);
+//        assertNull(albumDAO.getById(id));
 //    }
 //
 //    /*
 //     * Testing of getting all albums
 //     */
+//    
+//    @Test
 //    public void testGetAllAlbums() {
-//        assertTrue(albumDao.getAll().isEmpty());
+//        assertTrue(albumDAO.getAll().isEmpty());
 //
 //        Album album1 = new Album("title1", "cover1.jpg", DateTime.now(), new ArrayList<Song>(), "comment1", new ArrayList<Artist>(), new ArrayList<Genre>());
 //        Album album2 = new Album("title2", "cover2.jpg", DateTime.now(), new ArrayList<Song>(), "comment2", new ArrayList<Artist>(), new ArrayList<Genre>());
@@ -244,19 +249,21 @@
 //        albums.add(album1);
 //        albums.add(album2);
 //        
-//        albumDao.create(album1);
-//        albumDao.create(album2);      
+//        albumDAO.create(album1);
+//        albumDAO.create(album2);      
 //
-//        assertEquals(albums, albumDao.getAll());
+//        assertEquals(albums, albumDAO.getAll());
 //    }
 //
 //    /*
 //     * Get with null name
 //     */
+//    
+//    @Test
 //    public void testGetByTitleWithNullName() {
 //        
 //        try {
-//            albumDao.getByTitle(null);              //title is null
+//            albumDAO.getByTitle(null);              //title is null
 //        } catch (DataAccessException e) {
 //            //ok
 //        }
@@ -264,27 +271,29 @@
 //        
 //    }
 //
+//    @Test
 //    public void testGetArtistByNameWithNotAssignedName() {
 //        
-//        Album nullResult = albumDao.getByTitle("Mirage");              //getAlbumByName with not assigned name, should return null
+//        Album nullResult = albumDAO.getByTitle("Mirage");              //getAlbumByName with not assigned name, should return null
 //        
 //        
 //        assertNull(nullResult);
 //    }
 //
+//    @Test
 //    public void testGetAlbumByTitle() {
 //
 //        
 //        Album expResult = new Album("Kaleidoscope", "cover.jpg", new DateTime(2009, 1, 1, 0, 0), new ArrayList<Song>(), "nehehe",
 //                new ArrayList<Artist>(), new ArrayList<Genre>());
 //        expResult.getArtists().add(new Artist("Tiesto"));
-//        albumDao.create(expResult);
+//        albumDAO.create(expResult);
 //        
 //        
 //
 //        assertNotNull(expResult.getId());
 //
-//        Album result = albumDao.getByTitle(expResult.getTitle());              //correct
+//        Album result = albumDAO.getByTitle(expResult.getTitle());              //correct
 //        //assertDeepEquals(expResult, result);
 //        assertEquals(expResult.getTitle(), result.getTitle());
 //        assertEquals(expResult.getCover(), result.getCover());
@@ -295,6 +304,7 @@
 //        //assertEquals(expResult.getGenres(), result.getGenres());
 //    }
 //
+//    @Test
 //    public void testGetAlbumByGenre() {
 //        
 //        Album expResult = new Album("Kaleidoscope", "cover.jpg", new DateTime(2009, 1, 1, 0, 0), new ArrayList<Song>(), "nehehe",
@@ -306,7 +316,7 @@
 //        expResult.getGenres().add(tranceGen);
 //        expResult.getGenres().add(houseGen);
 //        expResult.getGenres().add(technoGen);
-//        albumDao.create(expResult);
+//        albumDAO.create(expResult);
 //        
 //        //
 //
@@ -316,20 +326,20 @@
 //        expResult2.getArtists().add(new Artist("Armin Van Buuren"));
 //        expResult2.getGenres().add(tranceGen);
 //        expResult2.getGenres().add(houseGen);
-//        albumDao.create(expResult2);
+//        albumDAO.create(expResult2);
 //        
 //        
 //
 //        assertNotNull(expResult.getId());
 //        assertNotNull(expResult2.getId());
 //
-//        List<Album> resultList = albumDao.getByGenre(technoGen);
+//        List<Album> resultList = albumDAO.getByGenre(technoGen);
 //        assertEquals(1, resultList.size());
 //        List<Album> technoList = new ArrayList<Album>();
 //        technoList.add(expResult);
 //        assertEquals(technoList, resultList);
 //
-//        List<Album> resultList2 = albumDao.getByGenre(houseGen);
+//        List<Album> resultList2 = albumDAO.getByGenre(houseGen);
 //        List<Album> houseList = new ArrayList<Album>();
 //        houseList.add(expResult);
 //        houseList.add(expResult2);
@@ -344,6 +354,7 @@
 //         */
 //    }
 //
+//    @Test
 //    public void testGetAlbumByArtist() {
 //        
 //        Album expResult = new Album("Spaceman", "cover.jpg", new DateTime(2009, 1, 1, 0, 0), new ArrayList<Song>(), "nehehe",
@@ -355,7 +366,7 @@
 //        expResult.getArtists().add(tiesto);
 //        expResult.getArtists().add(hardwell);
 //        expResult.getArtists().add(dyro);
-//        albumDao.create(expResult);
+//        albumDAO.create(expResult);
 //        
 //
 //        
@@ -363,20 +374,20 @@
 //                new ArrayList<Artist>(), new ArrayList<Genre>());
 //        expResult2.getArtists().add(dyro);
 //        expResult2.getArtists().add(hardwell);
-//        albumDao.create(expResult2);
+//        albumDAO.create(expResult2);
 //        
 //        
 //
 //        assertNotNull(expResult.getId());
 //        assertNotNull(expResult2.getId());
 //
-//        List<Album> resultList = albumDao.getByArtist(tiesto);
+//        List<Album> resultList = albumDAO.getByArtist(tiesto);
 //        assertEquals(1, resultList.size());
 //        List<Album> tiestosList = new ArrayList<Album>();
 //        tiestosList.add(expResult);
 //        assertEquals(tiestosList, resultList);
 //
-//        List<Album> resultList2 = albumDao.getByArtist(hardwell);
+//        List<Album> resultList2 = albumDAO.getByArtist(hardwell);
 //        List<Album> hardwellList = new ArrayList<Album>();
 //        hardwellList.add(expResult);
 //        hardwellList.add(expResult2);
@@ -391,12 +402,13 @@
 //         */
 //    }
 //
+//    @Test
 //    public void testGetAlbumByReleaseYear() {
 //        
 //        Album expResult = new Album("Club Life", "cover.jpg", new DateTime(2011, 10, 1, 0, 0), new ArrayList<Song>(), "nehehe",
 //                new ArrayList<Artist>(), new ArrayList<Genre>());
 //        expResult.getArtists().add(new Artist("Tiesto"));
-//        albumDao.create(expResult);
+//        albumDAO.create(expResult);
 //        
 //        
 //
@@ -404,7 +416,7 @@
 //        Album expResult2 = new Album("Club Life Alfa", "cover1.jpg", new DateTime(2011, 1, 1, 0, 0), new ArrayList<Song>(), "nehehe",
 //                new ArrayList<Artist>(), new ArrayList<Genre>());
 //        expResult.getArtists().add(new Artist("Tiesto"));
-//        albumDao.create(expResult2);
+//        albumDAO.create(expResult2);
 //        
 //        
 //
@@ -412,7 +424,7 @@
 //        Album expResult3 = new Album("Club Life Final Release", "cover.jpg", new DateTime(2011, 12, 31, 23, 59), new ArrayList<Song>(), "nehehe",
 //                new ArrayList<Artist>(), new ArrayList<Genre>());
 //        expResult.getArtists().add(new Artist("Tiesto"));
-//        albumDao.create(expResult3);
+//        albumDAO.create(expResult3);
 //        
 //        
 //
@@ -420,7 +432,7 @@
 //        Album expResult4 = new Album("Club Life Final Release 2010", "cover.jpg", new DateTime(2010, 12, 31, 23, 59), new ArrayList<Song>(), "nehehe",
 //                new ArrayList<Artist>(), new ArrayList<Genre>());
 //        expResult.getArtists().add(new Artist("Tiesto"));
-//        albumDao.create(expResult4);
+//        albumDAO.create(expResult4);
 //        
 //        
 //
@@ -428,7 +440,7 @@
 //        Album expResult5 = new Album("Club Life Alfa 2012", "cover.jpg", new DateTime(2012, 1, 1, 0, 0), new ArrayList<Song>(), "nehehe",
 //                new ArrayList<Artist>(), new ArrayList<Genre>());
 //        expResult.getArtists().add(new Artist("Tiesto"));
-//        albumDao.create(expResult5);
+//        albumDAO.create(expResult5);
 //        
 //        
 //
@@ -438,7 +450,7 @@
 //        assertNotNull(expResult4.getId());
 //        assertNotNull(expResult5.getId());
 //
-//        List<Album> resultList = albumDao.getByReleaseYear(new Integer(2011));
+//        List<Album> resultList = albumDAO.getByReleaseYear(new Integer(2011));
 //        assertEquals(3, resultList.size());
 //        List<Album> twoOelevenList = new ArrayList<Album>();
 //        twoOelevenList.add(expResult);
@@ -447,7 +459,7 @@
 //
 //        assertEquals(twoOelevenList, resultList);
 //
-//        List<Album> resultList2 = albumDao.getByReleaseYear(new Integer(2012));
+//        List<Album> resultList2 = albumDAO.getByReleaseYear(new Integer(2012));
 //        List<Album> twoOtwelveList = new ArrayList<Album>();
 //        twoOtwelveList.add(expResult5);
 //        assertEquals(twoOtwelveList, resultList2);
