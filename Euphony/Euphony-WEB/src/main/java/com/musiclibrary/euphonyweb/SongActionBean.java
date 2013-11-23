@@ -105,8 +105,11 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
     @Override
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
         //fill up the data for the table if validation errors occured
-        songs = songService.getAll();
         //return null to let the event handling continue
+        songs = songService.getAll();
+        albums = albumService.getAllAlbums();
+        genres = genreService.getAll();
+        artists = artistService.getAll();
         return null;
     }
 
