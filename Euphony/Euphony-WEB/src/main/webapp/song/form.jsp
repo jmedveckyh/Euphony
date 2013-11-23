@@ -11,6 +11,9 @@
 <fmt:message key='song.genre' var="genre"/>
 <fmt:message key='song.album' var="album"/>
 <fmt:message key='song.artist' var="artist"/>
+<fmt:message key='song.genreChoose' var="genreChoose"/>
+<fmt:message key='song.albumChoose' var="albumChoose"/>
+<fmt:message key='song.artistChoose' var="artistChoose"/>
 
 <table>
     <tr>
@@ -33,6 +36,7 @@
         <th><s:label for="b5" name="${genre}"/></th>
         <td>
             <s:select id="b5" name="genre">
+            <s:option value="0">${genreChoose}</s:option>
             <s:options-collection collection="${actionBean.genres}" label="name" value="id"/>
             </s:select>
         </td>
@@ -41,6 +45,7 @@
         <th><s:label for="b6" name="${album}"/></th>
         <td>
             <s:select id="b6" name="album">
+                <s:option value="0">${albumChoose}</s:option>
             <s:options-collection collection="${actionBean.albums}" label="title" value="id"/>
             </s:select>
         </td>
@@ -49,6 +54,7 @@
         <th><s:label for="b7" name="${artist}"/></th>
         <td>
             <s:select id="b7" name="artist">
+                <s:option value="0">${artistChoose}</s:option>
             <s:options-collection collection="${actionBean.artists}" label="name" value="id"/>
             </s:select>
         </td>
