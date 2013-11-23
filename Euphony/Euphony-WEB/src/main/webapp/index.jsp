@@ -10,7 +10,7 @@
         <%@include file="/explore/menuUp.jsp"%>
         
         
-       index poďjebaný
+       index
        
 
     </s:layout-component>
