@@ -17,13 +17,10 @@ import java.util.List;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
-import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationErrorHandler;
 import net.sourceforge.stripes.validation.ValidationErrors;
-import net.sourceforge.stripes.validation.ValidationMethod;
-import net.sourceforge.stripes.validation.ValidationState;
 import org.joda.time.DateTime;
 
 /**
@@ -104,6 +101,10 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
     }
 
     public Resolution add() {
+        song.setAlbum(albumService.getById(album));
+        song.setArtist(artistService.getById(artist));
+        song.setGenre(genreService.getById(genre));
+        
         songService.create(song);
         //getContext().getMessages().add(new LocalizableMessage("book.add.message",escapeHTML(book.getTitle()),escapeHTML(book.getAuthor())));
         return new RedirectResolution(this.getClass(), "list");
@@ -133,13 +134,6 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
         songService.delete(song);
         return new RedirectResolution(this.getClass(), "list");
     }
-    
-    @ValidationMethod(when=ValidationState.ALWAYS, on={"save","add"})
-    public void validateFields(ValidationErrors errors){
-        if (album==0) errors.add("album", new LocalizableError("validation.selectbox"));
-        if (genre==0) errors.add("genre", new LocalizableError("validation.selectbox"));
-        if (artist==0) errors.add("artist", new LocalizableError("validation.selectbox"));
-    }
 
     @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
     public void loadSongFromDatabase() {
@@ -147,7 +141,7 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
         if (ids == null) return;
         song = songService.getById(Long.parseLong(ids));
     }
-    
+
     public Resolution edit() {
         albums = albumService.getAllAlbums();
         genres = genreService.getAll();
