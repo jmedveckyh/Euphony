@@ -5,7 +5,7 @@
 <web-app>
     <display-name>Euphony, the music library</display-name>
     <welcome-file-list>
-        <welcome-file>explore/songs.jps</welcome-file>
+        <welcome-file>/index.jsp</welcome-file>
     </welcome-file-list>
     <context-param>  
         <param-name>contextConfigLocation</param-name>

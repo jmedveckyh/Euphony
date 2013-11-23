@@ -34,31 +34,38 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
     protected AlbumService albumService;
     @SpringBean
     protected ArtistService artistService;
+    @SpringBean
+    protected PlaylistService playlistService;
     private GenreDTO genre;
     private SongDTO song;
     private AlbumDTO album;
-    private ArtistDTO artis;
+    private ArtistDTO artist;
+    private PlaylistDTO playlist;
     private List<GenreDTO> genres;
     private List<SongDTO> songs;
     private List<AlbumDTO> albums;
     private List<ArtistDTO> artists;
+    private List<PlaylistDTO> playlists;
 
     @DefaultHandler
     public Resolution songs() {
         //log.debug("list()");
         songs = songService.getAll();
+        playlists = playlistService.getAll();
         return new ForwardResolution("/explore/songs.jsp");
     }
 
     public Resolution albums() {
         //log.debug("list()");
         albums = albumService.getAllAlbums();
+        playlists = playlistService.getAll();
         return new ForwardResolution("/explore/albums.jsp");
     }
 
     public Resolution artists() {
         //log.debug("list()");
         artists = artistService.getAll();
+        playlists = playlistService.getAll();
         return new ForwardResolution("/explore/artists.jsp");
     }
 
@@ -85,6 +92,10 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
         return songs;
     }
 
+    public List<PlaylistDTO> getPlaylists() {
+        return playlists;
+    }
+
     public GenreDTO getGenre() {
         return genre;
     }
@@ -109,11 +120,19 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
         this.album = album;
     }
 
-    public ArtistDTO getArtis() {
-        return artis;
+    public ArtistDTO getArtist() {
+        return artist;
     }
 
-    public void setArtis(ArtistDTO artis) {
-        this.artis = artis;
+    public void setArtis(ArtistDTO artist) {
+        this.artist = artist;
+    }
+
+    public PlaylistDTO getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(PlaylistDTO playlist) {
+        this.playlist = playlist;
     }
 }

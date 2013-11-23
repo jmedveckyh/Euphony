@@ -21,47 +21,21 @@ import net.sourceforge.stripes.validation.ValidationErrors;
  *
  * @author Tomas Smetanka
  */
-@UrlBinding("/")
+@UrlBinding("/playlist/{playlist.id}")
 public class PlaylistActionBean extends BaseActionBean implements ValidationErrorHandler {
     
     @SpringBean
     protected PlaylistService playlistService;
     
-    private PlaylistDTO playlist;
-    private List<PlaylistDTO> playlists;
-    
-    
-    @DefaultHandler
-    public Resolution explore() {
-        //log.debug("list()");
-        playlists = playlistService.getAll();
-        return new ForwardResolution("/index.jsp");
-    }
-
-    public List<PlaylistDTO> getPlaylists() {
-        return playlists;
-    }
-
-    //--- part for adding ----
     @ValidateNestedProperties(value = {
         @Validate(on = {"add", "save"}, field = "name", required = true)
     })
-    public Resolution add() {
-//        log.debug("add() genre={}", genre);
-        playlistService.create(playlist);
-//        getContext().getMessages().add(new LocalizableMessage("genre.add.message",escapeHTML(genre.getName())));
-        return new RedirectResolution(this.getClass(), "/");
-    }
+    private PlaylistDTO playlist;
     
-    public Resolution cancel() {
-//        log.debug("cancel() genre={}", genre);
-        return new RedirectResolution(this.getClass(), "/");
-    }
+    private List<PlaylistDTO> playlists;
 
-    @Override
-    public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
-        playlists = playlistService.getAll();
-        return null;
+    public List<PlaylistDTO> getPlaylists() {
+        return playlists;
     }
 
     public PlaylistDTO getPlaylist() {
@@ -71,6 +45,34 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
     public void setPlaylist(PlaylistDTO playlist) {
         this.playlist = playlist;
     }
+
+    
+    //--- displaying one playlist ----
+    @DefaultHandler
+    public Resolution show() {
+        playlists = playlistService.getAll();
+        return new ForwardResolution("/playlist/id.jsp");
+    }
+    
+    //--- part for adding ----
+   
+    public Resolution add() {
+//        log.debug("add() genre={}", genre);
+        playlistService.create(playlist);
+//        getContext().getMessages().add(new LocalizableMessage("genre.add.message",escapeHTML(genre.getName())));
+        return new RedirectResolution(this.getClass(), "/explore");
+    }
+    
+    public Resolution cancel() {
+//        log.debug("cancel() genre={}", genre);
+        return new RedirectResolution(this.getClass(), "/explore");
+    }
+
+    @Override
+    public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
+        playlists = playlistService.getAll();
+        return null;
+    }
     
     //--- part for deleting a genre ----
     public Resolution delete() {
@@ -79,11 +81,11 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
         playlist = playlistService.getById(playlist.getId());
         playlistService.delete(playlist);
         //getContext().getMessages().add(new LocalizableMessage("genre.delete.message", escapeHTML(genre.getTitle()), escapeHTML(genre.getAuthor())));
-        return new RedirectResolution(this.getClass(), "/");
+        return new RedirectResolution(this.getClass(), "/explore");
     }
 
     //--- part for editing a genre ----
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"save", "show"})
     public void loadPlaylistFromDatabase() {
         String ids = getContext().getRequest().getParameter("playlist.id");
         if (ids == null) {
@@ -92,14 +94,9 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
         playlist = playlistService.getById(Long.parseLong(ids));
     }
 
-    public Resolution edit() {
-        //log.debug("edit() genre={}", genre);
-        return new ForwardResolution("/playlist/edit.jsp");
-    }
-
     public Resolution save() {
         //log.debug("save() genre={}", genre);
         playlistService.update(playlist);
-        return new RedirectResolution(this.getClass(), "/");
+        return new RedirectResolution(this.getClass(), "/playlist/id.jsp");
     }
 }

@@ -31,7 +31,7 @@
     </tr>
     <tr>
         <th><s:label for="b3" name="${comment}"/></th>
-        <td><s:text id="b3" name="album.comment" size="24"/></td>
+        <td><s:textarea id="b3" name="album.comment"/></td>
     </tr>
     <tr>
         <th><s:label for="b4" name="${releaseDate}"/></th>

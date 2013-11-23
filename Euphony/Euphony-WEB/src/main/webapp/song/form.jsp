@@ -44,7 +44,7 @@
     </tr>
     <tr>
         <th><s:label for="b4" name="${comment}"/></th>
-        <td><s:text id="b4" name="song.comment"/></td>
+        <td><s:textarea id="b4" name="song.comment"/></td>
     </tr>
     <tr>
         <th><s:label for="b5" name="${genre}"/></th>

@@ -1,7 +1,9 @@
 package com.musiclibrary.euphonyweb;
 
 import com.musiclibrary.euphonyapi.dto.ArtistDTO;
+import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.services.ArtistService;
+import com.musiclibrary.euphonyapi.services.PlaylistService;
 import java.util.List;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -28,6 +30,23 @@ public class ArtistActionBean extends BaseActionBean implements ValidationErrorH
     @SpringBean
     protected ArtistService artistService;
     
+    @SpringBean
+    protected PlaylistService playlistService;
+    private List<PlaylistDTO> playlists;
+    private PlaylistDTO playlist;
+
+    public List<PlaylistDTO> getPlaylists() {
+        return playlists;
+    }
+
+    public PlaylistDTO getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(PlaylistDTO playlist) {
+        this.playlist = playlist;
+    }
+    
     
     //--- part for showing a list of artists ----
     private List<ArtistDTO> artists;
@@ -37,6 +56,7 @@ public class ArtistActionBean extends BaseActionBean implements ValidationErrorH
     public Resolution list() {
         //log.debug("list()");
         artists = artistService.getAll();
+        playlists = playlistService.getAll();
         return new ForwardResolution("/artist/list.jsp");
     }
 

@@ -1,12 +1,13 @@
 package com.musiclibrary.euphonyweb;
 
 import com.musiclibrary.euphonyapi.dto.GenreDTO;
+import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.services.GenreService;
+import com.musiclibrary.euphonyapi.services.PlaylistService;
 import java.util.List;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.LocalizableMessage;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
@@ -28,6 +29,23 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
     @SpringBean
     protected GenreService genreService;
     
+    @SpringBean
+    protected PlaylistService playlistService;
+    private List<PlaylistDTO> playlists;
+    private PlaylistDTO playlist;
+
+    public List<PlaylistDTO> getPlaylists() {
+        return playlists;
+    }
+
+    public PlaylistDTO getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(PlaylistDTO playlist) {
+        this.playlist = playlist;
+    }
+    
     
     //--- part for showing a list of genres ----
     private List<GenreDTO> genres;
@@ -37,6 +55,7 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
     public Resolution list() {
         //log.debug("list()");
         genres = genreService.getAll();
+        playlists = playlistService.getAll();
         return new ForwardResolution("/genre/list.jsp");
     }
 

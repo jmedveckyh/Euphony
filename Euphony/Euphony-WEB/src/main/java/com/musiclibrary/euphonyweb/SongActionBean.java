@@ -1,18 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.musiclibrary.euphonyweb;
 
 import com.musiclibrary.euphonyapi.dto.AlbumDTO;
 import com.musiclibrary.euphonyapi.dto.ArtistDTO;
 import com.musiclibrary.euphonyapi.dto.GenreDTO;
+import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
 import com.musiclibrary.euphonyapi.services.AlbumService;
 import com.musiclibrary.euphonyapi.services.ArtistService;
 import com.musiclibrary.euphonyapi.services.GenreService;
+import com.musiclibrary.euphonyapi.services.PlaylistService;
 import com.musiclibrary.euphonyapi.services.SongService;
-import java.util.ArrayList;
 import java.util.List;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.controller.LifecycleStage;
@@ -21,7 +18,6 @@ import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationErrorHandler;
 import net.sourceforge.stripes.validation.ValidationErrors;
-import org.joda.time.DateTime;
 
 /**
  *
@@ -63,12 +59,30 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
     @Validate(on = {"add", "save"}, required = true)
     private Long artist;
 
+    @SpringBean
+    protected PlaylistService playlistService;
+    private List<PlaylistDTO> playlists;
+    private PlaylistDTO playlist;
+
+    public List<PlaylistDTO> getPlaylists() {
+        return playlists;
+    }
+
+    public PlaylistDTO getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(PlaylistDTO playlist) {
+        this.playlist = playlist;
+    }
+    
     @DefaultHandler
     public Resolution list() {
         songs = songService.getAll();
         albums = albumService.getAllAlbums();
         genres = genreService.getAll();
         artists = artistService.getAll();
+        playlists = playlistService.getAll();
         return new ForwardResolution("/song/list.jsp");
     }
 

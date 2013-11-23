@@ -7,14 +7,12 @@ package com.musiclibrary.euphonyweb;
 import com.musiclibrary.euphonyapi.dto.AlbumDTO;
 import com.musiclibrary.euphonyapi.dto.ArtistDTO;
 import com.musiclibrary.euphonyapi.dto.GenreDTO;
+import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
 import com.musiclibrary.euphonyapi.services.AlbumService;
+import com.musiclibrary.euphonyapi.services.PlaylistService;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -23,13 +21,10 @@ import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
-import net.sourceforge.stripes.validation.DateTypeConverter;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
-import net.sourceforge.stripes.validation.ValidationError;
 import net.sourceforge.stripes.validation.ValidationErrorHandler;
 import net.sourceforge.stripes.validation.ValidationErrors;
-import org.hibernate.exception.ConstraintViolationException;
 import org.joda.time.DateTime;
 
 /**
@@ -41,6 +36,23 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
 
     @SpringBean
     protected AlbumService albumService;
+    
+    @SpringBean
+    protected PlaylistService playlistService;
+    private List<PlaylistDTO> playlists;
+    private PlaylistDTO playlist;
+
+    public List<PlaylistDTO> getPlaylists() {
+        return playlists;
+    }
+
+    public PlaylistDTO getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(PlaylistDTO playlist) {
+        this.playlist = playlist;
+    }
     
     private List<AlbumDTO> albums;
     
@@ -55,6 +67,7 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     @DefaultHandler
     public Resolution list() {
         albums = albumService.getAllAlbums();
+        playlists = playlistService.getAll();
         return new ForwardResolution("/album/list.jsp");
     }
 
