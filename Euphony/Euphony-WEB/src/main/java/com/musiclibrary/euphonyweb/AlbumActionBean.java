@@ -5,7 +5,11 @@
 package com.musiclibrary.euphonyweb;
 
 import com.musiclibrary.euphonyapi.dto.AlbumDTO;
+import com.musiclibrary.euphonyapi.dto.ArtistDTO;
+import com.musiclibrary.euphonyapi.dto.GenreDTO;
+import com.musiclibrary.euphonyapi.dto.SongDTO;
 import com.musiclibrary.euphonyapi.services.AlbumService;
+import java.util.ArrayList;
 import java.util.List;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -19,6 +23,7 @@ import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationErrorHandler;
 import net.sourceforge.stripes.validation.ValidationErrors;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -49,6 +54,11 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     }
 
     public Resolution add() {
+        album.setArtists(new ArrayList<ArtistDTO>());
+        album.setGenres(new ArrayList<GenreDTO>());
+        album.setSongs(new ArrayList<SongDTO>());
+        //NACITAVANIE CASU
+        album.setReleaseDate(DateTime.now());
         albumService.create(album);
         //getContext().getMessages().add(new LocalizableMessage("book.add.message",escapeHTML(book.getTitle()),escapeHTML(book.getAuthor())));
         return new RedirectResolution(this.getClass(), "list");
@@ -88,6 +98,7 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     }
 
     public Resolution save() {
+        album.setReleaseDate(DateTime.now());
         albumService.update(album);
         return new RedirectResolution(this.getClass(), "list");
     }

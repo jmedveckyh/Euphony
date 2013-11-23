@@ -20,7 +20,7 @@
                 <th></th>
                 <th></th>
             </tr>
-            <c:forEach items="${actionBean.albums}" var="song">
+            <c:forEach items="${actionBean.albums}" var="album">
                 <tr>
                     <td><c:out value="${album.id}"/></td>
                     <td><c:out value="${album.title}"/></td>
