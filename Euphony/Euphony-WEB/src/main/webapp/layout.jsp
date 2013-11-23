@@ -15,9 +15,9 @@
     <html lang="${pageContext.request.locale}">
         <head>
             <title><f:message key="${titlekey}"/></title>
-            <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/style.css"/>
+            <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css"/>
             <link rel="icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
-            <script src="${pageContext.request.contextPath}/global.js" type="text/javascript"></script>
+            <script src="${pageContext.request.contextPath}/js/global.js" type="text/javascript"></script>
             <s:layout-component name="header"/>
         </head>
         <body>
