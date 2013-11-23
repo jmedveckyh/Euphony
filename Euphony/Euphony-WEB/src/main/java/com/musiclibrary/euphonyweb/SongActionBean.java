@@ -93,11 +93,9 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
     })
 
     public Resolution add() {
-        /*
         song.setAlbum(albumService.getById(album));
         song.setArtist(artistService.getById(artist));
         song.setGenre(genreService.getById(genre));
-        */
         
         songService.create(song);
         //getContext().getMessages().add(new LocalizableMessage("book.add.message",escapeHTML(book.getTitle()),escapeHTML(book.getAuthor())));
