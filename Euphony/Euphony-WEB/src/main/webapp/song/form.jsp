@@ -11,9 +11,6 @@
 <fmt:message key='song.genre' var="genre"/>
 <fmt:message key='song.album' var="album"/>
 <fmt:message key='song.artist' var="artist"/>
-<fmt:message key='song.genreChoose' var="genreChoose"/>
-<fmt:message key='song.albumChoose' var="albumChoose"/>
-<fmt:message key='song.artistChoose' var="artistChoose"/>
 
 <table>
     <tr>
