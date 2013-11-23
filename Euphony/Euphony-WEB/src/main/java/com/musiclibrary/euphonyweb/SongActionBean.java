@@ -44,7 +44,13 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
     private List<GenreDTO> genres;
     private List<ArtistDTO> artists;
     
+    @ValidateNestedProperties(value = {
+            @Validate(on = {"add", "save"}, field = "title", required = true),
+            @Validate(on = {"add", "save"}, field = "bitrate", required = true, minvalue = 1, maxvalue=2000),
+            @Validate(on = {"add", "save"}, field = "trackNumber", required = true, minvalue = 1)
+    })
     private SongDTO song;
+    
     private long album;
     private long genre;
     private long artist;
@@ -85,12 +91,6 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
     public void setGenre(long genre){
         this.genre=genre;
     }
-
-    @ValidateNestedProperties(value = {
-            @Validate(on = {"add", "save"}, field = "title", required = true),
-            @Validate(on = {"add", "save"}, field = "bitrate", required = true, minvalue = 1, maxvalue=2000),
-            @Validate(on = {"add", "save"}, field = "trackNumber", required = true, minvalue = 1)
-    })
 
     public Resolution add() {
         song.setAlbum(albumService.getById(album));
