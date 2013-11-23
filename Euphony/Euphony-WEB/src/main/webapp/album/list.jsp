@@ -26,7 +26,7 @@
                     <td><c:out value="${album.title}"/></td>
                     <td><c:out value="${album.cover}"/></td>
                     <td><c:out value="${album.comment}"/></td>
-                    <td><c:out value="${album.releaseDate}"/></td>
+                    <td><c:out value="${album.releaseDate.dayOfMonth}.${album.releaseDate.monthOfYear}.${album.releaseDate.year}"/></td>
                     <td>
                         <s:link beanclass="com.musiclibrary.euphonyweb.AlbumActionBean" event="edit"><s:param name="album.id" value="${album.id}"/><f:message key="album.list.edit"/></s:link>
                         </td>

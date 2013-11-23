@@ -17,9 +17,23 @@
         <th><s:label for="b1" name="${title}"/></th>
         <td><s:text id="b1" name="song.title"/></td>
     </tr>
-        <tr>
+    <tr>
         <th><s:label for="b2" name="${bitrate}"/></th>
-        <td><s:text id="b2" name="song.bitrate"/></td>
+        <td>
+            <s:select name="song.bitrate">  
+                <s:option label="" value=""/>
+                <s:option label="32 kbps" value="32"/>
+                <s:option label="64 kbps" value="64"/>
+                <s:option label="96 kbps" value="96"/>
+                <s:option label="128 kbps" value="128"/>
+                <s:option label="160 kbps" value="160"/>
+                <s:option label="192 kbps" value="192"/> 
+                <s:option label="256 kbps" value="256"/>
+                <s:option label="320 kbps" value="320"/>
+                <s:option label="Lossless" value="2500"/>
+            </s:select>  
+        </td>
+
     </tr>
     <tr>
         <th><s:label for="b3" name="${trackNumber}"/></th>
@@ -33,7 +47,8 @@
         <th><s:label for="b5" name="${genre}"/></th>
         <td>
             <s:select id="b5" name="genre">
-            <s:options-collection collection="${actionBean.genres}" label="name" value="id"/>
+                <s:option label="" value=""/>
+                <s:options-collection collection="${actionBean.genres}" label="name" value="id"/>
             </s:select>
         </td>
     </tr>
@@ -41,7 +56,8 @@
         <th><s:label for="b6" name="${album}"/></th>
         <td>
             <s:select id="b6" name="album">
-            <s:options-collection collection="${actionBean.albums}" label="title" value="id"/>
+                <s:option label="" value=""/>
+                <s:options-collection collection="${actionBean.albums}" label="title" value="id"/>
             </s:select>
         </td>
     </tr>
@@ -49,7 +65,8 @@
         <th><s:label for="b7" name="${artist}"/></th>
         <td>
             <s:select id="b7" name="artist">
-            <s:options-collection collection="${actionBean.artists}" label="name" value="id"/>
+                <s:option label="" value=""/>
+                <s:options-collection collection="${actionBean.artists}" label="name" value="id"/>
             </s:select>
         </td>
     </tr>

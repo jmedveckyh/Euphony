@@ -32,10 +32,13 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
 
     @SpringBean //Spring can inject even to private and protected fields
     protected SongService songService;
+    
     @SpringBean
     protected AlbumService albumService;
+    
     @SpringBean
     protected GenreService genreService;
+    
     @SpringBean
     protected ArtistService artistService;
     
@@ -46,17 +49,19 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
     
     @ValidateNestedProperties(value = {
             @Validate(on = {"add", "save"}, field = "title", required = true),
-            @Validate(on = {"add", "save"}, field = "bitrate", required = true, minvalue = 1, maxvalue=2000),
-            @Validate(on = {"add", "save"}, field = "trackNumber", required = true, minvalue = 1),
-            @Validate(on = {"add", "save"}, field = "genre", required = true),
-            @Validate(on = {"add", "save"}, field = "album", required = true),
-            @Validate(on = {"add", "save"}, field = "artist", required = true)
+            @Validate(on = {"add", "save"}, field = "bitrate", required = true, minvalue = 1, maxvalue=2500),
+            @Validate(on = {"add", "save"}, field = "trackNumber", required = true, minvalue = 1)
     })
     private SongDTO song;
     
-    private long album;
-    private long genre;
-    private long artist;
+    @Validate(on = {"add", "save"}, required = true)
+    private Long album;
+    
+    @Validate(on = {"add", "save"}, required = true)
+    private Long genre;
+    
+    @Validate(on = {"add", "save"}, required = true)
+    private Long artist;
 
     @DefaultHandler
     public Resolution list() {
