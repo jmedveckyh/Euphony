@@ -18,6 +18,16 @@ body {
 }
 
 /**** LEFT PANEL ****/
+.home { 
+    width: 268px;
+    height: 70px;
+    position: absolute;
+    opacity: 100;
+    margin: 30px 0px 0px 10px;
+    cursor: pointer;
+    z-index: 5;
+}
+
 .navigation { 
     float: left;
     width: 300px;

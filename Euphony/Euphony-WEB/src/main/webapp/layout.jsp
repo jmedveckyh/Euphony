@@ -20,6 +20,7 @@
             <s:layout-component name="header"/>
         </head>
         <body>
+            <div class="home" onclick="window.location.href='${pageContext.request.contextPath}'"></div>
             <div class="navigation">
                 <div class="logo"><h1>Euphony</h1></div>
                 <div class="cl"></div>
