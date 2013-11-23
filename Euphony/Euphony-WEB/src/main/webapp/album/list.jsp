@@ -4,7 +4,7 @@
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
 
-<s:layout-render name="/layout.jsp" titlekey="song.list.title">
+<s:layout-render name="/layout.jsp" titlekey="album.list.title">
     <s:layout-component name="body">
         <s:useActionBean beanclass="com.musiclibrary.euphonyweb.AlbumActionBean" var="actionBean"/>
 

@@ -28,7 +28,7 @@ public class ArtistActionBean extends BaseActionBean implements ValidationErrorH
     @SpringBean
     protected ArtistService artistService;
     
-    private ArtistDTO artist;
+    
     //--- part for showing a list of artists ----
     private List<ArtistDTO> artists;
     
@@ -48,6 +48,8 @@ public class ArtistActionBean extends BaseActionBean implements ValidationErrorH
     @ValidateNestedProperties(value = {
         @Validate(on = {"add", "save"}, field = "name", required = true)
     })
+    private ArtistDTO artist;
+    
     public Resolution add() {
 //        log.debug("add() artist={}", artist);
         artistService.create(artist);

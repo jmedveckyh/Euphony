@@ -28,7 +28,7 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
     @SpringBean
     protected GenreService genreService;
     
-    private GenreDTO genre;
+    
     //--- part for showing a list of genres ----
     private List<GenreDTO> genres;
     
@@ -48,6 +48,8 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
     @ValidateNestedProperties(value = {
         @Validate(on = {"add", "save"}, field = "name", required = true)
     })
+    private GenreDTO genre;
+    
     public Resolution add() {
 //        log.debug("add() genre={}", genre);
         genreService.create(genre);

@@ -47,7 +47,10 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
     @ValidateNestedProperties(value = {
             @Validate(on = {"add", "save"}, field = "title", required = true),
             @Validate(on = {"add", "save"}, field = "bitrate", required = true, minvalue = 1, maxvalue=2000),
-            @Validate(on = {"add", "save"}, field = "trackNumber", required = true, minvalue = 1)
+            @Validate(on = {"add", "save"}, field = "trackNumber", required = true, minvalue = 1),
+            @Validate(on = {"add", "save"}, field = "genre", required = true),
+            @Validate(on = {"add", "save"}, field = "album", required = true),
+            @Validate(on = {"add", "save"}, field = "artist", required = true)
     })
     private SongDTO song;
     
