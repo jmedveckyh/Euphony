@@ -14,12 +14,12 @@
         <table class="basic">
             <tr>
                 <th><f:message key="song.id"/></th>
-                <th><f:message key="song.name"/></th>
+                <th><f:message key="song.title"/></th>
             </tr>
             <c:forEach items="${actionBean.songs}" var="song">
                 <tr>
                     <td><c:out value="${song.id}"/></td>
-                    <td><c:out value="${song.name}"/></td>
+                    <td><c:out value="${song.title}"/></td>
                 </tr>
             </c:forEach>
         </table>

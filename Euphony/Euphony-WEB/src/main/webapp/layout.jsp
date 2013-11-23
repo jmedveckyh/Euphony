@@ -9,7 +9,6 @@
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<s:useActionBean beanclass="com.musiclibrary.euphonyweb.PlaylistActionBean" var="playlistActionBean"/>
 <s:layout-definition>
     <!DOCTYPE html>
     <html lang="${pageContext.request.locale}">
@@ -17,6 +16,7 @@
             <title><f:message key="${titlekey}"/></title>
             <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/style.css"" />
             <link rel="icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon">
+            <script src="${pageContext.request.contextPath}/global.js" type="text/javascript"></script>
             <s:layout-component name="header"/>
         </head>
         <body>
@@ -30,21 +30,17 @@
                             <td><input type="submit" value=""></td>
                         </tr>
                     </table>
-
                 </div>
                 <div class="menu">
                     <ul>
                         <li><a href="${pageContext.request.contextPath}"><span><f:message key="menu.explore"/></span></a></li>
-                        <li><s:link beanclass="com.musiclibrary.euphonyweb.PlaylistActionBean" event="add"><span><f:message key="menu.newplaylist"/></span></s:link></li>
+                        <li><a href="javascript:void(0);" onclick="javascript:showDiv();"><span><f:message key="menu.newplaylist"/></span></a></li>
+                        <s:form beanclass="com.musiclibrary.euphonyweb.PlaylistActionBean">
+                            <li id="quickAddPlaylist"><s:text class="quickAddPlaylist" name="playlist.name"/><s:submit name="add" class="quickAddPlaylistSubmit"><f:message key="menu.newplaylist.add"/></s:submit></li>
+                        </s:form>
                     </ul>
-                    <h2><f:message key="menu.playlists"/></h2>
+                    <%@include file="playlists.jsp"%>
                     <hr>
-                    <ul>
-                        <c:forEach items="${playlistActionBean.playlists}" var="playlist">
-                            <li>
-                                <s:link beanclass="com.musiclibrary.euphonyweb.PlaylistActionBean" event="edit"><s:param name="playlist.id" value="${playlist.id}"/><span>${playlist.name}</span></s:link>
-                            </li>
-                        </c:forEach> 
                 </div>
             </div>
             <div class="userPanel">
@@ -57,7 +53,7 @@
                                 <ul>
                                     <li><s:link beanclass="com.musiclibrary.euphonyweb.GenreActionBean"><f:message key="menu.admin.newgenre"/></s:link></li>
                                     <li><s:link beanclass="com.musiclibrary.euphonyweb.ArtistActionBean"><f:message key="menu.admin.newartist"/></s:link></li>
-                                    <li><s:link beanclass="com.musiclibrary.euphonyweb.AlbumActionBean"><f:message key="menu.admin.newalbum"/></s:link></li>
+                                    <li><%--<s:link beanclass="com.musiclibrary.euphonyweb.AlbumActionBean">--%><f:message key="menu.admin.newalbum"/><%--</s:link>--%></li>
                                     <li><s:link beanclass="com.musiclibrary.euphonyweb.SongActionBean"><f:message key="menu.admin.newsong"/></s:link></li>
                                 </ul>
                             </div>

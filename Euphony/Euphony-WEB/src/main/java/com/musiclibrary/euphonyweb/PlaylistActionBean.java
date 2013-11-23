@@ -21,7 +21,7 @@ import net.sourceforge.stripes.validation.ValidationErrors;
  *
  * @author Tomas Smetanka
  */
-@UrlBinding("/{$event}/{playlist.id}")
+@UrlBinding("/")
 public class PlaylistActionBean extends BaseActionBean implements ValidationErrorHandler {
     
     @SpringBean
@@ -32,10 +32,10 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
     
     
     @DefaultHandler
-    public Resolution list() {
+    public Resolution explore() {
         //log.debug("list()");
         playlists = playlistService.getAll();
-        return new ForwardResolution("/layout.jsp");
+        return new ForwardResolution("/index.jsp");
     }
 
     public List<PlaylistDTO> getPlaylists() {
@@ -50,12 +50,12 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
 //        log.debug("add() genre={}", genre);
         playlistService.create(playlist);
 //        getContext().getMessages().add(new LocalizableMessage("genre.add.message",escapeHTML(genre.getName())));
-        return new RedirectResolution(this.getClass(), "list");
+        return new RedirectResolution(this.getClass(), "/");
     }
     
     public Resolution cancel() {
 //        log.debug("cancel() genre={}", genre);
-        return new RedirectResolution(this.getClass(), "list");
+        return new RedirectResolution(this.getClass(), "/");
     }
 
     @Override
@@ -79,7 +79,7 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
         playlist = playlistService.getById(playlist.getId());
         playlistService.delete(playlist);
         //getContext().getMessages().add(new LocalizableMessage("genre.delete.message", escapeHTML(genre.getTitle()), escapeHTML(genre.getAuthor())));
-        return new RedirectResolution(this.getClass(), "list");
+        return new RedirectResolution(this.getClass(), "/");
     }
 
     //--- part for editing a genre ----
@@ -100,6 +100,6 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
     public Resolution save() {
         //log.debug("save() genre={}", genre);
         playlistService.update(playlist);
-        return new RedirectResolution(this.getClass(), "list");
+        return new RedirectResolution(this.getClass(), "/");
     }
 }
