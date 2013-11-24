@@ -26,7 +26,10 @@
     </tr>
     <tr>
         <th><s:label for="b2" name="${cover}"/></th>
-        <td><s:text id="b2" name="album.cover" size="24"/></td>
+        <td><c:if test="${not empty edit.album.cover}">
+            <img src="${pageContext.request.contextPath}/upload/<c:out value="${edit.album.cover}"/>" width="100" height="100"/>
+            </c:if>
+            <s:file id="b2" name="cover"/></td>
     </tr>
     <tr>
         <th><s:label for="b3" name="${comment}"/></th>

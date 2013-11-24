@@ -11,10 +11,13 @@ import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
 import com.musiclibrary.euphonyapi.services.AlbumService;
 import com.musiclibrary.euphonyapi.services.PlaylistService;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
+import net.sourceforge.stripes.action.FileBean;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.HandlesEvent;
 import net.sourceforge.stripes.action.RedirectResolution;
@@ -53,6 +56,33 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     public PlaylistDTO getPlaylist() {
         return playlist;
     }
+    
+    private FileBean cover;
+    
+    public FileBean getCover(){
+        return cover;
+    }
+    
+    public void setCover(FileBean cover){
+        this.cover=cover;
+    }
+    
+        private void handleFileUpload() throws IOException{
+        if(cover==null) return;
+        String url = getContext().getServletContext().getRealPath("/upload/"+cover.getFileName());
+        File file = new File(url);
+        if(file.exists()) throw new IOException("File exists");
+        cover.save(file);
+        album.setCover(cover.getFileName());
+    }
+    
+    private void handleFileRemoval(){
+        if(album.getCover()!=null){
+            String url = getContext().getServletContext().getRealPath("/upload/"+album.getCover());
+            File file = new File(url);
+            file.delete();
+        }
+    }
 
     public void setPlaylist(PlaylistDTO playlist) {
         this.playlist = playlist;
@@ -83,12 +113,13 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
         return albums;
     }
 
-    public Resolution add() {
+    public Resolution add() throws IOException {
         album.setArtists(new ArrayList<ArtistDTO>());
         album.setGenres(new ArrayList<GenreDTO>());
         album.setSongs(new ArrayList<SongDTO>());
         //NACITAVANIE CASU
         album.setReleaseDate(new DateTime(Integer.parseInt(releaseDate.substring(6)), Integer.parseInt(releaseDate.substring(3, 5)), Integer.parseInt(releaseDate.substring(0, 2)), 0, 0));
+        handleFileUpload();
         albumService.create(album);
         //getContext().getMessages().add(new LocalizableMessage("book.add.message",escapeHTML(book.getTitle()),escapeHTML(book.getAuthor())));
         return new RedirectResolution(this.getClass(), "list");
@@ -121,6 +152,7 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
 
     public Resolution delete() throws Exception {
         album = albumService.getById(album.getId());
+        handleFileRemoval();
         albumService.delete(album);
         return new RedirectResolution(this.getClass(), "list");
     }
@@ -140,8 +172,12 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
         return new ForwardResolution("/album/edit.jsp");
     }
 
-    public Resolution save() {
+    public Resolution save() throws IOException {
         album.setReleaseDate(new DateTime(Integer.parseInt(releaseDate.substring(6)), Integer.parseInt(releaseDate.substring(3, 5)), Integer.parseInt(releaseDate.substring(0, 2)), 0, 0));
+        if(cover!=null && cover.getFileName()!=album.getCover()){
+            handleFileRemoval();
+        }
+        handleFileUpload();
         albumService.update(album);
         return new RedirectResolution(this.getClass(), "list");
     }

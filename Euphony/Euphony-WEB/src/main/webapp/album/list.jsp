@@ -24,7 +24,15 @@
                 <tr>
                     <td><c:out value="${album.id}"/></td>
                     <td><c:out value="${album.title}"/></td>
-                    <td><c:out value="${album.cover}"/></td>
+                    <td><c:choose>
+                        <c:when test="${not empty album.cover}">
+                            <img src="${pageContext.request.contextPath}/upload/<c:out value="${album.cover}"/>" width="100" height="100"/>
+                        </c:when>
+                        <c:otherwise>
+                            <img src="${pageContext.request.contextPath}/upload/nocover.png" width="100" height="100"/>
+                        </c:otherwise>
+                        </c:choose>
+                    </td>
                     <td><c:out value="${album.comment}"/></td>
                     <td><c:out value="${album.releaseDate.dayOfMonth}.${album.releaseDate.monthOfYear}.${album.releaseDate.year}"/></td>
                     <td>
