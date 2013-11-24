@@ -5,16 +5,19 @@ import com.musiclibrary.euphonyapi.dto.ArtistDTO;
 import com.musiclibrary.euphonyapi.dto.GenreDTO;
 import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
+import com.musiclibrary.euphonyapi.facade.MusicFacade;
 import com.musiclibrary.euphonyapi.services.AlbumService;
 import com.musiclibrary.euphonyapi.services.ArtistService;
 import com.musiclibrary.euphonyapi.services.GenreService;
 import com.musiclibrary.euphonyapi.services.PlaylistService;
 import com.musiclibrary.euphonyapi.services.SongService;
 import java.util.List;
+import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
+import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import net.sourceforge.stripes.validation.ValidationErrorHandler;
 import net.sourceforge.stripes.validation.ValidationErrors;
@@ -27,6 +30,8 @@ import net.sourceforge.stripes.validation.ValidationErrors;
 @UrlBinding("/explore/{$event}")
 public class ExploreActionBean extends BaseActionBean implements ValidationErrorHandler {
 
+    @SpringBean
+    protected MusicFacade facade;
     @SpringBean
     protected SongService songService;
     protected GenreService genreService;
@@ -54,6 +59,11 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
         playlists = playlistService.getAll();
         return new ForwardResolution("/explore/songs.jsp");
     }
+    
+    public Resolution song2playlist() {
+        facade.addSongToPlaylist(song, playlist);
+        return new ForwardResolution("/explore/songs.jsp");
+    }
 
     public Resolution albums() {
         //log.debug("list()");
@@ -73,6 +83,17 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
         songs = songService.getAll();
         return null;
+    }
+    
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"song2playlist"})
+    public void loadFromDatabase() {
+        String idPlaylist = getContext().getRequest().getParameter("playlist.id");
+        String idSong = getContext().getRequest().getParameter("song.id");
+        if (idPlaylist == null || idSong == null) {
+            return;
+        }
+        playlist = playlistService.getById(Long.parseLong(idPlaylist));
+        song = songService.getById(Long.parseLong(idSong));
     }
 
     //--- getters and setters ----
