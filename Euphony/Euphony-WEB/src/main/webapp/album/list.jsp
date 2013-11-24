@@ -39,7 +39,7 @@
                 </tr>
             </c:forEach>
         </table>
-            
+        <s:errors/>
         <s:form beanclass="com.musiclibrary.euphonyweb.AlbumActionBean">
             <fieldset><legend><f:message key="album.list.newalbum"/></legend>
                 <%@include file="form.jsp"%>

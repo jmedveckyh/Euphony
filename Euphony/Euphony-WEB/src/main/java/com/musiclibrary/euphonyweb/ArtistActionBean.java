@@ -85,6 +85,7 @@ public class ArtistActionBean extends BaseActionBean implements ValidationErrorH
     @Override
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
         artists = artistService.getAll();
+        playlists = playlistService.getAll();
         return null;
     }
 

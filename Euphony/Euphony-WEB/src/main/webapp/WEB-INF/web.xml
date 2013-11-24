@@ -47,6 +47,10 @@
             <param-value>net.sourceforge.stripes.integration.spring.SpringInterceptor</param-value>
             <description>Stripes injects Spring beans</description>
         </init-param>
+        <init-param>
+            <param-name>ExceptionHandler.Class</param-name>
+            <param-value>com.musiclibrary.euphonyweb.DatabaseExceptionHandler</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>StripesFilter</filter-name>

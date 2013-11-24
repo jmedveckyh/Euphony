@@ -16,16 +16,21 @@ import java.util.List;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
+import net.sourceforge.stripes.action.HandlesEvent;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
+import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationErrorHandler;
 import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMethod;
+import net.sourceforge.stripes.validation.ValidationState;
 import org.joda.time.DateTime;
+import org.springframework.dao.DataAccessException;
 
 /**
  *
@@ -36,7 +41,6 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
 
     @SpringBean
     protected AlbumService albumService;
-    
     @SpringBean
     protected PlaylistService playlistService;
     private List<PlaylistDTO> playlists;
@@ -53,9 +57,7 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     public void setPlaylist(PlaylistDTO playlist) {
         this.playlist = playlist;
     }
-    
     private List<AlbumDTO> albums;
-    
     @ValidateNestedProperties(value = {
         @Validate(on = {"add", "save"}, field = "title", required = true)
     })
@@ -63,9 +65,15 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     
     @Validate(on = {"add", "save"}, required = true)
     private String releaseDate;
-
+    
     @DefaultHandler
     public Resolution list() {
+        albums = albumService.getAllAlbums();
+        playlists = playlistService.getAll();
+        return new ForwardResolution("/album/list.jsp");
+    }
+    
+    public Resolution deleted() {
         albums = albumService.getAllAlbums();
         playlists = playlistService.getAll();
         return new ForwardResolution("/album/list.jsp");
@@ -90,6 +98,7 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
         //fill up the data for the table if validation errors occured
         albums = albumService.getAllAlbums();
+        playlists = playlistService.getAll();
         //return null to let the event handling continue
         return null;
     }
@@ -110,8 +119,7 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
         this.album = album;
     }
 
-    @Validate
-    public Resolution delete() {
+    public Resolution delete() throws Exception {
         album = albumService.getById(album.getId());
         albumService.delete(album);
         return new RedirectResolution(this.getClass(), "list");
@@ -127,12 +135,19 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     }
 
     public Resolution edit() {
+        albums = albumService.getAllAlbums();
+        playlists = playlistService.getAll();
         return new ForwardResolution("/album/edit.jsp");
     }
 
     public Resolution save() {
         album.setReleaseDate(new DateTime(Integer.parseInt(releaseDate.substring(6)), Integer.parseInt(releaseDate.substring(3, 5)), Integer.parseInt(releaseDate.substring(0, 2)), 0, 0));
         albumService.update(album);
+        return new RedirectResolution(this.getClass(), "list");
+    }
+
+    public Resolution cancel() {
+//        log.debug("cancel() artist={}", artist);
         return new RedirectResolution(this.getClass(), "list");
     }
 }

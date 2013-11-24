@@ -45,7 +45,7 @@
                 </tr>
             </c:forEach>
         </table>
-            
+        <s:errors/>
         <s:form beanclass="com.musiclibrary.euphonyweb.SongActionBean">
             <fieldset><legend><f:message key="song.list.newsong"/></legend>
                 <%@include file="form.jsp"%>

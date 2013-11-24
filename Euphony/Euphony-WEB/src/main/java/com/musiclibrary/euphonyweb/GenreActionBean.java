@@ -84,6 +84,7 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
     @Override
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
         genres = genreService.getAll();
+        playlists = playlistService.getAll();
         return null;
     }
 

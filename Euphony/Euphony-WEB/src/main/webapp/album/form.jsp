@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:bundle basename="StripesResources"/>
-<s:errors/>
 <fmt:message key='album.title' var="title"/>
 <fmt:message key='album.cover' var="cover"/>
 <fmt:message key='album.comment' var="comment"/>

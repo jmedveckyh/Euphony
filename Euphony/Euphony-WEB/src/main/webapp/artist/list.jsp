@@ -33,7 +33,7 @@
                 </tr>
             </c:forEach>
         </table>
-
+        <s:errors/>
         <s:form beanclass="com.musiclibrary.euphonyweb.ArtistActionBean">
             <fieldset><legend><f:message key="artist.list.newartist"/></legend>
                 <%@include file="form.jsp"%>

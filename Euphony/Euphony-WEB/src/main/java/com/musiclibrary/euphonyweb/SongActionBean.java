@@ -132,6 +132,7 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
         albums = albumService.getAllAlbums();
         genres = genreService.getAll();
         artists = artistService.getAll();
+        playlists = playlistService.getAll();
         return null;
     }
 
@@ -168,6 +169,11 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
         song.setArtist(artistService.getById(artist));
         song.setGenre(genreService.getById(genre));
         songService.update(song);
+        return new RedirectResolution(this.getClass(), "list");
+    }
+    
+    public Resolution cancel() {
+//        log.debug("cancel() artist={}", artist);
         return new RedirectResolution(this.getClass(), "list");
     }
 }

@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:bundle basename="StripesResources"/>
-<s:errors/>
 <fmt:message key='song.title' var="title"/>
 <fmt:message key='song.bitrate' var="bitrate"/>
 <fmt:message key='song.trackNumber' var="trackNumber"/>
