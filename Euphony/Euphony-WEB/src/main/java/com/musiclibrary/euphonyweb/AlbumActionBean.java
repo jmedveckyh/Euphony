@@ -25,6 +25,7 @@ import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
+import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
@@ -117,11 +118,9 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
         album.setArtists(new ArrayList<ArtistDTO>());
         album.setGenres(new ArrayList<GenreDTO>());
         album.setSongs(new ArrayList<SongDTO>());
-        //NACITAVANIE CASU
         album.setReleaseDate(new DateTime(Integer.parseInt(releaseDate.substring(6)), Integer.parseInt(releaseDate.substring(3, 5)), Integer.parseInt(releaseDate.substring(0, 2)), 0, 0));
         handleFileUpload();
         albumService.create(album);
-        //getContext().getMessages().add(new LocalizableMessage("book.add.message",escapeHTML(book.getTitle()),escapeHTML(book.getAuthor())));
         return new RedirectResolution(this.getClass(), "list");
     }
 
@@ -185,5 +184,14 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     public Resolution cancel() {
 //        log.debug("cancel() artist={}", artist);
         return new RedirectResolution(this.getClass(), "list");
+    }
+    
+    @ValidationMethod(when=ValidationState.ALWAYS)
+    public void validateCover(ValidationErrors errors){
+        if (cover!=null){
+            if(!(cover.getContentType().equals("image/jpeg") || cover.getContentType().equals("image/png"))){
+                errors.add("cover", new LocalizableError("validation.file"));
+            }
+        }
     }
 }
