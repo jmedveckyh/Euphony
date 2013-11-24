@@ -37,6 +37,7 @@
                     <ul>
                         <li><a href="${pageContext.request.contextPath}"><span><f:message key="menu.explore"/></span></a></li>
                         <li><a href="javascript:void(0);" onclick="javascript:showDiv();"><span><f:message key="menu.newplaylist"/></span></a></li>
+                        <f:message key='playlist.name' var="name"/>
                         <s:form beanclass="com.musiclibrary.euphonyweb.PlaylistActionBean">
                             <li id="quickAddPlaylist">
                                 <s:text class="quickAddPlaylist" name="playlist.name"/>

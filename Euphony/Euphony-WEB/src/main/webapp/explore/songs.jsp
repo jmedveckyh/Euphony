@@ -20,6 +20,13 @@
                 <tr>
                     <td><c:out value="${song.id}"/></td>
                     <td><c:out value="${song.title}"/></td>
+                    <td>
+                        <s:form beanclass="com.musiclibrary.euphonyweb.ExploreActionBean">
+                        <s:select name="playlists">
+                            <s:options-collection collection="${actionBean.playlists}" label="name" value="id"/>
+                        </s:select>
+                        </s:form>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

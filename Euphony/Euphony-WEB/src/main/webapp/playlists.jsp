@@ -6,17 +6,20 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="numberOfPlaylists" scope="session" value="${actionBean.playlists}"/>
 <c:choose>
-    <c:when test='${not empty "${actionBean.playlists}"}'>
+    <c:when test="${not empty numberOfPlaylists}">
         <h2><f:message key="menu.playlists"/></h2>
+        <hr> 
     </c:when>
 </c:choose>
-<hr> 
 <ul>
     <c:forEach items="${actionBean.playlists}" var="playlist">
         <li>
             <s:link beanclass="com.musiclibrary.euphonyweb.PlaylistActionBean" event="show">
-                <s:param name="playlist.id" value="${playlist.id}"/><span>${playlist.name}</span>
+                <f:parseNumber var="i" type="number" value="${playlist.id}"/>
+                <s:param name="playlist.id" value="${i}"/><span>${playlist.name}</span>
             </s:link>
         </li>
     </c:forEach> 
