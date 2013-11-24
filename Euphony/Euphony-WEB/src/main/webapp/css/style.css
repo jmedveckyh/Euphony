@@ -124,11 +124,11 @@ body {
     margin: 15px 27px;
 }
 
-#quickAddPlaylist { 
+#quickAddPlaylist, #quickAddPlaylistEdit { 
     display: none;
 }
 
-.menu .quickAddPlaylist {
+.quickAddPlaylist {
     width: 150px;
     height: 30px;
     line-height: 25px;
@@ -140,7 +140,7 @@ body {
     font-size: 14px;
 }
 
-.menu .quickAddPlaylistSubmit {
+.quickAddPlaylistSubmit {
     height: 35px;
     background-color: #771e87;
     color: #ffffff;

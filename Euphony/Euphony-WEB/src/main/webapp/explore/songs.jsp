@@ -10,7 +10,7 @@
         <%@include file="menuUp.jsp"%>
 
         <p>index a piesne</p>
-
+        <s:errors/>
         <table class="basic">
             <tr>
                 <th><f:message key="song.id"/></th>
@@ -20,6 +20,15 @@
                 <tr>
                     <td><c:out value="${song.id}"/></td>
                     <td><c:out value="${song.title}"/></td>
+                    <td>
+                        <s:form beanclass="com.musiclibrary.euphonyweb.ExploreActionBean">
+                            <s:select name="playlists">
+                                <s:options-collection collection="${actionBean.playlists}" label="name" value="id"/>
+                            </s:select>
+                            <s:hidden name="song.id" value="${song.id}"/>
+                            <s:submit name="song2playlist"><f:message key="add.song.to.playlist"/></s:submit>
+                        </s:form>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

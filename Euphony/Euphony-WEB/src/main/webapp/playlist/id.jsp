@@ -12,13 +12,9 @@
         <table border="0" class="playlistEditSubMenu">
             <tr>
                 <td>
-                    <s:link beanclass="com.musiclibrary.euphonyweb.PlaylistActionBean" event="edit">
-                        <s:param name="playlist.id" value="${actionBean.playlist.id}"/>
-                        <a href="javascript:void(0);" onclick="javascript:showDivEdit();">
-                            <img src="${pageContext.request.contextPath}/img/edit.png" width="35px">
-                        </a>
-                    </s:link>
-                            
+                    <a href="javascript:void(0);" onclick="javascript:showDivEdit();">
+                        <img src="${pageContext.request.contextPath}/img/edit.png" width="35px">
+                    </a>    
                 </td>
                 <td>
                     <s:link beanclass="com.musiclibrary.euphonyweb.PlaylistActionBean" event="delete">
@@ -32,9 +28,9 @@
                 <td>
                     <s:form beanclass="com.musiclibrary.euphonyweb.PlaylistActionBean">
                         <div id="quickAddPlaylistEdit">
-                            <s:hidden name="${actionBean.playlist.id}"/>
-                            <s:text class="quickAddPlaylist" name="playlist.name" value="${actionBean.playlist.name}"/>
-                            <s:submit class="quickAddPlaylistSubmit" name="edit">
+                            <s:hidden name="playlist.id" value="${actionBean.playlist.id}"/>
+                            <s:text name="playlist.name" value="${actionBean.playlist.name}" class="quickAddPlaylist"/>
+                            <s:submit class="quickAddPlaylistSubmit" name="save">
                                 <f:message key="playlist.edit"/>
                             </s:submit>
                         </div>
@@ -49,7 +45,22 @@
         ID: <c:out value="${actionBean.playlist.id}"/>
         <br>
         Nazov: <c:out value="${actionBean.playlist.name}"/>
-
-
+        <br>
+        Songy: 
+        <table>
+        <c:forEach items="${actionBean.playlist.songs}" var="song">
+                <tr>
+                    <td><c:out value="${song.id}"/></td>
+                    <td><c:out value="${song.title}"/></td>
+                    <td><c:out value="${song.bitrate}"/></td>
+                    <td><c:out value="${song.trackNumber}"/></td>
+                    <td><c:out value="${song.comment}"/></td>
+                    <td><c:out value="${song.genre.name}"/></td>
+                    <td><c:out value="${song.artist.name}"/></td>
+                    <td><c:out value="${song.album.title}"/></td>
+                </tr>
+            </c:forEach>
+        </table>
+        
     </s:layout-component>
 </s:layout-render>

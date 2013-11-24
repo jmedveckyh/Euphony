@@ -1,8 +1,11 @@
 package com.musiclibrary.euphonyweb;
 
 import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
+import com.musiclibrary.euphonyapi.dto.SongDTO;
 import com.musiclibrary.euphonyapi.services.PlaylistService;
+import com.musiclibrary.euphonyapi.services.SongService;
 import java.util.List;
+import java.util.Map;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -21,7 +24,7 @@ import net.sourceforge.stripes.validation.ValidationErrors;
  *
  * @author Tomas Smetanka
  */
-@UrlBinding("/playlist/{$event}/{playlist.id}")
+@UrlBinding("/playlist/else/{$event}/{playlist.id}")
 public class PlaylistActionBean extends BaseActionBean implements ValidationErrorHandler {
     
     @SpringBean
@@ -31,9 +34,8 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
         @Validate(on = {"add", "save"}, field = "name", required = true)
     })
     private PlaylistDTO playlist;
-    
     private List<PlaylistDTO> playlists;
-
+    
     public List<PlaylistDTO> getPlaylists() {
         return playlists;
     }
@@ -46,11 +48,32 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
         this.playlist = playlist;
     }
 
+    protected SongService songService;
+    private SongDTO song;
+    private Map<Integer, SongDTO> songs;
+
+    public SongDTO getSong() {
+        return song;
+    }
+
+    public void setSong(SongDTO song) {
+        this.song = song;
+    }
+
+    public Map<Integer, SongDTO> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(Map<Integer, SongDTO> songs) {
+        this.songs = songs;
+    }
+    
     
     //--- displaying one playlist ----
     @DefaultHandler
     public Resolution show() {
         playlists = playlistService.getAll();
+        songs = playlist.getSongs();
         return new ForwardResolution("/playlist/id.jsp");
     }
     
@@ -59,8 +82,9 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
     public Resolution add() {
 //        log.debug("add() genre={}", genre);
         playlistService.create(playlist);
+        Long ids = playlist.getId();
 //        getContext().getMessages().add(new LocalizableMessage("genre.add.message",escapeHTML(genre.getName())));
-        return new RedirectResolution("/explore");
+        return new RedirectResolution("/playlist/else/show/" + ids);
     }
     
     public Resolution cancel() {
@@ -85,7 +109,7 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
     }
 
     //--- part for editing a genre ----
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"save", "show"})
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"save", "add", "show"})
     public void loadPlaylistFromDatabase() {
         String ids = getContext().getRequest().getParameter("playlist.id");
         if (ids == null) {
@@ -97,6 +121,7 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
     public Resolution save() {
         //log.debug("save() genre={}", genre);
         playlistService.update(playlist);
-        return new RedirectResolution(this.getClass(), "/playlist/id.jsp");
+        Long ids = playlist.getId();
+        return new RedirectResolution("/playlist/else/show/" + ids);
     }
 }
