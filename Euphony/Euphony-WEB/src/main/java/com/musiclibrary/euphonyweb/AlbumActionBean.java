@@ -68,11 +68,10 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
         this.cover=cover;
     }
     
-        private void handleFileUpload() throws IOException{
+    private void handleFileUpload() throws IOException{
         if(cover==null) return;
         String url = getContext().getServletContext().getRealPath("/upload/"+cover.getFileName());
         File file = new File(url);
-        if(file.exists()) throw new IOException("File exists");
         cover.save(file);
         album.setCover(cover.getFileName());
     }
@@ -155,8 +154,20 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
         albumService.delete(album);
         return new RedirectResolution(this.getClass(), "list");
     }
+    
+    public Resolution deleteCover(){
+        //ZATIAL NEFUNGUJE
+        /*
+        if(album.getCover()!=null){
+            String url = getContext().getServletContext().getRealPath("/upload/"+album.getCover());
+            File file = new File(url);
+            file.delete();
+        }
+        */
+        return getContext().getSourcePageResolution();
+    }
 
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save", "deleteCover"})
     public void loadSongFromDatabase() {
         String ids = getContext().getRequest().getParameter("album.id");
         if (ids == null) {
@@ -186,11 +197,16 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
         return new RedirectResolution(this.getClass(), "list");
     }
     
-    @ValidationMethod(when=ValidationState.ALWAYS)
+    @ValidationMethod(when=ValidationState.ALWAYS, on = {"add","save"})
     public void validateCover(ValidationErrors errors){
         if (cover!=null){
             if(!(cover.getContentType().equals("image/jpeg") || cover.getContentType().equals("image/png"))){
                 errors.add("cover", new LocalizableError("validation.file"));
+            }
+            String url = getContext().getServletContext().getRealPath("/upload/"+cover.getFileName());
+            File file = new File(url);
+            if(file.exists()){
+                errors.add("cover", new LocalizableError("validation.fileexists"));
             }
         }
     }

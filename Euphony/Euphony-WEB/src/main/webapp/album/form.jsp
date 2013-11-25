@@ -28,6 +28,7 @@
         <th><s:label for="b2" name="${cover}"/></th>
         <td><c:if test="${not empty edit.album.cover}">
             <img src="${pageContext.request.contextPath}/upload/<c:out value="${edit.album.cover}"/>" width="100" height="100"/>
+            <s:submit name="deleteCover"><f:message key="album.form.deleteCover"/></s:submit>
             </c:if>
             <s:file id="b2" name="cover"/></td>
     </tr>
