@@ -200,7 +200,7 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     @ValidationMethod(when=ValidationState.ALWAYS, on = {"add","save"})
     public void validateCover(ValidationErrors errors){
         if (cover!=null){
-            if(!(cover.getContentType().equals("image/jpeg") || cover.getContentType().equals("image/png"))){
+            if(!(cover.getContentType().equals("image/jpeg") || cover.getContentType().equals("image/png") || cover.getContentType().equals("image/gif"))){
                 errors.add("cover", new LocalizableError("validation.file"));
             }
             String url = getContext().getServletContext().getRealPath("/upload/"+cover.getFileName());
