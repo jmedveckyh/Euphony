@@ -13,7 +13,7 @@
 <script src="${pageContext.request.contextPath}/js/jquery-ui-1.10.3.custom.min.js"></script>
 <script>
   $(function() {
-    $( "#datepicker" ).datepicker({changeYear: true});
+    $( "#datepicker" ).datepicker({changeYear: true, yearRange: "-100:+0"});
     $( "#datepicker" ).datepicker( "option", "showAnim", "slideDown" );
     $( "#datepicker" ).datepicker( "option", "dateFormat", "dd.mm.yy" );
   });
