@@ -6,7 +6,7 @@
 
 <s:layout-render name="/layout.jsp" titlekey="song.list.title">
     <s:layout-component name="body">
-        <s:useActionBean beanclass="com.musiclibrary.euphonyweb.SongActionBean" var="actionBean"/>
+        <s:useActionBean beanclass="com.musiclibrary.euphonyweb.SongActionBean" var="add"/>
 
         <p><f:message key="song.list.allsongs"/></p>
 

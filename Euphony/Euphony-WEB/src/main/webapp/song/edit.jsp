@@ -5,7 +5,7 @@
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
 <s:layout-render name="/layout.jsp" titlekey="song.edit.title">
     <s:layout-component name="body">
-        <s:useActionBean beanclass="com.musiclibrary.euphonyweb.SongActionBean" var="actionBean"/>
+        <s:useActionBean beanclass="com.musiclibrary.euphonyweb.SongActionBean" var="edit"/>
 
         <s:form beanclass="com.musiclibrary.euphonyweb.SongActionBean">
             <s:hidden name="song.id"/>

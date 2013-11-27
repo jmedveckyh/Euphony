@@ -19,8 +19,10 @@
     <tr>
         <th><s:label for="b2" name="${bitrate}"/></th>
         <td>
-            <s:select name="song.bitrate">  
+            <s:select name="song.bitrate">
+                <c:if test="${empty edit.song.bitrate}">
                 <s:option label="" value=""/>
+                </c:if>
                 <s:option label="32 kbps" value="32"/>
                 <s:option label="64 kbps" value="64"/>
                 <s:option label="96 kbps" value="96"/>
@@ -44,29 +46,55 @@
     </tr>
     <tr>
         <th><s:label for="b5" name="${genre}"/></th>
-        <td>
-            <s:select id="b5" name="genre">
-                <s:option label="" value=""/>
-                <s:options-collection collection="${actionBean.genres}" label="name" value="id"/>
-            </s:select>
+        <td><c:choose>
+                <c:when test="${not empty edit.song.genre.id}">
+                    <s:select id="b5" name="genre" value="${edit.song.genre.id}">
+                        <s:options-collection collection="${edit.genres}" label="name" value="id"/>
+                    </s:select>
+                </c:when>
+                <c:otherwise>
+                    <s:select id="b5" name="genre">
+                        <s:option label="" value=""/>
+                        <s:options-collection collection="${add.genres}" label="name" value="id"/>
+                    </s:select>
+                </c:otherwise>
+            </c:choose>
         </td>
     </tr>
     <tr>
         <th><s:label for="b6" name="${album}"/></th>
         <td>
-            <s:select id="b6" name="album">
-                <s:option label="" value=""/>
-                <s:options-collection collection="${actionBean.albums}" label="title" value="id"/>
-            </s:select>
+            <c:choose>
+                <c:when test="${not empty edit.song.album.id}">
+                    <s:select id="b6" name="album" value="${edit.song.album.id}">
+                        <s:options-collection collection="${edit.albums}" label="title" value="id"/>
+                    </s:select>
+                </c:when>
+                <c:otherwise>
+                    <s:select id="b6" name="album">
+                        <s:option label="" value=""/>
+                        <s:options-collection collection="${add.albums}" label="title" value="id"/>
+                    </s:select>
+                </c:otherwise>
+            </c:choose>
         </td>
     </tr>
     <tr>
         <th><s:label for="b7" name="${artist}"/></th>
         <td>
-            <s:select id="b7" name="artist">
-                <s:option label="" value=""/>
-                <s:options-collection collection="${actionBean.artists}" label="name" value="id"/>
-            </s:select>
+            <c:choose>
+                <c:when test="${not empty edit.song.artist.id}">
+                    <s:select id="b7" name="artist" value="${edit.song.artist.id}">
+                        <s:options-collection collection="${edit.artists}" label="name" value="id"/>
+                    </s:select>
+                </c:when>
+                <c:otherwise>
+                    <s:select id="b7" name="artist">
+                        <s:option label="" value=""/>
+                        <s:options-collection collection="${add.artists}" label="name" value="id"/>
+                    </s:select>
+                </c:otherwise>
+            </c:choose>
         </td>
     </tr>
 </table>
