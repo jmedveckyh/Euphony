@@ -42,13 +42,13 @@ public class PlaylistDAOImpl implements PlaylistDAO {
             Util.validatePlaylist(entity);
 
             if (entity.getId() != null) {
-                throw new DataAccessException("This playlist entity is already in databse.") {};
+                throw new IllegalArgumentException("This playlist entity is already in databse.");
             }
 
             em.persist(entity);
             em.flush();
             em.detach(entity);
-        } catch (PersistenceException ex) {
+        } catch (PersistenceException | IllegalArgumentException ex) {
             throw new DataAccessException(ex.getMessage(), ex) {
             };
         }
@@ -60,16 +60,16 @@ public class PlaylistDAOImpl implements PlaylistDAO {
             Util.validatePlaylist(entity);
 
             if (entity.getId() == null) {
-                throw new DataAccessException("This playlist entity cannot have null id.") {};
+                throw new IllegalArgumentException("This playlist entity cannot have null id.");
             }
             if (em.find(Playlist.class, entity.getId()) == null) {
-                throw new DataAccessException("This playlist entity does not exist in database.") {};
+                throw new IllegalArgumentException("This playlist entity does not exist in database.");
             }
 
             em.merge(entity);
             em.flush();
             em.detach(entity);
-        } catch (PersistenceException ex) {
+        } catch (PersistenceException | IllegalArgumentException ex) {
             throw new DataAccessException(ex.getMessage(), ex) {
             };
         }
@@ -81,16 +81,16 @@ public class PlaylistDAOImpl implements PlaylistDAO {
             Util.validatePlaylist(entity);
 
             if (entity.getId() == null) {
-                throw new DataAccessException("This playlist entity cannot have null id.") {};
+                throw new IllegalArgumentException("This playlist entity cannot have null id.");
             }
             if (em.find(Playlist.class, entity.getId()) == null) {
-                throw new DataAccessException("This playlist entity does not exist in database.") {};
+                throw new IllegalArgumentException("This playlist entity does not exist in database.");
             }
 
             Playlist objectTemp = em.merge(entity);
 
             em.remove(objectTemp);
-        } catch (PersistenceException ex) {
+        } catch (PersistenceException | IllegalArgumentException ex) {
             throw new DataAccessException(ex.getMessage(), ex) {
             };
         }
@@ -98,50 +98,67 @@ public class PlaylistDAOImpl implements PlaylistDAO {
 
     @Override
     public Playlist getById(Long id) {
-        if (id == null) {
-            throw new DataAccessException("Id cannot be null.") {
+        try {
+            if (id == null) {
+                throw new IllegalArgumentException("Id cannot be null.");
+            }
+
+            Playlist objectTemp = (Playlist) em.find(Playlist.class, id);
+            return objectTemp;
+        } catch (PersistenceException | IllegalArgumentException ex) {
+            throw new DataAccessException(ex.getMessage(), ex) {
             };
         }
-
-        Playlist objectTemp = (Playlist) em.find(Playlist.class, id);
-        return objectTemp;
     }
 
     @Override
     public Playlist getByName(String name) {
-        if (name == null) {
-            throw new DataAccessException("Name cannot be null.") {
+        try {
+            if (name == null) {
+                throw new IllegalArgumentException("Name cannot be null.");
+            }
+
+            Query q = em.createQuery("FROM Playlist WHERE name=:name");
+            q.setParameter("name", name);
+            Playlist playlist = (Playlist) q.getSingleResult();
+
+            return playlist;
+        } catch (PersistenceException | IllegalArgumentException ex) {
+            throw new DataAccessException(ex.getMessage(), ex) {
             };
         }
-
-        Query q = em.createQuery("FROM Playlist WHERE name=:name");
-        q.setParameter("name", name);
-        Playlist playlist = (Playlist) q.getSingleResult();
-
-        return playlist;
     }
 
     @Override
     public List<Playlist> getBySong(Song song) {
-        Util.validateSong(song);
+        try {
+            Util.validateSong(song);
 
-        if (song.getId() == null) {
-            throw new DataAccessException("This song entity cannot have null id.") {
+            if (song.getId() == null) {
+                throw new IllegalArgumentException("This song entity cannot have null id.");
+            }
+
+            Query q = em.createQuery("FROM Playlist WHERE song=:song");
+            q.setParameter("song", song);
+            List<Playlist> playlists = q.getResultList();
+
+            return Collections.unmodifiableList(playlists);
+        } catch (PersistenceException | IllegalArgumentException ex) {
+            throw new DataAccessException(ex.getMessage(), ex) {
             };
         }
-
-        Query q = em.createQuery("FROM Playlist WHERE song=:song");
-        q.setParameter("song", song);
-        List<Playlist> playlists = q.getResultList();
-
-        return Collections.unmodifiableList(playlists);
     }
 
     @Override
     public List<Playlist> getAll() {
-        Query q = em.createQuery("FROM Playlist");
-        List<Playlist> playlists = q.getResultList();
+        try {
+            Query q = em.createQuery("FROM Playlist");
+            List<Playlist> playlists = q.getResultList();
 
-        return Collections.unmodifiableList(playlists);
+            return Collections.unmodifiableList(playlists);
+        } catch (PersistenceException | IllegalArgumentException ex) {
+            throw new DataAccessException(ex.getMessage(), ex) {
+            };
+        }
     }
 }

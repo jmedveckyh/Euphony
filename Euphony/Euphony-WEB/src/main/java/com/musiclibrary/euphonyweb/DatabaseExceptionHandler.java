@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ForwardResolution;
+import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.controller.StripesConstants;
 import net.sourceforge.stripes.exception.DefaultExceptionHandler;
 import net.sourceforge.stripes.validation.LocalizableError;
-import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.ValidationErrors;
 import org.springframework.dao.DataAccessException;
 
@@ -28,20 +28,24 @@ public class DatabaseExceptionHandler extends DefaultExceptionHandler {
 
         if (bean.getClass().equals(AlbumActionBean.class)) {
             ValidationErrors errors = new ValidationErrors();
-            errors.addGlobalError(new SimpleError("Cannot delete album because it is assigned to some song."));
+            errors.addGlobalError(new LocalizableError("validation.assignedalbum"));
             bean.getContext().setValidationErrors(errors);
-            return bean.getContext().getSourcePageResolution();
+            return new ForwardResolution("/album/list.jsp");
         }
         if (bean.getClass().equals(ArtistActionBean.class)) {
             ValidationErrors errors = new ValidationErrors();
-            errors.addGlobalError(new SimpleError("Cannot delete artist because it is assigned to some song."));
+            errors.addGlobalError(new LocalizableError("validation.assignedartist"));
             bean.getContext().setValidationErrors(errors);
-            return bean.getContext().getSourcePageResolution();
+            return new ForwardResolution("/artist/list.jsp");
         }
         if (bean.getClass().equals(GenreActionBean.class)) {
-            ValidationErrors errors = new ValidationErrors();
-            errors.addGlobalError(new SimpleError("Cannot delete genre because it is assigned to some song."));
-            bean.getContext().setValidationErrors(errors);
+            //ValidationErrors errors = new ValidationErrors();
+            bean.getContext().getValidationErrors().addGlobalError(new LocalizableError("validation.assignedgenre"));
+            //bean.getContext().setValidationErrors(errors);
+            //return new ForwardResolution("/genre/list.jsp");
+            bean.getContext().getRequest().getRequestDispatcher("/genre/list.jsp").forward(request, response);
+            //bean.getContext().getRequest().getRequestDispatcher("error.jsp").forward(request, response);
+            //return null;
             return bean.getContext().getSourcePageResolution();
         }
         return null;
