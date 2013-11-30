@@ -12,13 +12,16 @@
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery-ui-1.10.3.custom.min.js"></script>
 <script>
-  $(function() {
-    $( "#datepicker" ).datepicker({changeYear: true, changeMonth: true, yearRange: "-100:+0"});
-    $( "#datepicker" ).datepicker( "option", "showAnim", "slideDown" );
-    $( "#datepicker" ).datepicker( "option", "dateFormat", "dd.mm.yy" );
-  });
-  </script>
-  
+    $(function() {
+        $("#b4").datepicker({changeYear: true, changeMonth: true, yearRange: "-100:+0"});
+        $("#b4").datepicker("option", "showAnim", "slideDown");
+        $("#b4").datepicker("option", "dateFormat", "dd.mm.yy");
+        if (${not empty edit.album.releaseDate}) {
+            $("#b4").datepicker("setDate", new Date("${edit.album.releaseDate}"));
+        }
+        });
+</script>
+
 <table>
     <tr>
         <th><s:label for="b1" name="${title}"/></th>
@@ -27,17 +30,19 @@
     <tr>
         <th><s:label for="b2" name="${cover}"/></th>
         <td><c:if test="${not empty edit.album.cover}">
-            <img src="${pageContext.request.contextPath}/upload/<c:out value="${edit.album.cover}"/>" width="100" height="100"/>
-            <s:submit name="deleteCover"><f:message key="album.form.deleteCover"/></s:submit>
-            </c:if>
-            <s:file id="b2" name="cover"/></td>
-    </tr>
-    <tr>
-        <th><s:label for="b3" name="${comment}"/></th>
-        <td><s:textarea id="b3" name="album.comment"/></td>
-    </tr>
-    <tr>
-        <th><s:label for="b4" name="${releaseDate}"/></th>
-        <td><s:text id="datepicker" name="releaseDate" size="24"/></td>
-    </tr>
+                <img src="${pageContext.request.contextPath}/upload/<c:out value="${edit.album.cover}"/>" width="100" height="100"/>
+        <s:submit name="deleteCover"><f:message key="album.form.deleteCover"/></s:submit>
+    </c:if>
+    <s:file id="b2" name="cover"/></td>
+</tr>
+<tr>
+    <th><s:label for="b3" name="${comment}"/></th>
+    <td><s:textarea id="b3" name="album.comment"/></td>
+</tr>
+<tr>
+    <th><s:label for="b4" name="${releaseDate}"/></th>
+    <td>
+        <s:text id="b4" name="releaseDate" size="24"/>
+    </td>
+</tr>
 </table>

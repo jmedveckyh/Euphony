@@ -57,28 +57,29 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     public PlaylistDTO getPlaylist() {
         return playlist;
     }
-    
     private FileBean cover;
-    
-    public FileBean getCover(){
+
+    public FileBean getCover() {
         return cover;
     }
-    
-    public void setCover(FileBean cover){
-        this.cover=cover;
+
+    public void setCover(FileBean cover) {
+        this.cover = cover;
     }
-    
-    private void handleFileUpload() throws IOException{
-        if(cover==null) return;
-        String url = getContext().getServletContext().getRealPath("/upload/"+cover.getFileName());
+
+    private void handleFileUpload() throws IOException {
+        if (cover == null) {
+            return;
+        }
+        String url = getContext().getServletContext().getRealPath("/upload/" + cover.getFileName());
         File file = new File(url);
         cover.save(file);
         album.setCover(cover.getFileName());
     }
-    
-    private void handleFileRemoval(){
-        if(album.getCover()!=null){
-            String url = getContext().getServletContext().getRealPath("/upload/"+album.getCover());
+
+    private void handleFileRemoval() {
+        if (album.getCover() != null) {
+            String url = getContext().getServletContext().getRealPath("/upload/" + album.getCover());
             File file = new File(url);
             file.delete();
         }
@@ -95,14 +96,14 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     
     @Validate(on = {"add", "save"}, required = true)
     private String releaseDate;
-    
+
     @DefaultHandler
     public Resolution list() {
         albums = albumService.getAllAlbums();
         playlists = playlistService.getAll();
         return new ForwardResolution("/album/list.jsp");
     }
-    
+
     public Resolution deleted() {
         albums = albumService.getAllAlbums();
         playlists = playlistService.getAll();
@@ -154,21 +155,21 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
         albumService.delete(album);
         return new RedirectResolution(this.getClass(), "list");
     }
-    
-    public Resolution deleteCover(){
+
+    public Resolution deleteCover() {
         //ZATIAL NEFUNGUJE
         /*
-        if(album.getCover()!=null){
-            String url = getContext().getServletContext().getRealPath("/upload/"+album.getCover());
-            File file = new File(url);
-            file.delete();
-        }
-        */
+         if(album.getCover()!=null){
+         String url = getContext().getServletContext().getRealPath("/upload/"+album.getCover());
+         File file = new File(url);
+         file.delete();
+         }
+         */
         return getContext().getSourcePageResolution();
     }
 
     @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save", "deleteCover"})
-    public void loadSongFromDatabase() {
+    public void loadAlbumFromDatabase() {
         String ids = getContext().getRequest().getParameter("album.id");
         if (ids == null) {
             return;
@@ -184,7 +185,7 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
 
     public Resolution save() throws IOException {
         album.setReleaseDate(new DateTime(Integer.parseInt(releaseDate.substring(6)), Integer.parseInt(releaseDate.substring(3, 5)), Integer.parseInt(releaseDate.substring(0, 2)), 0, 0));
-        if(cover!=null && cover.getFileName()!=album.getCover()){
+        if (cover != null && cover.getFileName() != album.getCover()) {
             handleFileRemoval();
         }
         handleFileUpload();
@@ -196,16 +197,16 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
 //        log.debug("cancel() artist={}", artist);
         return new RedirectResolution(this.getClass(), "list");
     }
-    
-    @ValidationMethod(when=ValidationState.ALWAYS, on = {"add","save"})
-    public void validateCover(ValidationErrors errors){
-        if (cover!=null){
-            if(!(cover.getContentType().equals("image/jpeg") || cover.getContentType().equals("image/png") || cover.getContentType().equals("image/gif"))){
+
+    @ValidationMethod(when = ValidationState.ALWAYS, on = {"add", "save"})
+    public void validateCover(ValidationErrors errors) {
+        if (cover != null) {
+            if (!(cover.getContentType().equals("image/jpeg") || cover.getContentType().equals("image/png") || cover.getContentType().equals("image/gif"))) {
                 errors.add("cover", new LocalizableError("validation.file"));
             }
-            String url = getContext().getServletContext().getRealPath("/upload/"+cover.getFileName());
+            String url = getContext().getServletContext().getRealPath("/upload/" + cover.getFileName());
             File file = new File(url);
-            if(file.exists()){
+            if (file.exists()) {
                 errors.add("cover", new LocalizableError("validation.fileexists"));
             }
         }
