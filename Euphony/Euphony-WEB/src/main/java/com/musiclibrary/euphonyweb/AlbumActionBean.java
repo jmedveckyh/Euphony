@@ -93,7 +93,6 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
         @Validate(on = {"add", "save"}, field = "title", required = true)
     })
     private AlbumDTO album;
-    
     @Validate(on = {"add", "save"}, required = true)
     private String releaseDate;
 
@@ -152,7 +151,9 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     public Resolution delete() throws Exception {
         album = albumService.getById(album.getId());
         handleFileRemoval();
-        albumService.delete(album);
+        try {
+            albumService.delete(album);
+        } catch (DataAccessException ex) {}
         return new RedirectResolution(this.getClass(), "list");
     }
 

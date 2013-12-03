@@ -18,6 +18,7 @@ import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationErrorHandler;
 import net.sourceforge.stripes.validation.ValidationErrors;
+import org.springframework.dao.DataAccessException;
 
 /**
  * Action bean for Artist.
@@ -26,10 +27,9 @@ import net.sourceforge.stripes.validation.ValidationErrors;
  */
 @UrlBinding("/artists/{$event}/{artist.id}")
 public class ArtistActionBean extends BaseActionBean implements ValidationErrorHandler {
-    
+
     @SpringBean
     protected ArtistService artistService;
-    
     @SpringBean
     protected PlaylistService playlistService;
     private List<PlaylistDTO> playlists;
@@ -46,12 +46,9 @@ public class ArtistActionBean extends BaseActionBean implements ValidationErrorH
     public void setPlaylist(PlaylistDTO playlist) {
         this.playlist = playlist;
     }
-    
-    
     //--- part for showing a list of artists ----
     private List<ArtistDTO> artists;
-    
-    
+
     @DefaultHandler
     public Resolution list() {
         //log.debug("list()");
@@ -63,20 +60,19 @@ public class ArtistActionBean extends BaseActionBean implements ValidationErrorH
     public List<ArtistDTO> getArtists() {
         return artists;
     }
-
     //--- part for adding ----
     @ValidateNestedProperties(value = {
         @Validate(on = {"add", "save"}, field = "name", required = true)
     })
     private ArtistDTO artist;
-    
+
     public Resolution add() {
 //        log.debug("add() artist={}", artist);
         artistService.create(artist);
 //        getContext().getMessages().add(new LocalizableMessage("artist.add.message",escapeHTML(artist.getName())));
         return new RedirectResolution(this.getClass(), "list");
     }
-    
+
     public Resolution cancel() {
 //        log.debug("cancel() artist={}", artist);
         return new RedirectResolution(this.getClass(), "list");
@@ -96,13 +92,15 @@ public class ArtistActionBean extends BaseActionBean implements ValidationErrorH
     public void setArtist(ArtistDTO artist) {
         this.artist = artist;
     }
-    
+
     //--- part for deleting a artist ----
     public Resolution delete() {
         //log.debug("delete({})", artist.getId());
         //only id is filled by the form
         artist = artistService.getById(artist.getId());
-        artistService.delete(artist);
+        try {
+            artistService.delete(artist);
+        } catch (DataAccessException ex) {}
         //getContext().getMessages().add(new LocalizableMessage("artist.delete.message", escapeHTML(artist.getTitle()), escapeHTML(artist.getAuthor())));
         return new RedirectResolution(this.getClass(), "list");
     }

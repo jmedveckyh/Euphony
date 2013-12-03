@@ -5,6 +5,7 @@ import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.services.GenreService;
 import com.musiclibrary.euphonyapi.services.PlaylistService;
 import java.util.List;
+import net.sourceforge.stripes.action.After;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -13,10 +14,12 @@ import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
+import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationErrorHandler;
 import net.sourceforge.stripes.validation.ValidationErrors;
+import org.springframework.dao.DataAccessException;
 
 /**
  * Action bean for Genre.
@@ -25,10 +28,9 @@ import net.sourceforge.stripes.validation.ValidationErrors;
  */
 @UrlBinding("/genres/{$event}/{genre.id}")
 public class GenreActionBean extends BaseActionBean implements ValidationErrorHandler {
-    
+
     @SpringBean
     protected GenreService genreService;
-    
     @SpringBean
     protected PlaylistService playlistService;
     private List<PlaylistDTO> playlists;
@@ -45,12 +47,9 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
     public void setPlaylist(PlaylistDTO playlist) {
         this.playlist = playlist;
     }
-    
-    
     //--- part for showing a list of genres ----
     private List<GenreDTO> genres;
-    
-    
+
     @DefaultHandler
     public Resolution list() {
         //log.debug("list()");
@@ -62,26 +61,26 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
     public List<GenreDTO> getGenres() {
         return genres;
     }
-
     //--- part for adding ----
     @ValidateNestedProperties(value = {
         @Validate(on = {"add", "save"}, field = "name", required = true)
     })
     private GenreDTO genre;
-    
+
     public Resolution add() {
 //        log.debug("add() genre={}", genre);
         genreService.create(genre);
 //        getContext().getMessages().add(new LocalizableMessage("genre.add.message",escapeHTML(genre.getName())));
         return new RedirectResolution(this.getClass(), "list");
     }
-    
+
     public Resolution cancel() {
 //        log.debug("cancel() genre={}", genre);
         return new RedirectResolution(this.getClass(), "list");
     }
 
     @Override
+    @After(stages = LifecycleStage.RequestComplete, on = {"delete"})
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
         genres = genreService.getAll();
         playlists = playlistService.getAll();
@@ -95,13 +94,15 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
     public void setGenre(GenreDTO genre) {
         this.genre = genre;
     }
-    
+
     //--- part for deleting a genre ----
-    public Resolution delete() {
+    public Resolution delete() throws Exception {
         //log.debug("delete({})", genre.getId());
         //only id is filled by the form
         genre = genreService.getById(genre.getId());
-        genreService.delete(genre);
+        try {
+            genreService.delete(genre);
+        } catch (DataAccessException ex) {}
         //getContext().getMessages().add(new LocalizableMessage("genre.delete.message", escapeHTML(genre.getTitle()), escapeHTML(genre.getAuthor())));
         return new RedirectResolution(this.getClass(), "list");
     }
