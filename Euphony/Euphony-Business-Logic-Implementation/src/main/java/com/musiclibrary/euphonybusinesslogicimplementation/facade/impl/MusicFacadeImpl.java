@@ -10,7 +10,7 @@ import com.musiclibrary.euphonybusinesslogicimplementation.util.DTOMapper;
 import com.musiclibrary.euphonybusinesslogicimplementation.util.MusicErrorException;
 import com.musiclibrary.euphonybusinesslogicimplementation.util.Util;
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.Map.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,7 +64,12 @@ public class MusicFacadeImpl implements MusicFacade {
         if (playlist.getSongs() == null) {
             return false;
         } else {
-            return playlist.getSongs().containsValue(song);
+            for (Entry<Integer, SongDTO> entry : playlist.getSongs().entrySet()) {
+                if (song.equals(entry.getValue())) {
+                    return true;
+                }
+            }
+            return false;
         }
 
     }
@@ -95,11 +100,13 @@ public class MusicFacadeImpl implements MusicFacade {
     public void addSongToPlaylist(SongDTO song, PlaylistDTO playlist) {
 
         if (isSongInPlaylist(song, playlist)) {
-            throw new MusicErrorException("The song is already in playlist.");
+            throw new IllegalArgumentException("The song is already in playlist.");
         } else {
-            TreeMap<Integer, SongDTO> songs = new TreeMap<>();
-            songs.putAll(playlist.getSongs());
-            playlist.getSongs().put((Integer) songs.lastKey() + 1, song);
+            Integer newKey = 0;
+            for (Entry<Integer, SongDTO> entry : playlist.getSongs().entrySet()) {
+                newKey = entry.getKey();
+            }
+            playlist.getSongs().put(newKey + 1, song);
             playlistService.update(playlist);
         }
 

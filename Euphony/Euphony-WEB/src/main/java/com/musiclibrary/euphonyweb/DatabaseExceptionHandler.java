@@ -1,18 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.musiclibrary.euphonyweb;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.controller.StripesConstants;
 import net.sourceforge.stripes.exception.DefaultExceptionHandler;
 import net.sourceforge.stripes.validation.LocalizableError;
+import net.sourceforge.stripes.validation.ValidationErrors;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -38,6 +34,18 @@ public class DatabaseExceptionHandler extends DefaultExceptionHandler {
             return new ForwardResolution("/genre/list.jsp");
         }
         return null;
+    }
+
+    public Resolution handleIllegalArgumentGeneric(IllegalArgumentException exc, HttpServletRequest request, HttpServletResponse response) {
+        
+        ActionBean bean = (ActionBean) request.getAttribute(StripesConstants.REQ_ATTR_ACTION_BEAN);
+        
+        if (bean.getClass().equals(Song2PlaylistActionBean.class)) {
+            bean.getContext().getValidationErrors().addGlobalError(new LocalizableError("validation.assignedsonginplaylist"));
+            return new ForwardResolution("/explore/songs.jsp");
+        }
+        
+        return new ForwardResolution("/");
     }
 
     public Resolution handleGeneric(Exception exc, HttpServletRequest request, HttpServletResponse response) {

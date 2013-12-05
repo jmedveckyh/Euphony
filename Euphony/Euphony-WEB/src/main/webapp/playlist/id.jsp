@@ -48,7 +48,7 @@
         <br>
         Songy: 
         <table>
-        <c:forEach items="${actionBean.playlist.songs}" var="song">
+        <c:forEach items="${actionBean.playlist.songs}" var="song"> 
                 <tr>
                     <td><c:out value="${song.id}"/></td>
                     <td><c:out value="${song.title}"/></td>

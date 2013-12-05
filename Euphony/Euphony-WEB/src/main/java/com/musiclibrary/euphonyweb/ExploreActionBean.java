@@ -12,12 +12,10 @@ import com.musiclibrary.euphonyapi.services.GenreService;
 import com.musiclibrary.euphonyapi.services.PlaylistService;
 import com.musiclibrary.euphonyapi.services.SongService;
 import java.util.List;
-import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
-import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import net.sourceforge.stripes.validation.ValidationErrorHandler;
 import net.sourceforge.stripes.validation.ValidationErrors;
@@ -51,7 +49,30 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
     private List<AlbumDTO> albums;
     private List<ArtistDTO> artists;
     private List<PlaylistDTO> playlists;
+    
+//    @Validate(required = true, on = {"song2playlist"})
+//    private List<SongDTO> selectedSongs;
+//
+//    public List<SongDTO> getSelectedSongs() {
+//        return selectedSongs;
+//    }
+//
+//    public void setSelectedSongs(List<SongDTO> selectedSongs) {
+//        this.selectedSongs = selectedSongs;
+//    }
 
+//    @Validate(required = true, on="song2playlist")
+//    private PlaylistDTO selectedPlaylist;
+//
+//    public PlaylistDTO getSelectedPlaylist() {
+//        return selectedPlaylist;
+//    }
+//
+//    public void setSelectedPlaylist(PlaylistDTO selectedPlaylist) {
+//        this.selectedPlaylist = selectedPlaylist;
+//    }
+    
+    
     @DefaultHandler
     public Resolution songs() {
         //log.debug("list()");
@@ -59,11 +80,13 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
         playlists = playlistService.getAll();
         return new ForwardResolution("/explore/songs.jsp");
     }
-    
-    public Resolution song2playlist() {
-        facade.addSongToPlaylist(song, playlist);
-        return new ForwardResolution("/explore/songs.jsp");
-    }
+
+//    public Resolution song2playlist() {
+//        for (SongDTO selectedSong : selectedSongs) {
+//            facade.addSongToPlaylist(selectedSong, playlistService.getById(new Long(2)));
+//        }
+//        return new ForwardResolution("/explore/songs.jsp");
+//    }
 
     public Resolution albums() {
         //log.debug("list()");
@@ -84,17 +107,17 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
         songs = songService.getAll();
         return null;
     }
-    
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"song2playlist"})
-    public void loadFromDatabase() {
-        String idPlaylist = getContext().getRequest().getParameter("playlist.id");
-        String idSong = getContext().getRequest().getParameter("song.id");
-        if (idPlaylist == null || idSong == null) {
-            return;
-        }
-        playlist = playlistService.getById(Long.parseLong(idPlaylist));
-        song = songService.getById(Long.parseLong(idSong));
-    }
+
+//    @Before(stages = LifecycleStage.BindingAndValidation, on = {"song2playlist"})
+//    public void loadFromDatabase() {
+//        String idPlaylist = getContext().getRequest().getParameter("playlist.id");
+//        String idSong = getContext().getRequest().getParameter("song.id");
+//        if (idPlaylist == null || idSong == null) {
+//            return;
+//        }
+//        playlist = playlistService.getById(Long.parseLong(idPlaylist));
+//        song = songService.getById(Long.parseLong(idSong));
+//    }
 
     //--- getters and setters ----
     public List<GenreDTO> getGenres() {
@@ -115,6 +138,10 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
 
     public List<PlaylistDTO> getPlaylists() {
         return playlists;
+    }
+
+    public void setPlaylists(List<PlaylistDTO> playlists) {
+        this.playlists = playlists;
     }
 
     public GenreDTO getGenre() {

@@ -28,7 +28,7 @@
                 <div class="search">
                     <table border="0">
                         <tr>
-                            <td><input type="text" name="search" class="search"></td>
+                            <td><input type="text" name="search" class="search" required></td>
                             <td><input type="submit" value=""></td>
                         </tr>
                     </table>
@@ -38,9 +38,9 @@
                         <li><a href="${pageContext.request.contextPath}"><span><f:message key="menu.explore"/></span></a></li>
                         <li><a href="javascript:void(0);" onclick="javascript:showDiv();"><span><f:message key="menu.newplaylist"/></span></a></li>
                         <f:message key='playlist.name' var="name"/>
-                        <s:form beanclass="com.musiclibrary.euphonyweb.PlaylistActionBean">
+                        <s:form beanclass="com.musiclibrary.euphonyweb.PlaylistActionBean" name="quickAddPlaylist" onsubmit="return validateAddPlaylistForm()">
                             <li id="quickAddPlaylist">
-                                <s:text class="quickAddPlaylist" name="playlist.name"/>
+                                <s:text class="quickAddPlaylist" name="playlist.name" id="pn"/>
                                 <s:submit name="add" class="quickAddPlaylistSubmit">
                                     <f:message key="menu.newplaylist.add"/>
                                 </s:submit>

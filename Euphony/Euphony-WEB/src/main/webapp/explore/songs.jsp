@@ -13,24 +13,32 @@
         <s:errors/>
         <table class="basic">
             <tr>
+                <th>X</th>
                 <th><f:message key="song.id"/></th>
                 <th><f:message key="song.title"/></th>
             </tr>
+            <s:form beanclass="com.musiclibrary.euphonyweb.Song2PlaylistActionBean">
             <c:forEach items="${actionBean.songs}" var="song">
                 <tr>
+                    <td><s:checkbox name="selectedSongs" value="${song.id}"/></td>
                     <td><c:out value="${song.id}"/></td>
                     <td><c:out value="${song.title}"/></td>
+                </tr>   
+            </c:forEach>
+                <tr>
+                    <td></td>
+                    <td></td>
                     <td>
-                        <s:form beanclass="com.musiclibrary.euphonyweb.ExploreActionBean">
-                            <s:select name="playlists">
+                            <s:select name="selectedPlaylist">
+                                <s:option value=""/>
                                 <s:options-collection collection="${actionBean.playlists}" label="name" value="id"/>
                             </s:select>
-                            <s:hidden name="song.id" value="${song.id}"/>
+                            <s:hidden name="title" value="${song.title}"/>
                             <s:submit name="song2playlist"><f:message key="add.song.to.playlist"/></s:submit>
+                            <s:errors field="selectedSongs"/>
                         </s:form>
                     </td>
                 </tr>
-            </c:forEach>
         </table>
 
 

@@ -40,9 +40,9 @@ public class Song implements Serializable {
     @ManyToOne (optional=false,cascade= CascadeType.REFRESH)
     private Artist artist;
 
-    @ManyToOne
-    private Playlist playlist;            
-            
+//    @ManyToOne
+//    private Playlist playlist;            
+//            
     public Song(){ }
 
     public Song(String title, int bitrate, int trackNumber, String comment, Genre genre, Album album, Artist artist) {
