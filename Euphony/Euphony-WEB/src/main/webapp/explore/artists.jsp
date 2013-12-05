@@ -8,17 +8,13 @@
     <s:layout-component name="body">
         <h3><f:message key="menu.explore"/></h3>
         <%@include file="menuUp.jsp"%>
-
-        <p>index a artisti</p>
-
+        
         <table class="basic">
             <tr>
-                <th><f:message key="artist.id"/></th>
                 <th><f:message key="artist.name"/></th>
             </tr>
             <c:forEach items="${actionBean.artists}" var="artist">
                 <tr>
-                    <td><c:out value="${artist.id}"/></td>
                     <td><c:out value="${artist.name}"/></td>
                 </tr>
             </c:forEach>

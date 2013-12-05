@@ -1,3 +1,4 @@
+/* Show and hide field for adding playlist name */
 function showDiv() {
     var div = document.getElementById('quickAddPlaylist');
     if (div.style.display == "block") {
@@ -7,15 +8,39 @@ function showDiv() {
     }
 }
 
+/* Show and hide field for editing playlist name */
 function showDivEdit() {
-    var div = document.getElementById('quickAddPlaylistEdit');
-    if (div.style.display == "block") {
-        div.style.display = "none";
+    var divEdit = document.getElementById('quickAddPlaylistEdit');
+    var divDel = document.getElementById('playlistDelete');
+    
+    if (divDel.style.display == "block") {
+        divDel.style.display = "none";
+    }
+    
+    if (divEdit.style.display == "block") {
+        divEdit.style.display = "none";
     } else {
-        div.style.display = "block";
+        divEdit.style.display = "block";
     }
 }
 
+/* Show and hide field for deleting playlist */
+function showDivDelete() {
+    var divEdit = document.getElementById('quickAddPlaylistEdit');
+    var divDel = document.getElementById('playlistDelete');
+    
+    if (divEdit.style.display == "block") {
+        divEdit.style.display = "none";
+    }
+    
+    if (divDel.style.display == "block") {
+        divDel.style.display = "none";
+    } else {
+        divDel.style.display = "block";
+    }
+}
+
+/* Validates empty playlist */
 function validateAddPlaylistForm() {
     var x = document.forms["quickAddPlaylist"]["playlist.name"].value;
     if (x == null || x == "") {
@@ -24,3 +49,12 @@ function validateAddPlaylistForm() {
     }
     return true;
 }
+
+/* Checks checkboxes in rows */ 
+$(document).ready(function () {
+    $('.basic tr').click(function (event) {
+        if (event.target.type !== 'checkbox') {
+            $(':checkbox', this).trigger('click');
+        }
+    });
+});

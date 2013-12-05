@@ -3,7 +3,7 @@
 
 <table>
     <tr>
-        <th><s:label for="b1" name="genre.name"/></th>
+        <td class="labelTd"><s:label for="b1" name="genre.name"/></td>
         <td><s:text id="b1" name="genre.name"/></td>
     </tr>
 </table>

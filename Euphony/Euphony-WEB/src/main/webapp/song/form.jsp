@@ -13,11 +13,11 @@
 
 <table>
     <tr>
-        <th><s:label for="b1" name="${title}"/></th>
+        <td class="labelTd"><s:label for="b1" name="${title}"/></td>
         <td><s:text id="b1" name="song.title"/></td>
     </tr>
     <tr>
-        <th><s:label for="b2" name="${bitrate}"/></th>
+        <td class="labelTd"><s:label for="b2" name="${bitrate}"/></td>
         <td>
             <s:select name="song.bitrate">
                 <c:if test="${empty edit.song.bitrate}">
@@ -37,15 +37,15 @@
 
     </tr>
     <tr>
-        <th><s:label for="b3" name="${trackNumber}"/></th>
+        <td class="labelTd"><s:label for="b3" name="${trackNumber}"/></td>
         <td><s:text id="b3" name="song.trackNumber"/></td>
     </tr>
     <tr>
-        <th><s:label for="b4" name="${comment}"/></th>
+        <td class="labelTd"><s:label for="b4" name="${comment}"/></td>
         <td><s:textarea id="b4" name="song.comment"/></td>
     </tr>
     <tr>
-        <th><s:label for="b5" name="${genre}"/></th>
+        <td class="labelTd"><s:label for="b5" name="${genre}"/></td>
         <td><c:choose>
                 <c:when test="${not empty edit.song.genre.id}">
                     <s:select id="b5" name="genre" value="${edit.song.genre.id}">
@@ -62,7 +62,7 @@
         </td>
     </tr>
     <tr>
-        <th><s:label for="b6" name="${album}"/></th>
+        <td class="labelTd"><s:label for="b6" name="${album}"/></td>
         <td>
             <c:choose>
                 <c:when test="${not empty edit.song.album.id}">
@@ -80,7 +80,7 @@
         </td>
     </tr>
     <tr>
-        <th><s:label for="b7" name="${artist}"/></th>
+        <td class="labelTd"><s:label for="b7" name="${artist}"/></td>
         <td>
             <c:choose>
                 <c:when test="${not empty edit.song.artist.id}">

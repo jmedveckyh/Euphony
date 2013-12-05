@@ -7,6 +7,8 @@
     <s:layout-component name="body">
         <s:useActionBean beanclass="com.musiclibrary.euphonyweb.GenreActionBean" var="actionBean"/>
 
+        <h3><f:message key="genre.list.editgenre"/></h3>
+        
         <s:form beanclass="com.musiclibrary.euphonyweb.GenreActionBean">
             <s:hidden name="genre.id"/>
             <fieldset><legend><f:message key="genre.edit.edit"/></legend>

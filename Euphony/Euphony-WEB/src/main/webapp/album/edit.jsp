@@ -6,6 +6,9 @@
 <s:layout-render name="/layout.jsp" titlekey="song.edit.title">
     <s:layout-component name="body">
         <s:useActionBean beanclass="com.musiclibrary.euphonyweb.AlbumActionBean" var="edit"/>
+        
+        <h3><f:message key="album.list.editalbum"/></h3>
+        
         <s:errors/>
         <s:form beanclass="com.musiclibrary.euphonyweb.AlbumActionBean">
             <s:hidden name="album.id"/>

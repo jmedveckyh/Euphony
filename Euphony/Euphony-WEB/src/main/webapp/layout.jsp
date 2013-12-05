@@ -17,6 +17,7 @@
             <title><f:message key="${titlekey}"/></title>
             <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css"/>
             <link rel="icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
+            <script src="${pageContext.request.contextPath}/js/jquery-1.10.2.min.js" type="text/javascript"></script>
             <script src="${pageContext.request.contextPath}/js/global.js" type="text/javascript"></script>
             <s:layout-component name="header"/>
         </head>
@@ -72,6 +73,7 @@
             <div class="content">
                 <s:messages/>
                 <s:layout-component name="body"/>
+                <hr>
             </div>
         </body>
     </html>

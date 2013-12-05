@@ -36,11 +36,11 @@
 
 <table>
     <tr>
-        <th><s:label for="b1" name="${title}"/></th>
+        <td class="labelTd"><s:label for="b1" name="${title}"/></td>
         <td><s:text id="b1" name="album.title" size="24"/></td>
     </tr>
     <tr>
-        <th><s:label for="b2" name="${cover}"/></th>
+        <td class="labelTd"><s:label for="b2" name="${cover}"/></td>
         <td><c:if test="${not empty edit.album.cover}">
                 <img src="${pageContext.request.contextPath}/upload/<c:out value="${edit.album.cover}"/>" width="100" height="100"/>
         <s:submit name="deleteCover"><f:message key="album.form.deleteCover"/></s:submit>
@@ -48,11 +48,11 @@
     <s:file id="b2" name="cover"/></td>
 </tr>
 <tr>
-    <th><s:label for="b3" name="${comment}"/></th>
+    <td class="labelTd"><s:label for="b3" name="${comment}"/></td>
     <td><s:textarea id="b3" name="album.comment"/></td>
 </tr>
 <tr>
-    <th><s:label for="b4" name="${releaseDate}"/></th>
+    <td class="labelTd"><s:label for="b4" name="${releaseDate}"/></td>
     <td>
         <s:text id="b4" name="releaseDate" size="24"/>
     </td>

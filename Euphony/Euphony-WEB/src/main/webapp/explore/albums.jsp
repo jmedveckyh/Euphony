@@ -9,19 +9,23 @@
         <h3><f:message key="menu.explore"/></h3>
         <%@include file="menuUp.jsp"%>
 
-        <p>index a albumy</p>
-
-        <table class="basic">
+        <table class="basicSquare">
+            <c:set var="counter" value="0"/>
             <tr>
-                <th><f:message key="album.id"/></th>
-                <th><f:message key="album.name"/></th>
+                <c:forEach items="${actionBean.albums}" var="album">
+                    <c:set var="counter" value="${counter + 1}"/>
+                    <td>
+                        <img src="${pageContext.request.contextPath}/upload/${album.cover}"/><br>
+                        <div class="blackTd"><c:out value="${album.title}"/></div><br>
+                        <div class="silverTd"><f:message key="album.releasedate"/>: <c:out value="${album.releaseDate.dayOfMonth}.${album.releaseDate.monthOfYear}.${album.releaseDate.year}"/></div><br>
+                    </td>
+                    <c:choose>
+                        <c:when test="${counter % 4 == 0}">
+                        </tr><tr>
+                        </c:when>
+                    </c:choose>
+                </c:forEach>
             </tr>
-            <c:forEach items="${actionBean.albums}" var="album">
-                <tr>
-                    <td><c:out value="${album.id}"/></td>
-                    <td><c:out value="${album.title}"/></td>
-                </tr>
-            </c:forEach>
         </table>
 
 

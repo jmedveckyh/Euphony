@@ -38,6 +38,8 @@ body {
     background-color: #222;
     top: 0;
     left: 0;
+    min-height: 100%;
+    height: auto;
 }
 
 .logo {
@@ -124,7 +126,7 @@ body {
     margin: 15px 27px;
 }
 
-#quickAddPlaylist, #quickAddPlaylistEdit { 
+#quickAddPlaylist, #quickAddPlaylistEdit, #playlistDelete { 
     display: none;
 }
 
@@ -147,12 +149,34 @@ body {
     border: 0;
 }
 
+.imgEdit {
+    width: 35px;
+}
+
+.imgDel {
+    width: 35px;
+}
+
+.imgEdit:hover {
+    width: 35px;
+    background-image: url("./../img/edit.png");
+    background-size: 35px;
+}
+
+.imgDel:hover {
+    width: 35px;
+    background-image: url("./../img/delete.png");
+    background-size: 35px;
+}
+
 /**** CONTENT ****/
 .content {
     position: absolute;
     background-color: #ebebeb;
     margin-left: 315px;
     margin-right: 15px;
+    width: 75%;
+    z-index: -1;
 }
 
 .content h3 {
@@ -174,9 +198,176 @@ body {
     text-decoration: none;
 }
 
+.content hr {
+    border: 0;
+    border-top: 1px solid #acacac;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    width: 30%;
+}
+
 .playlistEditSubMenu td {
     width: 50px;
     text-align: left
+}
+
+.basic {
+    width: 100%;
+    border-collapse: collapse;
+    padding-bottom: 20px;
+}
+
+.basic th {
+    text-align: left;
+}
+
+.basic tr {
+    height: 20px;
+}
+
+.basic td {
+    padding: 6px;
+}
+
+.basic .blackTd {
+    width: 35%;
+    font-size: 14px;
+}
+
+.basic .silverTd {
+    width: 35%;
+    color: #444242;
+    font-size: 12px;
+}
+
+.basic .actionTd {
+    width: 5%;
+}
+
+.basic tr:nth-child(even) {
+    background: #e2e2e2;
+}
+
+.basic tr:nth-child(odd) {
+    background: #ebebeb;
+}
+
+.basic tr:not(:first-child):hover {
+    background-color: #b6b6b6;
+}
+
+.basicSquare {
+    width: 90%;
+}
+
+.basicSquare img {
+    width: 170px;
+    padding-top: 5px;
+}
+
+.basicSquare .blackTd {
+    font-size: 14px;
+    margin-bottom: -15px;
+}
+
+.basicSquare .silverTd {
+    color: #444242;
+    font-size: 12px;
+}
+
+.labelTd {
+    width: 30%;
+    text-align: right;
+    padding-right: 10px;
+    font-weight: bold;
+}
+
+.dropdown select, fieldset select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: url('./../img/dropdown_arrow.gif') no-repeat;
+    background-position: 168px 0px;
+    width: 200px;
+    height: 26px;
+    margin-top: 10px;
+    text-indent: 0.01px;
+    text-overflow: "";
+    background-color: white;
+    border: 1px solid #b6b6b6;
+    color: #444242;
+    font-size: 15px;
+}
+
+fieldset select {
+    width: 330px;
+    background-position: 298px 0px;
+}
+
+fieldset {
+    -moz-border-radius-bottomleft: 7px;
+    -moz-border-radius-bottomright: 7px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 7px;
+    -webkit-border-radius: 7px;
+    border: 1px solid #acacac;
+    border-radius: 3px;
+    margin-bottom: 40px;
+    padding: 30px;
+}
+
+legend {
+    -moz-border-radius-bottomleft: 7px;
+    -moz-border-radius-bottomright: 7px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 7px;
+    -webkit-border-radius: 7px;
+    border: 1px solid #acacac;
+    background-color: #acacac;
+    color: white;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 15px;
+}
+  
+fieldset input[type="submit"], .dropdown input[type="submit"] {
+    height: 26px;
+    background-color: white;
+    border: 1px solid #b6b6b6;
+    color: #444242;
+    font-size: 15px;
+}
+
+fieldset input[type="submit"] {
+    margin-top: 20px;
+}
+
+fieldset input[type="file"] {
+    width: 330px;
+    height: 26px;
+    background-color: white;
+    border: 1px solid #b6b6b6;
+    color: #444242;
+    font-size: 15px;
+}
+
+fieldset input[type="text"] {
+    width: 300px;
+    height: 26px;
+    padding: 0 15px 0 15px;
+    background-color: white;
+    border: 1px solid #b6b6b6;
+    color: #444242;
+    font-size: 15px;
+}
+
+fieldset textarea {
+    width: 300px;
+    height: 60px;
+    padding: 15px;
+    background-color: white;
+    border: 1px solid #b6b6b6;
+    color: #444242;
+    font-size: 15px;
 }
 
 
@@ -289,3 +480,4 @@ body {
     opacity: 1; 
     margin-top: 18px; 
 }
+    
