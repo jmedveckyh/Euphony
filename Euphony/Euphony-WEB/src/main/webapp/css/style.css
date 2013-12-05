@@ -17,6 +17,14 @@ body {
     clear: both;
 }
 
+.errorbox {
+    margin: 10px; 
+    padding: 10px; 
+    color: #DE1B1B; 
+    font-weight: bold;
+}
+
+
 /**** LEFT PANEL ****/
 .home { 
     width: 268px;
