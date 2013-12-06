@@ -21,7 +21,11 @@
                 <c:forEach items="${actionBean.songs}" var="song">
                     <tr>
                         <td><s:checkbox name="selectedSongs" value="${song.id}"/></td>
-                        <td class="blackTd"><c:out value="${song.title}"/></td>
+                        <td class="blackTd">
+                            <s:link beanclass="com.musiclibrary.euphonyweb.SongActionBean" event="details">
+                            <s:param name="song.id" value="${song.id}"/>
+                            <c:out value="${song.title}"/>
+                            </s:link></td>
                         <td class="silverTd"><c:out value="${song.artist.name}"/></td>
                         <td class="silverTd"><c:out value="${song.album.title}"/></td>
                     </tr>   
