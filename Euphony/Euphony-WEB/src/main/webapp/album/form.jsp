@@ -9,9 +9,7 @@
 <fmt:message key='album.releaseDate' var="releaseDate"/>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/custom-theme/jquery-ui-1.10.3.custom.min.css">
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery-ui-1.10.3.custom.min.js"></script>
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
 <script>
     $(function() {
