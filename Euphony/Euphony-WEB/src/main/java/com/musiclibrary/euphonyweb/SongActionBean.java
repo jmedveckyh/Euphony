@@ -150,7 +150,7 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
         return new RedirectResolution(this.getClass(), "list");
     }
 
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save", "details"})
     public void loadSongFromDatabase() {
         String ids = getContext().getRequest().getParameter("song.id");
         if (ids == null) return;
@@ -175,5 +175,9 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
     public Resolution cancel() {
 //        log.debug("cancel() artist={}", artist);
         return new RedirectResolution(this.getClass(), "list");
+    }
+    
+    public Resolution details() {
+        return new ForwardResolution("/song/details.jsp");
     }
 }

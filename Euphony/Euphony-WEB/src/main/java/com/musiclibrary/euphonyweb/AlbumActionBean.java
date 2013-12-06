@@ -19,14 +19,12 @@ import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.FileBean;
 import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.HandlesEvent;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import net.sourceforge.stripes.validation.LocalizableError;
-import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationErrorHandler;
@@ -158,14 +156,12 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     }
 
     public Resolution deleteCover() {
-        //ZATIAL NEFUNGUJE
-        /*
          if(album.getCover()!=null){
-         String url = getContext().getServletContext().getRealPath("/upload/"+album.getCover());
-         File file = new File(url);
-         file.delete();
+            String url = getContext().getServletContext().getRealPath("/upload/"+album.getCover());
+            File file = new File(url);
+            file.delete();
+            album.setCover(null);
          }
-         */
         return getContext().getSourcePageResolution();
     }
 
