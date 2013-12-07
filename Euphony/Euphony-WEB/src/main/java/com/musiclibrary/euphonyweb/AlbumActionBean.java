@@ -10,7 +10,10 @@ import com.musiclibrary.euphonyapi.dto.GenreDTO;
 import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
 import com.musiclibrary.euphonyapi.services.AlbumService;
+import com.musiclibrary.euphonyapi.services.ArtistService;
+import com.musiclibrary.euphonyapi.services.GenreService;
 import com.musiclibrary.euphonyapi.services.PlaylistService;
+import com.musiclibrary.euphonyapi.services.SongService;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,8 +48,43 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     protected AlbumService albumService;
     @SpringBean
     protected PlaylistService playlistService;
+    @SpringBean
+    protected SongService songService;
+    @SpringBean
+    protected ArtistService artistService;
+    @SpringBean
+    protected GenreService genreService;
+    
     private List<PlaylistDTO> playlists;
     private PlaylistDTO playlist;
+    
+    private List<SongDTO> songs;
+    private List<ArtistDTO> artists;
+    private List<GenreDTO> genres;
+
+    public List<ArtistDTO> getArtists() {
+        return artists;
+    }
+
+    public void setArtists(List<ArtistDTO> artists) {
+        this.artists = artists;
+    }
+
+    public List<GenreDTO> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<GenreDTO> genres) {
+        this.genres = genres;
+    }
+
+    public List<SongDTO> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(List<SongDTO> songs) {
+        this.songs = songs;
+    }
     
     private String delete;
     public String getDelete() {
@@ -222,6 +260,9 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     }
     
     public Resolution details() {
+        songs=songService.getAll();
+        artists=artistService.getAll();
+        genres=genreService.getAll();
         return new ForwardResolution("/album/details.jsp");
     }
 }

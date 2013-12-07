@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * 
@@ -16,6 +17,7 @@ import javax.persistence.OneToOne;
  * @author Sebastian
  */
 @Entity
+@Table(name = "songs")
 public class Song implements Serializable {
     
     @Id

@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;
@@ -21,6 +22,7 @@ import org.joda.time.DateTime;
  * @author Branislav Novotny
  */
 @Entity
+@Table(name = "albums")
 public class Album implements Serializable {
     
     @Id
@@ -36,16 +38,16 @@ public class Album implements Serializable {
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime releaseDate;
         
-    @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(fetch= FetchType.EAGER,cascade= CascadeType.REFRESH)
+    @Fetch(FetchMode.JOIN)
+    @OneToMany(mappedBy="album",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
     private List<Song> songs;
 
     @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(fetch= FetchType.EAGER,cascade= CascadeType.REFRESH)
+    @OneToMany(fetch= FetchType.LAZY,cascade= CascadeType.REFRESH)
     private List<Genre> genres;
     
     @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(fetch= FetchType.EAGER,cascade= CascadeType.REFRESH)
+    @OneToMany(fetch= FetchType.LAZY,cascade= CascadeType.REFRESH)
     private List<Artist> artists;
 
     public Album() {
