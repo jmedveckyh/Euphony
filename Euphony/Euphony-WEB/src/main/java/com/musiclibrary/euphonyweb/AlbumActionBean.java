@@ -38,7 +38,7 @@ import org.springframework.dao.DataAccessException;
  *
  * @author Sebastian
  */
-@UrlBinding("/albums/{$event}/{album.id}")
+@UrlBinding("/albums/{$event}/{album.id}/{delete}")
 public class AlbumActionBean extends BaseActionBean implements ValidationErrorHandler {
 
     @SpringBean
@@ -47,6 +47,14 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     protected PlaylistService playlistService;
     private List<PlaylistDTO> playlists;
     private PlaylistDTO playlist;
+    
+    private String delete;
+    public String getDelete() {
+        return delete;
+    }
+    public void setDelete(String delete) {
+        this.delete = delete;
+    } 
 
     public List<PlaylistDTO> getPlaylists() {
         return playlists;
@@ -158,14 +166,18 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     public Resolution deleteCover() {
          if(album.getCover()!=null){
             String url = getContext().getServletContext().getRealPath("/upload/"+album.getCover());
+            /*
             File file = new File(url);
             file.delete();
+            * */
+            delete="yes";
             album.setCover(null);
          }
-        return getContext().getSourcePageResolution();
+        return new ForwardResolution("/album/edit.jsp");
+        //return new ForwardResolution("/album/edit.jsp");
     }
 
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save", "deleteCover"})
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save", "deleteCover" , "details"})
     public void loadAlbumFromDatabase() {
         String ids = getContext().getRequest().getParameter("album.id");
         if (ids == null) {
@@ -207,5 +219,9 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
                 errors.add("cover", new LocalizableError("validation.fileexists"));
             }
         }
+    }
+    
+    public Resolution details() {
+        return new ForwardResolution("/album/details.jsp");
     }
 }

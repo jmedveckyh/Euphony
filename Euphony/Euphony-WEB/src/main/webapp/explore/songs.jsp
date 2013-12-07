@@ -26,8 +26,15 @@
                             <s:param name="song.id" value="${song.id}"/>
                             <c:out value="${song.title}"/>
                             </s:link></td>
-                        <td class="silverTd"><c:out value="${song.artist.name}"/></td>
-                        <td class="silverTd"><c:out value="${song.album.title}"/></td>
+                        <td class="silverTd">
+                            <c:out value="${song.artist.name}"/>
+                        </td>
+                        <td class="silverTd">
+                            <s:link beanclass="com.musiclibrary.euphonyweb.AlbumActionBean" event="details">
+                            <s:param name="album.id" value="${song.album.id}"/>
+                            <c:out value="${song.album.title}"/>
+                            </s:link>
+                        </td>
                     </tr>   
                 </c:forEach>
             </table>

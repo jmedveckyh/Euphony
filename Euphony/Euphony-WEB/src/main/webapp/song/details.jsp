@@ -11,6 +11,10 @@
         <p><f:message key="song.trackNumber"/>: ${details.song.trackNumber}</p>
         <p><f:message key="song.genre"/>: ${details.song.genre.name} - odkaz na genre info</p>
         <p><f:message key="song.artist"/>: ${details.song.artist.name} - odkaz na ertist info</p>
-        <p><f:message key="song.album"/>: ${details.song.album.title} - odkaz na album info + obrazok</p>
+        <p><f:message key="song.album"/>: <s:link beanclass="com.musiclibrary.euphonyweb.AlbumActionBean" event="details">
+                <s:param name="album.id" value="${details.song.album.id}"/>
+                ${details.song.album.title}
+            </s:link>
+        </p>
     </s:layout-component>
 </s:layout-render>

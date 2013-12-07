@@ -17,6 +17,7 @@ import org.springframework.dao.DataAccessException;
  */
 public class DatabaseExceptionHandler extends DefaultExceptionHandler {
 
+    /*
     public Resolution handleDatabaseException(DataAccessException exc, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         ActionBean bean = (ActionBean) request.getAttribute(StripesConstants.REQ_ATTR_ACTION_BEAN);
@@ -51,4 +52,5 @@ public class DatabaseExceptionHandler extends DefaultExceptionHandler {
     public Resolution handleGeneric(Exception exc, HttpServletRequest request, HttpServletResponse response) {
         return new ForwardResolution("/");
     }
+    */
 }
