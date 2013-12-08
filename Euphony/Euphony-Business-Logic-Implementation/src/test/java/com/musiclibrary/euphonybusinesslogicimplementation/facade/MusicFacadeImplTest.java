@@ -41,7 +41,7 @@ public class MusicFacadeImplTest {
         albumService = mock(AlbumService.class);
         songService = mock(SongService.class);
         
-    }
+    }   
     
     private void assertDeepEquals(PlaylistDTO expected, PlaylistDTO actual) {
         assertEquals(expected.getId(), actual.getId());

@@ -115,7 +115,7 @@ public class MusicFacadeImpl implements MusicFacade {
     public void addSongToAlbum(SongDTO song, AlbumDTO album) {
 
         if (isSongInAlbum(song, album)) {
-            throw new MusicErrorException("The song is already in album.");
+            throw new IllegalArgumentException("The song is already in album.");
         } else {
             album.getSongs().add(song);
             albumService.update(album);
@@ -137,20 +137,10 @@ public class MusicFacadeImpl implements MusicFacade {
                 }
             }
 
-//            skusit toto
-//            Iterator<Object> it = map.keySet().iterator();
-//
-//            while (it.hasNext()) {
-//                it.next();
-//                if (something) {
-//                    it.remove();
-//                }
-//            }
-
             playlist.getSongs().remove(keyToRemove);
             playlistService.update(playlist);
         } else {
-            throw new MusicErrorException("The song is not in playlist.");
+            throw new IllegalArgumentException("The song is not in playlist.");
         }
 
     }
@@ -163,7 +153,7 @@ public class MusicFacadeImpl implements MusicFacade {
             album.getSongs().remove(song);
             albumService.update(album);
         } else {
-            throw new MusicErrorException("The song is not in album.");
+            throw new IllegalArgumentException("The song is not in album.");
         }
 
     }
