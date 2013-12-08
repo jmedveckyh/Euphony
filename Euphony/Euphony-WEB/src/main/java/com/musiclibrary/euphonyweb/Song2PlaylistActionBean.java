@@ -56,7 +56,7 @@ public class Song2PlaylistActionBean extends BaseActionBean implements Validatio
     }
 
     public Resolution song2playlist() {
-        if (playlists == null) {
+        if (selectedPlaylist == null) {
             return new RedirectResolution("/explore");
         }
         songs = songService.getAll();
