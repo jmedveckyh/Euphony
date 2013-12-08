@@ -5,7 +5,6 @@ import com.musiclibrary.euphonyapi.dto.ArtistDTO;
 import com.musiclibrary.euphonyapi.dto.GenreDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
 import java.util.List;
-import org.springframework.dao.DataAccessException;
 
 /**
  *
@@ -13,24 +12,24 @@ import org.springframework.dao.DataAccessException;
  */
 public interface AlbumService {
     
-    void create(AlbumDTO albumDTO) throws DataAccessException;
+    void create(AlbumDTO albumDTO);
     
-    void update(AlbumDTO albumDTO) throws DataAccessException;
+    void update(AlbumDTO albumDTO);
     
-    void delete(AlbumDTO albumDTO) throws DataAccessException;
+    void delete(AlbumDTO albumDTO);
     
-    AlbumDTO getById(Long id) throws DataAccessException;
+    AlbumDTO getById(Long id);
     
-    AlbumDTO getByTitle(String title) throws DataAccessException;
+    AlbumDTO getByTitle(String title);
         
-    List<AlbumDTO> getByGenre(GenreDTO genre)throws DataAccessException;
+    List<AlbumDTO> getByGenre(GenreDTO genre);
     
-    List<AlbumDTO> getByArtist(ArtistDTO artist) throws DataAccessException;
+    List<AlbumDTO> getByArtist(ArtistDTO artist);
     
-    List<AlbumDTO> getAllAlbums() throws DataAccessException;
+    List<AlbumDTO> getAllAlbums();
     
-    List<AlbumDTO> getByReleaseYear(Integer year) throws DataAccessException;    
+    List<AlbumDTO> getByReleaseYear(Integer year);    
 
-    List<SongDTO> getSongsByAlbum(AlbumDTO album) throws DataAccessException;
+    List<SongDTO> getSongsByAlbum(AlbumDTO album);
     
 }

@@ -3,7 +3,6 @@ package com.musiclibrary.euphonyapi.services;
 import com.musiclibrary.euphonyapi.dto.GenreDTO;
 //import com.musiclibrary.euphonybusinesslogicimplementation.dao.GenreDAO;
 import java.util.List;
-import org.springframework.dao.DataAccessException;
 
 /**
  *
@@ -11,17 +10,15 @@ import org.springframework.dao.DataAccessException;
  */
 public interface GenreService {
 
-    void create(GenreDTO genreDTO) throws DataAccessException;
+    void create(GenreDTO genreDTO);
 
-    void update(GenreDTO genreDTO) throws DataAccessException;
+    void update(GenreDTO genreDTO);
 
-    void delete(GenreDTO genreDTO) throws DataAccessException;
+    void delete(GenreDTO genreDTO);
 
-    GenreDTO getById(Long id) throws DataAccessException;
+    GenreDTO getById(Long id);
 
-    List<GenreDTO> getAll() throws DataAccessException;
+    List<GenreDTO> getAll();
 
-    GenreDTO getByName(String name) throws DataAccessException;
-
-//    void setDAO(GenreDAO genreDAO);
+    GenreDTO getByName(String name);
 }

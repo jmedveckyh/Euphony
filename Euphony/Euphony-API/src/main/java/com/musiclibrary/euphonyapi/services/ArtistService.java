@@ -3,7 +3,6 @@ package com.musiclibrary.euphonyapi.services;
 import com.musiclibrary.euphonyapi.dto.ArtistDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
 import java.util.List;
-import org.springframework.dao.DataAccessException;
 
 /**
  *
@@ -11,17 +10,17 @@ import org.springframework.dao.DataAccessException;
  */
 public interface ArtistService {
     
-    void create(ArtistDTO artistDTO) throws DataAccessException;
+    void create(ArtistDTO artistDTO);
 
-    void update(ArtistDTO artistDTO) throws DataAccessException;
+    void update(ArtistDTO artistDTO);
 
-    void delete(ArtistDTO artistDTO) throws DataAccessException;
+    void delete(ArtistDTO artistDTO);
 
-    ArtistDTO getById(Long id) throws DataAccessException;
+    ArtistDTO getById(Long id);
 
-    List<ArtistDTO> getAll() throws DataAccessException;
+    List<ArtistDTO> getAll();
 
-    ArtistDTO getByName(String name) throws DataAccessException;
+    ArtistDTO getByName(String name);
 
-    List<SongDTO> getSongsByArtist(ArtistDTO artist) throws DataAccessException;
+    List<SongDTO> getSongsByArtist(ArtistDTO artist);
 }
