@@ -22,24 +22,26 @@
             <s:layout-component name="header"/>
         </head>
         <body>
-            <div class="home" onclick="window.location.href='${pageContext.request.contextPath}'"></div>
+            <div class="home" onclick="window.location.href = '${pageContext.request.contextPath}'"></div>
             <div class="navigation">
                 <div class="logo"><h1>Euphony</h1></div>
                 <div class="cl"></div>
                 <div class="search">
                     <table border="0">
-                        <tr>
-                            <td><input type="text" name="search" class="search" required></td>
-                            <td><input type="submit" value=""></td>
-                        </tr>
+                        <s:form beanclass="com.musiclibrary.euphonyweb.SearchActionBean">
+                            <tr>
+                                <td><s:text name="phrase" class="search"/></td>
+                                <td><s:submit name="search" value=""></s:submit></td>
+                                </tr>
+                        </s:form>
                     </table>
                 </div>
                 <div class="menu">
                     <ul>
                         <li><a href="${pageContext.request.contextPath}"><span><f:message key="menu.explore"/></span></a></li>
                         <li><a href="javascript:void(0);" onclick="javascript:showDiv();"><span><f:message key="menu.newplaylist"/></span></a></li>
-                        <f:message key='playlist.name' var="name"/>
-                        <s:form beanclass="com.musiclibrary.euphonyweb.PlaylistActionBean" name="quickAddPlaylist" onsubmit="return validateAddPlaylistForm()">
+                                    <f:message key='playlist.name' var="name"/>
+                                    <s:form beanclass="com.musiclibrary.euphonyweb.PlaylistActionBean" name="quickAddPlaylist" onsubmit="return validateAddPlaylistForm()">
                             <li id="quickAddPlaylist">
                                 <s:text class="quickAddPlaylist" name="playlist.name" id="pn"/>
                                 <s:submit name="add" class="quickAddPlaylistSubmit">
@@ -64,13 +66,13 @@
                                     <li><s:link beanclass="com.musiclibrary.euphonyweb.ArtistActionBean"><f:message key="menu.admin.newartist"/></s:link></li>
                                     <li><s:link beanclass="com.musiclibrary.euphonyweb.AlbumActionBean"><f:message key="menu.admin.newalbum"/></s:link></li>
                                     <li><s:link beanclass="com.musiclibrary.euphonyweb.SongActionBean"><f:message key="menu.admin.newsong"/></s:link></li>
-                                </ul>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="content">
+                        </li>
+                    </ul>
+                </div>
+                <div class="content">
                 <s:messages/>
                 <s:layout-component name="body"/>
                 <hr>
