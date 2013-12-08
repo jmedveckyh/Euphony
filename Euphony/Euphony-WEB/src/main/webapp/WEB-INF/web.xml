@@ -51,6 +51,10 @@
             <param-name>ExceptionHandler.Class</param-name>
             <param-value>com.musiclibrary.euphonyweb.DatabaseExceptionHandler</param-value>
         </init-param>
+        <init-param>
+            <param-name>LocalePicker.Class</param-name>
+            <param-value>com.musiclibrary.euphonyweb.LocalePicker</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>StripesFilter</filter-name>
