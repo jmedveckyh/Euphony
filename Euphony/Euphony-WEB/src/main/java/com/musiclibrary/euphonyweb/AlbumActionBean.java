@@ -56,43 +56,17 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     protected GenreService genreService;
     
     private List<PlaylistDTO> playlists;
-    private PlaylistDTO playlist;
-    
     private List<SongDTO> songs;
-    private List<ArtistDTO> artists;
-    private List<GenreDTO> genres;
-
-    public List<ArtistDTO> getArtists() {
-        return artists;
-    }
-
-    public void setArtists(List<ArtistDTO> artists) {
-        this.artists = artists;
-    }
-
-    public List<GenreDTO> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(List<GenreDTO> genres) {
-        this.genres = genres;
-    }
-
-    public List<SongDTO> getSongs() {
-        return songs;
-    }
+    private PlaylistDTO playlist;
+  
 
     public void setSongs(List<SongDTO> songs) {
         this.songs = songs;
     }
     
-    private String delete;
-    public String getDelete() {
-        return delete;
+    public List<SongDTO> getSongs() {
+        return songs;
     }
-    public void setDelete(String delete) {
-        this.delete = delete;
-    } 
 
     public List<PlaylistDTO> getPlaylists() {
         return playlists;
@@ -208,7 +182,6 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
             File file = new File(url);
             file.delete();
             * */
-            delete="yes";
             album.setCover(null);
          }
         return new ForwardResolution("/album/edit.jsp");
@@ -260,9 +233,6 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     }
     
     public Resolution details() {
-        songs=songService.getAll();
-        artists=artistService.getAll();
-        genres=genreService.getAll();
         return new ForwardResolution("/album/details.jsp");
     }
 }

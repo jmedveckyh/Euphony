@@ -29,7 +29,7 @@
             <tr>                
                 <th><f:message key="genre.name"/></th>
             </tr>
-                <c:forEach items="${actionBean.genres}" var="genre">
+                <c:forEach items="${actionBean.album.genres}" var="genre">
                 <tr>
                 <td><c:out value="${genre.name}"/></td>
                 </tr>
@@ -41,7 +41,7 @@
             <tr>                
                 <th><f:message key="artist.name"/></th>
             </tr>
-                <c:forEach items="${actionBean.artists}" var="artist">
+                <c:forEach items="${actionBean.album.artists}" var="artist">
                 <tr>
                 <td><c:out value="${artist.name}"/></td>
                 </tr>
