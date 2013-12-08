@@ -3,7 +3,7 @@ package com.musiclibrary.euphonyapi.services;
 import com.musiclibrary.euphonyapi.dto.AlbumDTO;
 import com.musiclibrary.euphonyapi.dto.ArtistDTO;
 import com.musiclibrary.euphonyapi.dto.GenreDTO;
-//import com.musiclibrary.euphonybusinesslogicimplementation.dao.AlbumDAO;
+import com.musiclibrary.euphonyapi.dto.SongDTO;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 
@@ -31,5 +31,6 @@ public interface AlbumService {
     
     List<AlbumDTO> getByReleaseYear(Integer year) throws DataAccessException;    
 
-//    void setDAO(AlbumDAO dao);
+    List<SongDTO> getSongsByAlbum(AlbumDTO album) throws DataAccessException;
+    
 }

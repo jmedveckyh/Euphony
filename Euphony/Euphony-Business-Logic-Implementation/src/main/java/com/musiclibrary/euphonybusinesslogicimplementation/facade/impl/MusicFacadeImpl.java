@@ -25,7 +25,6 @@ public class MusicFacadeImpl implements MusicFacade {
 
     @Autowired
     private PlaylistService playlistService;
-    
     @Autowired
     private AlbumService albumService;
 
@@ -41,13 +40,12 @@ public class MusicFacadeImpl implements MusicFacade {
 
     public void createPlaylist(PlaylistDTO playlist) {
         playlistService.create(playlist);
-    }    
+    }
 
     public void createAlbum(AlbumDTO album) {
         albumService.create(album);
     }
-    
-    
+
     @Override
     @Transactional
     public Boolean isSongInPlaylist(SongDTO song, PlaylistDTO playlist) {
@@ -79,7 +77,7 @@ public class MusicFacadeImpl implements MusicFacade {
     public Boolean isSongInAlbum(SongDTO song, AlbumDTO album) {
 
         Util.validateAlbum(DTOMapper.toEntity(album));
-        
+
         if (song.getId() == null) {
             throw new IllegalArgumentException("Song's id is null.");
         }
@@ -132,12 +130,22 @@ public class MusicFacadeImpl implements MusicFacade {
         if (isSongInPlaylist(song, playlist)) {
             Integer keyToRemove = null;
 
-            for (Map.Entry<Integer, SongDTO> entry : playlist.getSongs().entrySet()) {
-                if (song == entry.getValue()) {
+            for (Entry<Integer, SongDTO> entry : playlist.getSongs().entrySet()) {
+                if (song.equals(entry.getValue())) {
                     keyToRemove = entry.getKey();
                     break;
                 }
             }
+
+//            skusit toto
+//            Iterator<Object> it = map.keySet().iterator();
+//
+//            while (it.hasNext()) {
+//                it.next();
+//                if (something) {
+//                    it.remove();
+//                }
+//            }
 
             playlist.getSongs().remove(keyToRemove);
             playlistService.update(playlist);
@@ -159,5 +167,4 @@ public class MusicFacadeImpl implements MusicFacade {
         }
 
     }
-    
 }

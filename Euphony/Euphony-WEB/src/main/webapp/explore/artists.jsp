@@ -8,14 +8,19 @@
     <s:layout-component name="body">
         <h3><f:message key="menu.explore"/></h3>
         <%@include file="menuUp.jsp"%>
-        
+
         <table class="basic">
             <tr>
                 <th><f:message key="artist.name"/></th>
             </tr>
             <c:forEach items="${actionBean.artists}" var="artist">
                 <tr>
-                    <td><c:out value="${artist.name}"/></td>
+                    <td>
+                        <s:link beanclass="com.musiclibrary.euphonyweb.ExploreActionBean" event="showArtist">
+                            <s:param name="mainId" value="${artist.id}"/>
+                            <c:out value="${artist.name}"/>
+                        </s:link>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

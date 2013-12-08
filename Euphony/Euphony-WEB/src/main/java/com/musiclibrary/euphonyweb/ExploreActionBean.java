@@ -25,7 +25,7 @@ import net.sourceforge.stripes.validation.ValidationErrors;
  * 
  * @author Tomas Smetanka #396209
  */
-@UrlBinding("/explore/{$event}")
+@UrlBinding("/explore/{$event}/{mainId}")
 public class ExploreActionBean extends BaseActionBean implements ValidationErrorHandler {
 
     @SpringBean
@@ -46,32 +46,11 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
     private PlaylistDTO playlist;
     private List<GenreDTO> genres;
     private List<SongDTO> songs;
+    private List<SongDTO> songsInAlbum;
+    private List<SongDTO> songsInArtist;
     private List<AlbumDTO> albums;
     private List<ArtistDTO> artists;
     private List<PlaylistDTO> playlists;
-    
-//    @Validate(required = true, on = {"song2playlist"})
-//    private List<SongDTO> selectedSongs;
-//
-//    public List<SongDTO> getSelectedSongs() {
-//        return selectedSongs;
-//    }
-//
-//    public void setSelectedSongs(List<SongDTO> selectedSongs) {
-//        this.selectedSongs = selectedSongs;
-//    }
-
-//    @Validate(required = true, on="song2playlist")
-//    private PlaylistDTO selectedPlaylist;
-//
-//    public PlaylistDTO getSelectedPlaylist() {
-//        return selectedPlaylist;
-//    }
-//
-//    public void setSelectedPlaylist(PlaylistDTO selectedPlaylist) {
-//        this.selectedPlaylist = selectedPlaylist;
-//    }
-    
     
     @DefaultHandler
     public Resolution songs() {
@@ -80,13 +59,6 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
         playlists = playlistService.getAll();
         return new ForwardResolution("/explore/songs.jsp");
     }
-
-//    public Resolution song2playlist() {
-//        for (SongDTO selectedSong : selectedSongs) {
-//            facade.addSongToPlaylist(selectedSong, playlistService.getById(new Long(2)));
-//        }
-//        return new ForwardResolution("/explore/songs.jsp");
-//    }
 
     public Resolution albums() {
         //log.debug("list()");
@@ -101,23 +73,38 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
         playlists = playlistService.getAll();
         return new ForwardResolution("/explore/artists.jsp");
     }
-
+    
     @Override
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
         songs = songService.getAll();
         return null;
-    }
+    }    
 
-//    @Before(stages = LifecycleStage.BindingAndValidation, on = {"song2playlist"})
-//    public void loadFromDatabase() {
-//        String idPlaylist = getContext().getRequest().getParameter("playlist.id");
-//        String idSong = getContext().getRequest().getParameter("song.id");
-//        if (idPlaylist == null || idSong == null) {
-//            return;
-//        }
-//        playlist = playlistService.getById(Long.parseLong(idPlaylist));
-//        song = songService.getById(Long.parseLong(idSong));
-//    }
+    public Resolution showAlbum() {
+        String ids = getContext().getRequest().getParameter("mainId"); 
+        if (ids == null) {
+            return new ForwardResolution("/explore");
+        }
+        
+        playlists = playlistService.getAll();
+        album = albumService.getById(Long.parseLong(ids));
+        songsInAlbum = albumService.getSongsByAlbum(album);
+        
+        return new ForwardResolution("/explore/album.jsp");
+    }
+    
+    public Resolution showArtist() {
+        String ids = getContext().getRequest().getParameter("mainId");
+        if (ids == null) {
+            return new ForwardResolution("/explore");
+        }
+        
+        playlists = playlistService.getAll();
+        artist = artistService.getById(Long.parseLong(ids));
+        songsInArtist = artistService.getSongsByArtist(artist);
+        
+        return new ForwardResolution("/explore/artist.jsp");
+    }
 
     //--- getters and setters ----
     public List<GenreDTO> getGenres() {
@@ -182,5 +169,21 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
 
     public void setPlaylist(PlaylistDTO playlist) {
         this.playlist = playlist;
+    }
+    
+    public List<SongDTO> getSongsInAlbum() {
+        return songsInAlbum;
+    }
+
+    public void setSongsInAlbum(List<SongDTO> songsInAlbum) {
+        this.songsInAlbum = songsInAlbum;
+    }
+    
+    public List<SongDTO> getSongsInArtist() {
+        return songsInArtist;
+    }
+
+    public void setSongsInArtist(List<SongDTO> songsInArtist) {
+        this.songsInArtist = songsInArtist;
     }
 }

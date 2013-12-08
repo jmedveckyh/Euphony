@@ -1,6 +1,7 @@
 package com.musiclibrary.euphonybusinesslogicimplementation.dao;
 
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Artist;
+import com.musiclibrary.euphonybusinesslogicimplementation.entities.Song;
 import java.util.List;
 
 /**
@@ -21,4 +22,5 @@ public interface ArtistDAO {
 
     public Artist getByName(String name);
     
+    public List<Song> getSongsByArtist(Artist artist);
 }

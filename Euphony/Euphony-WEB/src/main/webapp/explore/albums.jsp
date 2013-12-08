@@ -15,8 +15,13 @@
                 <c:forEach items="${actionBean.albums}" var="album">
                     <c:set var="counter" value="${counter + 1}"/>
                     <td>
-                        <img src="${pageContext.request.contextPath}/upload/${album.cover}"/><br>
-                        <div class="blackTd"><c:out value="${album.title}"/></div><br>
+                        <s:link beanclass="com.musiclibrary.euphonyweb.ExploreActionBean" event="showAlbum">
+                            <img src="${pageContext.request.contextPath}/upload/${album.cover}"/><br>
+                            <div class="blackTd">
+                                <s:param name="mainId" value="${album.id}"/>
+                                <c:out value="${album.title}"/>
+                            </s:link>
+                        </div><br>
                         <div class="silverTd"><f:message key="album.releasedate"/>: <c:out value="${album.releaseDate.dayOfMonth}.${album.releaseDate.monthOfYear}.${album.releaseDate.year}"/></div><br>
                     </td>
                     <c:choose>

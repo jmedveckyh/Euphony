@@ -23,18 +23,11 @@
                         <td><s:checkbox name="selectedSongs" value="${song.id}"/></td>
                         <td class="blackTd">
                             <s:link beanclass="com.musiclibrary.euphonyweb.SongActionBean" event="details">
-                            <s:param name="song.id" value="${song.id}"/>
-                            <c:out value="${song.title}"/>
+                                <s:param name="song.id" value="${song.id}"/>
+                                <c:out value="${song.title}"/>
                             </s:link></td>
-                        <td class="silverTd">
-                            <c:out value="${song.artist.name}"/>
-                        </td>
-                        <td class="silverTd">
-                            <s:link beanclass="com.musiclibrary.euphonyweb.AlbumActionBean" event="details">
-                            <s:param name="album.id" value="${song.album.id}"/>
-                            <c:out value="${song.album.title}"/>
-                            </s:link>
-                        </td>
+                        <td class="silverTd"><c:out value="${song.artist.name}"/></td>
+                        <td class="silverTd"><c:out value="${song.album.title}"/></td>
                     </tr>   
                 </c:forEach>
             </table>
@@ -43,9 +36,7 @@
                     <s:option value=""/>
                     <s:options-collection collection="${actionBean.playlists}" label="name" value="id"/>
                 </s:select>
-                <s:hidden name="title" value="${song.title}"/>
                 <s:submit name="song2playlist"><f:message key="add.song.to.playlist"/></s:submit>
-                <s:errors field="selectedSongs"/>
             </s:form>
         </div>
         <div class="cl"></div>

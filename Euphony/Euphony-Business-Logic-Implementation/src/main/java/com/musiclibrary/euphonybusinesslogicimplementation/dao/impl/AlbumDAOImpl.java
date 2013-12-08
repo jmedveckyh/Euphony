@@ -4,6 +4,7 @@ import com.musiclibrary.euphonybusinesslogicimplementation.dao.AlbumDAO;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Album;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Artist;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Genre;
+import com.musiclibrary.euphonybusinesslogicimplementation.entities.Song;
 import com.musiclibrary.euphonybusinesslogicimplementation.util.Util;
 import java.util.Collections;
 import java.util.List;
@@ -198,6 +199,26 @@ public class AlbumDAOImpl implements AlbumDAO {
             try {
                 List<Album> albums = q.getResultList();
                 return albums;
+            } catch (NoResultException ex) {
+                return null;
+            }
+        } catch (PersistenceException | IllegalArgumentException ex) {
+            throw new DataAccessException(ex.getMessage(), ex) {
+            };
+        }
+    }
+
+    @Override
+    public List<Song> getSongsByAlbum(Album album) {
+        try {
+            if (album == null) {
+                throw new IllegalArgumentException("Album is null");
+            }
+            Query q = em.createQuery("select x from Song x WHERE x.album = :album");
+            q.setParameter("album", album);
+            try {
+                List<Song> songs = q.getResultList();
+                return songs;
             } catch (NoResultException ex) {
                 return null;
             }

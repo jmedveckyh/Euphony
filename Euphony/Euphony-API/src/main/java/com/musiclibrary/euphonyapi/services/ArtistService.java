@@ -1,7 +1,7 @@
 package com.musiclibrary.euphonyapi.services;
 
 import com.musiclibrary.euphonyapi.dto.ArtistDTO;
-//import com.musiclibrary.euphonybusinesslogicimplementation.dao.ArtistDAO;
+import com.musiclibrary.euphonyapi.dto.SongDTO;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 
@@ -23,5 +23,5 @@ public interface ArtistService {
 
     ArtistDTO getByName(String name) throws DataAccessException;
 
-//    void setDAO(ArtistDAO artistDAO);
+    List<SongDTO> getSongsByArtist(ArtistDTO artist) throws DataAccessException;
 }

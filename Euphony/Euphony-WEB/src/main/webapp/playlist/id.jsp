@@ -42,33 +42,44 @@
                 </s:submit>
             </div>
         </s:form>
-        <div class="cl"><br><br></div>
-
-
 
         <c:set var="numberOfSongs" scope="session" value="${actionBean.playlist.songs}"/>
         <c:choose>
             <c:when test="${empty numberOfSongs}">
-                <i><f:message key="playlist.songs.none"/></i>
+                <br><i><f:message key="playlist.songs.none"/></i>
             </c:when>
             <c:otherwise>
                 <h4><f:message key="playlist.listofsongs"/></h4>
+
+                <table class="basic">
+                    <tr>
+                        <th></th>
+                        <th><f:message key="song.title"/></th>
+                        <th><f:message key="song.artist"/></th>
+                        <th><f:message key="song.album"/></th>
+                    </tr>
+                    <s:form beanclass="com.musiclibrary.euphonyweb.Song2PlaylistActionBean">
+                        <c:forEach items="${actionBean.playlist.songs}" var="song">
+                            <tr>
+                                <td><s:checkbox name="selectedSongs" value="${song.value.id}"/></td>
+                                <td class="blackTd">
+                                    <s:link beanclass="com.musiclibrary.euphonyweb.SongActionBean" event="details">
+                                        <s:param name="song.id" value="${song.value.id}"/>
+                                        <c:out value="${song.value.title}"/>
+                                    </s:link></td>
+                                <td class="silverTd"><c:out value="${song.value.artist.name}"/></td>
+                                <td class="silverTd"><c:out value="${song.value.album.title}"/></td>
+                            </tr>   
+                        </c:forEach>
+                    </table>
+                    <br>
+                    <div class="dropdown">
+                        <s:hidden name="selectedPlaylist" value="${actionBean.playlist.id}"/>
+                        <s:submit name="songFromPlaylist"><f:message key="remove.song.from.playlist"/></s:submit>
+                    </s:form>
+                </div>
             </c:otherwise>
         </c:choose>
-        <table>
-            <c:forEach items="${actionBean.playlist.songs}" var="song"> 
-                <tr>
-                    <td><c:out value="${song.id}"/></td>
-                    <td><c:out value="${song.title}"/></td>
-                    <td><c:out value="${song.bitrate}"/></td>
-                    <td><c:out value="${song.trackNumber}"/></td>
-                    <td><c:out value="${song.comment}"/></td>
-                    <td><c:out value="${song.genre.name}"/></td>
-                    <td><c:out value="${song.artist.name}"/></td>
-                    <td><c:out value="${song.album.title}"/></td>
-                </tr>
-            </c:forEach>
-        </table>
 
     </s:layout-component>
 </s:layout-render>

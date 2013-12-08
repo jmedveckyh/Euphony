@@ -1,6 +1,7 @@
 package com.musiclibrary.euphonybusinesslogicimplementation.services.impl;
 
 import com.musiclibrary.euphonyapi.dto.ArtistDTO;
+import com.musiclibrary.euphonyapi.dto.SongDTO;
 import com.musiclibrary.euphonyapi.services.ArtistService;
 import com.musiclibrary.euphonybusinesslogicimplementation.dao.ArtistDAO;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Artist;
@@ -70,5 +71,11 @@ public class ArtistServiceImpl implements ArtistService {
 
         return DTOMapper.toDTO(artistDAO.getByName(name));
 
+    }
+    
+    public List<SongDTO> getSongsByArtist(ArtistDTO artist) throws DataAccessException {
+        
+        return DTOMapper.songsListToDTO(artistDAO.getSongsByArtist(DTOMapper.toEntity(artist)));
+        
     }
 }

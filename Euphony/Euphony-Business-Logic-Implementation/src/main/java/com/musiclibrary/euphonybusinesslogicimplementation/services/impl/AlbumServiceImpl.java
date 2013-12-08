@@ -3,6 +3,7 @@ package com.musiclibrary.euphonybusinesslogicimplementation.services.impl;
 import com.musiclibrary.euphonyapi.dto.AlbumDTO;
 import com.musiclibrary.euphonyapi.dto.ArtistDTO;
 import com.musiclibrary.euphonyapi.dto.GenreDTO;
+import com.musiclibrary.euphonyapi.dto.SongDTO;
 import com.musiclibrary.euphonyapi.services.AlbumService;
 import com.musiclibrary.euphonybusinesslogicimplementation.dao.AlbumDAO;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Album;
@@ -91,6 +92,13 @@ public class AlbumServiceImpl implements AlbumService {
     public List<AlbumDTO> getByArtist(ArtistDTO artist) throws DataAccessException {
 
         return DTOMapper.albumListToDTO(albumDAO.getByArtist(DTOMapper.toEntity(artist)));
+
+    }
+
+    @Override
+    public List<SongDTO> getSongsByAlbum(AlbumDTO album) throws DataAccessException {
+
+        return DTOMapper.songsListToDTO(albumDAO.getSongsByAlbum(DTOMapper.toEntity(album)));
 
     }
 }
