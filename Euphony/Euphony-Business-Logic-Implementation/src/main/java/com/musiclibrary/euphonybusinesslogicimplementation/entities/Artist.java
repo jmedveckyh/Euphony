@@ -31,9 +31,9 @@ public class Artist implements Serializable {
     @Column(unique = true)
     private String name;
     
-    @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(fetch= FetchType.EAGER,cascade= CascadeType.REFRESH)
-    private List<Song> songs;
+//    @Fetch(FetchMode.SUBSELECT)
+//    @OneToMany(fetch= FetchType.EAGER,cascade= CascadeType.REFRESH)
+//    private List<Song> songs;
 
     public Artist() {
     }

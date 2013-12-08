@@ -1,76 +1,77 @@
 package com.musiclibrary.euphonybusinesslogicimplementation.dao;
 
+import com.musiclibrary.euphonybusinesslogicimplementation.dao.impl.ArtistDAOImpl;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Artist;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import static org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Unit tests for Artist DAO implementation.
  *
  * @author Jakub Medvecky-Heretik #396373
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/testApplicationContext.xml" ) 
-@Transactional
 public class ArtistDAOImplTest {
 
-    @Autowired
-    private ArtistDAO artistDAO;
+    private EntityManagerFactory emf;
+    private EntityManager em;
+    private ArtistDAOImpl artistDAOImpl;
 
-    public void setArtistDAO(ArtistDAO artistDAO) {
-        this.artistDAO = artistDAO;
+    @Before
+    public void setUp() {
+        emf = Persistence.createEntityManagerFactory("testEuphonyPU");
+        em = emf.createEntityManager();
+        artistDAOImpl = new ArtistDAOImpl(em);
     }
     
     /**
-     * Test of createArtist method, of class artistDAO with wrong attributes.
+     * Test of createArtist method, of class artistDAOImpl with wrong attributes.
      */
     @Test(expected = DataAccessException.class)
     public void testCreateArtistWithNull() {
-        
-        artistDAO.create(null);              //artist is null
-        
-        
+        em.getTransaction().begin();
+        artistDAOImpl.create(null);              //artist is null
+        em.getTransaction().commit();
+        em.clear();
     }
 
     @Test(expected = DataAccessException.class)
     public void testCreateArtistWithNullAttributes() {
-        
+        em.getTransaction().begin();
         Artist artist = new Artist();
-        artistDAO.create(artist);              //artist has null attributes
-        
-        
+        artistDAOImpl.create(artist);              //artist has null attributes
+        em.getTransaction().commit();
+        em.clear();
     }
 
     @Test(expected = DataAccessException.class)
     public void testCreateArtistWithEmptyName() {
-        
+        em.getTransaction().begin();
         Artist artist = new Artist();
         artist.setName("");
-        artistDAO.create(artist);              //artist has empty name
-        
-        
+        artistDAOImpl.create(artist);              //artist has empty name
+        em.getTransaction().commit();
+        em.clear();
     }
 
     /**
-     * Test of createArtist method, of class artistDAO.
+     * Test of createArtist method, of class artistDAOImpl.
      */
     @Test
     public void testCreateArtist() {
         System.out.println("createArtist");
 
-        
+        em.getTransaction().begin();
         Artist artist = new Artist("Bjork");     //artist has not-empty name and null id
-        artistDAO.create(artist);
-        
-        
+        artistDAOImpl.create(artist);
+        em.getTransaction().commit();
+        em.clear();
 
         assertNotNull(artist.getId());
         Long artistId = artist.getId();
@@ -82,97 +83,97 @@ public class ArtistDAOImplTest {
     }
 
     /**
-     * Test of getArtistById method, of class artistDAO with wrong attributes.
+     * Test of getArtistById method, of class artistDAOImpl with wrong attributes.
      */
     @Test(expected = DataAccessException.class)
     public void testGetArtistByIdWithNull() {
-        
-        artistDAO.getById(null);              //id and class are null
-        
-        
+        em.getTransaction().begin();
+        artistDAOImpl.getById(null);              //id and class are null
+        em.getTransaction().commit();
+        em.clear();
     }
 
     @Test
     public void testGetArtistByIdWithNotAssignedId() {
-        
-        Artist nullResult = artistDAO.getById(new Long(100));              //getArtist with not assigned id, should return null
-        
-        
+        em.getTransaction().begin();
+        Artist nullResult = artistDAOImpl.getById(new Long(100));              //getArtist with not assigned id, should return null
+        em.getTransaction().commit();
+        em.clear();
         assertNull(nullResult);
     }
 
     /**
-     * Test of getArtistById method, of class artistDAO.
+     * Test of getArtistById method, of class artistDAOImpl.
      */
     @Test
     public void testGetArtistById() {
         System.out.println("getArtistById");
 
-        
+        em.getTransaction().begin();
         Artist expResult = new Artist("Marika Gombitova");
-        artistDAO.create(expResult);
-        
-        
+        artistDAOImpl.create(expResult);
+        em.getTransaction().commit();
+        em.clear();
 
         assertNotNull(expResult.getId());
         Long artistId = expResult.getId();
 
-        Artist result = artistDAO.getById(artistId);              //correct
+        Artist result = artistDAOImpl.getById(artistId);              //correct
         assertDeepEquals(expResult, result);
     }
 
     /**
-     * Test of updateArtist method, of class artistDAO with wrong attributes.
+     * Test of updateArtist method, of class artistDAOImpl with wrong attributes.
      */
     @Test(expected = DataAccessException.class)
     public void testUpdateArtistWithNull() {
-        
-        artistDAO.update(null);              //artist is null
-        
-        
+        em.getTransaction().begin();
+        artistDAOImpl.update(null);              //artist is null
+        em.getTransaction().commit();
+        em.clear();
     }
 
     @Test(expected = DataAccessException.class)
     public void testUpdateArtistWithNullAttributes() {
-        
+        em.getTransaction().begin();
         Artist artist = new Artist();
-        artistDAO.update(artist);              //artist has null attributes
-        
-        
+        artistDAOImpl.update(artist);              //artist has null attributes
+        em.getTransaction().commit();
+        em.clear();
     }
 
     @Test(expected = DataAccessException.class)
     public void testUpdateArtistWithEmptyName() {
-        
+        em.getTransaction().begin();
         Artist artist = new Artist();
         artist.setName("");
-        artistDAO.update(artist);              //artist has empty name
-        
-        
+        artistDAOImpl.update(artist);              //artist has empty name
+        em.getTransaction().commit();
+        em.clear();
     }
 
     @Test(expected = DataAccessException.class)
     public void testUpdateArtistWithNoId() {
-        
+        em.getTransaction().begin();
         Artist artist = new Artist();
         artist.setName("Marika Gombitova");           //artist has null id
-        artistDAO.update(artist);
-        
-        
+        artistDAOImpl.update(artist);
+        em.getTransaction().commit();
+        em.clear();
     }
 
     @Test(expected = DataAccessException.class)
     public void testUpdateArtistWithNotAssignedId() {
-        
+        em.getTransaction().begin();
         Artist artist = new Artist("Marika Gombitova");
         artist.setId(new Long(100));             //artist has not assigned id from db
-        artistDAO.update(artist);
-        
-        
+        artistDAOImpl.update(artist);
+        em.getTransaction().commit();
+        em.clear();
     }
 
     /**
-     * Test of updateArtist method, of class artistDAO.
+     * Test of updateArtist method, of class artistDAOImpl.
      */
     @Test
     public void testUpdateArtist() {
@@ -182,37 +183,37 @@ public class ArtistDAOImplTest {
 
         Artist updatedArtist = new Artist("Michal David");
 
-        
-        artistDAO.create(artist);
-        
+        em.getTransaction().begin();
+        artistDAOImpl.create(artist);
+        em.getTransaction().commit();
         updatedArtist.setId(artist.getId());
 
-        
-        artistDAO.update(updatedArtist);                //correct
-        
-        assertDeepEquals(updatedArtist, artistDAO.getById(artist.getId()));
-        
+        em.getTransaction().begin();
+        artistDAOImpl.update(updatedArtist);                //correct
+        em.getTransaction().commit();
+        assertDeepEquals(updatedArtist, artistDAOImpl.getById(artist.getId()));
+        em.clear();
 
     }
 
     /**
-     * Test of deleteArtist method, of class artistDAO with wrong attributes.
+     * Test of deleteArtist method, of class artistDAOImpl with wrong attributes.
      */
     @Test(expected = DataAccessException.class)
     public void testDeleteArtistWithNull() {
-        
-        artistDAO.delete(null);           //artist is null
-        
-        
+        em.getTransaction().begin();
+        artistDAOImpl.delete(null);           //artist is null
+        em.getTransaction().commit();
+        em.clear();
     }
 
     @Test(expected = DataAccessException.class)
     public void testDeleteArtistWithNullId() {
         Artist artist = new Artist("Marika Gombitova");
-        
-        artistDAO.delete(artist);           //artist has null id
-        
-        
+        em.getTransaction().begin();
+        artistDAOImpl.delete(artist);           //artist has null id
+        em.getTransaction().commit();
+        em.clear();
     }
 
     @Test(expected = DataAccessException.class)
@@ -220,90 +221,90 @@ public class ArtistDAOImplTest {
         Artist artist = new Artist("Marika Gombitova");
         artist.setId(new Long(100));
 
-        
-        artistDAO.delete(artist);           //artist has not assigned id from db 
-        
-        
+        em.getTransaction().begin();
+        artistDAOImpl.delete(artist);           //artist has not assigned id from db 
+        em.getTransaction().commit();
+        em.clear();
     }
 
     /**
-     * Test of deleteArtist method, of class artistDAO.
+     * Test of deleteArtist method, of class artistDAOImpl.
      */
     @Test
     public void testDeleteArtist() {
         System.out.println("deleteArtist");
 
         Artist artist = new Artist("Marika Gombitova");
+        em.getTransaction().begin();
+        artistDAOImpl.create(artist);           //correct
+        em.getTransaction().commit();
+        em.clear();
         
-        artistDAO.create(artist);           //correct
-        
-        
-        
-        
-        artistDAO.delete(artist);           
-        
-        
+        em.getTransaction().begin();
+        artistDAOImpl.delete(artist);           
+        em.getTransaction().commit();
+        em.clear();
     }
 
     /**
-     * Test of getArtistByName method, of class artistDAO with wrong attributes.
+     * Test of getArtistByName method, of class artistDAOImpl with wrong attributes.
      */
 
     @Test(expected = DataAccessException.class)
     public void testGetArtistByNameWithNull() {
-        
-        artistDAO.getByName(null);              //name is null
-        
-        
+        em.getTransaction().begin();
+        artistDAOImpl.getByName(null);              //name is null
+        em.getTransaction().commit();
+        em.clear();
     }
     
     @Test
     public void testGetArtistByNameWithNotAssignedName() {
-        
-        Artist nullResult = artistDAO.getByName("Nicki Minaj");              //getArtistByName with not assigned name, should return null
-        
-        
+        em.getTransaction().begin();
+        Artist nullResult = artistDAOImpl.getByName("Nicki Minaj");              //getArtistByName with not assigned name, should return null
+        em.getTransaction().commit();
+        em.clear();
         assertNull(nullResult);
     }
     
     /**
-     * Test of getArtistById method, of class artistDAO.
+     * Test of getArtistById method, of class artistDAOImpl.
      */
     @Test
     public void testGetArtistByName() {
         System.out.println("getArtistByName");
 
-        
+        em.getTransaction().begin();
         Artist expResult = new Artist("Nicki Minaj");
-        artistDAO.create(expResult);
-        
-        
+        artistDAOImpl.create(expResult);
+        em.getTransaction().commit();
+        em.clear();
 
         assertNotNull(expResult.getId());
 
-        Artist result = artistDAO.getByName(expResult.getName());              //correct
+        Artist result = artistDAOImpl.getByName(expResult.getName());              //correct
         assertDeepEquals(expResult, result);
     }
     
     /**
-     * Test of getArtistById method, of class artistDAO.
+     * Test of getArtistById method, of class artistDAOImpl.
      */
     @Test
     public void testGetAllArtists() {
         System.out.println("getAllArtists");
 
         List<Artist> expResults = new ArrayList<Artist>();
-        assertEquals(expResults, artistDAO.getAll());
+        assertEquals(expResults, artistDAOImpl.getAll());
         
-        
+        em.getTransaction().begin();
         Artist expResult1 = new Artist("Nicki Minaj");
         Artist expResult2 = new Artist("Robo Kazik");
         Artist expResult3 = new Artist("Team");
-        artistDAO.create(expResult1);
-        artistDAO.create(expResult2);
-        artistDAO.create(expResult3);
-        
-        
+        artistDAOImpl.create(expResult1);
+        artistDAOImpl.create(expResult2);
+        artistDAOImpl.create(expResult3);
+        em.getTransaction().commit();
+        em.clear();
 
         assertNotNull(expResult1.getId());
         assertNotNull(expResult2.getId());
@@ -313,12 +314,12 @@ public class ArtistDAOImplTest {
         expResults.add(expResult2);
         expResults.add(expResult3);
 
-        List<Artist> results = artistDAO.getAll();              //correct
+        List<Artist> results = artistDAOImpl.getAll();              //correct
         assertEquals(expResults, results);
         
     }
     
-    private void assertDeepEquals(Artist expected, Artist actual) {
+    public static void assertDeepEquals(Artist expected, Artist actual) {
         assertEquals(expected.getId(), actual.getId());
         assertEquals(expected.getName(), actual.getName());
     }

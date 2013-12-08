@@ -42,11 +42,11 @@ public class Album implements Serializable {
     private List<Song> songs;
 
     @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(fetch= FetchType.LAZY,cascade= CascadeType.REFRESH)
+    @ManyToMany(fetch= FetchType.LAZY,cascade= CascadeType.REFRESH)
     private List<Genre> genres;
     
     @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(fetch= FetchType.LAZY,cascade= CascadeType.REFRESH)
+    @ManyToMany(fetch= FetchType.LAZY,cascade= CascadeType.REFRESH)
     private List<Artist> artists;
 
     public Album() {
