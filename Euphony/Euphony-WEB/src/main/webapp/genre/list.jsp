@@ -38,7 +38,7 @@
                             <img src="${pageContext.request.contextPath}/img/delete.png" width="25px"/>
                         </s:link>
                     </td>
-                    <td class="blackTd"><c:out value="${genre.name}"/></td>
+                    <td><c:out value="${genre.name}"/></td>
                 </tr>
             </c:forEach>
         </table>

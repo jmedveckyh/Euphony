@@ -22,7 +22,6 @@
             <tr>                
                 <th><f:message key="action.update"/></th>
                 <th><f:message key="action.delete"/></th>
-                <th><f:message key="action.details"/></th>
                 <th><f:message key="album.cover"/></th>
                 <th><f:message key="album.title"/></th>
                 <th><f:message key="album.comment"/></th>
@@ -42,12 +41,6 @@
                         <s:link beanclass="com.musiclibrary.euphonyweb.AlbumActionBean" event="delete">
                             <s:param name="album.id" value="${album.id}"/>
                             <img src="${pageContext.request.contextPath}/img/delete.png" width="25px"/>
-                        </s:link>
-                    </td>
-                    <td class="actionTd">
-                        <s:link beanclass="com.musiclibrary.euphonyweb.AlbumActionBean" event="details">
-                            <s:param name="album.id" value="${album.id}"/>
-                            <img src="${pageContext.request.contextPath}/img/details.png" width="25px"/>
                         </s:link>
                     </td>
                     <td>

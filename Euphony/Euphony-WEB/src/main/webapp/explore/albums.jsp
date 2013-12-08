@@ -16,7 +16,14 @@
                     <c:set var="counter" value="${counter + 1}"/>
                     <td>
                         <s:link beanclass="com.musiclibrary.euphonyweb.ExploreActionBean" event="showAlbum">
-                            <img src="${pageContext.request.contextPath}/upload/${album.cover}"/><br>
+                             <c:choose>
+                                <c:when test="${not empty album.cover}">
+                                    <img src="${pageContext.request.contextPath}/upload/${album.cover}"/><br>
+                                </c:when>
+                                <c:otherwise>
+                                    <img src="${pageContext.request.contextPath}/upload/nocover.png"/><br>
+                                </c:otherwise>
+                            </c:choose>
                             <div class="blackTd">
                                 <s:param name="mainId" value="${album.id}"/>
                                 <c:out value="${album.title}"/>

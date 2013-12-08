@@ -105,6 +105,18 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
         
         return new ForwardResolution("/explore/artist.jsp");
     }
+    
+    public Resolution showSong() {
+        String ids = getContext().getRequest().getParameter("mainId");
+        if (ids == null) {
+            return new ForwardResolution("/explore");
+        }
+        
+        playlists = playlistService.getAll();
+        song = songService.getById(Long.parseLong(ids));
+        
+        return new ForwardResolution("/explore/song.jsp");
+    }
 
     //--- getters and setters ----
     public List<GenreDTO> getGenres() {

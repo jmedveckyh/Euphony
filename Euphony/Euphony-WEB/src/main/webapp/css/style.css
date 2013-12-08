@@ -267,6 +267,9 @@ body {
 
 .basic .silverTd {
     width: 35%;
+}
+
+.basic .silverTd a {
     color: #444242;
     font-size: 12px;
 }
@@ -287,11 +290,11 @@ body {
     background-color: #b6b6b6;
 }
 
-.basic a, .basicSquare a {
+.basic a, .basicSquare a, .showSongDetail a {
     color: black;
 }
 
-.basic a:hover, .basicSquare a:hover {
+.basic a:hover, .basicSquare a:hover, .showSongDetail a:hover {
     text-decoration: underline;
 }
 
@@ -325,6 +328,20 @@ body {
 
 .showAlbumDetail h3 {
     margin-top: 0px;
+}
+
+.showSongDetail img {
+    width: 170px;
+    padding-top: 5px;
+}
+
+.showSongDetail td {
+    vertical-align: top;
+    padding-right: 15px;
+}
+
+.showSongDetail {
+    font-size: 110%;
 }
 
 .labelTd {

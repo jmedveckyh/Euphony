@@ -6,6 +6,7 @@ import com.musiclibrary.euphonyapi.facade.MusicFacade;
 import com.musiclibrary.euphonyapi.services.PlaylistService;
 import com.musiclibrary.euphonyapi.services.SongService;
 import java.util.List;
+import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.integration.spring.SpringBean;
@@ -71,11 +72,14 @@ public class Song2PlaylistActionBean extends BaseActionBean implements Validatio
    public Resolution songFromPlaylist() {
         songs = songService.getAll();
         playlists = playlistService.getAll();
+        if (selectedSongs == null) {
+            return new ForwardResolution("/playlist/else/show/" + selectedPlaylist);
+        }
         for (Long selectedSong : selectedSongs) {
             facade.removeSongFromPlaylist(songService.getById(selectedSong), playlistService.getById(selectedPlaylist));
         }
         
-        return new RedirectResolution("/explore"); 
+        return new ForwardResolution("/playlist/else/show/" + selectedPlaylist);
     }
 
     @Override

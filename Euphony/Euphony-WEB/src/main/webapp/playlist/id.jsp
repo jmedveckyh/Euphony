@@ -63,12 +63,23 @@
                             <tr>
                                 <td><s:checkbox name="selectedSongs" value="${song.value.id}"/></td>
                                 <td class="blackTd">
-                                    <s:link beanclass="com.musiclibrary.euphonyweb.SongActionBean" event="details">
-                                        <s:param name="song.id" value="${song.value.id}"/>
+                                    <s:link beanclass="com.musiclibrary.euphonyweb.ExploreActionBean" event="showSong">
+                                        <s:param name="mainId" value="${song.value.id}"/>
                                         <c:out value="${song.value.title}"/>
-                                    </s:link></td>
-                                <td class="silverTd"><c:out value="${song.value.artist.name}"/></td>
-                                <td class="silverTd"><c:out value="${song.value.album.title}"/></td>
+                                    </s:link>
+                                </td>
+                                <td class="silverTd">
+                                    <s:link beanclass="com.musiclibrary.euphonyweb.ExploreActionBean" event="showArtist">
+                                        <s:param name="mainId" value="${song.value.artist.id}"/>
+                                        <c:out value="${song.value.artist.name}"/>
+                                    </s:link>
+                                </td>
+                                <td class="silverTd">
+                                    <s:link beanclass="com.musiclibrary.euphonyweb.ExploreActionBean" event="showAlbum">
+                                        <s:param name="mainId" value="${song.value.album.id}"/>
+                                        <c:out value="${song.value.album.title}"/>
+                                    </s:link>
+                                </td>
                             </tr>   
                         </c:forEach>
                     </table>
