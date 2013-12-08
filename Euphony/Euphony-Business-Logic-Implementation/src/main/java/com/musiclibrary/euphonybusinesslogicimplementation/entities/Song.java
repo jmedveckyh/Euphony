@@ -17,7 +17,6 @@ import javax.persistence.Table;
  * @author Sebastian
  */
 @Entity
-@Table(name = "songs")
 public class Song implements Serializable {
     
     @Id

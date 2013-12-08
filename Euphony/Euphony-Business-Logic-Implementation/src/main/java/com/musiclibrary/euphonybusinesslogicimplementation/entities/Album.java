@@ -22,7 +22,6 @@ import org.joda.time.DateTime;
  * @author Branislav Novotny
  */
 @Entity
-@Table(name = "albums")
 public class Album implements Serializable {
     
     @Id
@@ -38,8 +37,8 @@ public class Album implements Serializable {
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime releaseDate;
         
-    @Fetch(FetchMode.JOIN)
-    @OneToMany(mappedBy="album",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.REFRESH)
     private List<Song> songs;
 
     @Fetch(FetchMode.SUBSELECT)
