@@ -165,16 +165,6 @@ public class AlbumDAOImplTest extends TestCase {
         }
         em.getTransaction().commit();
         em.clear();
-
-        /*
-         List<Artist> artists = new ArrayList();
-         List<Genre> genres = new ArrayList();
-         artists.add(new Artist("Iron Maiden"));
-         genres.add(new Genre("heavy metal"));
-         album = new Album("The Number of the Beast", "cover1.jpg", DateTime.now(), new ArrayList<Song>(), "comment1", artists, genres);
-        
-         List<Song> songs = new ArrayList();
-         songs.add(new Song("The Prisoner",320,2,"comment",genre,album,artist));*/
     }
 
     /**
@@ -419,7 +409,6 @@ public class AlbumDAOImplTest extends TestCase {
         expResult.getGenres().add(technoGen);
         albumDao.create(expResult);
         em.getTransaction().commit();
-        //em.clear();
 
         em.getTransaction().begin();
         Album expResult2 = new Album("Mirage", "cover1.jpg", new DateTime(2010, 1, 1, 0, 0), new ArrayList<Song>(), "hehe",
@@ -446,13 +435,6 @@ public class AlbumDAOImplTest extends TestCase {
         houseList.add(expResult2);
         assertEquals(2, resultList2.size());
         assertEquals(houseList, resultList2);
-
-
-        /*assertEquals(expResult.getTitle(), result.getTitle());
-         assertEquals(expResult.getCover(), result.getCover());
-         assertEquals(expResult.getReleaseDate(), result.getReleaseDate());
-         assertEquals(expResult.getArtists(), result.getArtists());*/
-
     }
 
     public void testGetAlbumByArtist() {
@@ -499,14 +481,7 @@ public class AlbumDAOImplTest extends TestCase {
         hardwellList.add(expResult);
         hardwellList.add(expResult2);
         assertEquals(2, resultList2.size());
-        assertEquals(hardwellList, resultList2);
-
-        /*
-         assertEquals(expResult.getTitle(), result.getTitle());
-         assertEquals(expResult.getCover(), result.getCover());
-         assertEquals(expResult.getReleaseDate(), result.getReleaseDate());
-         assertEquals(expResult.getArtists(), result.getArtists());
-         */
+        assertEquals(hardwellList, resultList2);   
     }
 
     public void testGetAlbumByReleaseYear() {
