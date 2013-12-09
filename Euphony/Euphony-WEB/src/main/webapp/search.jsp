@@ -12,14 +12,27 @@
 
 <s:layout-render name="./layout.jsp" titlekey="search.title">
     <s:layout-component name="body">
-        <s:useActionBean beanclass="com.musiclibrary.euphonyweb.SearchActionBean" var="actionBean"/>
+        <s:useActionBean beanclass="com.musiclibrary.euphonyweb.SearchActionBean" var="searchActionBean"/>
         <s:useActionBean beanclass="com.musiclibrary.euphonyweb.PlaylistActionBean" var="playlistActionBean"/>
 
-        <h3><f:message key="search.list"/></h3>
-        <table class="basic">
-            <tr>
-                <td>***<c:out value="${actionBean.phrase}"/>***</td>
-            </tr>
-        </table>        
+        <h3><f:message key="menu.explore"/></h3>
+        <%@include file="explore/menuUp.jsp"%>
+
+        <h3><f:message key="search.list.songs"/> "${searchActionBean.phrase}" </h3>
+
+        <%@include file="incl/songsIncl.jsp"%>
+
+        <h3><f:message key="search.list.albums"/> "${searchActionBean.phrase}" </h3>
+
+        <%@include file="incl/albumsIncl.jsp"%>
+
+        <h3><f:message key="search.list.artists"/> "${searchActionBean.phrase}" </h3>
+
+        <%@include file="incl/artistsIncl.jsp"%>
+
+        <h3><f:message key="search.list.playlists"/> "${searchActionBean.phrase}" </h3>
+
+         <%@include file="incl/playlistsIncl.jsp"%>
+
     </s:layout-component>
 </s:layout-render>
