@@ -7,6 +7,7 @@ import com.musiclibrary.euphonyapi.facade.MusicFacade;
 import com.musiclibrary.euphonyapi.services.AlbumService;
 import com.musiclibrary.euphonyapi.services.PlaylistService;
 import com.musiclibrary.euphonyapi.services.SongService;
+import com.musiclibrary.euphonybusinesslogicimplementation.facade.impl.MusicFacadeImpl;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,9 +31,7 @@ public class MusicFacadeImplTest {
     
     @Before
     public void setUp() {   
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("/applicationContext.xml");
-        facade = (MusicFacade) ctx.getBean("musicFacadeImpl");
-        
+        facade = new MusicFacadeImpl();
         facade.setPlaylistService(playlistService);
         facade.setAlbumService(albumService);
 
