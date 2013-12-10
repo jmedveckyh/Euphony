@@ -18,8 +18,6 @@ import junit.framework.TestCase;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -299,11 +297,6 @@ public class SongServiceImplTest extends TestCase{
        
         when(dao.getByGenre(DTOMapper.toEntity(genreDto2))).thenReturn(list);
         assertEquals(DTOMapper.songsListToEntity(dtoList), DTOMapper.songsListToEntity(service.getByGenre(genreDto2)));
-       
-        /*
-        verify(dao,times(1)).getByGenre(DTOMapper.toEntity(genreDto1));
-        verify(dao,times(1)).getByGenre(DTOMapper.toEntity(genreDto2));
-        */
     }
     
     public void testGetByArtist(){
@@ -353,11 +346,6 @@ public class SongServiceImplTest extends TestCase{
        
         when(dao.getByArtist(DTOMapper.toEntity(artistDto2))).thenReturn(list);
         assertEquals(DTOMapper.songsListToEntity(dtoList), DTOMapper.songsListToEntity(service.getByArtist(artistDto2)));
-       
-        /*
-        verify(dao,times(1)).getByGenre(DTOMapper.toEntity(genreDto1));
-        verify(dao,times(1)).getByGenre(DTOMapper.toEntity(genreDto2));
-        */
     }
     
     public void testGetByAlbum(){
@@ -404,11 +392,6 @@ public class SongServiceImplTest extends TestCase{
        
         when(dao.getByAlbum(DTOMapper.toEntity(albumDto2))).thenReturn(list);
         assertEquals(DTOMapper.songsListToEntity(dtoList), DTOMapper.songsListToEntity(service.getByAlbum(albumDto2)));
-       
-        /*
-        verify(dao,times(1)).getByGenre(DTOMapper.toEntity(genreDto1));
-        verify(dao,times(1)).getByGenre(DTOMapper.toEntity(genreDto2));
-        */
     }
     
     public void testGetArtistByNameSub(){

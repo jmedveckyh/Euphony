@@ -4,7 +4,6 @@ import com.musiclibrary.euphonybusinesslogicimplementation.dao.AlbumDAO;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Album;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Artist;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Genre;
-import com.musiclibrary.euphonybusinesslogicimplementation.entities.Song;
 import com.musiclibrary.euphonybusinesslogicimplementation.util.Util;
 import java.util.Collections;
 import java.util.List;

@@ -3,7 +3,6 @@ package com.musiclibrary.euphonybusinesslogicimplementation.dao;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Album;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Artist;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Genre;
-import com.musiclibrary.euphonybusinesslogicimplementation.entities.Song;
 import java.util.List;
 
 /**

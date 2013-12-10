@@ -1,7 +1,6 @@
 package com.musiclibrary.euphonyapi.services;
 
 import com.musiclibrary.euphonyapi.dto.ArtistDTO;
-import com.musiclibrary.euphonyapi.dto.SongDTO;
 import java.util.List;
 
 /**

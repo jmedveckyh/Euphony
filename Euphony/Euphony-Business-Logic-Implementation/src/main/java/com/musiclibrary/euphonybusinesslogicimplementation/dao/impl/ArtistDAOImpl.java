@@ -2,7 +2,6 @@ package com.musiclibrary.euphonybusinesslogicimplementation.dao.impl;
 
 import com.musiclibrary.euphonybusinesslogicimplementation.dao.ArtistDAO;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Artist;
-import com.musiclibrary.euphonybusinesslogicimplementation.entities.Song;
 import com.musiclibrary.euphonybusinesslogicimplementation.util.Util;
 import java.util.Collections;
 import java.util.List;
