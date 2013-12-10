@@ -144,24 +144,4 @@ public class ArtistDAOImpl implements ArtistDAO {
             };
         }
     }
-
-    @Override
-    public List<Song> getSongsByArtist(Artist artist) {
-        try {
-            if (artist == null) {
-                throw new IllegalArgumentException("Album is null");
-            }
-            Query q = em.createQuery("select x from Song x WHERE x.artist = :artist");
-            q.setParameter("artist", artist);
-            try {
-                List<Song> songs = q.getResultList();
-                return songs;
-            } catch (NoResultException ex) {
-                return null;
-            }
-        } catch (PersistenceException | IllegalArgumentException ex) {
-            throw new DataAccessException(ex.getMessage(), ex) {
-            };
-        }
-    }
 }

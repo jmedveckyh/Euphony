@@ -207,24 +207,4 @@ public class AlbumDAOImpl implements AlbumDAO {
             };
         }
     }
-
-    @Override
-    public List<Song> getSongsByAlbum(Album album) {
-        try {
-            if (album == null) {
-                throw new IllegalArgumentException("Album is null");
-            }
-            Query q = em.createQuery("select x from Song x WHERE x.album = :album");
-            q.setParameter("album", album);
-            try {
-                List<Song> songs = q.getResultList();
-                return songs;
-            } catch (NoResultException ex) {
-                return null;
-            }
-        } catch (PersistenceException | IllegalArgumentException ex) {
-            throw new DataAccessException(ex.getMessage(), ex) {
-            };
-        }
-    }
 }

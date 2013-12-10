@@ -22,5 +22,4 @@ public interface ArtistDAO {
 
     public Artist getByName(String name);
     
-    public List<Song> getSongsByArtist(Artist artist);
 }

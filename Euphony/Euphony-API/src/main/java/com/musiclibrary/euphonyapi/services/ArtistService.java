@@ -21,8 +21,6 @@ public interface ArtistService {
     List<ArtistDTO> getAll();
 
     ArtistDTO getByName(String name);
-
-    List<SongDTO> getSongsByArtist(ArtistDTO artist);
     
     List<ArtistDTO> getArtistsByNameSub(String phrase);
             

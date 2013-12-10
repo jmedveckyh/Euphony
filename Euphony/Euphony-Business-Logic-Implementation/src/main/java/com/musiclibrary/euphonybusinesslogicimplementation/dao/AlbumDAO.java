@@ -29,7 +29,5 @@ public interface AlbumDAO {
     public List<Album> getByArtist(Artist artist);
     
     public List<Album> getByReleaseYear(Integer year);
-    
-    public List<Song> getSongsByAlbum(Album album);
-    
+        
 }

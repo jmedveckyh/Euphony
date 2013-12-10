@@ -88,7 +88,7 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
         
         playlists = playlistService.getAll();
         album = albumService.getById(Long.parseLong(ids));
-        songsInAlbum = albumService.getSongsByAlbum(album);
+        songsInAlbum = songService.getByAlbum(album);
         
         return new ForwardResolution("/explore/album.jsp");
     }
@@ -101,7 +101,7 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
         
         playlists = playlistService.getAll();
         artist = artistService.getById(Long.parseLong(ids));
-        songsInArtist = artistService.getSongsByArtist(artist);
+        songsInArtist = songService.getByArtist(artist);
         
         return new ForwardResolution("/explore/artist.jsp");
     }

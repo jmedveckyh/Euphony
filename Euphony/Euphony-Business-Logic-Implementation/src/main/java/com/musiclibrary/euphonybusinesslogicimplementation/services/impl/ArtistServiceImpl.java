@@ -74,13 +74,7 @@ public class ArtistServiceImpl implements ArtistService {
         return DTOMapper.toDTO(artistDAO.getByName(name));
 
     }
-    
-    public List<SongDTO> getSongsByArtist(ArtistDTO artist) throws DataAccessException {
-        
-        return DTOMapper.songsListToDTO(artistDAO.getSongsByArtist(DTOMapper.toEntity(artist)));
-        
-    }
-    
+
     @Override
     public List<ArtistDTO> getArtistsByNameSub(String phrase){
         List<ArtistDTO> tmpArtists = getAll();

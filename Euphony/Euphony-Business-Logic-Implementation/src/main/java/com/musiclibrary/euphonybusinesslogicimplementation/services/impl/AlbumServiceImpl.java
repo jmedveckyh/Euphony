@@ -96,13 +96,6 @@ public class AlbumServiceImpl implements AlbumService {
         return DTOMapper.albumListToDTO(albumDAO.getByArtist(DTOMapper.toEntity(artist)));
 
     }
-
-    @Override
-    public List<SongDTO> getSongsByAlbum(AlbumDTO album) throws DataAccessException {
-
-        return DTOMapper.songsListToDTO(albumDAO.getSongsByAlbum(DTOMapper.toEntity(album)));
-
-    }
     
     @Override
     public List<AlbumDTO> getAlbumsByTitleSub(String phrase){

@@ -31,7 +31,5 @@ public interface AlbumService {
     List<AlbumDTO> getAlbumsByTitleSub(String phrase);
     
     List<AlbumDTO> getByReleaseYear(Integer year);    
-
-    List<SongDTO> getSongsByAlbum(AlbumDTO album);
     
 }
