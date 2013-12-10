@@ -411,4 +411,33 @@ public class SongServiceImplTest extends TestCase{
         */
     }
     
+    public void testGetArtistByNameSub(){
+        ArrayList<Song> allList = new ArrayList<>();
+        
+        SongDTO expResult1 = new SongDTO("Armin Van Buuren");
+        SongDTO expResult2 = new SongDTO("Paul van Dyk");
+        SongDTO expResult3 = new SongDTO("Sean Paul");
+        
+        expResult1.setId(1l);
+        expResult2.setId(2l);
+        expResult3.setId(3l);
+       
+        allList.add(DTOMapper.toEntity(expResult1));
+        allList.add(DTOMapper.toEntity(expResult2));
+        allList.add(DTOMapper.toEntity(expResult3));
+        
+        ArrayList<Song> paulList = new ArrayList<>();
+        paulList.add(DTOMapper.toEntity(expResult2));
+        paulList.add(DTOMapper.toEntity(expResult3));
+
+        ArrayList<Song> vanList = new ArrayList<>();
+        vanList.add(DTOMapper.toEntity(expResult1));
+        vanList.add(DTOMapper.toEntity(expResult2));
+        
+        when(dao.getAll()).thenReturn(allList);
+        
+        assertEquals(paulList, DTOMapper.songsListToEntity(service.getSongsByTitleSub("pAUL")));
+        assertEquals(vanList, DTOMapper.songsListToEntity(service.getSongsByTitleSub("van")));
+    }
+    
 }

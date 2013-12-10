@@ -546,7 +546,7 @@ public class AlbumDAOImplTest extends TestCase {
         twoOtwelveList.add(expResult5);
         assertEquals(twoOtwelveList, resultList2);
     }
-
+    
     private void assertDeepEquals(Album a1, Album a2) {
         assertEquals(a1.getId(), a2.getId());
         assertDeepEquals(a1.getArtists(), a2.getArtists());

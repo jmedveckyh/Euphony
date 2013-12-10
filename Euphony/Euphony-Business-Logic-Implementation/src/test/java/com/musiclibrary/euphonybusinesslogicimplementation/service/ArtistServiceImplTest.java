@@ -8,6 +8,7 @@ import com.musiclibrary.euphonybusinesslogicimplementation.entities.Artist;
 import com.musiclibrary.euphonybusinesslogicimplementation.services.impl.ArtistServiceImpl;
 import com.musiclibrary.euphonybusinesslogicimplementation.util.DTOMapper;
 import java.util.ArrayList;
+import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -151,6 +152,35 @@ public class ArtistServiceImplTest {
         assertNull(artist.getId());
 
         verifyNoMoreInteractions(artistDAO);
+    }
+    
+    public void testGetArtistByNameSub(){
+        ArrayList<Artist> allList = new ArrayList<>();
+        
+        ArtistDTO expResult1 = new ArtistDTO("Armin Van Buuren");
+        ArtistDTO expResult2 = new ArtistDTO("Paul van Dyk");
+        ArtistDTO expResult3 = new ArtistDTO("Sean Paul");
+        
+        expResult1.setId(1l);
+        expResult2.setId(2l);
+        expResult3.setId(3l);
+       
+        allList.add(DTOMapper.toEntity(expResult1));
+        allList.add(DTOMapper.toEntity(expResult2));
+        allList.add(DTOMapper.toEntity(expResult3));
+        
+        ArrayList<Artist> paulList = new ArrayList<>();
+        paulList.add(DTOMapper.toEntity(expResult2));
+        paulList.add(DTOMapper.toEntity(expResult3));
+
+        ArrayList<Artist> vanList = new ArrayList<>();
+        vanList.add(DTOMapper.toEntity(expResult1));
+        vanList.add(DTOMapper.toEntity(expResult2));
+        
+        when(artistDAO.getAll()).thenReturn(allList);
+        
+        assertEquals(paulList, DTOMapper.artistsListToEntity(artistService.getArtistsByNameSub("pAUL")));
+        assertEquals(vanList, DTOMapper.artistsListToEntity(artistService.getArtistsByNameSub("van")));
     }
 
     private void assertDeepEquals(ArtistDTO expected, ArtistDTO actual) {
