@@ -12,9 +12,6 @@ import com.musiclibrary.euphonyapi.services.AlbumService;
 import com.musiclibrary.euphonyapi.services.ArtistService;
 import com.musiclibrary.euphonyapi.services.PlaylistService;
 import com.musiclibrary.euphonyapi.services.SongService;
-import java.text.Normalizer;
-import java.text.Normalizer.Form;
-import java.util.ArrayList;
 import java.util.List;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -99,77 +96,14 @@ public class SearchActionBean extends BaseActionBean implements ValidationErrorH
     public Resolution handleValidationErrors(ValidationErrors ve) throws Exception {
         throw new IllegalArgumentException("Not supported yet.");
     }
-    /*
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"search"})
-    public void loadPhraseFromDatabase() {
-        phrase = getContext().getRequest().getParameter("phrase");
-    }
-    */
+
     @DefaultHandler
     public Resolution search() {
         playlists = playlistService.getAll();
-        songs = getSongsByTitleSub(phrase);
-        albums = getAlbumsByTitleSub(phrase);
-        artists = getArtistsByNameSub(phrase);
-        playlists = getPlaylistsByNameSub(phrase);
+        songs = songService.getSongsByTitleSub(phrase);
+        albums = albumService.getAlbumsByTitleSub(phrase);
+        artists = artistService.getArtistsByNameSub(phrase);
         
         return new ForwardResolution("/search.jsp");
-    }
-    
-    public String removeDiacritics(String str){
-        if(str == null){
-            return "";
-        }
-        return Normalizer.normalize(str, Form.NFD)
-               .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
-    }
-    
-    public List<SongDTO> getSongsByTitleSub(String subword){
-        List<SongDTO> tmpSongs = songService.getAll();
-        List<SongDTO> resSongs = new ArrayList<>();
-        for (SongDTO song : tmpSongs) {
-            
-            if(removeDiacritics(song.getTitle().toLowerCase())
-               .contains(removeDiacritics(phrase).toLowerCase())){
-                resSongs.add(song);
-            }
-        }
-        return resSongs;
-    }
-    
-    public List<AlbumDTO> getAlbumsByTitleSub(String subword){
-        List<AlbumDTO> tmpAlbums = albumService.getAllAlbums();
-        List<AlbumDTO> resAlbums = new ArrayList<>();
-        for (AlbumDTO album : tmpAlbums) {
-            if(removeDiacritics(album.getTitle().toLowerCase())
-               .contains(removeDiacritics(phrase).toLowerCase())){
-                resAlbums.add(album);
-            }
-        }
-        return resAlbums;
-    }
-    
-    public List<ArtistDTO> getArtistsByNameSub(String subword){
-        List<ArtistDTO> tmpArtists = artistService.getAll();
-        List<ArtistDTO> resArtists = new ArrayList<>();
-        for (ArtistDTO album : tmpArtists) {
-            if(removeDiacritics(album.getName().toLowerCase())
-               .contains(removeDiacritics(phrase).toLowerCase())){
-                resArtists.add(album);
-            }
-        }
-        return resArtists;
-    }
-    
-    public List<PlaylistDTO> getPlaylistsByNameSub(String subword){
-        List<PlaylistDTO> tmpPlaylists = playlistService.getAll();
-        List<PlaylistDTO> resPlaylists = new ArrayList<>();
-        for (PlaylistDTO playlist : tmpPlaylists) {
-            if(removeDiacritics(playlist.getName().toLowerCase())
-               .contains(removeDiacritics(phrase).toLowerCase())){
-                resPlaylists.add(playlist);
-            }
-        }
-        return resPlaylists;
     }
 }

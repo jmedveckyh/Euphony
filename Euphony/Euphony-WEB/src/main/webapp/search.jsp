@@ -30,9 +30,5 @@
 
         <%@include file="incl/artistsIncl.jsp"%>
 
-        <h3><f:message key="search.list.playlists"/> "${searchActionBean.phrase}" </h3>
-
-         <%@include file="incl/playlistsIncl.jsp"%>
-
     </s:layout-component>
 </s:layout-render>

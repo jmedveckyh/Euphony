@@ -30,4 +30,6 @@ public interface SongService {
 
     List<SongDTO> getByAlbum(AlbumDTO album);
     
+    List<SongDTO> getSongsByTitleSub(String phrase);
+    
 }

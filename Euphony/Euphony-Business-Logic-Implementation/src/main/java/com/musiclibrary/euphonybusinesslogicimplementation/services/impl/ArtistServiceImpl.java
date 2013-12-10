@@ -6,6 +6,8 @@ import com.musiclibrary.euphonyapi.services.ArtistService;
 import com.musiclibrary.euphonybusinesslogicimplementation.dao.ArtistDAO;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Artist;
 import com.musiclibrary.euphonybusinesslogicimplementation.util.DTOMapper;
+import com.musiclibrary.euphonybusinesslogicimplementation.util.Util;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -77,5 +79,18 @@ public class ArtistServiceImpl implements ArtistService {
         
         return DTOMapper.songsListToDTO(artistDAO.getSongsByArtist(DTOMapper.toEntity(artist)));
         
+    }
+    
+    @Override
+    public List<ArtistDTO> getArtistsByNameSub(String phrase){
+        List<ArtistDTO> tmpArtists = getAll();
+        List<ArtistDTO> resArtists = new ArrayList<>();
+        for (ArtistDTO album : tmpArtists) {
+            if(Util.removeDiacritics(album.getName().toLowerCase())
+               .contains(Util.removeDiacritics(phrase).toLowerCase())){
+                resArtists.add(album);
+            }
+        }
+        return resArtists;
     }
 }

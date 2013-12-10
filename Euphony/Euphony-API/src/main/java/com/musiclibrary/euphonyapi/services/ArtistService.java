@@ -23,4 +23,7 @@ public interface ArtistService {
     ArtistDTO getByName(String name);
 
     List<SongDTO> getSongsByArtist(ArtistDTO artist);
+    
+    List<ArtistDTO> getArtistsByNameSub(String phrase);
+            
 }

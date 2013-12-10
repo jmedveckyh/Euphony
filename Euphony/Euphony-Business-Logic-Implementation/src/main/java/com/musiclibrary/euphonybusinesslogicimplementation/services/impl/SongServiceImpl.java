@@ -8,6 +8,8 @@ import com.musiclibrary.euphonyapi.services.SongService;
 import com.musiclibrary.euphonybusinesslogicimplementation.dao.SongDAO;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Song;
 import com.musiclibrary.euphonybusinesslogicimplementation.util.DTOMapper;
+import com.musiclibrary.euphonybusinesslogicimplementation.util.Util;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -94,5 +96,19 @@ public class SongServiceImpl implements SongService {
 
         return DTOMapper.songsListToDTO(songDAO.getByAlbum(DTOMapper.toEntity(album)));
 
+    }
+    
+    @Override
+    public List<SongDTO> getSongsByTitleSub(String phrase) throws DataAccessException{
+        List<SongDTO> tmpSongs = getAll();
+        List<SongDTO> resSongs = new ArrayList<>();
+        for (SongDTO song : tmpSongs) {
+            
+            if(Util.removeDiacritics(song.getTitle().toLowerCase())
+               .contains(Util.removeDiacritics(phrase).toLowerCase())){
+                resSongs.add(song);
+            }
+        }
+        return resSongs;
     }
 }
