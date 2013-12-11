@@ -6,8 +6,13 @@ import com.musiclibrary.euphonyapi.dto.SongDTO;
 import com.musiclibrary.euphonyapi.facade.MusicFacade;
 import com.musiclibrary.euphonyapi.services.AlbumService;
 import com.musiclibrary.euphonyapi.services.PlaylistService;
+import com.musiclibrary.euphonyapi.services.SongService;
 import com.musiclibrary.euphonybusinesslogicimplementation.util.DTOMapper;
 import com.musiclibrary.euphonybusinesslogicimplementation.util.Util;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +30,8 @@ public class MusicFacadeImpl implements MusicFacade {
     private PlaylistService playlistService;
     @Autowired
     private AlbumService albumService;
+    @Autowired
+    private SongService songService;
 
     @Override
     public void setPlaylistService(PlaylistService playlistService) {
@@ -34,6 +41,11 @@ public class MusicFacadeImpl implements MusicFacade {
     @Override
     public void setAlbumService(AlbumService albumService) {
         this.albumService = albumService;
+    }
+
+    @Override
+    public void setSongService(SongService songService) {
+        this.songService = songService;
     }
 
     public void createPlaylist(PlaylistDTO playlist) {
@@ -99,10 +111,16 @@ public class MusicFacadeImpl implements MusicFacade {
             throw new IllegalArgumentException("The song is already in playlist.");
         } else {
             Integer newKey = 0;
-            for (Entry<Integer, SongDTO> entry : playlist.getSongs().entrySet()) {
-                newKey = entry.getKey();
+            if (playlist.getSongs() == null) {
+                Map<Integer, SongDTO> emptyListOfSongs = new HashMap<>();
+                emptyListOfSongs.put(newKey + 1, song);
+                playlist.setSongs(emptyListOfSongs);
+            } else {
+                for (Entry<Integer, SongDTO> entry : playlist.getSongs().entrySet()) {
+                    newKey = entry.getKey();
+                }
+                playlist.getSongs().put(newKey + 1, song);
             }
-            playlist.getSongs().put(newKey + 1, song);
             playlistService.update(playlist);
         }
 
@@ -115,7 +133,13 @@ public class MusicFacadeImpl implements MusicFacade {
         if (isSongInAlbum(song, album)) {
             throw new IllegalArgumentException("The song is already in album.");
         } else {
-            album.getSongs().add(song);
+            if (album.getSongs() == null) {
+                List<SongDTO> emptyListOfSongs = new ArrayList<>();
+                emptyListOfSongs.add(song);
+                album.setSongs(emptyListOfSongs);
+            } else {
+                album.getSongs().add(song);
+            }
             albumService.update(album);
         }
 

@@ -60,6 +60,9 @@ public class DTOMapper {
 
     public static List<SongDTO> songsListToDTO(List<Song> songs) {
 
+        if (songs == null) {
+            return null;
+        }
         List<SongDTO> songsDTO = new ArrayList();
         for (Song song : songs) {
             songsDTO.add(DTOMapper.toDTO(song));
@@ -69,6 +72,9 @@ public class DTOMapper {
 
     public static List<Song> songsListToEntity(List<SongDTO> songsDto) {
 
+        if (songsDto == null) {
+            return null;
+        }
         List<Song> songs = new ArrayList();
         for (SongDTO songDto : songsDto) {
             songs.add(DTOMapper.toEntity(songDto));
@@ -101,7 +107,10 @@ public class DTOMapper {
     }
 
     public static List<GenreDTO> genresListToDTO(List<Genre> genres) {
-
+        
+        if (genres == null) {
+            return null;
+        }
         List<GenreDTO> genresDTO = new ArrayList();
         for (Genre genre : genres) {
             genresDTO.add(DTOMapper.toDTO(genre));
@@ -111,6 +120,9 @@ public class DTOMapper {
 
     public static List<Genre> genresListToEntity(List<GenreDTO> genresDto) {
 
+        if (genresDto == null) {
+            return null;
+        }
         List<Genre> genres = new ArrayList();
         for (GenreDTO genreDto : genresDto) {
             genres.add(DTOMapper.toEntity(genreDto));
@@ -172,6 +184,9 @@ public class DTOMapper {
 
     public static List<PlaylistDTO> playlistListToDTO(List<Playlist> playlists) {
 
+        if (playlists == null) {
+            return null;
+        }
         List<PlaylistDTO> playlistsDTO = new ArrayList();
         for (Playlist playlist : playlists) {
             playlistsDTO.add(DTOMapper.toDTO(playlist));
@@ -182,6 +197,9 @@ public class DTOMapper {
 
     public static List<Playlist> playlistListToEntity(List<PlaylistDTO> playlistsDTO) {
 
+        if (playlistsDTO == null) {
+            return null;
+        }
         List<Playlist> playlists = new ArrayList();
         for (PlaylistDTO playlistDTO : playlistsDTO) {
             playlists.add(DTOMapper.toEntity(playlistDTO));
@@ -252,6 +270,9 @@ public class DTOMapper {
     
     public static List<AlbumDTO> albumListToDTO(List<Album> albums) {
 
+        if (albums == null) {
+            return null;
+        }
         List<AlbumDTO> albumsDTO = new ArrayList();
         for (Album album : albums) {
             albumsDTO.add(DTOMapper.toDTO(album));
@@ -262,6 +283,9 @@ public class DTOMapper {
 
     public static List<Album> albumListToEntity(List<AlbumDTO> albumsDTO) {
 
+        if (albumsDTO == null) {
+            return null;
+        }
         List<Album> albums = new ArrayList();
         for (AlbumDTO album : albumsDTO) {
             albums.add(DTOMapper.toEntity(album));
@@ -272,6 +296,9 @@ public class DTOMapper {
 
     public static List<ArtistDTO> artistsListToDTO(List<Artist> artists) {
 
+        if (artists == null) {
+            return null;
+        }
         List<ArtistDTO> artistsDTO = new ArrayList();
         for (Artist artist : artists) {
             artistsDTO.add(DTOMapper.toDTO(artist));
@@ -282,6 +309,9 @@ public class DTOMapper {
 
     public static List<Artist> artistsListToEntity(List<ArtistDTO> artistsDto) {
 
+        if (artistsDto == null) {
+            return null;
+        }
         List<Artist> artists = new ArrayList();
         for (ArtistDTO artistDto : artistsDto) {
             artists.add(DTOMapper.toEntity(artistDto));

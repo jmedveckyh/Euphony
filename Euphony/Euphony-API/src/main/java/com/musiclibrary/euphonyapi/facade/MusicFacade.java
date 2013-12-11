@@ -5,6 +5,7 @@ import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
 import com.musiclibrary.euphonyapi.services.AlbumService;
 import com.musiclibrary.euphonyapi.services.PlaylistService;
+import com.musiclibrary.euphonyapi.services.SongService;
 
 /**
  * Interface for facade layer. 
@@ -67,5 +68,7 @@ public interface MusicFacade {
     public void setPlaylistService(PlaylistService playlistService);
 
     public void setAlbumService(AlbumService albumService);
+    
+    public void setSongService(SongService songService);
     
 }
