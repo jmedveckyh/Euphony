@@ -12,7 +12,8 @@
         <module>Euphony-Business-Logic-Implementation</module>
         <module>Euphony-WEB</module>
         <module>Euphony-client</module>
-    </modules>
+    <module>Euphony-REST-Server</module>
+  </modules>
   
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,19 +22,19 @@
     
     <developers>
         <developer>
-            <name>TomĂˇĹˇ Smetanka</name>
+            <name>Tom???? Smetanka</name>
             <email>smetanka@mail.muni.cz</email>
         </developer>
         <developer>
-            <name>Jakub MedveckĂ˝-Heretik</name>
+            <name>Jakub Medveck??-Heretik</name>
             <email>medo@mail.muni.cz</email>
         </developer>
         <developer>
-            <name>SebastiĂˇn LazoĹ�</name>
+            <name>Sebasti??n Lazo??</name>
             <email>395990@mail.muni.cz</email>
         </developer>
         <developer>
-            <name>Branislav NovotnĂ˝</name>
+            <name>Branislav Novotn??</name>
             <email>branno@mail.muni.cz</email>
         </developer>
     </developers>
