@@ -8,17 +8,17 @@
         <welcome-file>/index.jsp</welcome-file>
     </welcome-file-list>
     <context-param>  
+        <description>Spring configuration file</description>
         <param-name>contextConfigLocation</param-name>
         <param-value>
             classpath:applicationContext.xml    
         </param-value>
-        <description>config file for Spring</description>
     </context-param>
     <!-- JSTL -->
     <context-param>
+        <description>JSTL tags will use localized strings from the same source as Stripes</description>
         <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
         <param-value>StripesResources</param-value>
-        <description>JSTL tags will use localized string from the same source as Stripes</description>
     </context-param>
     <filter>
         <filter-name>DynamicMappingFilter</filter-name>
@@ -27,24 +27,24 @@
     </filter>
     <!-- Stripes -->
     <filter>
+        <description>Stripes main configuration</description>
         <filter-name>StripesFilter</filter-name>
         <display-name>Stripes Filter</display-name>
-        <description>Stripes main conf</description>
         <filter-class>net.sourceforge.stripes.controller.StripesFilter</filter-class>
         <init-param>
+            <description>Stripes ActionBeans location</description>
             <param-name>ActionResolver.Packages</param-name>
             <param-value>com.musiclibrary.euphonyweb</param-value>
-            <description>where Stripes searches for ActionBeans</description>
         </init-param>
         <init-param>
+            <description>Supported localizations and encodings</description>
             <param-name>LocalePicker.Locales</param-name>
             <param-value>sk:utf-8,en:utf-8</param-value>
-            <description>locales and encodings in the app</description>
         </init-param>
         <init-param>
-            <param-name>Interceptor.Classes</param-name>
-            <param-value>net.sourceforge.stripes.integration.spring.SpringInterceptor</param-value>
             <description>Stripes injects Spring beans</description>
+            <param-name>Interceptor.Classes</param-name>
+            <param-value>net.sourceforge.stripes.integration.spring.SpringInterceptor</param-value>  
         </init-param>
         <init-param>
             <param-name>ExceptionHandler.Class</param-name>
@@ -69,6 +69,7 @@
     </filter-mapping>
     <!-- Spring -->
     <listener>
+        <description>Spring activation at Application's start</description>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>  
     <servlet>

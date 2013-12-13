@@ -8,12 +8,12 @@
     
     <!-- Spring -->
     <listener>
-        <description>aktivace Springu pĹ™i startu aplikace</description>
+        <description>Spring activation at Application's start</description>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     
     <context-param>
-        <description>umĂ­stÄ›nĂ­ konfiguraÄŤnĂ­ho souboru pro Spring</description>
+        <description>Spring configuration file</description>
         <param-name>contextConfigLocation</param-name>
         <param-value>
             classpath:applicationContext.xml
@@ -22,40 +22,35 @@
     </context-param>
 
     <error-page>
-        <error-code>500</error-code>
-        <location>/jsp/serverError.jsp</location>
-    </error-page>
-    <error-page>
-        <error-code>404</error-code>
         <location>/jsp/serverError.jsp</location>
     </error-page>
 
 
     <!-- JSTL -->
     <context-param>
-        <description>JSTL tagy pouĹľijĂ­ lokalizovanĂ© texty ze stejnĂ©ho zdroje jako Stripes tagy</description>
+        <description>JSTL tags will use localized strings from the same source as Stripes</description>
         <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
         <param-value>StripesResources</param-value>
     </context-param>
 
     <!-- Stripes -->
     <filter>
-        <description>hlavnĂ­ mĂ­sto konfigurace Stripes</description>
+        <description>Stripes main configuration</description>
         <display-name>Stripes Filter</display-name>
         <filter-name>StripesFilter</filter-name>
         <filter-class>net.sourceforge.stripes.controller.StripesFilter</filter-class>
         <init-param>
-            <description>kde Stripes hledĂˇ ActionBeans</description>
+            <description>Stripes ActionBeans location</description>
             <param-name>ActionResolver.Packages</param-name>
             <param-value>com.musiclibrary.euphonyrest.client</param-value>
         </init-param>
         <init-param>
-            <description>jakĂˇ locale a kĂłdovĂˇnĂ­ aplikace podporuje</description>
+            <description>Supported localizations and encodings</description>
             <param-name>LocalePicker.Locales</param-name>
-            <param-value>cs:utf-8,en:utf-8</param-value>
+            <param-value>sk:utf-8,en:utf-8</param-value>
         </init-param>
         <init-param>
-            <description>propojenĂ­ Stripes se Spring</description>
+            <description>Stripes injects Spring beans</description>
             <param-name>Interceptor.Classes</param-name>
             <param-value>net.sourceforge.stripes.integration.spring.SpringInterceptor</param-value>
         </init-param>
@@ -68,7 +63,7 @@
     </filter-mapping>
 
     <filter>
-        <description>dynamicky mapuje URL na ActionBeans</description>
+        <description>dynamically maps URL to ActionBeans</description>
         <display-name>Stripes Dynamic Mapping Filter</display-name>
         <filter-name>DynamicMappingFilter</filter-name>
         <filter-class>net.sourceforge.stripes.controller.DynamicMappingFilter</filter-class>
