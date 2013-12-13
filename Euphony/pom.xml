@@ -12,8 +12,9 @@
         <module>Euphony-Business-Logic-Implementation</module>
         <module>Euphony-WEB</module>
         <module>Euphony-client</module>
-    <module>Euphony-REST-Server</module>
-  </modules>
+        <module>../../Euphony-rest-server</module>
+        <module>Euphony-rest-server</module>
+    </modules>
   
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
