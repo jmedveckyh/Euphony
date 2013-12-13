@@ -11,7 +11,8 @@ import org.apache.taglibs.standard.functions.Functions;
  */
 public abstract class BaseActionBean implements ActionBean {
     private ActionBeanContext context;
-
+    final static String URI = "http://localhost:8080/pa165/server";
+    
     @Override
     public void setContext(ActionBeanContext context) {
         this.context = context;
