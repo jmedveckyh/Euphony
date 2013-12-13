@@ -30,9 +30,7 @@ public class Song2PlaylistActionBean extends BaseActionBean implements Validatio
     @SpringBean
     protected SongService songService;
     
-    @ValidateNestedProperties(value = {
-        @Validate(required = true, on = {"song2playlist", "songFromPlaylist"})
-    })
+    @Validate(required = true, on = {"song2playlist", "songFromPlaylist"})
     private List<Long> selectedSongs;
     
     public List<Long> getSelectedSongs() {
@@ -43,9 +41,7 @@ public class Song2PlaylistActionBean extends BaseActionBean implements Validatio
         this.selectedSongs = selectedSongs;
     }
     
-    @ValidateNestedProperties(value = {
-        @Validate(required = true, on = {"song2playlist", "songFromPlaylist"})  
-    })
+    @Validate(required = true, on = {"song2playlist", "songFromPlaylist"})  
     private Long selectedPlaylist;
 
     public Long getSelectedPlaylist() {
