@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation of facade layer.
- * 
+ *
  * @author Tomas Smetanka
  */
 @Service

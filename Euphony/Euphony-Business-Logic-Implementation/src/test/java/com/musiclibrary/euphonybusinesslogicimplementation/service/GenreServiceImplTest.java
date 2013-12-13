@@ -33,7 +33,8 @@ public class GenreServiceImplTest {
     //treba??
     @Test(expected = DataAccessException.class)
     public void testCreateGenreWithNull() {
-        doThrow(new DataAccessException("null album") {}).when(genreDAO).create(null);
+        doThrow(new DataAccessException("null album") {
+        }).when(genreDAO).create(null);
 
         genreService.create(null);              //genre is null
         verify(genreDAO, times(1)).create(null);

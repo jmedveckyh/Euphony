@@ -29,5 +29,4 @@ public interface SongDAO {
     List<Song> getByArtist(Artist artist);
 
     List<Song> getByAlbum(Album album);
-    
 }

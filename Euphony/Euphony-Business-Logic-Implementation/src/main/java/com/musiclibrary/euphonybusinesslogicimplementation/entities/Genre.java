@@ -8,10 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- * Genre entity.
- * Represents a musical genre with its own id, name and is mapped to a song
- * with ManyToOne relationship because many songs can be of one genre.
- * 
+ * Genre entity. Represents a musical genre with its own id, name and is mapped
+ * to a song with ManyToOne relationship because many songs can be of one genre.
+ *
  * @author Jakub Medvecky-Heretik #396373
  */
 @Entity
@@ -20,7 +19,6 @@ public class Genre implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    
     @Column(unique = true)
     private String name;
 
@@ -31,7 +29,7 @@ public class Genre implements Serializable {
         this.id = null;
         this.name = name;
     }
-    
+
     public Genre(Long id, String name) {
         this.id = id;
         this.name = name;
@@ -79,5 +77,4 @@ public class Genre implements Serializable {
     public String toString() {
         return "Genre{" + "id=" + id + ", name=" + name + '}';
     }
-    
 }

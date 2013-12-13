@@ -20,5 +20,4 @@ public interface GenreDAO {
     public List<Genre> getAll();
 
     public Genre getByName(String name);
-    
 }

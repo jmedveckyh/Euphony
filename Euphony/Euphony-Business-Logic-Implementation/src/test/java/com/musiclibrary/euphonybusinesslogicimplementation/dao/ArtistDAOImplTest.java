@@ -29,9 +29,10 @@ public class ArtistDAOImplTest {
         em = emf.createEntityManager();
         artistDAOImpl = new ArtistDAOImpl(em);
     }
-    
+
     /**
-     * Test of createArtist method, of class artistDAOImpl with wrong attributes.
+     * Test of createArtist method, of class artistDAOImpl with wrong
+     * attributes.
      */
     @Test(expected = DataAccessException.class)
     public void testCreateArtistWithNull() {
@@ -83,7 +84,8 @@ public class ArtistDAOImplTest {
     }
 
     /**
-     * Test of getArtistById method, of class artistDAOImpl with wrong attributes.
+     * Test of getArtistById method, of class artistDAOImpl with wrong
+     * attributes.
      */
     @Test(expected = DataAccessException.class)
     public void testGetArtistByIdWithNull() {
@@ -123,7 +125,8 @@ public class ArtistDAOImplTest {
     }
 
     /**
-     * Test of updateArtist method, of class artistDAOImpl with wrong attributes.
+     * Test of updateArtist method, of class artistDAOImpl with wrong
+     * attributes.
      */
     @Test(expected = DataAccessException.class)
     public void testUpdateArtistWithNull() {
@@ -197,7 +200,8 @@ public class ArtistDAOImplTest {
     }
 
     /**
-     * Test of deleteArtist method, of class artistDAOImpl with wrong attributes.
+     * Test of deleteArtist method, of class artistDAOImpl with wrong
+     * attributes.
      */
     @Test(expected = DataAccessException.class)
     public void testDeleteArtistWithNull() {
@@ -239,17 +243,17 @@ public class ArtistDAOImplTest {
         artistDAOImpl.create(artist);           //correct
         em.getTransaction().commit();
         em.clear();
-        
+
         em.getTransaction().begin();
-        artistDAOImpl.delete(artist);           
+        artistDAOImpl.delete(artist);
         em.getTransaction().commit();
         em.clear();
     }
 
     /**
-     * Test of getArtistByName method, of class artistDAOImpl with wrong attributes.
+     * Test of getArtistByName method, of class artistDAOImpl with wrong
+     * attributes.
      */
-
     @Test(expected = DataAccessException.class)
     public void testGetArtistByNameWithNull() {
         em.getTransaction().begin();
@@ -257,7 +261,7 @@ public class ArtistDAOImplTest {
         em.getTransaction().commit();
         em.clear();
     }
-    
+
     @Test
     public void testGetArtistByNameWithNotAssignedName() {
         em.getTransaction().begin();
@@ -266,7 +270,7 @@ public class ArtistDAOImplTest {
         em.clear();
         assertNull(nullResult);
     }
-    
+
     /**
      * Test of getArtistById method, of class artistDAOImpl.
      */
@@ -285,7 +289,7 @@ public class ArtistDAOImplTest {
         Artist result = artistDAOImpl.getByName(expResult.getName());              //correct
         assertDeepEquals(expResult, result);
     }
-    
+
     /**
      * Test of getArtistById method, of class artistDAOImpl.
      */
@@ -295,7 +299,7 @@ public class ArtistDAOImplTest {
 
         List<Artist> expResults = new ArrayList<Artist>();
         assertEquals(expResults, artistDAOImpl.getAll());
-        
+
         em.getTransaction().begin();
         Artist expResult1 = new Artist("Nicki Minaj");
         Artist expResult2 = new Artist("Robo Kazik");
@@ -309,16 +313,16 @@ public class ArtistDAOImplTest {
         assertNotNull(expResult1.getId());
         assertNotNull(expResult2.getId());
         assertNotNull(expResult3.getId());
-        
+
         expResults.add(expResult1);
         expResults.add(expResult2);
         expResults.add(expResult3);
 
         List<Artist> results = artistDAOImpl.getAll();              //correct
         assertEquals(expResults, results);
-        
+
     }
-    
+
     public static void assertDeepEquals(Artist expected, Artist actual) {
         assertEquals(expected.getId(), actual.getId());
         assertEquals(expected.getName(), actual.getName());

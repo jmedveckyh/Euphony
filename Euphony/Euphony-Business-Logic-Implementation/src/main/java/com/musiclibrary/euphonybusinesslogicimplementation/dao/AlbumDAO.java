@@ -1,8 +1,6 @@
 package com.musiclibrary.euphonybusinesslogicimplementation.dao;
 
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Album;
-import com.musiclibrary.euphonybusinesslogicimplementation.entities.Artist;
-import com.musiclibrary.euphonybusinesslogicimplementation.entities.Genre;
 import java.util.List;
 
 /**
@@ -10,7 +8,7 @@ import java.util.List;
  * @author Branislav Novotny <br.novotny@gmail.com> #396152
  */
 public interface AlbumDAO {
-    
+
     public void create(Album entity);
 
     public void update(Album entity);
@@ -21,5 +19,5 @@ public interface AlbumDAO {
 
     public List<Album> getAll();
 
-    public Album getByTitle(String title);      
+    public Album getByTitle(String title);
 }

@@ -92,7 +92,7 @@ public class GenreDAOImplTest {
         em.getTransaction().commit();
         em.clear();
     }
-    
+
     @Test
     public void testGetGenreByIdWithNotAssignedId() {
         em.getTransaction().begin();
@@ -239,17 +239,17 @@ public class GenreDAOImplTest {
         genreDAOImpl.create(genre);           //correct
         em.getTransaction().commit();
         em.clear();
-        
+
         em.getTransaction().begin();
-        genreDAOImpl.delete(genre);  
+        genreDAOImpl.delete(genre);
         em.getTransaction().commit();
         em.clear();
     }
 
     /**
-     * Test of getGenreByName method, of class genreDAOImpl with wrong attributes.
+     * Test of getGenreByName method, of class genreDAOImpl with wrong
+     * attributes.
      */
-
     @Test(expected = DataAccessException.class)
     public void testGetGenreByNameWithNull() {
         em.getTransaction().begin();
@@ -257,7 +257,7 @@ public class GenreDAOImplTest {
         em.getTransaction().commit();
         em.clear();
     }
-    
+
     @Test
     public void testGetGenreByNameWithNotAssignedName() {
         em.getTransaction().begin();
@@ -266,7 +266,7 @@ public class GenreDAOImplTest {
         em.clear();
         assertNull(nullResult);
     }
-    
+
     /**
      * Test of getGenreById method, of class genreDAOImpl.
      */
@@ -285,7 +285,7 @@ public class GenreDAOImplTest {
         Genre result = genreDAOImpl.getByName(expResult.getName());              //correct
         assertDeepEquals(expResult, result);
     }
-    
+
     /**
      * Test of getGenreById method, of class genreDAOImpl.
      */
@@ -295,7 +295,7 @@ public class GenreDAOImplTest {
 
         List<Genre> expResults = new ArrayList<Genre>();
         assertEquals(expResults, genreDAOImpl.getAll());
-        
+
         em.getTransaction().begin();
         Genre expResult1 = new Genre("Heavy metal");
         Genre expResult2 = new Genre("Doom metal");
@@ -309,16 +309,16 @@ public class GenreDAOImplTest {
         assertNotNull(expResult1.getId());
         assertNotNull(expResult2.getId());
         assertNotNull(expResult3.getId());
-        
+
         expResults.add(expResult1);
         expResults.add(expResult2);
         expResults.add(expResult3);
 
         List<Genre> results = genreDAOImpl.getAll();              //correct
         assertEquals(expResults, results);
-        
+
     }
-    
+
     public static void assertDeepEquals(Genre expected, Genre actual) {
         assertEquals(expected.getId(), actual.getId());
         assertEquals(expected.getName(), actual.getName());

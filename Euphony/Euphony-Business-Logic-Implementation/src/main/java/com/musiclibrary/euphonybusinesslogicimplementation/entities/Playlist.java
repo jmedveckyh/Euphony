@@ -11,23 +11,20 @@ import javax.persistence.ManyToMany;
 
 /**
  * Playlist entity.
- * 
+ *
  * @author Tomas Smetanka
  */
 @Entity
 public class Playlist implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
     private String name;
-    
     @ManyToMany(cascade = CascadeType.ALL)
     private Map<Integer, Song> songs;
 
     public Playlist() {
-    
     }
 
     public Playlist(Long id, String name, Map<Integer, Song> songs) {
@@ -40,7 +37,7 @@ public class Playlist implements Serializable {
         this.id = id;
         this.name = name;
     }
-    
+
     public Playlist(String name) {
         this.name = name;
     }
@@ -49,7 +46,7 @@ public class Playlist implements Serializable {
         this.name = name;
         this.songs = songs;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -94,11 +91,10 @@ public class Playlist implements Serializable {
             return false;
         }
         return true;
-    }    
+    }
 
     @Override
     public String toString() {
         return "Playlist{" + "id=" + id + ", name=" + name + ", songs=" + songs + '}';
     }
-    
 }
