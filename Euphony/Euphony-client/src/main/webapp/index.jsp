@@ -1,13 +1,17 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
-
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Euphony</title>
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/style.css"/>
     </head>
     <body>
-        <h1>Vitajce u nas :)</h1>
+        <h1>PA165: Euphony REST client</h1>
+            <center>
+                <h2><a href="jsp/explore.jsp">Explore Euphony via REST</a></h2>
+                <br/>
+            </center>
     </body>
 </html>
