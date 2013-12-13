@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 /**
@@ -42,7 +43,7 @@ public class EuphonyServlet extends HttpServlet {
         super.init(config);
         SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
                 config.getServletContext());
-        //properties = ResourceBundle.getBundle("Resources");
+        properties = ResourceBundle.getBundle("Resources");
     }
 
     @Override
@@ -71,7 +72,7 @@ public class EuphonyServlet extends HttpServlet {
                         ObjectMapper mapper = new ObjectMapper();
                         mapper.writeValue(response.getOutputStream(), artist);
                     } else {
-                        response.sendError(404, properties.getString("error.nosuchartist"));
+                        response.sendError(404, properties.getString("error.invalidartist"));
                     }
                 }
             } else if (pathInfo.matches("/genre")) {
@@ -83,7 +84,7 @@ public class EuphonyServlet extends HttpServlet {
                         ObjectMapper mapper = new ObjectMapper();
                         mapper.writeValue(response.getOutputStream(), genre);
                     } else {
-                        response.sendError(404, properties.getString("error.nosuchgenre"));
+                        response.sendError(404, properties.getString("error.invalidgenre"));
                     }
                 }
             }
@@ -103,14 +104,14 @@ public class EuphonyServlet extends HttpServlet {
             if (artist != null && artistService.getById(artist.getId()) != null) {
                 artistService.update(artist);
             } else {
-                response.sendError(404, properties.getString("error.artistnotfound"));
+                response.sendError(404, properties.getString("error.invalidartist"));
             }
         } else if (map.get("event").equals("updateGenre")) {
             GenreDTO genre = mapper.convertValue(map.get("genre"), GenreDTO.class);
             if (genre != null && genreService.getById(genre.getId()) != null) {
                 genreService.update(genre);
             } else {
-                response.sendError(404, properties.getString("error.genrenotfound"));
+                response.sendError(404, properties.getString("error.invalidgenre"));
             }
         } else if (map.get("event").equals("addArtist")) {
             ArtistDTO artist = mapper.convertValue(map.get("artist"), ArtistDTO.class);
@@ -141,20 +142,28 @@ public class EuphonyServlet extends HttpServlet {
             if (pathInfo.contains("/deleteArtist")) {
                 Long id = Long.parseLong(pathInfo.substring(14));
                 if (id != null && artistService.getById(id) != null) {
-                    artistService.delete(artistService.getById(id));
+                    try {
+                        artistService.delete(artistService.getById(id));
+                    } catch (DataAccessException ex) {
+                        response.sendError(404, properties.getString("error.assignedartist"));
+                    }
                 } else {
-                    response.sendError(404, properties.getString("error.artistnotfound"));
+                    response.sendError(404, properties.getString("error.invalidartist"));
                 }
             }
             if (pathInfo.contains("/deleteGenre")) {
                 Long id = Long.parseLong(pathInfo.substring(13));
                 if (id != null && genreService.getById(id) != null) {
-                    genreService.delete(genreService.getById(id));
+                    try {
+                        genreService.delete(genreService.getById(id));
+                    } catch (DataAccessException ex) {
+                        response.sendError(404, properties.getString("error.assignedgenre"));
+                    }
                 } else {
-                    response.sendError(404, properties.getString("error.genrenotfound"));
+                    response.sendError(404, properties.getString("error.invalidgenre"));
                 }
             }
         }
-        
+
     }
 }

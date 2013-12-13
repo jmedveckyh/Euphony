@@ -16,6 +16,7 @@
     <center>
            <p style="font-size: 12px">User friendly message:</p> 
         <h1 style="font-size: 100px">Unavailable Server!</h1>
+        <h1 style="font-size: 100px"><c:out value="${requestScope['javax.servlet.error.message']}"/></h1>
     </center>
     </body>
 </html>
