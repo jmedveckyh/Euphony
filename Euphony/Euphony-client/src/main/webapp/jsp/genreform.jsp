@@ -8,7 +8,7 @@
 
 <s:errors/>
 
-<fmt:message key='admin.genreName' var="name"/>
+<fmt:message key='admin.genreCreate' var="name"/>
 
 <table style="width:fit-content">
     <tr>
