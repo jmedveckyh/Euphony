@@ -9,7 +9,7 @@ import net.sourceforge.stripes.controller.StripesConstants;
 import net.sourceforge.stripes.exception.DefaultExceptionHandler;
 import net.sourceforge.stripes.validation.LocalizableError;
 import org.springframework.dao.DataAccessException;
-import com.musiclibrary.euphonyweb.PlaylistActionBean;
+
 /**
  *
  * @author Medo
@@ -36,30 +36,30 @@ public class DatabaseExceptionHandler extends DefaultExceptionHandler {
     }
 
     public Resolution handleIllegalArgumentGeneric(IllegalArgumentException exc, HttpServletRequest request, HttpServletResponse response) {
-        
+
         ActionBean bean = (ActionBean) request.getAttribute(StripesConstants.REQ_ATTR_ACTION_BEAN);
-        
+
         if (bean.getClass().equals(Song2PlaylistActionBean.class)) {
             bean.getContext().getValidationErrors().addGlobalError(new LocalizableError("validation.assignedsonginplaylist"));
             return new ForwardResolution("/explore/songs.jsp");
         }
-        
+
         return new ForwardResolution("/");
     }
 
     public Resolution handleIllegalNullpointerInPlaylist(NullPointerException exc, HttpServletRequest request, HttpServletResponse response) {
-        
+
         ActionBean bean = (ActionBean) request.getAttribute(StripesConstants.REQ_ATTR_ACTION_BEAN);
-        
+
         if (bean.getClass().equals(Song2PlaylistActionBean.class)) {
             bean.getContext().getValidationErrors().addGlobalError(new LocalizableError("validation.noplaylistorsongselected"));
             return new ForwardResolution("/explore/songs.jsp");
         }
-        
+
         return new ForwardResolution("/");
     }
 
-//    public Resolution handleGeneric(Exception exc, HttpServletRequest request, HttpServletResponse response) {
-//        return new ForwardResolution("/");
-//    }
+    public Resolution handleGeneric(Exception exc, HttpServletRequest request, HttpServletResponse response) {
+        return new ForwardResolution("/");
+    }
 }

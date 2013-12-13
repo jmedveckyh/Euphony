@@ -26,16 +26,15 @@ import net.sourceforge.stripes.validation.ValidationErrors;
  */
 @UrlBinding("/playlist/else/{$event}/{playlist.id}")
 public class PlaylistActionBean extends BaseActionBean implements ValidationErrorHandler {
-    
+
     @SpringBean
     protected PlaylistService playlistService;
-    
     @ValidateNestedProperties(value = {
         @Validate(on = {"add", "save"}, field = "name", required = true)
     })
     private PlaylistDTO playlist;
     private List<PlaylistDTO> playlists;
-    
+
     public List<PlaylistDTO> getPlaylists() {
         return playlists;
     }
@@ -47,7 +46,6 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
     public void setPlaylist(PlaylistDTO playlist) {
         this.playlist = playlist;
     }
-
     protected SongService songService;
     private SongDTO song;
     private Map<Integer, SongDTO> songs;
@@ -67,28 +65,21 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
     public void setSongs(Map<Integer, SongDTO> songs) {
         this.songs = songs;
     }
-    
-    
-    //--- displaying one playlist ----
+
     @DefaultHandler
     public Resolution show() {
         playlists = playlistService.getAll();
         songs = playlist.getSongs();
         return new ForwardResolution("/playlist/id.jsp");
     }
-    
-    //--- part for adding ----
-   
+
     public Resolution add() {
-//        log.debug("add() genre={}", genre);
         playlistService.create(playlist);
         Long ids = playlist.getId();
-//        getContext().getMessages().add(new LocalizableMessage("genre.add.message",escapeHTML(genre.getName())));
         return new RedirectResolution("/playlist/else/show/" + ids);
     }
-    
+
     public Resolution cancel() {
-//        log.debug("cancel() genre={}", genre);
         return new RedirectResolution("/explore");
     }
 
@@ -97,18 +88,13 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
         playlists = playlistService.getAll();
         return null;
     }
-    
-    //--- part for deleting a genre ----
+
     public Resolution delete() {
-        //log.debug("delete({})", genre.getId());
-        //only id is filled by the form
         playlist = playlistService.getById(playlist.getId());
         playlistService.delete(playlist);
-        //getContext().getMessages().add(new LocalizableMessage("genre.delete.message", escapeHTML(genre.getTitle()), escapeHTML(genre.getAuthor())));
         return new RedirectResolution("/explore");
     }
 
-    //--- part for editing a genre ----
     @Before(stages = LifecycleStage.BindingAndValidation, on = {"save", "add", "show"})
     public void loadPlaylistFromDatabase() {
         String ids = getContext().getRequest().getParameter("playlist.id");
@@ -119,7 +105,6 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
     }
 
     public Resolution save() {
-        //log.debug("save() genre={}", genre);
         playlistService.update(playlist);
         Long ids = playlist.getId();
         return new RedirectResolution("/playlist/else/show/" + ids);

@@ -11,16 +11,14 @@ import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import net.sourceforge.stripes.validation.Validate;
-import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationErrorHandler;
 import net.sourceforge.stripes.validation.ValidationErrors;
 
 /**
  * *** action bean for showing songs, albums and artists in index.
- * 
+ *
  * @author Tomas Smetanka #396209
  */
-
 public class Song2PlaylistActionBean extends BaseActionBean implements ValidationErrorHandler {
 
     @SpringBean
@@ -29,10 +27,9 @@ public class Song2PlaylistActionBean extends BaseActionBean implements Validatio
     protected PlaylistService playlistService;
     @SpringBean
     protected SongService songService;
-    
     @Validate(required = true, on = {"song2playlist", "songFromPlaylist"})
     private List<Long> selectedSongs;
-    
+
     public List<Long> getSelectedSongs() {
         return selectedSongs;
     }
@@ -40,8 +37,7 @@ public class Song2PlaylistActionBean extends BaseActionBean implements Validatio
     public void setSelectedSongs(List<Long> selectedSongs) {
         this.selectedSongs = selectedSongs;
     }
-    
-    @Validate(required = true, on = {"song2playlist", "songFromPlaylist"})  
+    @Validate(required = true, on = {"song2playlist", "songFromPlaylist"})
     private Long selectedPlaylist;
 
     public Long getSelectedPlaylist() {
@@ -61,11 +57,11 @@ public class Song2PlaylistActionBean extends BaseActionBean implements Validatio
         for (Long selectedSong : selectedSongs) {
             facade.addSongToPlaylist(songService.getById(selectedSong), playlistService.getById(selectedPlaylist));
         }
-        
-        return new RedirectResolution("/explore"); 
+
+        return new RedirectResolution("/explore");
     }
 
-   public Resolution songFromPlaylist() {
+    public Resolution songFromPlaylist() {
         songs = songService.getAll();
         playlists = playlistService.getAll();
         if (selectedSongs == null) {
@@ -74,7 +70,7 @@ public class Song2PlaylistActionBean extends BaseActionBean implements Validatio
         for (Long selectedSong : selectedSongs) {
             facade.removeSongFromPlaylist(songService.getById(selectedSong), playlistService.getById(selectedPlaylist));
         }
-        
+
         return new ForwardResolution("/playlist/else/show/" + selectedPlaylist);
     }
 
@@ -83,9 +79,6 @@ public class Song2PlaylistActionBean extends BaseActionBean implements Validatio
 
         return null;
     }
-
-    //--- getters and setters ----
-    
     private List<PlaylistDTO> playlists;
 
     public List<PlaylistDTO> getPlaylists() {
@@ -104,5 +97,4 @@ public class Song2PlaylistActionBean extends BaseActionBean implements Validatio
     public void setSongs(List<SongDTO> songs) {
         this.songs = songs;
     }
-    
 }

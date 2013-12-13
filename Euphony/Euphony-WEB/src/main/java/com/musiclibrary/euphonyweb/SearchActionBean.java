@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.musiclibrary.euphonyweb;
 
 import com.musiclibrary.euphonyapi.dto.AlbumDTO;
@@ -31,25 +27,17 @@ public class SearchActionBean extends BaseActionBean implements ValidationErrorH
 
     @SpringBean
     protected PlaylistService playlistService;
-    
     @SpringBean
     protected SongService songService;
-    
     @SpringBean
     protected AlbumService albumService;
-    
     @SpringBean
     protected ArtistService artistService;
-    
     @Validate(on = {"search"}, required = true)
     private String phrase;
-    
     private List<PlaylistDTO> playlists;
-
     private List<SongDTO> songs;
-
     private List<AlbumDTO> albums;
-
     private List<ArtistDTO> artists;
 
     public List<ArtistDTO> getArtists() {
@@ -59,7 +47,7 @@ public class SearchActionBean extends BaseActionBean implements ValidationErrorH
     public void setArtists(List<ArtistDTO> artists) {
         this.artists = artists;
     }
-    
+
     public List<AlbumDTO> getAlbums() {
         return albums;
     }
@@ -67,7 +55,7 @@ public class SearchActionBean extends BaseActionBean implements ValidationErrorH
     public void setAlbums(List<AlbumDTO> albums) {
         this.albums = albums;
     }
-    
+
     public List<PlaylistDTO> getPlaylists() {
         return playlists;
     }
@@ -75,8 +63,8 @@ public class SearchActionBean extends BaseActionBean implements ValidationErrorH
     public void setPlaylists(List<PlaylistDTO> playlists) {
         this.playlists = playlists;
     }
-    
-     public List<SongDTO> getSongs() {
+
+    public List<SongDTO> getSongs() {
         return songs;
     }
 
@@ -103,7 +91,7 @@ public class SearchActionBean extends BaseActionBean implements ValidationErrorH
         songs = songService.getSongsByTitleSub(phrase);
         albums = albumService.getAlbumsByTitleSub(phrase);
         artists = artistService.getArtistsByNameSub(phrase);
-        
+
         return new ForwardResolution("/search.jsp");
     }
 }

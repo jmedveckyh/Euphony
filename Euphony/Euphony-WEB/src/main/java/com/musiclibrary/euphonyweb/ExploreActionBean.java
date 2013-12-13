@@ -22,7 +22,7 @@ import net.sourceforge.stripes.validation.ValidationErrors;
 
 /**
  * Explore action bean for showing songs, albums and artists in index.
- * 
+ *
  * @author Tomas Smetanka #396209
  */
 @UrlBinding("/explore/{$event}/{mainId}")
@@ -51,74 +51,70 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
     private List<AlbumDTO> albums;
     private List<ArtistDTO> artists;
     private List<PlaylistDTO> playlists;
-    
+
     @DefaultHandler
     public Resolution songs() {
-        //log.debug("list()");
         songs = songService.getAll();
         playlists = playlistService.getAll();
         return new ForwardResolution("/explore/songs.jsp");
     }
 
     public Resolution albums() {
-        //log.debug("list()");
         albums = albumService.getAllAlbums();
         playlists = playlistService.getAll();
         return new ForwardResolution("/explore/albums.jsp");
     }
 
     public Resolution artists() {
-        //log.debug("list()");
         artists = artistService.getAll();
         playlists = playlistService.getAll();
         return new ForwardResolution("/explore/artists.jsp");
     }
-    
+
     @Override
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
         songs = songService.getAll();
         return null;
-    }    
+    }
 
     public Resolution showAlbum() {
-        String ids = getContext().getRequest().getParameter("mainId"); 
+        String ids = getContext().getRequest().getParameter("mainId");
         if (ids == null) {
             return new ForwardResolution("/explore");
         }
-        
+
         playlists = playlistService.getAll();
         album = albumService.getById(Long.parseLong(ids));
         songsInAlbum = songService.getByAlbum(album);
-        
+
         return new ForwardResolution("/explore/album.jsp");
     }
-    
+
     public Resolution showArtist() {
         String ids = getContext().getRequest().getParameter("mainId");
         if (ids == null) {
             return new ForwardResolution("/explore");
         }
-        
+
         playlists = playlistService.getAll();
         artist = artistService.getById(Long.parseLong(ids));
         songsInArtist = songService.getByArtist(artist);
-        
+
         return new ForwardResolution("/explore/artist.jsp");
     }
-    
+
     public Resolution showSong() {
         String ids = getContext().getRequest().getParameter("mainId");
         if (ids == null) {
             return new ForwardResolution("/explore");
         }
-        
+
         playlists = playlistService.getAll();
         song = songService.getById(Long.parseLong(ids));
-        
+
         return new ForwardResolution("/explore/song.jsp");
     }
 
-    //--- getters and setters ----
     public List<GenreDTO> getGenres() {
         return genres;
     }
@@ -182,7 +178,7 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
     public void setPlaylist(PlaylistDTO playlist) {
         this.playlist = playlist;
     }
-    
+
     public List<SongDTO> getSongsInAlbum() {
         return songsInAlbum;
     }
@@ -190,7 +186,7 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
     public void setSongsInAlbum(List<SongDTO> songsInAlbum) {
         this.songsInAlbum = songsInAlbum;
     }
-    
+
     public List<SongDTO> getSongsInArtist() {
         return songsInArtist;
     }

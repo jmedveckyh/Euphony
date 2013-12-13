@@ -222,9 +222,6 @@ public class SongDAOImplTest extends TestCase {
      */
     public void testUpdateSong() {
 
-        //Song s = new Song("Salalaj", 320, 1, "", new Genre(), new Album());
-        //s.setId(new Long(1l));
-
         //test null song
         em.getTransaction().begin();
         try {
@@ -378,9 +375,6 @@ public class SongDAOImplTest extends TestCase {
      * Test delete song
      */
     public void testDeleteSong() {
-
-        //Song s = new Song("Salalaj", 320, 1, "", new Genre(), new Album());
-        //s.setId(new Long(1l));
 
         //test null song
         em.getTransaction().begin();

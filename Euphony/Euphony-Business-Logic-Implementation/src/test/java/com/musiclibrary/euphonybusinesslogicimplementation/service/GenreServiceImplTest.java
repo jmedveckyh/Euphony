@@ -12,7 +12,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
-import org.springframework.dao.DataAccessException;
 
 /**
  *
@@ -28,17 +27,6 @@ public class GenreServiceImplTest {
         genreService = new GenreServiceImpl();
         genreDAO = mock(GenreDAOImpl.class);
         ((GenreServiceImpl) genreService).setDAO(genreDAO);
-    }
-
-    //treba??
-    @Test(expected = DataAccessException.class)
-    public void testCreateGenreWithNull() {
-        doThrow(new DataAccessException("null album") {
-        }).when(genreDAO).create(null);
-
-        genreService.create(null);              //genre is null
-        verify(genreDAO, times(1)).create(null);
-        verifyNoMoreInteractions(genreDAO);
     }
 
     @Test

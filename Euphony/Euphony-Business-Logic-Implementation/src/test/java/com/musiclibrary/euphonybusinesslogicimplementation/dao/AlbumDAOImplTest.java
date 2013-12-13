@@ -315,7 +315,7 @@ public class AlbumDAOImplTest extends TestCase {
 
     public void testGetAlbumByNameWithNotAssignedName() {
         em.getTransaction().begin();
-        Album nullResult = albumDao.getByTitle("Mirage");//getAlbumByName with not assigned name, should return null
+        Album nullResult = albumDao.getByTitle("Mirage");   //getAlbumByName with not assigned name, should return null
         em.getTransaction().commit();
         em.clear();
         assertNull(nullResult);

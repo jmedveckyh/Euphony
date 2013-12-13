@@ -5,8 +5,6 @@
 package com.musiclibrary.euphonyweb;
 
 import com.musiclibrary.euphonyapi.dto.AlbumDTO;
-import com.musiclibrary.euphonyapi.dto.ArtistDTO;
-import com.musiclibrary.euphonyapi.dto.GenreDTO;
 import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
 import com.musiclibrary.euphonyapi.services.AlbumService;
@@ -16,7 +14,6 @@ import com.musiclibrary.euphonyapi.services.PlaylistService;
 import com.musiclibrary.euphonyapi.services.SongService;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;

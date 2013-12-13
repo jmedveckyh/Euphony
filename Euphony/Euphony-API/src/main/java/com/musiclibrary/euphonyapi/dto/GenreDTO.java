@@ -1,7 +1,7 @@
 package com.musiclibrary.euphonyapi.dto;
 
 /**
- *
+ * 
  * @author Medo
  */
 public class GenreDTO {

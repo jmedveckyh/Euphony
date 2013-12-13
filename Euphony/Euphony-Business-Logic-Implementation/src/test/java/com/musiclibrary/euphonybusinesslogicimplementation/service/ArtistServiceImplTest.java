@@ -13,7 +13,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
-import org.springframework.dao.DataAccessException;
 
 /**
  *
@@ -29,17 +28,6 @@ public class ArtistServiceImplTest {
         artistService = new ArtistServiceImpl();
         artistDAO = mock(ArtistDAOImpl.class);
         ((ArtistServiceImpl) artistService).setDAO(artistDAO);
-    }
-
-    //treba??
-    @Test(expected = DataAccessException.class)
-    public void testCreateArtistWithNull() {
-        doThrow(new DataAccessException("null album") {
-        }).when(artistDAO).create(null);
-
-        artistService.create(null);              //artist is null
-        verify(artistDAO, times(1)).create(null);
-        verifyNoMoreInteractions(artistDAO);
     }
 
     @Test

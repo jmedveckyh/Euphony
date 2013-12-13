@@ -12,11 +12,11 @@
         <title>Unavailable Server</title>
     </head>
     <body>
-        
+
     <center>
-           <p style="font-size: 12px">User friendly message:</p> 
-        <h1 style="font-size: 100px">Unavailable Server!</h1>
-        <h1 style="font-size: 100px"><c:out value="${requestScope['javax.servlet.error.message']}"/></h1>
+        <h1 style="font-size: 48px">Server error!</h1>
+        <h1 style="font-size: 24px">Either you tried to delete genre or artist which is assigned to some song</h1>
+        <h1 style="font-size: 24px">or the server is currently unavailable.</h1>
     </center>
-    </body>
+</body>
 </html>

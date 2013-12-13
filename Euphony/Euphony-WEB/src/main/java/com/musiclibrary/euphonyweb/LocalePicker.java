@@ -12,9 +12,10 @@ import net.sourceforge.stripes.localization.DefaultLocalePicker;
  *
  * @author Sebastian
  */
-public class LocalePicker extends DefaultLocalePicker{
-    public Locale pickLocale(HttpServletRequest request){
-        if(request.getLocale().getLanguage()=="sk" || request.getLocale().getLanguage()=="cs"){
+public class LocalePicker extends DefaultLocalePicker {
+
+    public Locale pickLocale(HttpServletRequest request) {
+        if (request.getLocale().getLanguage() == "sk" || request.getLocale().getLanguage() == "cs") {
             return new Locale("sk");
         }
         return Locale.ENGLISH;
