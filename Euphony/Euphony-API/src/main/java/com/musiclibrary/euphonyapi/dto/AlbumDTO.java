@@ -7,30 +7,27 @@ import org.joda.time.DateTime;
  * @author Branislav Novotny <br.novotny@gmail.com> #396152
  */
 public class AlbumDTO {
-    
+
     private Long id;
-    
     private String title;
-    
     private String cover;
-    
     private String comment;
-    
     private DateTime releaseDate;
 
-    public AlbumDTO() {}
+    public AlbumDTO() {
+    }
 
     public AlbumDTO(String title, String cover, DateTime releaseDate, String comment) {
         this.title = title;
         this.cover = cover;
         this.releaseDate = releaseDate;
-        this.comment = comment;     
+        this.comment = comment;
     }
 
     public AlbumDTO(String title) {
         this.title = title;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -62,7 +59,7 @@ public class AlbumDTO {
     public void setReleaseDate(DateTime releaseDate) {
         this.releaseDate = releaseDate;
     }
-    
+
     public String getComment() {
         return comment;
     }

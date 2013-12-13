@@ -80,7 +80,7 @@ public class AlbumDAOImplTest extends TestCase {
         em.clear();
 
         em.getTransaction().begin();
-        album = new Album("", "cover.jpg", DateTime.now(),"comment");
+        album = new Album("", "cover.jpg", DateTime.now(), "comment");
         try {
             albumDao.create(album);
             fail("Album title empty");
@@ -101,7 +101,7 @@ public class AlbumDAOImplTest extends TestCase {
         em.getTransaction().commit();
         em.clear();
 
-      
+
 
         em.getTransaction().begin();
         album = new Album("title", "cover.jpg", DateTime.now(), "comment");
@@ -199,7 +199,7 @@ public class AlbumDAOImplTest extends TestCase {
         em.clear();
         assertDeepEquals(album, albumDao.getById(album.getId()));
 
-        album = new Album("title", "cover.jpg", DateTime.now(),"comment");
+        album = new Album("title", "cover.jpg", DateTime.now(), "comment");
         em.getTransaction().begin();
         albumDao.create(album);
         em.getTransaction().commit();
@@ -232,7 +232,7 @@ public class AlbumDAOImplTest extends TestCase {
         em.clear();
         assertDeepEquals(album, albumDao.getById(album.getId()));
 
-        album = new Album("title", "cover.jpg", DateTime.now(),"comment");
+        album = new Album("title", "cover.jpg", DateTime.now(), "comment");
         em.getTransaction().begin();
         albumDao.create(album);
         em.getTransaction().commit();
@@ -259,7 +259,7 @@ public class AlbumDAOImplTest extends TestCase {
         em.clear();
 
         em.getTransaction().begin();
-        Album album = new Album("title", "cover.jpg", DateTime.now(),"comment");
+        Album album = new Album("title", "cover.jpg", DateTime.now(), "comment");
         try {
             albumDao.delete(album);
             fail("album not in db");
@@ -305,7 +305,7 @@ public class AlbumDAOImplTest extends TestCase {
     public void testGetByTitleWithNullName() {
         em.getTransaction().begin();
         try {
-            albumDao.getByTitle(null);              //title is null
+            albumDao.getByTitle(null);//title is null
         } catch (DataAccessException e) {
             //ok
         }
@@ -315,7 +315,7 @@ public class AlbumDAOImplTest extends TestCase {
 
     public void testGetAlbumByNameWithNotAssignedName() {
         em.getTransaction().begin();
-        Album nullResult = albumDao.getByTitle("Mirage");              //getAlbumByName with not assigned name, should return null
+        Album nullResult = albumDao.getByTitle("Mirage");//getAlbumByName with not assigned name, should return null
         em.getTransaction().commit();
         em.clear();
         assertNull(nullResult);
@@ -324,17 +324,16 @@ public class AlbumDAOImplTest extends TestCase {
     public void testGetAlbumByTitle() {
         em.getTransaction().begin();
         Album expResult = new Album("Kaleidoscope", "cover.jpg", new DateTime(2009, 1, 1, 0, 0), "nehehe");
-        //expResult.getArtists().add(tiesto);
         albumDao.create(expResult);
         em.getTransaction().commit();
         em.clear();
 
         assertNotNull(expResult.getId());
 
-        Album result = albumDao.getByTitle(expResult.getTitle());              //correct
+        Album result = albumDao.getByTitle(expResult.getTitle());//correct
         assertDeepEquals(expResult, result);
     }
-    
+
     private void assertDeepEquals(Album a1, Album a2) {
         assertEquals(a1.getId(), a2.getId());
         assertEquals(a1.getComment(), a2.getComment());

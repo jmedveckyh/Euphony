@@ -97,15 +97,15 @@ public class SongServiceImpl implements SongService {
         return DTOMapper.songsListToDTO(songDAO.getByAlbum(DTOMapper.toEntity(album)));
 
     }
-    
+
     @Override
-    public List<SongDTO> getSongsByTitleSub(String phrase) throws DataAccessException{
+    public List<SongDTO> getSongsByTitleSub(String phrase) throws DataAccessException {
         List<SongDTO> tmpSongs = getAll();
         List<SongDTO> resSongs = new ArrayList<>();
         for (SongDTO song : tmpSongs) {
-            
-            if(Util.removeDiacritics(song.getTitle().toLowerCase())
-               .contains(Util.removeDiacritics(phrase).toLowerCase())){
+
+            if (Util.removeDiacritics(song.getTitle().toLowerCase())
+                    .contains(Util.removeDiacritics(phrase).toLowerCase())) {
                 resSongs.add(song);
             }
         }

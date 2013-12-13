@@ -4,30 +4,27 @@ import java.util.Map;
 
 /**
  * Playlist DTO layer.
- * 
+ *
  * @author Tomas Smetanka
  */
-public class PlaylistDTO { 
-    
+public class PlaylistDTO {
+
     private Long id;
-    
     private String name;
-    
     private Map<Integer, SongDTO> songs;
 
     public PlaylistDTO() {
-        
     }
 
     public PlaylistDTO(String name) {
         this.name = name;
     }
-    
+
     public PlaylistDTO(String name, Map<Integer, SongDTO> songs) {
         this.name = name;
         this.songs = songs;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -51,5 +48,4 @@ public class PlaylistDTO {
     public void setSongs(Map<Integer, SongDTO> songs) {
         this.songs = songs;
     }
-    
 }

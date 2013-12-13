@@ -1,48 +1,38 @@
 package com.musiclibrary.euphonybusinesslogicimplementation.entities;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 /**
- * 
- * 
- * @author Sebastian
+ *
+ *
+ * @author Sebastian Lazon
  */
 @Entity
 public class Song implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    
     private String title;
-    
     private int bitrate;
-    
-    @Column(name="track_number")
+    @Column(name = "track_number")
     private int trackNumber;
-    
     private String comment;
-    
-    @ManyToOne(optional=false)
+    @ManyToOne(optional = false)
     private Genre genre;
-    
-    @ManyToOne(optional=false)
+    @ManyToOne(optional = false)
     private Album album;
-    
-    @ManyToOne(optional=false)
+    @ManyToOne(optional = false)
     private Artist artist;
-    
-    public Song(){ }
+
+    public Song() {
+    }
 
     public Song(String title, int bitrate, int trackNumber, String comment, Genre genre, Album album, Artist artist) {
         this.title = title;
@@ -53,7 +43,7 @@ public class Song implements Serializable {
         this.album = album;
         this.artist = artist;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -109,7 +99,7 @@ public class Song implements Serializable {
     public void setAlbum(Album album) {
         this.album = album;
     }
-    
+
     public Artist getArtist() {
         return artist;
     }
@@ -144,5 +134,4 @@ public class Song implements Serializable {
     public String toString() {
         return "Song{" + "id=" + id + ", title=" + title + ", bitrate=" + bitrate + ", trackNumber=" + trackNumber + ", comment=" + comment + ", genre=" + genre + ", album=" + album + ", artist=" + artist + '}';
     }
-    
 }

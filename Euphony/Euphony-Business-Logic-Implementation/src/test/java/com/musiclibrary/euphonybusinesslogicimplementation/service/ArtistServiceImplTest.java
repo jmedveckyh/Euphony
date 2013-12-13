@@ -34,7 +34,8 @@ public class ArtistServiceImplTest {
     //treba??
     @Test(expected = DataAccessException.class)
     public void testCreateArtistWithNull() {
-        doThrow(new DataAccessException("null album") {}).when(artistDAO).create(null);
+        doThrow(new DataAccessException("null album") {
+        }).when(artistDAO).create(null);
 
         artistService.create(null);              //artist is null
         verify(artistDAO, times(1)).create(null);
@@ -61,12 +62,12 @@ public class ArtistServiceImplTest {
         when(artistDAO.getById(1l)).thenReturn(DTOMapper.toEntity(expResult));
         ArtistDTO result = artistService.getById(expResult.getId());              //correct
         verify(artistDAO, times(1)).getById(expResult.getId());
-        
+
         assertDeepEquals(expResult, result);
 
         verifyNoMoreInteractions(artistDAO);
     }
-    
+
     @Test
     public void testGetArtistByName() {
 
@@ -76,39 +77,39 @@ public class ArtistServiceImplTest {
         when(artistDAO.getByName("Nicki Minaj")).thenReturn(DTOMapper.toEntity(expResult));
         ArtistDTO result = artistService.getByName(expResult.getName());              //correct
         verify(artistDAO, times(1)).getByName(expResult.getName());
-        
+
         assertDeepEquals(expResult, result);
 
         verifyNoMoreInteractions(artistDAO);
     }
-    
+
     @Test
     public void testGetAll() {
 
         when(artistDAO.getAll()).thenReturn(new ArrayList<Artist>());
         ArrayList<ArtistDTO> list = new ArrayList<>();
         assertEquals(list, artistService.getAll());
-        
+
         ArtistDTO expResult1 = new ArtistDTO("Nicki Minaj");
         ArtistDTO expResult2 = new ArtistDTO("Robo Kazik");
         ArtistDTO expResult3 = new ArtistDTO("OneRepublic");
-        
+
         expResult1.setId(1l);
         expResult2.setId(2l);
         expResult3.setId(3l);
-       
+
         list.add(expResult1);
         list.add(expResult2);
         list.add(expResult3);
-        
+
         ArrayList<Artist> daoList = new ArrayList<>();
         daoList.add(DTOMapper.toEntity(expResult1));
         daoList.add(DTOMapper.toEntity(expResult2));
         daoList.add(DTOMapper.toEntity(expResult3));
         when(artistDAO.getAll()).thenReturn(daoList);
-        
+
         assertEquals(DTOMapper.artistsListToEntity(list), DTOMapper.artistsListToEntity(artistService.getAll()));
-        verify(artistDAO,times(2)).getAll();
+        verify(artistDAO, times(2)).getAll();
 
         verifyNoMoreInteractions(artistDAO);
     }
@@ -124,12 +125,12 @@ public class ArtistServiceImplTest {
         doNothing().when(artistDAO).update(DTOMapper.toEntity(artist));
         artistService.update(updatedArtist);              //correct
         verify(artistDAO, times(1)).update(DTOMapper.toEntity(updatedArtist));
-        
+
         when(artistDAO.getById(1l)).thenReturn(DTOMapper.toEntity(updatedArtist));
 
         assertDeepEquals(updatedArtist, artistService.getById(updatedArtist.getId()));
         verify(artistDAO, times(1)).getById(updatedArtist.getId());
-        
+
         verifyNoMoreInteractions(artistDAO);
     }
 
@@ -142,7 +143,7 @@ public class ArtistServiceImplTest {
         doNothing().when(artistDAO).delete(DTOMapper.toEntity(artist));
         artistService.delete(artist);
         verify(artistDAO, times(1)).delete(DTOMapper.toEntity(artist));
-        
+
         artist.setId(null);
 
         when(artistDAO.getById(null)).thenReturn(null);
@@ -153,22 +154,22 @@ public class ArtistServiceImplTest {
 
         verifyNoMoreInteractions(artistDAO);
     }
-    
-    public void testGetArtistByNameSub(){
+
+    public void testGetArtistByNameSub() {
         ArrayList<Artist> allList = new ArrayList<>();
-        
+
         ArtistDTO expResult1 = new ArtistDTO("Armin Van Buuren");
         ArtistDTO expResult2 = new ArtistDTO("Paul van Dyk");
         ArtistDTO expResult3 = new ArtistDTO("Sean Paul");
-        
+
         expResult1.setId(1l);
         expResult2.setId(2l);
         expResult3.setId(3l);
-       
+
         allList.add(DTOMapper.toEntity(expResult1));
         allList.add(DTOMapper.toEntity(expResult2));
         allList.add(DTOMapper.toEntity(expResult3));
-        
+
         ArrayList<Artist> paulList = new ArrayList<>();
         paulList.add(DTOMapper.toEntity(expResult2));
         paulList.add(DTOMapper.toEntity(expResult3));
@@ -176,9 +177,9 @@ public class ArtistServiceImplTest {
         ArrayList<Artist> vanList = new ArrayList<>();
         vanList.add(DTOMapper.toEntity(expResult1));
         vanList.add(DTOMapper.toEntity(expResult2));
-        
+
         when(artistDAO.getAll()).thenReturn(allList);
-        
+
         assertEquals(paulList, DTOMapper.artistsListToEntity(artistService.getArtistsByNameSub("pAUL")));
         assertEquals(vanList, DTOMapper.artistsListToEntity(artistService.getArtistsByNameSub("van")));
     }

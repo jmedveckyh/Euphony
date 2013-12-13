@@ -2,8 +2,6 @@ package com.musiclibrary.euphonybusinesslogicimplementation.dao.impl;
 
 import com.musiclibrary.euphonybusinesslogicimplementation.dao.AlbumDAO;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Album;
-import com.musiclibrary.euphonybusinesslogicimplementation.entities.Artist;
-import com.musiclibrary.euphonybusinesslogicimplementation.entities.Genre;
 import com.musiclibrary.euphonybusinesslogicimplementation.util.Util;
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +11,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
-import org.joda.time.DateTime;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 

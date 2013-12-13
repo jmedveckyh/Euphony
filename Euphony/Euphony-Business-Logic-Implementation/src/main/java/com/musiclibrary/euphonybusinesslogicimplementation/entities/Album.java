@@ -10,31 +10,28 @@ import org.joda.time.DateTime;
 
 /**
  * Album entity.
- * 
+ *
  * @author Branislav Novotny
  */
 @Entity
 public class Album implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
     private String comment;
-    
     private String title;
-    
     private String cover;
-    
-    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime releaseDate;
 
-    public Album() {}
+    public Album() {
+    }
 
     public Album(String title) {
         this.title = title;
     }
-    
+
     public Album(String title, String cover, DateTime releaseDate, String comment) {
         this.title = title;
         this.cover = cover;
@@ -45,7 +42,7 @@ public class Album implements Serializable {
     public Long getId() {
         return id;
     }
-    
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -73,7 +70,7 @@ public class Album implements Serializable {
     public void setReleaseDate(DateTime releaseDate) {
         this.releaseDate = releaseDate;
     }
-    
+
     public String getComment() {
         return comment;
     }
@@ -108,5 +105,4 @@ public class Album implements Serializable {
     public String toString() {
         return "Album{" + "id=" + id + ", title=" + title + ", cover=" + cover + ", releaseDate=" + releaseDate + '}';
     }
-    
 }

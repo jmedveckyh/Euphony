@@ -72,14 +72,14 @@ public class AlbumServiceImpl implements AlbumService {
         return DTOMapper.albumListToDTO(albumDAO.getAll());
 
     }
-    
+
     @Override
-    public List<AlbumDTO> getAlbumsByTitleSub(String phrase){
+    public List<AlbumDTO> getAlbumsByTitleSub(String phrase) {
         List<AlbumDTO> tmpAlbums = getAllAlbums();
         List<AlbumDTO> resAlbums = new ArrayList<>();
         for (AlbumDTO album : tmpAlbums) {
-            if(Util.removeDiacritics(album.getTitle().toLowerCase())
-               .contains(Util.removeDiacritics(phrase).toLowerCase())){
+            if (Util.removeDiacritics(album.getTitle().toLowerCase())
+                    .contains(Util.removeDiacritics(phrase).toLowerCase())) {
                 resAlbums.add(album);
             }
         }

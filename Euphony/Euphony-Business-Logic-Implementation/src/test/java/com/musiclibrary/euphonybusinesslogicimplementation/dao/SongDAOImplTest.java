@@ -531,7 +531,7 @@ public class SongDAOImplTest extends TestCase {
 
         //test delete song
         Genre genreTemp = new Genre("Pop");
-        Album albumTemp = new Album("The Fox", "cover.jpg", DateTime.now(),"comment");
+        Album albumTemp = new Album("The Fox", "cover.jpg", DateTime.now(), "comment");
         Artist artistTemp = new Artist("Ylvis");
 
         em.getTransaction().begin();
@@ -539,7 +539,7 @@ public class SongDAOImplTest extends TestCase {
         albumDao.create(albumTemp);
         artistDao.create(artistTemp);
         em.getTransaction().commit();
-        
+
         Song dalibomba = new Song("Sandru - Dalibomba", 320, 1, "Yeah!!!", genreTemp, albumTemp, artistTemp);
         em.getTransaction().begin();
         songDao.create(dalibomba);
@@ -588,13 +588,13 @@ public class SongDAOImplTest extends TestCase {
         Genre genreTemp = new Genre("Pop");
         Album albumTemp = new Album("The Fox", "cover.jpg", DateTime.now(), "comment");
         Artist artistTemp = new Artist("Ylvis");
-        
+
         em.getTransaction().begin();
         genreDao.create(genreTemp);
         albumDao.create(albumTemp);
         artistDao.create(artistTemp);
         em.getTransaction().commit();
-        
+
         Song dalibomba = new Song("Sandru - Dalibomba", 320, 1, "Yeah!!!", genreTemp, albumTemp, artistTemp);
         em.getTransaction().begin();
         songDao.create(dalibomba);
@@ -611,15 +611,15 @@ public class SongDAOImplTest extends TestCase {
         assertTrue(songDao.getByTitle("Prisoner").isEmpty());
 
         Genre genreTemp = new Genre("Pop");
-        Album albumTemp = new Album("The Fox", "cover.jpg", DateTime.now(),"comment");
+        Album albumTemp = new Album("The Fox", "cover.jpg", DateTime.now(), "comment");
         Artist artistTemp = new Artist("Ylvis");
-        
+
         em.getTransaction().begin();
         genreDao.create(genreTemp);
         albumDao.create(albumTemp);
         artistDao.create(artistTemp);
         em.getTransaction().commit();
-        
+
         Song song = new Song("Prisoner", 320, 2, "Children of the Damned", genreTemp, albumTemp, artistTemp);
         em.getTransaction().begin();
         songDao.create(song);
@@ -640,8 +640,8 @@ public class SongDAOImplTest extends TestCase {
     }
 
     public void testGetByAlbum() {
-        
-        Album album = new Album("Title", "cover.jpg", DateTime.now(),"comment");
+
+        Album album = new Album("Title", "cover.jpg", DateTime.now(), "comment");
         em.getTransaction().begin();
         albumDao.create(album);
         em.getTransaction().commit();
@@ -649,12 +649,12 @@ public class SongDAOImplTest extends TestCase {
 
         Genre genreTemp = new Genre("Pop");
         Artist artistTemp = new Artist("Ylvis");
-        
+
         em.getTransaction().begin();
         genreDao.create(genreTemp);
         artistDao.create(artistTemp);
         em.getTransaction().commit();
-        
+
         Song song = new Song("Prisoner", 320, 2, "Children of the Damned", genreTemp, album, artistTemp);
         em.getTransaction().begin();
         songDao.create(song);
@@ -683,12 +683,12 @@ public class SongDAOImplTest extends TestCase {
 
         Album albumTemp = new Album("The Fox", "cover.jpg", DateTime.now(), "comment");
         Artist artistTemp = new Artist("Ylvis");
-        
+
         em.getTransaction().begin();
         albumDao.create(albumTemp);
         artistDao.create(artistTemp);
         em.getTransaction().commit();
-        
+
         Song song = new Song("Prisoner", 320, 2, "Children of the Damned", genre, albumTemp, artistTemp);
         em.getTransaction().begin();
         songDao.create(song);
@@ -716,13 +716,13 @@ public class SongDAOImplTest extends TestCase {
         assertTrue(songDao.getByArtist(artist).isEmpty());
 
         Genre genreTemp = new Genre("Pop");
-        Album albumTemp = new Album("The Fox", "cover.jpg", DateTime.now(),"comment");
-        
+        Album albumTemp = new Album("The Fox", "cover.jpg", DateTime.now(), "comment");
+
         em.getTransaction().begin();
         genreDao.create(genreTemp);
         albumDao.create(albumTemp);
         em.getTransaction().commit();
-        
+
         Song song = new Song("Prisoner", 320, 2, "Children of the Damned", genreTemp, albumTemp, artist);
         em.getTransaction().begin();
         songDao.create(song);
@@ -739,7 +739,7 @@ public class SongDAOImplTest extends TestCase {
         em.getTransaction().begin();
         songDao.delete(song);
         em.getTransaction().commit();
-        
+
         assertTrue(songDao.getByArtist(artist).isEmpty());
         em.clear();
 

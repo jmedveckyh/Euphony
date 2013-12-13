@@ -17,7 +17,7 @@ import java.util.TreeMap;
 
 /**
  * DTO to Entity and Entity to DTO mapper.
- * 
+ *
  * @author Everyone
  */
 public class DTOMapper {
@@ -107,7 +107,7 @@ public class DTOMapper {
     }
 
     public static List<GenreDTO> genresListToDTO(List<Genre> genres) {
-        
+
         if (genres == null) {
             return null;
         }
@@ -261,7 +261,7 @@ public class DTOMapper {
         return artistDTO;
 
     }
-    
+
     public static List<AlbumDTO> albumListToDTO(List<Album> albums) {
 
         if (albums == null) {
