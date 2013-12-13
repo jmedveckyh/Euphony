@@ -9,3 +9,5 @@ URL of REST server: <a href="http://localhost:8080/pa165/server">http://localhos
 
 For REST client call "<strong>mvn clean install tomcat7:run tomcat7:deploy</strong>" in folder Euphony-client.<br>
 URL of REST client module: <a href="http://localhost:8081/pa165/client">http://localhost:8081/pa165/client/</a><br>
+
+Test data can be automatically added by executing <a href="https://github.com/tomillie/Euphony/blob/master/Euphony/Euphony-WEB/inserts.sql">this SQL script</a>.
