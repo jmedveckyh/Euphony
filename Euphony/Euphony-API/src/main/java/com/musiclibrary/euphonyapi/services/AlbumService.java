@@ -20,15 +20,9 @@ public interface AlbumService {
     AlbumDTO getById(Long id);
     
     AlbumDTO getByTitle(String title);
-        
-    List<AlbumDTO> getByGenre(GenreDTO genre);
-    
-    List<AlbumDTO> getByArtist(ArtistDTO artist);
-    
+
     List<AlbumDTO> getAllAlbums();
     
     List<AlbumDTO> getAlbumsByTitleSub(String phrase);
-    
-    List<AlbumDTO> getByReleaseYear(Integer year);    
     
 }

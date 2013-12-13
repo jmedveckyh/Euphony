@@ -30,36 +30,6 @@ public class Util {
             throw new IllegalArgumentException("Album's title is null.") {
             };
         }
-        if (album.getSongs() == null) {
-            throw new IllegalArgumentException("Album's songs is null.") {
-            };
-        }
-        for (Song s : album.getSongs()) {
-            if (s == null) {
-                throw new IllegalArgumentException("Album's list of songs contains null song.") {
-                };
-            }
-        }
-        if (album.getGenres() == null) {
-            throw new IllegalArgumentException("Album's genres is null.") {
-            };
-        }
-        for (Genre g : album.getGenres()) {
-            if (g == null) {
-                throw new IllegalArgumentException("Album's list of genres contains null genre.") {
-                };
-            }
-        }
-        if (album.getArtists() == null) {
-            throw new IllegalArgumentException("Album's artists is null.") {
-            };
-        }
-        for (Artist a : album.getArtists()) {
-            if (a == null) {
-                throw new IllegalArgumentException("Album's list of artists contains null artist.") {
-                };
-            }
-        }
     }
 
     public static void validateArtist(Artist artist) {

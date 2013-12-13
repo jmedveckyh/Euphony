@@ -1,17 +1,12 @@
 package com.musiclibrary.euphonybusinesslogicimplementation.facade.impl;
 
-import com.musiclibrary.euphonyapi.dto.AlbumDTO;
 import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
 import com.musiclibrary.euphonyapi.facade.MusicFacade;
-import com.musiclibrary.euphonyapi.services.AlbumService;
 import com.musiclibrary.euphonyapi.services.PlaylistService;
-import com.musiclibrary.euphonyapi.services.SongService;
 import com.musiclibrary.euphonybusinesslogicimplementation.util.DTOMapper;
 import com.musiclibrary.euphonybusinesslogicimplementation.util.Util;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,32 +23,14 @@ public class MusicFacadeImpl implements MusicFacade {
 
     @Autowired
     private PlaylistService playlistService;
-    @Autowired
-    private AlbumService albumService;
-    @Autowired
-    private SongService songService;
 
     @Override
     public void setPlaylistService(PlaylistService playlistService) {
         this.playlistService = playlistService;
     }
 
-    @Override
-    public void setAlbumService(AlbumService albumService) {
-        this.albumService = albumService;
-    }
-
-    @Override
-    public void setSongService(SongService songService) {
-        this.songService = songService;
-    }
-
     public void createPlaylist(PlaylistDTO playlist) {
         playlistService.create(playlist);
-    }
-
-    public void createAlbum(AlbumDTO album) {
-        albumService.create(album);
     }
 
     @Override
@@ -84,27 +61,6 @@ public class MusicFacadeImpl implements MusicFacade {
 
     @Override
     @Transactional
-    public Boolean isSongInAlbum(SongDTO song, AlbumDTO album) {
-
-        Util.validateAlbum(DTOMapper.toEntity(album));
-
-        if (song.getId() == null) {
-            throw new IllegalArgumentException("Song's id is null.");
-        }
-        if (album.getId() == null) {
-            throw new IllegalArgumentException("Playlist's id is null.");
-        }
-
-        if (album.getSongs() == null) {
-            return false;
-        } else {
-            return album.getSongs().contains(song);
-        }
-
-    }
-
-    @Override
-    @Transactional
     public void addSongToPlaylist(SongDTO song, PlaylistDTO playlist) {
 
         if (isSongInPlaylist(song, playlist)) {
@@ -128,25 +84,6 @@ public class MusicFacadeImpl implements MusicFacade {
 
     @Override
     @Transactional
-    public void addSongToAlbum(SongDTO song, AlbumDTO album) {
-
-        if (isSongInAlbum(song, album)) {
-            throw new IllegalArgumentException("The song is already in album.");
-        } else {
-            if (album.getSongs() == null) {
-                List<SongDTO> emptyListOfSongs = new ArrayList<>();
-                emptyListOfSongs.add(song);
-                album.setSongs(emptyListOfSongs);
-            } else {
-                album.getSongs().add(song);
-            }
-            albumService.update(album);
-        }
-
-    }
-
-    @Override
-    @Transactional
     public void removeSongFromPlaylist(SongDTO song, PlaylistDTO playlist) {
 
         if (isSongInPlaylist(song, playlist)) {
@@ -163,19 +100,6 @@ public class MusicFacadeImpl implements MusicFacade {
             playlistService.update(playlist);
         } else {
             throw new IllegalArgumentException("The song is not in playlist.");
-        }
-
-    }
-
-    @Override
-    @Transactional
-    public void removeSongFromAlbum(SongDTO song, AlbumDTO album) {
-
-        if (isSongInAlbum(song, album)) {
-            album.getSongs().remove(song);
-            albumService.update(album);
-        } else {
-            throw new IllegalArgumentException("The song is not in album.");
         }
 
     }

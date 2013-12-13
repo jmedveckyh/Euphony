@@ -1,18 +1,10 @@
 package com.musiclibrary.euphonybusinesslogicimplementation.entities;
 
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
@@ -36,36 +28,18 @@ public class Album implements Serializable {
     
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime releaseDate;
-        
-    @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.REFRESH)
-    private List<Song> songs;
 
-    @Fetch(FetchMode.SUBSELECT)
-    @ManyToMany(fetch= FetchType.LAZY,cascade= CascadeType.REFRESH)
-    private List<Genre> genres;
-    
-    @Fetch(FetchMode.SUBSELECT)
-    @ManyToMany(fetch= FetchType.LAZY,cascade= CascadeType.REFRESH)
-    private List<Artist> artists;
-
-    public Album() {
-    
-    }
+    public Album() {}
 
     public Album(String title) {
         this.title = title;
     }
     
-    public Album(String title, String cover, DateTime releaseDate, List<Song> songs, 
-            String comment, List<Artist> artists, List<Genre> genres) {
+    public Album(String title, String cover, DateTime releaseDate, String comment) {
         this.title = title;
         this.cover = cover;
         this.releaseDate = releaseDate;
-        this.songs = songs;
         this.comment = comment;
-        this.artists = artists;
-        this.genres = genres;
     }
 
     public Long getId() {
@@ -99,14 +73,6 @@ public class Album implements Serializable {
     public void setReleaseDate(DateTime releaseDate) {
         this.releaseDate = releaseDate;
     }
-
-    public List<Song> getSongs() {
-        return songs;
-    }
-
-    public void setSongs(List<Song> songs) {
-        this.songs = songs;
-    }
     
     public String getComment() {
         return comment;
@@ -115,24 +81,6 @@ public class Album implements Serializable {
     public void setComment(String comment) {
         this.comment = comment;
     }
-    
-    public List<Genre> getGenres() {
-        return genres;
-    }
-
-    public List<Artist> getArtists() {
-        return artists;
-    }
-    
-    public void setGenres(List<Genre> genres) {
-        this.genres = genres;
-    }
-
-    public void setArtists(List<Artist> artists) {
-        this.artists = artists;
-    }
-    
-    
 
     @Override
     public int hashCode() {
@@ -158,7 +106,7 @@ public class Album implements Serializable {
 
     @Override
     public String toString() {
-        return "Album{" + "id=" + id + ", title=" + title + ", cover=" + cover + ", releaseDate=" + releaseDate + ", songs=" + songs + '}';
+        return "Album{" + "id=" + id + ", title=" + title + ", cover=" + cover + ", releaseDate=" + releaseDate + '}';
     }
     
 }

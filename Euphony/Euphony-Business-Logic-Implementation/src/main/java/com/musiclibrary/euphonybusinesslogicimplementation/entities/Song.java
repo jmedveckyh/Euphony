@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -32,18 +33,15 @@ public class Song implements Serializable {
     
     private String comment;
     
-    @ManyToOne (optional=false,cascade= CascadeType.REFRESH)
+    @ManyToOne(optional=false)
     private Genre genre;
     
-    @ManyToOne (optional=false,cascade= CascadeType.REFRESH)
+    @ManyToOne(optional=false)
     private Album album;
     
-    @ManyToOne (optional=false,cascade= CascadeType.REFRESH)
+    @ManyToOne(optional=false)
     private Artist artist;
-
-//    @ManyToOne
-//    private Playlist playlist;            
-//            
+    
     public Song(){ }
 
     public Song(String title, int bitrate, int trackNumber, String comment, Genre genre, Album album, Artist artist) {

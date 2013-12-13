@@ -132,9 +132,6 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     }
 
     public Resolution add() throws IOException {
-        album.setArtists(new ArrayList<ArtistDTO>());
-        album.setGenres(new ArrayList<GenreDTO>());
-        album.setSongs(new ArrayList<SongDTO>());
         album.setReleaseDate(new DateTime(Integer.parseInt(releaseDate.substring(6)), Integer.parseInt(releaseDate.substring(3, 5)), Integer.parseInt(releaseDate.substring(0, 2)), 0, 0));
         handleFileUpload();
         albumService.create(album);

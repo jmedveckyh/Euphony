@@ -60,7 +60,7 @@ public class SongDAOImplTest extends TestCase {
     public void testCreateSong() {
 
         Genre genreTemp = new Genre("Pop");
-        Album albumTemp = new Album("The Fox", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
+        Album albumTemp = new Album("The Fox", "cover.jpg", DateTime.now(), "comment");
         Artist artistTemp = new Artist("Ylvis");
 
         em.getTransaction().begin();
@@ -531,7 +531,7 @@ public class SongDAOImplTest extends TestCase {
 
         //test delete song
         Genre genreTemp = new Genre("Pop");
-        Album albumTemp = new Album("The Fox", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
+        Album albumTemp = new Album("The Fox", "cover.jpg", DateTime.now(),"comment");
         Artist artistTemp = new Artist("Ylvis");
 
         em.getTransaction().begin();
@@ -586,7 +586,7 @@ public class SongDAOImplTest extends TestCase {
 
         //test get by id
         Genre genreTemp = new Genre("Pop");
-        Album albumTemp = new Album("The Fox", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
+        Album albumTemp = new Album("The Fox", "cover.jpg", DateTime.now(), "comment");
         Artist artistTemp = new Artist("Ylvis");
         
         em.getTransaction().begin();
@@ -611,7 +611,7 @@ public class SongDAOImplTest extends TestCase {
         assertTrue(songDao.getByTitle("Prisoner").isEmpty());
 
         Genre genreTemp = new Genre("Pop");
-        Album albumTemp = new Album("The Fox", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
+        Album albumTemp = new Album("The Fox", "cover.jpg", DateTime.now(),"comment");
         Artist artistTemp = new Artist("Ylvis");
         
         em.getTransaction().begin();
@@ -641,7 +641,7 @@ public class SongDAOImplTest extends TestCase {
 
     public void testGetByAlbum() {
         
-        Album album = new Album("Title", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
+        Album album = new Album("Title", "cover.jpg", DateTime.now(),"comment");
         em.getTransaction().begin();
         albumDao.create(album);
         em.getTransaction().commit();
@@ -681,7 +681,7 @@ public class SongDAOImplTest extends TestCase {
         em.getTransaction().commit();
         assertTrue(songDao.getByGenre(genre).isEmpty());
 
-        Album albumTemp = new Album("The Fox", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
+        Album albumTemp = new Album("The Fox", "cover.jpg", DateTime.now(), "comment");
         Artist artistTemp = new Artist("Ylvis");
         
         em.getTransaction().begin();
@@ -716,7 +716,7 @@ public class SongDAOImplTest extends TestCase {
         assertTrue(songDao.getByArtist(artist).isEmpty());
 
         Genre genreTemp = new Genre("Pop");
-        Album albumTemp = new Album("The Fox", "cover.jpg", DateTime.now(), new ArrayList<Song>(), "comment", new ArrayList<Artist>(), new ArrayList<Genre>());
+        Album albumTemp = new Album("The Fox", "cover.jpg", DateTime.now(),"comment");
         
         em.getTransaction().begin();
         genreDao.create(genreTemp);

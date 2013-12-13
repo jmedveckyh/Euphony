@@ -72,8 +72,7 @@ public class PlaylistDAOImplTest {
     public void testCreatePlaylistWithNameAndSongs() {
         Map<Integer, Song> songs = new TreeMap<>();
         Genre genreTemp = new Genre("Pop");
-        Album albumTemp = new Album("The Fox", "cover.jpg", new DateTime(2009, 1, 1, 0, 0), new ArrayList<Song>(), "nehehe",
-                new ArrayList<Artist>(), new ArrayList<Genre>());
+        Album albumTemp = new Album("The Fox", "cover.jpg", new DateTime(2009, 1, 1, 0, 0), "nehehe");
         Artist artistTemp = new Artist("Ylvis");
         
         em.getTransaction().begin();
@@ -132,8 +131,7 @@ public class PlaylistDAOImplTest {
     public void testUpdatePlaylistWithIdAndName() {
         Map<Integer, Song> songs = new TreeMap<>();
         Genre genreTemp = new Genre("Pop");
-        Album albumTemp = new Album("The Fox", "cover.jpg", new DateTime(2009, 1, 1, 0, 0), new ArrayList<Song>(), "nehehe",
-                new ArrayList<Artist>(), new ArrayList<Genre>());
+        Album albumTemp = new Album("The Fox", "cover.jpg", new DateTime(2009, 1, 1, 0, 0), "nehehe");
         Artist artistTemp = new Artist("Ylvis");
         
         em.getTransaction().begin();
@@ -237,8 +235,7 @@ public class PlaylistDAOImplTest {
     public void testDeletePlaylistWithIdAndName() {
         Map<Integer, Song> songs = new TreeMap<>();
         Genre genreTemp = new Genre("Pop");
-        Album albumTemp = new Album("The Fox", "cover.jpg", new DateTime(2009, 1, 1, 0, 0), new ArrayList<Song>(), "nehehe",
-                new ArrayList<Artist>(), new ArrayList<Genre>());
+        Album albumTemp = new Album("The Fox", "cover.jpg", new DateTime(2009, 1, 1, 0, 0), "nehehe");
         Artist artistTemp = new Artist("Ylvis");
         
         em.getTransaction().begin();
@@ -338,8 +335,7 @@ public class PlaylistDAOImplTest {
     public void testGetByIdPlaylistWithClsAndId() {
         Map<Integer, Song> songs = new TreeMap<>();
         Genre genreTemp = new Genre("Pop");
-        Album albumTemp = new Album("The Fox", "cover.jpg", new DateTime(2009, 1, 1, 0, 0), new ArrayList<Song>(), "nehehe",
-                new ArrayList<Artist>(), new ArrayList<Genre>());
+        Album albumTemp = new Album("The Fox", "cover.jpg", new DateTime(2009, 1, 1, 0, 0), "nehehe");
         Artist artistTemp = new Artist("Ylvis");
         
         em.getTransaction().begin();

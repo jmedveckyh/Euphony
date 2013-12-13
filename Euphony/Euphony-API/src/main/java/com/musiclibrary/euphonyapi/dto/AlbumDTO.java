@@ -1,6 +1,5 @@
 package com.musiclibrary.euphonyapi.dto;
 
-import java.util.List;
 import org.joda.time.DateTime;
 
 /**
@@ -18,27 +17,14 @@ public class AlbumDTO {
     private String comment;
     
     private DateTime releaseDate;
-        
-    private List<SongDTO> songs;
-    
-    private List<GenreDTO> genres;
-    
-    private List<ArtistDTO> artists;
 
-    public AlbumDTO() {
-        
-    }
+    public AlbumDTO() {}
 
-    public AlbumDTO(String title, String cover, DateTime releaseDate, List<SongDTO> songs,
-            String comment, List<ArtistDTO> artists, List<GenreDTO> genres) {
+    public AlbumDTO(String title, String cover, DateTime releaseDate, String comment) {
         this.title = title;
         this.cover = cover;
         this.releaseDate = releaseDate;
-        this.songs = songs;
-        this.comment = comment;
-        this.artists = artists;
-        this.genres = genres;
-        
+        this.comment = comment;     
     }
 
     public AlbumDTO(String title) {
@@ -76,14 +62,6 @@ public class AlbumDTO {
     public void setReleaseDate(DateTime releaseDate) {
         this.releaseDate = releaseDate;
     }
-
-    public List<SongDTO> getSongs() {
-        return songs;
-    }
-
-    public void setSongs(List<SongDTO> songs) {
-        this.songs = songs;
-    }
     
     public String getComment() {
         return comment;
@@ -92,21 +70,4 @@ public class AlbumDTO {
     public void setComment(String comment) {
         this.comment = comment;
     }
-    
-    public List<GenreDTO> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(List<GenreDTO> genres) {
-        this.genres = genres;
-    }
-
-    public List<ArtistDTO> getArtists() {
-        return artists;
-    }
-
-    public void setArtists(List<ArtistDTO> artists) {
-        this.artists = artists;
-    }
-    
 }

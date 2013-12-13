@@ -21,12 +21,5 @@ public interface AlbumDAO {
 
     public List<Album> getAll();
 
-    public Album getByTitle(String title);
-    
-    public List<Album> getByGenre(Genre genre);
-    
-    public List<Album> getByArtist(Artist artist);
-    
-    public List<Album> getByReleaseYear(Integer year);
-        
+    public Album getByTitle(String title);      
 }

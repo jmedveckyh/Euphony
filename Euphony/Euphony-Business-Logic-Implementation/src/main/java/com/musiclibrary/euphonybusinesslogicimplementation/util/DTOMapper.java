@@ -217,10 +217,7 @@ public class DTOMapper {
         album.setId(albumDTO.getId());
         album.setCover(albumDTO.getCover());
         album.setReleaseDate(albumDTO.getReleaseDate());
-        album.setSongs(DTOMapper.songsListToEntity(albumDTO.getSongs()));
         album.setTitle(albumDTO.getTitle());
-        album.setArtists(DTOMapper.artistsListToEntity(albumDTO.getArtists()));
-        album.setGenres(DTOMapper.genresListToEntity(albumDTO.getGenres()));
         album.setComment(albumDTO.getComment());
         return album;
 
@@ -235,10 +232,7 @@ public class DTOMapper {
         albumDTO.setId(album.getId());
         albumDTO.setCover(album.getCover());
         albumDTO.setReleaseDate(album.getReleaseDate());
-        albumDTO.setSongs(DTOMapper.songsListToDTO(album.getSongs()));
         albumDTO.setTitle(album.getTitle());
-        albumDTO.setArtists(DTOMapper.artistsListToDTO(album.getArtists()));
-        albumDTO.setGenres(DTOMapper.genresListToDTO(album.getGenres()));
         albumDTO.setComment(album.getComment());
         return albumDTO;
 
