@@ -119,6 +119,7 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
 
     public Resolution edit() {
         //log.debug("edit() genre={}", genre);
+        playlists = playlistService.getAll();
         return new ForwardResolution("/genre/edit.jsp");
     }
 

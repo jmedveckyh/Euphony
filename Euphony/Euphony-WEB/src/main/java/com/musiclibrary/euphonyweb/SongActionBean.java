@@ -161,6 +161,7 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
         albums = albumService.getAllAlbums();
         genres = genreService.getAll();
         artists = artistService.getAll();
+        playlists = playlistService.getAll();
         return new ForwardResolution("/song/edit.jsp");
     }
 

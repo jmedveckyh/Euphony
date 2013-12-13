@@ -117,6 +117,7 @@ public class ArtistActionBean extends BaseActionBean implements ValidationErrorH
 
     public Resolution edit() {
         //log.debug("edit() artist={}", artist);
+        playlists = playlistService.getAll();
         return new ForwardResolution("/artist/edit.jsp");
     }
 
