@@ -8,7 +8,7 @@ import java.util.List;
  * @author Medo
  */
 public interface ArtistService {
-    
+
     void create(ArtistDTO artistDTO);
 
     void update(ArtistDTO artistDTO);
@@ -20,7 +20,6 @@ public interface ArtistService {
     List<ArtistDTO> getAll();
 
     ArtistDTO getByName(String name);
-    
+
     List<ArtistDTO> getArtistsByNameSub(String phrase);
-            
 }

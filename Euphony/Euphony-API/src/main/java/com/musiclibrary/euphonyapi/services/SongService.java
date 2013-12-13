@@ -29,7 +29,6 @@ public interface SongService {
     List<SongDTO> getByArtist(ArtistDTO artist);
 
     List<SongDTO> getByAlbum(AlbumDTO album);
-    
+
     List<SongDTO> getSongsByTitleSub(String phrase);
-    
 }

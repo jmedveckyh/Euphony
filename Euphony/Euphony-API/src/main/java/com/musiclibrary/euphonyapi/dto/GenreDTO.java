@@ -5,9 +5,8 @@ package com.musiclibrary.euphonyapi.dto;
  * @author Medo
  */
 public class GenreDTO {
-    
+
     private Long id;
-    
     private String name;
 
     public GenreDTO() {

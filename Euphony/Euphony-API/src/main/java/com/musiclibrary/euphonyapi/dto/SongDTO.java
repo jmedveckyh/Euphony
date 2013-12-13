@@ -6,8 +6,8 @@ import java.util.Objects;
  *
  * @author Sebastian Lazon
  */
-public class SongDTO{
-    
+public class SongDTO {
+
     private Long id;
     private String title;
     private int bitrate;
@@ -17,7 +17,8 @@ public class SongDTO{
     private AlbumDTO album;
     private ArtistDTO artist;
 
-    public SongDTO(){ }
+    public SongDTO() {
+    }
 
     public SongDTO(String title) {
         this.title = title;
@@ -32,7 +33,7 @@ public class SongDTO{
         this.album = album;
         this.artist = artist;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -88,7 +89,7 @@ public class SongDTO{
     public void setAlbum(AlbumDTO album) {
         this.album = album;
     }
-    
+
     public ArtistDTO getArtist() {
         return artist;
     }

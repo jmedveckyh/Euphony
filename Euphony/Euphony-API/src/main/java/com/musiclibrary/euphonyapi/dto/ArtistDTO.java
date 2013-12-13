@@ -5,8 +5,8 @@ package com.musiclibrary.euphonyapi.dto;
  * @author Medo
  */
 public class ArtistDTO {
+
     private Long id;
-    
     private String name;
 
     public ArtistDTO() {
