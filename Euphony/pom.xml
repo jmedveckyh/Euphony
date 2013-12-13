@@ -12,7 +12,7 @@
         <module>Euphony-Business-Logic-Implementation</module>
         <module>Euphony-WEB</module>
         <module>Euphony-client</module>
-        <module>Euphony-rest-server</module>
+        <module>Euphony-server</module>
     </modules>
   
     <properties>
