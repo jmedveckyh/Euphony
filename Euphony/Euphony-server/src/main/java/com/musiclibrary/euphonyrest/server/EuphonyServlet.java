@@ -10,6 +10,8 @@ import com.musiclibrary.euphonyapi.dto.GenreDTO;
 import com.musiclibrary.euphonyapi.services.ArtistService;
 import com.musiclibrary.euphonyapi.services.GenreService;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -78,7 +80,7 @@ public class EuphonyServlet extends HttpServlet {
                         ObjectMapper mapper = new ObjectMapper();
                         mapper.writeValue(response.getOutputStream(), artist);
                     } else {
-                        response.sendError(404, properties.getString("error.nosuchartist")); 
+                        response.sendError(404, properties.getString("error.nosuchartist"));
                     }
                 }
             } else if (pathInfo.matches("/genre")) {
@@ -101,9 +103,68 @@ public class EuphonyServlet extends HttpServlet {
 
     @Override
     protected synchronized void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
+
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> map = mapper.readValue(request.getInputStream(), HashMap.class);
+
+        if (map.get("event").equals("updateArtist")) {
+            ArtistDTO artist = mapper.convertValue(map.get("artist"), ArtistDTO.class);
+            if (artist != null && artistService.getById(artist.getId()) != null) {
+                artistService.update(artist);
+            } else {
+                response.sendError(404, properties.getString("error.artistnotfound"));
+            }
+        } else if (map.get("event").equals("updateGenre")) {
+            GenreDTO genre = mapper.convertValue(map.get("genre"), GenreDTO.class);
+            if (genre != null && artistService.getById(genre.getId()) != null) {
+                genreService.update(genre);
+            } else {
+                response.sendError(404, properties.getString("error.genrenotfound"));
+            }
+        } else if (map.get("event").equals("addArtist")) {
+            ArtistDTO artist = mapper.convertValue(map.get("artist"), ArtistDTO.class);
+            if (artist != null && artist.getId() == null) {
+                artistService.create(artist);
+            } else {
+                response.sendError(404, properties.getString("error.invalidartist"));
+            }
+        } else if (map.get("event").equals("addGenre")) {
+            GenreDTO genre = mapper.convertValue(map.get("genre"), GenreDTO.class);
+            if (genre != null && genre.getId() == null) {
+                genreService.create(genre);
+            } else {
+                response.sendError(404, properties.getString("error.invalidgenre"));
+            }
+        } else {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, properties.getString("error.unknownrequest"));
+        }
+
     }
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
+
+        String pathInfo = request.getPathInfo();
+        if (pathInfo != null) {
+            if (pathInfo.contains("/deleteArtist")) {
+                Long id = Long.parseLong(pathInfo.substring(14));
+                if (id != null && artistService.getById(id) != null) {
+                    artistService.delete(artistService.getById(id));
+                } else {
+                    response.sendError(404, properties.getString("error.artistnotfound"));
+                }
+            }
+            if (pathInfo.contains("/deleteGenre")) {
+                Long id = Long.parseLong(pathInfo.substring(13));
+                if (id != null && genreService.getById(id) != null) {
+                    genreService.delete(genreService.getById(id));
+                } else {
+                    response.sendError(404, properties.getString("error.genrenotfound"));
+                }
+            }
+        }
+        
     }
 }
