@@ -12,6 +12,7 @@
         <module>Euphony-Business-Logic-Implementation</module>
         <module>Euphony-WEB</module>
         <module>Euphony-server</module>
+        <module>Euphony-client</module>
     </modules>
   
     <properties>
