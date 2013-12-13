@@ -4,15 +4,11 @@
     Author     : Medo
 --%>
 
-<fmt:bundle basename="StripesResources" /> 
-
 <s:errors/>
-
 <fmt:message key='admin.artistName' var="name"/>
-
-<table style="width:fit-content">
+<table class="addEditForm">
     <tr>
-        <th><s:label for="b1" name="${name}"/></th>
-        <td><s:text id="b1" name="artist.name"/></td>
+        <th><s:label for="pn" name="${name}"/></th>
+        <td><s:text id="pn" name="artist.name"/></td>
     </tr>
 </table>

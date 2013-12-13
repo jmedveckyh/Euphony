@@ -1,0 +1,197 @@
+/* 
+    Document   : style
+    Created on : 13-Dec-2013, 21:37:00
+    Author     : Tomáš Smetanka
+    Description:
+        Global style definition for REST client.
+*/
+
+/**** OTHER ****/
+body {
+    background-color: #ebebeb;
+    font-family: "wf_SegoeUI", "Segoe", "Segoe UI", HelveticaNeue, Droid Sans, Arial, Sans-Serif;
+    font-size: 13px;
+}
+
+.cl {
+    clear: both;
+}
+
+.errorbox {
+    margin: 10px; 
+    padding: 10px; 
+    color: #DE1B1B; 
+    font-weight: bold;
+}
+
+
+/**** LEFT PANEL ****/
+.home { 
+    width: 268px;
+    height: 70px;
+    position: absolute;
+    opacity: 100;
+    margin: 30px 0px 0px 10px;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.navigation { 
+    margin: -10px 0 0 -25%;
+    width: 50%;
+    height: 100px;
+    position: absolute;
+    background-image: url("./../img/euphony-logo-small-white.png");
+    background-repeat: no-repeat;
+    background-position-y: 20px;
+    background-position-x: 20px;
+    background-color: #222;
+    left: 50%;
+}
+
+.logo {
+    width: 260px;
+    height: 100px;
+    float: left;
+    margin-left: 20px;
+    cursor: pointer;
+}  
+
+.menu {
+    float: right;
+}
+
+.menu span {
+    padding: 10px;
+    margin: 30px 20px 0 0;
+    background-color: #771e87;
+    color: #ffffff;
+    font-size: 16px;
+    float: left;
+}
+
+.menu span:hover {
+    background-color: #393939;
+}
+
+.menu a {
+    text-decoration: none;
+}
+
+.content {
+    position: absolute;
+    margin: 120px 0 0 -25%;
+    left: 50%;
+    width: 50%;
+    height: auto;
+    position: absolute;
+}
+
+.basic {
+    width: 100%;
+    border-collapse: collapse;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.basic th {
+    text-align: left;
+}
+
+.basic tr {
+    height: 20px;
+}
+
+.basic td {
+    padding: 6px;
+}
+
+.basic .blackTd {
+    width: 35%;
+    font-size: 14px;
+}
+
+.basic .silverTd {
+    width: 35%;
+}
+
+.basic .silverTd a {
+    color: #444242;
+    font-size: 12px;
+}
+
+.basic .actionTd {
+    width: 10%;
+}
+
+.basic tr:nth-child(even) {
+    background: #e2e2e2;
+}
+
+.basic tr:nth-child(odd) {
+    background: #ebebeb;
+}
+
+.basic tr:not(:first-child):hover {
+    background-color: #b6b6b6;
+}
+
+.basic a {
+    color: black;
+}
+
+.basic a:hover {
+    text-decoration: underline;
+}
+
+.addEditForm {
+    width: 100%;
+}
+
+fieldset input[type="text"] {
+    width: 300px;
+    height: 26px;
+    padding: 0 15px 0 15px;
+    background-color: white;
+    border: 1px solid #b6b6b6;
+    color: #444242;
+    font-size: 15px;
+}
+
+fieldset input[type="submit"] {
+    margin-top: 20px;
+}
+
+fieldset input[type="submit"] {
+    height: 26px;
+    background-color: white;
+    border: 1px solid #b6b6b6;
+    color: #444242;
+    font-size: 15px;
+}
+
+fieldset {
+    -moz-border-radius-bottomleft: 7px;
+    -moz-border-radius-bottomright: 7px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 7px;
+    -webkit-border-radius: 7px;
+    border: 1px solid #acacac;
+    border-radius: 3px;
+    margin-bottom: 40px;
+    padding: 30px;
+}
+
+legend {
+    -moz-border-radius-bottomleft: 7px;
+    -moz-border-radius-bottomright: 7px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 7px;
+    -webkit-border-radius: 7px;
+    border: 1px solid #acacac;
+    background-color: #acacac;
+    color: white;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 15px;
+}

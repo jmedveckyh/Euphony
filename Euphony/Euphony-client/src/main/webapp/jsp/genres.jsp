@@ -11,39 +11,47 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<fmt:bundle basename="StripesResources" /> 
-<fmt:message key='menu.genres' var="title"/>
-<s:layout-render name="layout.jsp" title="${title}">
-    <s:layout-component name="telo">
+<s:layout-render name="./../layout.jsp" titlekey="menu.genres">
+    <s:layout-component name="body">
         <s:useActionBean beanclass="com.musiclibrary.euphonyrest.client.GenreActionBean" var="actionBean"/>
-        <center>
+         <h2><fmt:message key="menu.genres"/></h2>  
             <c:choose>
                 <c:when test="${fn:length(actionBean.genres) == 0}">
-                    <div><font style="color: red;" ><fmt:message key="menu.nogenres"/></font></div><br /><br />
+                    <i><fmt:message key="menu.nogenres"/></i><br/><br/>
                 </c:when>
                 <c:otherwise>
-                    <table class="zakladni">
+                    <table class="basic">
                         <tr>
-                            <th><fmt:message key="admin.genreName"/></th>
                             <th><fmt:message key="admin.genreEdit"/></th>
                             <th><fmt:message key="admin.genreDelete"/></th>
+                            <th><fmt:message key="admin.genreName"/></th>
                         </tr>
                         <c:forEach items="${actionBean.genres}" var="genre">
-                            <tr>
-                                <td><c:out value="${genre.name}"/></td>
-                                <td><s:link beanclass="com.musiclibrary.euphonyrest.client.GenreActionBean" event="edit"><s:param name="genre.id" value="${genre.id}"/><fmt:message key="admin.genreEdit"/></s:link> </td>
-                                <td><s:link beanclass="com.musiclibrary.euphonyrest.client.GenreActionBean" event="delete"><s:param name="genre.id" value="${genre.id}"/><fmt:message key="admin.genreDelete"/></s:link> </td>
-                                </tr>
+                        <tr>
+                            <td class="actionTd">
+                                <s:link beanclass="com.musiclibrary.euphonyrest.client.GenreActionBean" event="edit">
+                                    <s:param name="genre.id" value="${genre.id}"/>
+                                    <img src="${pageContext.request.contextPath}/img/edit.png" width="25px"/>
+                                </s:link>
+                            </td>
+                            <td class="actionTd">
+                                <s:link beanclass="com.musiclibrary.euphonyrest.client.GenreActionBean" event="delete">
+                                    <s:param name="genre.id" value="${genre.id}"/>
+                                    <img src="${pageContext.request.contextPath}/img/delete.png" width="25px"/>
+                                </s:link>
+                            </td>
+                            <td><c:out value="${genre.name}"/></td>
+                        </tr>
                         </c:forEach>
                     </table>
                 </c:otherwise>
             </c:choose>
-            <s:form style="width:400px" beanclass="com.musiclibrary.euphonyrest.client.GenreActionBean">
-                <br /><fieldset><legend><fmt:message key="admin.newGenre"/></legend>
+            <s:form beanclass="com.musiclibrary.euphonyrest.client.GenreActionBean" name="requiredForm" onsubmit="return validateGenreForm()">
+                <br/>
+                <fieldset><legend><fmt:message key="admin.newGenre"/></legend>
                     <%@include file="genreform.jsp"%>
                     <s:submit name="add"><fmt:message key="admin.createNewGenre"/></s:submit>
-                    </fieldset>
+                </fieldset>
             </s:form>
-        </center>
     </s:layout-component>
 </s:layout-render>

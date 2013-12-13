@@ -3,7 +3,7 @@
     Created on : Dec 13, 2013, 4:12:08 PM
     Author     : Medo
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Unavailable Server</title>
     </head>
-    <body style="background-color: red">
+    <body>
         
     <center>
            <p style="font-size: 12px">User friendly message:</p> 

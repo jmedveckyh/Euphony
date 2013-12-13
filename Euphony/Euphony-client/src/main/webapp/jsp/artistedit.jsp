@@ -12,20 +12,16 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="java.util.Locale" %>
 
-<fmt:bundle basename="StripesResources" /> 
-<fmt:message key='admin.artistEdit' var="title"/>
-<s:layout-render name="layout.jsp" title="${title}">
-    <s:layout-component name="telo">
+<s:layout-render name="./../layout.jsp" titlekey="menu.genres">
+    <s:layout-component name="body">
         <s:useActionBean beanclass="com.musiclibrary.euphonyrest.client.ArtistActionBean" var="actionBean"/>
-        <center>
-            <s:form style="width:400px" beanclass="com.musiclibrary.euphonyrest.client.ArtistActionBean">
+            <s:form beanclass="com.musiclibrary.euphonyrest.client.ArtistActionBean" name="requiredForm">
                 <s:hidden name="artist.id"/>
                 <fieldset><legend><fmt:message key="admin.changeEntries"/></legend>
                     <%@include file="artistform.jsp"%>
-                    <s:submit name="save"><fmt:message key="save"/></s:submit>
+                    <s:submit name="save" onclick="return validateArtistForm()"><fmt:message key="save"/></s:submit>
                     <s:submit name="storno"><fmt:message key="storno"/></s:submit>
                     </fieldset>
             </s:form>
-        </center>
     </s:layout-component>
 </s:layout-render>

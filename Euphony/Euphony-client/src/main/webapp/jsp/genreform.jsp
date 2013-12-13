@@ -4,15 +4,11 @@
     Author     : Medo
 --%>
 
-<fmt:bundle basename="StripesResources" /> 
-
 <s:errors/>
-
-<fmt:message key='admin.genreCreate' var="name"/>
-
-<table style="width:fit-content">
+<fmt:message key='admin.genreName' var="name"/>
+<table class="addEditForm">
     <tr>
-        <th><s:label for="b1" name="${name}"/></th>
-        <td><s:text id="b1" name="genre.name"/></td>
+        <th><s:label for="pn" name="${name}"/></th>
+        <td><s:text id="pn" name="genre.name"/></td>
     </tr>
 </table>

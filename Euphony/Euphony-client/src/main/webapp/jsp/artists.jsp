@@ -11,39 +11,46 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<fmt:bundle basename="StripesResources" /> 
-<fmt:message key='menu.artists' var="title"/>
-<s:layout-render name="layout.jsp" title="${title}">
-    <s:layout-component name="telo">
+<s:layout-render name="./../layout.jsp" titlekey="menu.artists">
+    <s:layout-component name="body">
         <s:useActionBean beanclass="com.musiclibrary.euphonyrest.client.ArtistActionBean" var="actionBean"/>
-        <center>
-            <c:choose>
-                <c:when test="${fn:length(actionBean.artists) == 0}">
-                    <div><font style="color: red;" ><fmt:message key="menu.noartists"/></font></div><br /><br />
-                </c:when>
+            <h2><fmt:message key="menu.artists"/></h2>
+                <c:choose>
+                    <c:when test="${fn:length(actionBean.artists) == 0}">
+                        <i><fmt:message key="menu.noartists"/></i><br/><br/>
+                    </c:when>
                 <c:otherwise>
-                    <table class="zakladni">
+                    <table class="basic">
                         <tr>
-                            <th><fmt:message key="admin.artistName"/></th>
                             <th><fmt:message key="admin.artistEdit"/></th>
                             <th><fmt:message key="admin.artistDelete"/></th>
+                            <th><fmt:message key="admin.artistName"/></th>
                         </tr>
                         <c:forEach items="${actionBean.artists}" var="artist">
                             <tr>
+                                <td class="actionTd">
+                                    <s:link beanclass="com.musiclibrary.euphonyrest.client.ArtistActionBean" event="edit">
+                                        <s:param name="artist.id" value="${artist.id}"/>
+                                        <img src="${pageContext.request.contextPath}/img/edit.png" width="25px"/>
+                                    </s:link>
+                                </td>
+                                <td class="actionTd">
+                                    <s:link beanclass="com.musiclibrary.euphonyrest.client.ArtistActionBean" event="delete">
+                                        <s:param name="artist.id" value="${artist.id}"/>
+                                        <img src="${pageContext.request.contextPath}/img/delete.png" width="25px"/>
+                                    </s:link>
+                                </td>
                                 <td><c:out value="${artist.name}"/></td>
-                                <td><s:link beanclass="com.musiclibrary.euphonyrest.client.ArtistActionBean" event="edit"><s:param name="artist.id" value="${artist.id}"/><fmt:message key="admin.artistEdit"/></s:link> </td>
-                                <td><s:link beanclass="com.musiclibrary.euphonyrest.client.ArtistActionBean" event="delete"><s:param name="artist.id" value="${artist.id}"/><fmt:message key="admin.artistDelete"/></s:link> </td>
-                                </tr>
+                            </tr>
                         </c:forEach>
                     </table>
                 </c:otherwise>
             </c:choose>
-            <s:form style="width:400px" beanclass="com.musiclibrary.euphonyrest.client.ArtistActionBean">
-                <br /><fieldset><legend><fmt:message key="admin.newArtist"/></legend>
+            <s:form beanclass="com.musiclibrary.euphonyrest.client.ArtistActionBean" name="requiredForm" onsubmit="return validateArtistForm()">
+                <fieldset><legend><fmt:message key="admin.newArtist"/></legend>
                     <%@include file="artistform.jsp"%>
                     <s:submit name="add"><fmt:message key="admin.createNewArtist"/></s:submit>
-                    </fieldset>
+                </fieldset>
             </s:form>
-        </center>
     </s:layout-component>
 </s:layout-render>
