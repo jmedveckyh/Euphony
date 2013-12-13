@@ -26,15 +26,9 @@ import org.springframework.web.client.RestTemplate;
 @UrlBinding("/jsp/artists")
 public class ArtistActionBean extends BaseActionBean {
 
-    final static String URI = "http://localhost:8080/pa165/rest";
+    final static String URI = "http://localhost:8080/server";
     @SpringBean
     RestTemplate restTemplate;
-
-    public HttpHeaders getHttpHeader() {
-        HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.set("Authorization", "Basic rest:rest");
-        return requestHeaders;
-    }
 
     @DefaultHandler
     public Resolution artists() {
@@ -50,7 +44,7 @@ public class ArtistActionBean extends BaseActionBean {
 
     public Resolution add() {
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("event", "add");
+        map.put("event", "addArtist");
         map.put("artist", artist);
         restTemplate.postForObject(URI, map, Map.class);
         return new RedirectResolution(this.getClass(), "artists");
@@ -66,7 +60,7 @@ public class ArtistActionBean extends BaseActionBean {
 
     public Resolution delete() {
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("event", "delete");
+        map.put("event", "deleteArtist");
         map.put("artist", artist);
         restTemplate.delete(URI + "/deleteArtist/" + artist.getId().toString());
         return new RedirectResolution(this.getClass(), "artists");
@@ -78,7 +72,7 @@ public class ArtistActionBean extends BaseActionBean {
 
     public Resolution save() {
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("event", "update");
+        map.put("event", "updateArtist");
         map.put("artist", artist);
         restTemplate.postForObject(URI, map, Map.class);
         return new RedirectResolution(this.getClass(), "artists");

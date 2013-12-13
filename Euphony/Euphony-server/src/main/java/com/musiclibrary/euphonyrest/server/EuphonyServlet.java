@@ -28,7 +28,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
  *
  *
  */
-@WebServlet(urlPatterns = "/rest/*")
+@WebServlet(urlPatterns = "/*")
 public class EuphonyServlet extends HttpServlet {
 
     private ResourceBundle properties;
@@ -117,7 +117,7 @@ public class EuphonyServlet extends HttpServlet {
             }
         } else if (map.get("event").equals("updateGenre")) {
             GenreDTO genre = mapper.convertValue(map.get("genre"), GenreDTO.class);
-            if (genre != null && artistService.getById(genre.getId()) != null) {
+            if (genre != null && genreService.getById(genre.getId()) != null) {
                 genreService.update(genre);
             } else {
                 response.sendError(404, properties.getString("error.genrenotfound"));
