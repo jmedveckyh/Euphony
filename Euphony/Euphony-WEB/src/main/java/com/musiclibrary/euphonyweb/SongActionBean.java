@@ -26,43 +26,34 @@ import net.sourceforge.stripes.validation.ValidationErrors;
 @UrlBinding("/songs/{$event}/{song.id}")
 public class SongActionBean extends BaseActionBean implements ValidationErrorHandler {
 
-    @SpringBean //Spring can inject even to private and protected fields
+    @SpringBean
     protected SongService songService;
-    
     @SpringBean
     protected AlbumService albumService;
-    
     @SpringBean
     protected GenreService genreService;
-    
     @SpringBean
     protected ArtistService artistService;
-    
-    private List<SongDTO> songs;
-    private List<AlbumDTO> albums;
-    private List<GenreDTO> genres;
-    private List<ArtistDTO> artists;
-    
-    @ValidateNestedProperties(value = {
-            @Validate(on = {"add", "save"}, field = "title", required = true),
-            @Validate(on = {"add", "save"}, field = "bitrate", required = true, minvalue = 1, maxvalue=2500),
-            @Validate(on = {"add", "save"}, field = "trackNumber", required = true, minvalue = 1)
-    })
-    private SongDTO song;
-    
-    @Validate(on = {"add", "save"}, required = true)
-    private Long album;
-    
-    @Validate(on = {"add", "save"}, required = true)
-    private Long genre;
-    
-    @Validate(on = {"add", "save"}, required = true)
-    private Long artist;
-
     @SpringBean
     protected PlaylistService playlistService;
     private List<PlaylistDTO> playlists;
     private PlaylistDTO playlist;
+    private List<SongDTO> songs;
+    private List<AlbumDTO> albums;
+    private List<GenreDTO> genres;
+    private List<ArtistDTO> artists;
+    @ValidateNestedProperties(value = {
+        @Validate(on = {"add", "save"}, field = "title", required = true),
+        @Validate(on = {"add", "save"}, field = "bitrate", required = true, minvalue = 1, maxvalue = 2500),
+        @Validate(on = {"add", "save"}, field = "trackNumber", required = true, minvalue = 1)
+    })
+    private SongDTO song;
+    @Validate(on = {"add", "save"}, required = true)
+    private Long album;
+    @Validate(on = {"add", "save"}, required = true)
+    private Long genre;
+    @Validate(on = {"add", "save"}, required = true)
+    private Long artist;
 
     public List<PlaylistDTO> getPlaylists() {
         return playlists;
@@ -75,7 +66,7 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
     public void setPlaylist(PlaylistDTO playlist) {
         this.playlist = playlist;
     }
-    
+
     @DefaultHandler
     public Resolution list() {
         songs = songService.getAll();
@@ -89,45 +80,42 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
     public List<SongDTO> getSongs() {
         return songs;
     }
-    
+
     public List<GenreDTO> getGenres() {
         return genres;
     }
-    
+
     public List<AlbumDTO> getAlbums() {
         return albums;
     }
-    
+
     public List<ArtistDTO> getArtists() {
         return artists;
     }
-    
-    public void setAlbum(long album){
-        this.album=album;
+
+    public void setAlbum(long album) {
+        this.album = album;
     }
-    
-    public void setArtist(long artist){
-        this.artist=artist;
+
+    public void setArtist(long artist) {
+        this.artist = artist;
     }
-    
-    public void setGenre(long genre){
-        this.genre=genre;
+
+    public void setGenre(long genre) {
+        this.genre = genre;
     }
 
     public Resolution add() {
         song.setAlbum(albumService.getById(album));
         song.setArtist(artistService.getById(artist));
         song.setGenre(genreService.getById(genre));
-        
+
         songService.create(song);
-        //getContext().getMessages().add(new LocalizableMessage("book.add.message",escapeHTML(book.getTitle()),escapeHTML(book.getAuthor())));
         return new RedirectResolution(this.getClass(), "list");
     }
 
     @Override
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
-        //fill up the data for the table if validation errors occured
-        //return null to let the event handling continue
         songs = songService.getAll();
         albums = albumService.getAllAlbums();
         genres = genreService.getAll();
@@ -153,7 +141,9 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
     @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save", "details"})
     public void loadSongFromDatabase() {
         String ids = getContext().getRequest().getParameter("song.id");
-        if (ids == null) return;
+        if (ids == null) {
+            return;
+        }
         song = songService.getById(Long.parseLong(ids));
     }
 
@@ -172,13 +162,8 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
         songService.update(song);
         return new RedirectResolution(this.getClass(), "list");
     }
-    
+
     public Resolution cancel() {
-//        log.debug("cancel() artist={}", artist);
         return new RedirectResolution(this.getClass(), "list");
-    }
-    
-    public Resolution details() {
-        return new ForwardResolution("/song/details.jsp");
     }
 }

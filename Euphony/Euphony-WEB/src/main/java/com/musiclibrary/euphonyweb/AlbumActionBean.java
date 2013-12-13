@@ -39,9 +39,9 @@ import org.springframework.dao.DataAccessException;
 
 /**
  *
- * @author Sebastian
+ * @author Sebastian Lazon
  */
-@UrlBinding("/albums/{$event}/{album.id}/{delete}")
+@UrlBinding("/albums/{$event}/{album.id}")
 public class AlbumActionBean extends BaseActionBean implements ValidationErrorHandler {
 
     @SpringBean
@@ -54,16 +54,14 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     protected ArtistService artistService;
     @SpringBean
     protected GenreService genreService;
-    
     private List<PlaylistDTO> playlists;
     private List<SongDTO> songs;
     private PlaylistDTO playlist;
-  
 
     public void setSongs(List<SongDTO> songs) {
         this.songs = songs;
     }
-    
+
     public List<SongDTO> getSongs() {
         return songs;
     }
@@ -140,10 +138,8 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
 
     @Override
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
-        //fill up the data for the table if validation errors occured
         albums = albumService.getAllAlbums();
         playlists = playlistService.getAll();
-        //return null to let the event handling continue
         return null;
     }
 
@@ -168,24 +164,20 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
         handleFileRemoval();
         try {
             albumService.delete(album);
-        } catch (DataAccessException ex) {}
+        } catch (DataAccessException ex) {
+        }
         return new RedirectResolution(this.getClass(), "list");
     }
 
     public Resolution deleteCover() {
-         if(album.getCover()!=null){
-            String url = getContext().getServletContext().getRealPath("/upload/"+album.getCover());
-            /*
-            File file = new File(url);
-            file.delete();
-            * */
+        if (album.getCover() != null) {
+            String url = getContext().getServletContext().getRealPath("/upload/" + album.getCover());
             album.setCover(null);
-         }
+        }
         return new ForwardResolution("/album/edit.jsp");
-        //return new ForwardResolution("/album/edit.jsp");
     }
 
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save", "deleteCover" , "details"})
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save", "deleteCover", "details"})
     public void loadAlbumFromDatabase() {
         String ids = getContext().getRequest().getParameter("album.id");
         if (ids == null) {
@@ -202,7 +194,7 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
 
     public Resolution save() throws IOException {
         album.setReleaseDate(new DateTime(Integer.parseInt(releaseDate.substring(6)), Integer.parseInt(releaseDate.substring(3, 5)), Integer.parseInt(releaseDate.substring(0, 2)), 0, 0));
-        if (cover != null && cover.getFileName() != album.getCover()) {
+        if (cover != null && !cover.getFileName().equals(album.getCover())) {
             handleFileRemoval();
         }
         handleFileUpload();
@@ -211,7 +203,6 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
     }
 
     public Resolution cancel() {
-//        log.debug("cancel() artist={}", artist);
         return new RedirectResolution(this.getClass(), "list");
     }
 
@@ -227,9 +218,5 @@ public class AlbumActionBean extends BaseActionBean implements ValidationErrorHa
                 errors.add("cover", new LocalizableError("validation.fileexists"));
             }
         }
-    }
-    
-    public Resolution details() {
-        return new ForwardResolution("/album/details.jsp");
     }
 }
