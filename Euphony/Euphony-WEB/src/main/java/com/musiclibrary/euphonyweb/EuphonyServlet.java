@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.musiclibrary.euphonyrest.server;
+package com.musiclibrary.euphonyweb;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.musiclibrary.euphonyapi.dto.ArtistDTO;
@@ -28,7 +28,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
  *
  *
  */
-@WebServlet(urlPatterns = "/*")
+@WebServlet(urlPatterns = "/server/*")
 public class EuphonyServlet extends HttpServlet {
 
     private ResourceBundle properties;
@@ -49,29 +49,20 @@ public class EuphonyServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pathInfo = request.getPathInfo();
 
-        /*if (artistService == null) {
-         response.getOutputStream().print("NEFUNGUJE");
-         } else {
-         response.getOutputStream().print("FUNGUJE!!!");
-         }
-         */
         if (pathInfo != null) {
             if (pathInfo.matches("/")) {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
                 dispatcher.forward(request, response);
             }
             if (pathInfo.matches("/artists")) {
-                //response.getOutputStream().print("artists ");
                 response.setContentType("application/json");
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.writeValue(response.getOutputStream(), artistService.getAll());
             } else if (pathInfo.matches("/genres")) {
-                //response.getOutputStream().print("genres ");
                 response.setContentType("application/json");
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.writeValue(response.getOutputStream(), genreService.getAll());
             } else if (pathInfo.matches("/artist")) {
-                //response.getOutputStream().print("artist ");
                 response.setContentType("application/json");
                 Long id = Long.parseLong(request.getParameter("id"));
                 if (id != null) {
@@ -84,7 +75,6 @@ public class EuphonyServlet extends HttpServlet {
                     }
                 }
             } else if (pathInfo.matches("/genre")) {
-                //response.getOutputStream().print("genre ");
                 response.setContentType("application/json");
                 Long id = Long.parseLong(request.getParameter("id"));
                 if (id != null) {

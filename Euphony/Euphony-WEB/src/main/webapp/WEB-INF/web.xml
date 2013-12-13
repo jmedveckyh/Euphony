@@ -10,7 +10,6 @@
     <context-param>  
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            /WEB-INF/spring-context.xml
             classpath:applicationContext.xml    
         </param-value>
         <description>config file for Spring</description>
@@ -72,4 +71,17 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>  
+    <servlet>
+        <display-name>EuphonyServlet</display-name>
+        <servlet-name>EuphonyServlet</servlet-name>
+        <servlet-class>
+            org.springframework.web.context.support.HttpRequestHandlerServlet
+        </servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>user-webservice</servlet-name>
+        <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
 </web-app>

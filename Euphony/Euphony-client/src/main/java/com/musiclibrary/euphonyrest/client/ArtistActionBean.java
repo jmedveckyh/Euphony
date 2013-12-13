@@ -26,7 +26,7 @@ import org.springframework.web.client.RestTemplate;
 @UrlBinding("/jsp/artists")
 public class ArtistActionBean extends BaseActionBean {
 
-    final static String URI = "http://localhost:8080/server";
+    final static String URI = "http://localhost:8080/pa165/server";
     @SpringBean
     RestTemplate restTemplate;
 
