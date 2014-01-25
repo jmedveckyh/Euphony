@@ -1,5 +1,6 @@
 package com.musiclibrary.euphonybusinesslogicimplementation.util;
 
+import com.musiclibrary.euphonybusinesslogicimplementation.entities.Account;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Album;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Artist;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Genre;
@@ -110,6 +111,37 @@ public class Util {
         }
         if (song.getTrackNumber() <= 0) {
             throw new IllegalArgumentException("Song's track number must be bigger than 0.") {
+            };
+        }
+    }
+    
+public static void validateAccount(Account account) {
+        if (account == null) {
+            throw new IllegalArgumentException("Playlist cannot be null.") {
+            };
+        }
+        if (account.getUsername()== null) {
+            throw new IllegalArgumentException("Account's username is null.") {
+            };
+        }
+        if (account.getIsAdmin()== null) {
+            throw new IllegalArgumentException("Account's getIsAdmin is null.") {
+            };
+        }
+        if ("".equals(account.getUsername())) {
+            throw new IllegalArgumentException("Account's username is empty.") {
+            };
+        }
+        if (account.getPassword()== null) {
+            throw new IllegalArgumentException("Account's passwoed is null.") {
+            };
+        }
+        if ("".equals(account.getPassword())) {
+            throw new IllegalArgumentException("Account's passwoed is empty.") {
+            };
+        }
+        if (account.getPlaylists()== null) {
+            throw new IllegalArgumentException("Account's playlists is null.") {
             };
         }
     }

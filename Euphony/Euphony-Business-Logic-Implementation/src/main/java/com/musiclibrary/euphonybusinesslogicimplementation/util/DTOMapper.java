@@ -1,10 +1,12 @@
 package com.musiclibrary.euphonybusinesslogicimplementation.util;
 
+import com.musiclibrary.euphonyapi.dto.AccountDTO;
 import com.musiclibrary.euphonyapi.dto.AlbumDTO;
 import com.musiclibrary.euphonyapi.dto.ArtistDTO;
 import com.musiclibrary.euphonyapi.dto.GenreDTO;
 import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
+import com.musiclibrary.euphonybusinesslogicimplementation.entities.Account;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Album;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Artist;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Genre;
@@ -312,4 +314,35 @@ public class DTOMapper {
         }
         return artists;
     }
+
+    public static AccountDTO accountEntityToDTOAccount(Account account) {
+
+        if (account == null) {
+            return null;
+        }
+        AccountDTO accountDTO = new AccountDTO();
+        accountDTO.setId(account.getId());
+        accountDTO.setUsername(account.getUsername());
+        accountDTO.setIsAdmin(account.getIsAdmin());
+        accountDTO.setPassword(account.getPassword());
+        accountDTO.setPlaylists(playlistListToDTO(account.getPlaylists()));
+        return accountDTO;
+    }
+    
+    public static Account accountDTOtoEntity(AccountDTO accDto){
+        
+        if (accDto == null) {
+            return null;
+        }
+        Account account = new Account();
+        account.setId(accDto.getId());
+        account.setUsername(accDto.getUsername());
+        account.setIsAdmin(accDto.getIsAdmin());
+        account.setPassword(accDto.getPassword());
+        account.setPlaylists(playlistListToEntity(accDto.getPlaylists()));
+        return account;
+
+    }
+    
+ 
 }
