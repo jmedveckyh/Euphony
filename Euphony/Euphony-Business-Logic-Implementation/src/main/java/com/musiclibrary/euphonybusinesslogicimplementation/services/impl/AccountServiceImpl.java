@@ -24,8 +24,8 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountDAO accountDAO;
 
-    public void setAccountDAO(AccountDAO dao) {
-        this.accountDAO = dao;
+    public void setAccountDAO(AccountDAO accountDAO) {
+        this.accountDAO = accountDAO;
     }
 
     @Override

@@ -12,13 +12,13 @@ import com.musiclibrary.euphonybusinesslogicimplementation.entities.Account;
  */
 public interface AccountDAO {
     
-    void create (Account account);
+    public void create (Account account);
  
-    Account get (Long id);
+    public Account get (Long id);
     
-    void update(Account account);
+    public void update(Account account);
     
-    void delete(Account account);
+    public void delete(Account account);
     
-    Account getByUsername(String username);
+    public Account getByUsername(String username);
 }
