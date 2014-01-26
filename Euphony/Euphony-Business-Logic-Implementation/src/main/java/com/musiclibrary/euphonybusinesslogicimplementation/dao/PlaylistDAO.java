@@ -11,13 +11,13 @@ import java.util.List;
  */
 public interface PlaylistDAO {
 
-    public void create(Playlist entity);
+    void create(Playlist entity);
 
-    public void update(Playlist entity);
+    void update(Playlist entity);
 
-    public void delete(Playlist entity);
+    void delete(Playlist entity);
 
-    public Playlist getById(Long id);
+    Playlist getById(Long id);
 
     Playlist getByName(String name);
 

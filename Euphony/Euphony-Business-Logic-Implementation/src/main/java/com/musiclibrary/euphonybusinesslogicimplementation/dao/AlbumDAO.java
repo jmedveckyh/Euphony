@@ -9,15 +9,15 @@ import java.util.List;
  */
 public interface AlbumDAO {
 
-    public void create(Album entity);
+    void create(Album entity);
 
-    public void update(Album entity);
+    void update(Album entity);
 
-    public void delete(Album entity);
+    void delete(Album entity);
 
-    public Album getById(Long id);
+    Album getById(Long id);
 
-    public List<Album> getAll();
+    List<Album> getAll();
 
-    public Album getByTitle(String title);
+    Album getByTitle(String title);
 }
