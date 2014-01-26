@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +15,7 @@ import javax.persistence.OneToMany;
  *
  * @author Brano
  */
+@Entity
 public class Account implements Serializable{
     
     @Id
@@ -32,6 +34,16 @@ public class Account implements Serializable{
     @OneToMany(cascade = CascadeType.ALL)
     private List<Playlist> playlists;
 
+    public Account(){
+    }
+    
+    public Account(String username, String password, Boolean isAdmin, List<Playlist> playlists){
+        this.username = username;
+        this.password = password;
+        this.playlists = playlists;
+        this.isAdmin = isAdmin;
+    }
+    
     public Long getId() {
         return id;
     }

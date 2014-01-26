@@ -26,12 +26,17 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountDTO register(AccountDTO acc) {
-        if (acc == null || acc.getIsAdmin() == null || acc.getPassword() == null || acc.getUsername() == null) {
-            throw new IllegalArgumentException("Null argument");
+        
+        if (acc == null) {
+           throw new IllegalArgumentException("account is null");
+        }
+        
+        if (acc.getIsAdmin() == null || acc.getPassword() == null || acc.getUsername() == null) {
+            throw new IllegalArgumentException("account isAdmin or pass or username is null");
         }
 
         if (acc.getUsername().isEmpty() || acc.getPassword().isEmpty()) {
-            throw new IllegalArgumentException("Empty argument");
+            throw new IllegalArgumentException("account username or password is empty");
         }
 
         Account account = accountDAO.getByUsername(acc.getUsername());
@@ -47,11 +52,11 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountDTO login(String username, String password) {
         if (username == null || password == null) {
-            throw new IllegalArgumentException("Null argunet");
+            throw new IllegalArgumentException("account username or password is nullt");
         }
 
         if (username.isEmpty() || password.isEmpty()) {
-            throw new IllegalArgumentException("Empty argument");
+            throw new IllegalArgumentException("account username or password is empty");
         }
 
         Account account = accountDAO.getByUsername(username);
