@@ -27,9 +27,9 @@ public class AuthActionBean extends BaseActionBean {
 
     @SpringBean
     protected AccountService accountService;
-    @Validate(required = true, on = "submitLogin")
+    @Validate(required = true, on = {"submitLogin", "submitRegister"})
     private String username;
-    @Validate(required = true, on = "submitLogin")
+    @Validate(required = true, on = {"submitLogin", "submitRegister"})
     private String password;
 
     public String getUsername() {

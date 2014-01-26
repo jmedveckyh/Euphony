@@ -29,12 +29,12 @@
     <fieldset><legend><f:message key="login"/></legend>
         <table>
             <tr>
-                <td class="labelTd"><s:label for="b1" name="name"/></td>
-                <td><s:text id="b1" name="login.name"/></td>
+                <td class="labelTd"><s:label for="b1" name="username"/></td>
+                <td><s:text id="b1" name="username"/></td>
             </tr>
             <tr>
-                <td class="labelTd"><s:label for="b2" name="name"/></td>
-                <td><s:password id="b2" name="login.password"/></td>
+                <td class="labelTd"><s:label for="b2" name="password"/></td>
+                <td><s:password id="b2" name="password"/></td>
             </tr>
         </table>
         <s:submit name="submitLogin"><f:message key="login"/></s:submit>
