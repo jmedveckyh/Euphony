@@ -21,7 +21,7 @@ import net.sourceforge.stripes.validation.Validate;
  *
  * @author Sebastian
  */
-@NotLoggedIn
+@DoesNotRequireLogin
 @UrlBinding("/auth/{event}")
 public class AuthActionBean extends BaseActionBean {
 

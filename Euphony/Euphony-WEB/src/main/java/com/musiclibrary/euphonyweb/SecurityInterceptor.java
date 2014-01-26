@@ -17,7 +17,7 @@ import net.sourceforge.stripes.controller.LifecycleStage;
  * @author Sebastian
  */
 @Intercepts({LifecycleStage.ActionBeanResolution})
-public class AuthInterceptor implements Interceptor{
+public class SecurityInterceptor implements Interceptor{
    
     /**
      * Checks if a user is logged in. When not user is redirected to login page.
@@ -29,7 +29,7 @@ public class AuthInterceptor implements Interceptor{
     @Override
     public Resolution intercept(ExecutionContext ctxt) throws Exception {
         Resolution resolution = ctxt.proceed();
-        if(ctxt.getActionBean().getClass().isAnnotationPresent(NotLoggedIn.class)) {
+        if(ctxt.getActionBean().getClass().isAnnotationPresent(DoesNotRequireLogin.class)) {
             return resolution;
         }
         if(isLoggedIn(ctxt.getActionBeanContext())) {

@@ -61,7 +61,7 @@
         <init-param>
             <description>Stripes injects Spring beans</description>
             <param-name>Interceptor.Classes</param-name>
-            <param-value>net.sourceforge.stripes.integration.spring.SpringInterceptor</param-value>  
+            <param-value>com.musiclibrary.euphonyweb.SecurityInterceptor</param-value>  
         </init-param>
         <init-param>
             <param-name>ExceptionHandler.Class</param-name>
