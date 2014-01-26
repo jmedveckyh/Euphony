@@ -13,11 +13,13 @@ import javax.persistence.PersistenceContextType;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Brano
  */
+@Repository
 public class AccountDAOImpl implements AccountDAO {
 
     @PersistenceContext(type = PersistenceContextType.EXTENDED)
