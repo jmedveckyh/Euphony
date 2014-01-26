@@ -24,7 +24,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @UrlBinding("/jsp/genres")
 public class GenreActionBean extends BaseActionBean {
-
+    
     @SpringBean
     RestTemplate restTemplate;
 

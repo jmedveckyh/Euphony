@@ -26,7 +26,8 @@
         </plugins>
     </build>
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>      
+        <spring-framework.version>3.1.2.RELEASE</spring-framework.version>
     </properties>
     <dependencies>
         <dependency>
@@ -54,13 +55,13 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>3.2.4.RELEASE</version>
+            <version>${spring-framework.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>3.2.4.RELEASE</version>
+            <version>${spring-framework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
@@ -70,7 +71,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-            <version>3.2.4.RELEASE</version>
+            <version>${spring-framework.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -86,7 +87,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>3.2.4.RELEASE</version>
+            <version>${spring-framework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -106,17 +107,17 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>3.2.4.RELEASE</version>
+            <version>${spring-framework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aspects</artifactId>
-            <version>3.2.4.RELEASE</version>
+            <version>${spring-framework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>3.2.4.RELEASE</version>
+            <version>${spring-framework.version}</version>
         </dependency>
     </dependencies>
 </project>
