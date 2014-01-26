@@ -26,6 +26,12 @@ public abstract class BaseActionBean implements ActionBean {
         return context;
     }
 
+    public HttpHeaders getHttpHeader() {
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.set("Authorization", "Basic rest:rest");
+        return requestHeaders;
+    }
+
     public static String escapeHTML(String s) {
         return Functions.escapeXml(s);
     }

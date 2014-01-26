@@ -23,7 +23,6 @@
         <param-value>
             classpath:applicationContext.xml
             /WEB-INF/applicationContext.xml
-            /WEB-INF/applicationContext-security.xml
         </param-value>
     </context-param>
 

@@ -14,7 +14,17 @@
     <context:annotation-config/>
     <context:component-scan base-package="com.musiclibrary.euphonyrest.client" />
     
+    <bean id="credentials" class="org.apache.commons.httpclient.UsernamePasswordCredentials">
+        <constructor-arg value="rest"/>
+        <constructor-arg value="rest"/>
+    </bean>
+    
+    <bean id="httpState" class="com.musiclibrary.euphonyrest.client.CustomHttpState">
+        <property name="credentials" ref="credentials"/>
+    </bean>
+    
     <bean id="httpClient" class="org.apache.commons.httpclient.HttpClient">
+        <property name="state" ref="httpState"/>
     </bean>
 
     <bean id="httpClientFactory" class="org.springframework.http.client.CommonsClientHttpRequestFactory">
