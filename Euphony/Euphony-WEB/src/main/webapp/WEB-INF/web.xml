@@ -11,9 +11,21 @@
         <description>Spring configuration file</description>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath:applicationContext.xml    
+            classpath:applicationContext.xml
+            /WEB-INF/applicationContext-security.xml    
         </param-value>
     </context-param>
+    
+    <filter>
+      <filter-name>springSecurityFilterChain</filter-name>
+      <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+
+    <filter-mapping>
+      <filter-name>springSecurityFilterChain</filter-name>
+      <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
     <!-- JSTL -->
     <context-param>
         <description>JSTL tags will use localized strings from the same source as Stripes</description>

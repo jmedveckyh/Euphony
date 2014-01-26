@@ -7,7 +7,7 @@ import org.apache.taglibs.standard.functions.Functions;
 /**
  * Base actionBean implementing the required methods for setting and getting context.
  *
- * @author Martin Kuba makub@ics.muni.cz
+ * 
  */
 public abstract class BaseActionBean implements ActionBean {
     private ActionBeanContext context;

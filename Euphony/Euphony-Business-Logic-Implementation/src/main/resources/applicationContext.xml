@@ -43,12 +43,14 @@
     <bean id="genreDAO" class="com.musiclibrary.euphonybusinesslogicimplementation.dao.impl.GenreDAOImpl"/>
     <bean id="playlistDAO" class="com.musiclibrary.euphonybusinesslogicimplementation.dao.impl.PlaylistDAOImpl"/>
     <bean id="songDAO" class="com.musiclibrary.euphonybusinesslogicimplementation.dao.impl.SongDAOImpl"/>
+    <bean id="accountDAO" class="com.musiclibrary.euphonybusinesslogicimplementation.dao.impl.AccountDAOImpl"/>
    
     <bean id="albumService" class="com.musiclibrary.euphonybusinesslogicimplementation.services.impl.AlbumServiceImpl" />
     <bean id="artistService" class="com.musiclibrary.euphonybusinesslogicimplementation.services.impl.ArtistServiceImpl"/>
     <bean id="genreService" class="com.musiclibrary.euphonybusinesslogicimplementation.services.impl.GenreServiceImpl"/>
     <bean id="playlistService" class="com.musiclibrary.euphonybusinesslogicimplementation.services.impl.PlaylistServiceImpl"/>
-    <bean id="songService" class="com.musiclibrary.euphonybusinesslogicimplementation.services.impl.SongServiceImpl"/>    
+    <bean id="songService" class="com.musiclibrary.euphonybusinesslogicimplementation.services.impl.SongServiceImpl"/>
+    <bean id="accountService" class="com.musiclibrary.euphonybusinesslogicimplementation.services.impl.AccountServiceImpl"/>   
     
     <bean id="musicFacadeImpl" class="com.musiclibrary.euphonybusinesslogicimplementation.facade.impl.MusicFacadeImpl" />
 
