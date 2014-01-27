@@ -54,6 +54,10 @@ public class AuthActionBean extends BaseActionBean {
     public Resolution login() {
         return new ForwardResolution("login.jsp");
     }
+    
+    public Resolution register(){
+        return new ForwardResolution("register.jsp");
+    }
 
     public Resolution submitLogin() {
         HttpSession session = getContext().getRequest().getSession();
