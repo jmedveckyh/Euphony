@@ -56,26 +56,29 @@
             </div>
             <div class="userPanel">
                 <ul>
-                    <li><s:link beanclass="com.musiclibrary.euphonyweb.AuthActionBean" event="logout"><f:message key="menu.logout"/></s:link></li>
-                    <c:if test="${pageContext.session.getAttribute('admin')==true}">
-                    <li class="drop">
-                        <a href="#" class="username">Admin</a>
-                        <div class="dropdownContain">
-                            <div class="dropOut">
-                                <div class="triangle"></div>
-                                <ul>
-                                    <li><s:link beanclass="com.musiclibrary.euphonyweb.GenreActionBean"><f:message key="menu.admin.newgenre"/></s:link></li>
-                                    <li><s:link beanclass="com.musiclibrary.euphonyweb.ArtistActionBean"><f:message key="menu.admin.newartist"/></s:link></li>
-                                    <li><s:link beanclass="com.musiclibrary.euphonyweb.AlbumActionBean"><f:message key="menu.admin.newalbum"/></s:link></li>
-                                    <li><s:link beanclass="com.musiclibrary.euphonyweb.SongActionBean"><f:message key="menu.admin.newsong"/></s:link></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
+                    <c:if test="${pageContext.session.getAttribute('admin')==false}">
+                        <b>${pageContext.session.getAttribute('username')} &nbsp </b>
                     </c:if>
-                    </ul>
-                </div>
-                <div class="content">
+                    <li><s:link beanclass="com.musiclibrary.euphonyweb.AuthActionBean" event="logout"><f:message key="menu.logout"/></s:link></li>
+                        <c:if test="${pageContext.session.getAttribute('admin')==true}">
+                        <li class="drop">
+                            <a href="#" class="username">Admin</a>
+                            <div class="dropdownContain">
+                                <div class="dropOut">
+                                    <div class="triangle"></div>
+                                    <ul>
+                                        <li><s:link beanclass="com.musiclibrary.euphonyweb.GenreActionBean"><f:message key="menu.admin.newgenre"/></s:link></li>
+                                        <li><s:link beanclass="com.musiclibrary.euphonyweb.ArtistActionBean"><f:message key="menu.admin.newartist"/></s:link></li>
+                                        <li><s:link beanclass="com.musiclibrary.euphonyweb.AlbumActionBean"><f:message key="menu.admin.newalbum"/></s:link></li>
+                                        <li><s:link beanclass="com.musiclibrary.euphonyweb.SongActionBean"><f:message key="menu.admin.newsong"/></s:link></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                    </c:if>
+                </ul>
+            </div>
+            <div class="content">
                 <s:messages/>
                 <s:layout-component name="body"/>
                 <hr>

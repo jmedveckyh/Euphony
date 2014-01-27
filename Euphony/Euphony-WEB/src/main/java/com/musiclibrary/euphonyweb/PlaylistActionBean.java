@@ -1,11 +1,15 @@
 package com.musiclibrary.euphonyweb;
 
+import com.musiclibrary.euphonyapi.dto.AccountDTO;
 import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
+import com.musiclibrary.euphonyapi.facade.MusicFacade;
+import com.musiclibrary.euphonyapi.services.AccountService;
 import com.musiclibrary.euphonyapi.services.PlaylistService;
 import com.musiclibrary.euphonyapi.services.SongService;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpSession;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -29,11 +33,28 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
 
     @SpringBean
     protected PlaylistService playlistService;
+    @SpringBean
+    protected MusicFacade facade;
     @ValidateNestedProperties(value = {
         @Validate(on = {"add", "save"}, field = "name", required = true)
     })
     private PlaylistDTO playlist;
     private List<PlaylistDTO> playlists;
+    
+    @SpringBean
+    private AccountService accountService; 
+    
+    private AccountDTO account;
+    
+    //private List<PlaylistDTO> accPlaylists;
+
+    public AccountDTO getAccount() {
+        return account;
+    }
+
+    public void setAccount(AccountDTO account) {
+        this.account = account;
+    }
 
     public List<PlaylistDTO> getPlaylists() {
         return playlists;
@@ -68,13 +89,21 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
 
     @DefaultHandler
     public Resolution show() {
-        playlists = playlistService.getAll();
+        facade.setPlaylistService(playlistService);
+        facade.setAccountService(accountService);
+        HttpSession session = getContext().getRequest().getSession();
+        playlists = facade.getPlaylistsByAccount((String)session.getAttribute("username"));
+        //playlists = playlistService.getAll();
         songs = playlist.getSongs();
         return new ForwardResolution("/playlist/id.jsp");
     }
 
     public Resolution add() {
-        playlistService.create(playlist);
+        facade.setPlaylistService(playlistService);
+        facade.setAccountService(accountService);
+        HttpSession session = getContext().getRequest().getSession();
+        facade.addPlaylistByAccount((String)session.getAttribute("username"), playlist);
+        //playlistService.create(playlist);
         Long ids = playlist.getId();
         return new RedirectResolution("/playlist/else/show/" + ids);
     }

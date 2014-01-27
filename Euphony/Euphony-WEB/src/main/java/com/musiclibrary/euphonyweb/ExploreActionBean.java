@@ -1,17 +1,20 @@
 package com.musiclibrary.euphonyweb;
 
+import com.musiclibrary.euphonyapi.dto.AccountDTO;
 import com.musiclibrary.euphonyapi.dto.AlbumDTO;
 import com.musiclibrary.euphonyapi.dto.ArtistDTO;
 import com.musiclibrary.euphonyapi.dto.GenreDTO;
 import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
 import com.musiclibrary.euphonyapi.facade.MusicFacade;
+import com.musiclibrary.euphonyapi.services.AccountService;
 import com.musiclibrary.euphonyapi.services.AlbumService;
 import com.musiclibrary.euphonyapi.services.ArtistService;
 import com.musiclibrary.euphonyapi.services.GenreService;
 import com.musiclibrary.euphonyapi.services.PlaylistService;
 import com.musiclibrary.euphonyapi.services.SongService;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
@@ -51,11 +54,30 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
     private List<AlbumDTO> albums;
     private List<ArtistDTO> artists;
     private List<PlaylistDTO> playlists;
+    
+    @SpringBean
+    private AccountService accountService; 
+    
+    private AccountDTO account;
+    
+    //private List<PlaylistDTO> accPlaylists;
+
+    public AccountDTO getAccount() {
+        return account;
+    }
+
+    public void setAccount(AccountDTO account) {
+        this.account = account;
+    }
 
     @DefaultHandler
     public Resolution songs() {
         songs = songService.getAll();
-        playlists = playlistService.getAll();
+        facade.setPlaylistService(playlistService);
+        facade.setAccountService(accountService);
+        HttpSession session = getContext().getRequest().getSession();
+        playlists = facade.getPlaylistsByAccount((String)session.getAttribute("username"));
+        //playlists = playlistService.getAll();
         return new ForwardResolution("/explore/songs.jsp");
     }
 

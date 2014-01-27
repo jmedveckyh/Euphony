@@ -1,12 +1,15 @@
 package com.musiclibrary.euphonybusinesslogicimplementation.facade.impl;
 
+import com.musiclibrary.euphonyapi.dto.AccountDTO;
 import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
 import com.musiclibrary.euphonyapi.facade.MusicFacade;
+import com.musiclibrary.euphonyapi.services.AccountService;
 import com.musiclibrary.euphonyapi.services.PlaylistService;
 import com.musiclibrary.euphonybusinesslogicimplementation.util.DTOMapper;
 import com.musiclibrary.euphonybusinesslogicimplementation.util.Util;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,40 @@ public class MusicFacadeImpl implements MusicFacade {
     @Autowired
     private PlaylistService playlistService;
 
+    @Autowired
+    private AccountService accountService;
+
+    public void setAccountService(AccountService accountService) {
+        this.accountService = accountService;
+    }
+    
+    @Override
+    public List<PlaylistDTO> getPlaylistsByAccount(String username){
+        AccountDTO acc = accountService.getByUsername(username);
+        if (acc.getIsAdmin()) {
+            return playlistService.getAll();
+        } 
+        else 
+            return acc.getPlaylists();    
+    }
+    
+    @Override
+    public void addPlaylistByAccount(String username, PlaylistDTO playlist){
+        if (username == null) {
+            throw new NullPointerException("username is null");
+        }
+        if (playlist == null) {
+            throw new NullPointerException("playlist is null");
+        }
+        
+        playlistService.create(playlist);
+        AccountDTO acc = accountService.getByUsername(username);
+        List<PlaylistDTO> pLists = acc.getPlaylists();
+        pLists.add(playlist);
+        acc.setPlaylists(pLists);
+        accountService.update(acc);
+    }
+    
     @Override
     public void setPlaylistService(PlaylistService playlistService) {
         this.playlistService = playlistService;

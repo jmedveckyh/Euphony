@@ -2,7 +2,9 @@ package com.musiclibrary.euphonyapi.facade;
 
 import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
+import com.musiclibrary.euphonyapi.services.AccountService;
 import com.musiclibrary.euphonyapi.services.PlaylistService;
+import java.util.List;
 
 /**
  * Interface for facade layer. Other methods that communicate with UI layer will
@@ -44,4 +46,10 @@ public interface MusicFacade {
      * @param album to be removed from, cannot be null.
      */
     void setPlaylistService(PlaylistService playlistService);
+    
+    void setAccountService(AccountService accountService);
+    
+    void addPlaylistByAccount(String username, PlaylistDTO playlist);
+    
+    List<PlaylistDTO> getPlaylistsByAccount(String username);
 }
