@@ -90,6 +90,7 @@ public class AuthActionBean extends BaseActionBean {
 
     public Resolution logout() {
         getContext().getRequest().getSession().setAttribute("loggedIn", false);
+        getContext().getRequest().getSession().setAttribute("admin", false);
         return new ForwardResolution("login.jsp");
     }
 }
