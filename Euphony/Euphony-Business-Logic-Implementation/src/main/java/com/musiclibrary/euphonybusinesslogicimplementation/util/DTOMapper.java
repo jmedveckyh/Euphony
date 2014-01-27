@@ -315,7 +315,7 @@ public class DTOMapper {
         return artists;
     }
 
-    public static AccountDTO accountEntityToDTOAccount(Account account) {
+    public static AccountDTO ToDTO(Account account) {
 
         if (account == null) {
             return null;
@@ -329,7 +329,7 @@ public class DTOMapper {
         return accountDTO;
     }
     
-    public static Account accountDTOtoEntity(AccountDTO accDto){
+    public static Account toEntity(AccountDTO accDto){
         
         if (accDto == null) {
             return null;

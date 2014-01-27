@@ -133,11 +133,15 @@ public static void validateAccount(Account account) {
             };
         }
         if (account.getPassword()== null) {
-            throw new IllegalArgumentException("Account's passwoed is null.") {
+            throw new IllegalArgumentException("Account's password is null.") {
             };
         }
         if ("".equals(account.getPassword())) {
-            throw new IllegalArgumentException("Account's passwoed is empty.") {
+            throw new IllegalArgumentException("Account's password is empty.") {
+            };
+        }
+        if (account.getPassword().length() < 7) {
+            throw new IllegalArgumentException("Account's password is too short (min. 8 chars).") {
             };
         }
         if (account.getPlaylists()== null) {

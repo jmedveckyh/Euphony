@@ -69,7 +69,7 @@ public class AccountDAOImplTest extends TestCase {
         //test account with not null id
         em.getTransaction().begin();
         try {
-            Account acc = new Account("Pato", "abc123", Boolean.FALSE, new ArrayList<Playlist>());
+            Account acc = new Account("Pato", "abc123xx", Boolean.FALSE, new ArrayList<Playlist>());
             acc.setId(new Long(1l));
             accountDAOImpl.create(acc);
             fail("account id set!");
@@ -94,7 +94,7 @@ public class AccountDAOImplTest extends TestCase {
         //test with null username
         em.getTransaction().begin();
         try {
-            Account acc = new Account(null, "abc123", Boolean.FALSE, new ArrayList<Playlist>());
+            Account acc = new Account(null, "abc123xx", Boolean.FALSE, new ArrayList<Playlist>());
             accountDAOImpl.create(acc);
             fail("account with null username!");
         } catch (DataAccessException ex) {
@@ -118,7 +118,7 @@ public class AccountDAOImplTest extends TestCase {
         //test with null isAdmin attribute
         em.getTransaction().begin();
         try {
-            Account acc = new Account("Pato", "abc123", null, new ArrayList<Playlist>());
+            Account acc = new Account("Pato", "abc123xx", null, new ArrayList<Playlist>());
             accountDAOImpl.create(acc);
             fail("account with null isAdmin attribute!");
         } catch (DataAccessException ex) {
@@ -130,7 +130,7 @@ public class AccountDAOImplTest extends TestCase {
         //test with null playlists 
         em.getTransaction().begin();
         try {
-            Account acc = new Account("Pato", "abc123", Boolean.FALSE, null);
+            Account acc = new Account("Pato", "abc123xx", Boolean.FALSE, null);
             accountDAOImpl.create(acc);
             fail("account with null playlists!");
         } catch (DataAccessException ex) {
@@ -159,7 +159,7 @@ public class AccountDAOImplTest extends TestCase {
         pList.add(playlist);
 
         em.getTransaction().begin();
-        Account account = new Account("Pato", "abc123", Boolean.FALSE, pList);
+        Account account = new Account("Pato", "abc123xx", Boolean.FALSE, pList);
         accountDAOImpl.create(account);
         em.getTransaction().commit();
 
@@ -196,7 +196,7 @@ public class AccountDAOImplTest extends TestCase {
         //test account with null username
         em.getTransaction().begin();
         try {
-            accountDAOImpl.update(new Account(null, "123abc", Boolean.FALSE, new ArrayList<Playlist>()));
+            accountDAOImpl.update(new Account(null, "abc123xx", Boolean.FALSE, new ArrayList<Playlist>()));
             fail("account with null username update!");
         } catch (DataAccessException ex) {
             //OK
@@ -218,7 +218,7 @@ public class AccountDAOImplTest extends TestCase {
         //test account with null isAdmin
         em.getTransaction().begin();
         try {
-            accountDAOImpl.update(new Account("Al", "123abc", null, new ArrayList<Playlist>()));
+            accountDAOImpl.update(new Account("Al", "abc123xx", null, new ArrayList<Playlist>()));
             fail("account with null isAdmin update!");
         } catch (DataAccessException ex) {
             //OK
@@ -229,7 +229,7 @@ public class AccountDAOImplTest extends TestCase {
         //test account with null playlists
         em.getTransaction().begin();
         try {
-            accountDAOImpl.update(new Account(null, "123abc", Boolean.FALSE, null));
+            accountDAOImpl.update(new Account(null, "abc123xx", Boolean.FALSE, null));
             fail("account with null playlists update!");
         } catch (DataAccessException ex) {
             //OK
@@ -240,7 +240,7 @@ public class AccountDAOImplTest extends TestCase {
         //test account with null id
         em.getTransaction().begin();
         try {
-            accountDAOImpl.update(new Account("Pato", "123abc", Boolean.FALSE, new ArrayList<Playlist>()));
+            accountDAOImpl.update(new Account("Pato", "abc123xx", Boolean.FALSE, new ArrayList<Playlist>()));
             em.getTransaction().commit();
             fail("account with null id update!");
         } catch (DataAccessException ex) {
@@ -252,7 +252,7 @@ public class AccountDAOImplTest extends TestCase {
         //test account with id not assigned by database
         em.getTransaction().begin();
         try {
-            Account acc = new Account("Pato", "123abc", Boolean.FALSE, new ArrayList<Playlist>());
+            Account acc = new Account("Pato", "abc123xx", Boolean.FALSE, new ArrayList<Playlist>());
             acc.setId(new Long(1000));
             accountDAOImpl.update(acc);
             fail("account with assigned id update!");
@@ -263,7 +263,7 @@ public class AccountDAOImplTest extends TestCase {
         em.clear();
 
         em.getTransaction().begin();
-        Account acc = new Account("Pato", "123abc", Boolean.FALSE, new ArrayList<Playlist>());
+        Account acc = new Account("Pato", "abc123xx", Boolean.FALSE, new ArrayList<Playlist>());
         accountDAOImpl.create(acc);
         em.getTransaction().commit();
         em.clear();
@@ -281,12 +281,12 @@ public class AccountDAOImplTest extends TestCase {
 
     public void testDeleteAccount() {
         em.getTransaction().begin();
-        Account acc = new Account("Pato", "123abc", Boolean.FALSE, new ArrayList<Playlist>());
+        Account acc = new Account("Pato", "abc123xx", Boolean.FALSE, new ArrayList<Playlist>());
         accountDAOImpl.create(acc);
         em.getTransaction().commit();
         em.clear();
 
-        Account acc2 = new Account("Pato", "123abc", Boolean.FALSE, new ArrayList<Playlist>());
+        Account acc2 = new Account("Pato", "abc123xx", Boolean.FALSE, new ArrayList<Playlist>());
         Long id = acc.getId();
         assertNotNull(id);
 
@@ -324,7 +324,7 @@ public class AccountDAOImplTest extends TestCase {
         
         //test get by id
         em.getTransaction().begin();
-        Account acc = new Account("Pato", "123abc", Boolean.FALSE, new ArrayList<Playlist>());
+        Account acc = new Account("Pato", "abc123xx", Boolean.FALSE, new ArrayList<Playlist>());
         accountDAOImpl.create(acc);
         em.getTransaction().commit();
         em.clear();
@@ -341,13 +341,13 @@ public class AccountDAOImplTest extends TestCase {
         
         //test get by username
         em.getTransaction().begin();
-        Account acc2 = new Account("Brano", "123abc", Boolean.FALSE, new ArrayList<Playlist>());
+        Account acc2 = new Account("Brano", "abc123xx", Boolean.FALSE, new ArrayList<Playlist>());
         accountDAOImpl.create(acc2);
         em.getTransaction().commit();
         em.clear();
         
         em.getTransaction().begin();
-        Account acc3 = new Account("Ivan", "789456", Boolean.FALSE, new ArrayList<Playlist>());
+        Account acc3 = new Account("Ivan", "78945600", Boolean.FALSE, new ArrayList<Playlist>());
         accountDAOImpl.create(acc3);
         em.getTransaction().commit();
         em.clear();
