@@ -9,15 +9,15 @@ import java.util.List;
  */
 public interface GenreDAO {
 
-    public void create(Genre entity);
+    void create(Genre entity);
 
-    public void update(Genre entity);
+    void update(Genre entity);
 
-    public void delete(Genre entity);
+    void delete(Genre entity);
 
-    public Genre getById(Long id);
+    Genre getById(Long id);
 
-    public List<Genre> getAll();
+    List<Genre> getAll();
 
-    public Genre getByName(String name);
+    Genre getByName(String name);
 }

@@ -17,6 +17,17 @@ public class AccountDTO {
     private String password;
     private Boolean isAdmin;
     private List<PlaylistDTO> playlists;
+
+    public AccountDTO() {
+    }
+
+    public AccountDTO(Long id, String username, String password, Boolean isAdmin, List<PlaylistDTO> playlists) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.isAdmin = isAdmin;
+        this.playlists = playlists;
+    }
     
     public Long getId() {
         return id;

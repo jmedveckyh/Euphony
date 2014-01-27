@@ -9,15 +9,15 @@ import java.util.List;
  */
 public interface ArtistDAO {
 
-    public void create(Artist entity);
+    void create(Artist entity);
 
-    public void update(Artist entity);
+    void update(Artist entity);
 
-    public void delete(Artist entity);
+    void delete(Artist entity);
 
-    public Artist getById(Long id);
+    Artist getById(Long id);
 
-    public List<Artist> getAll();
+    List<Artist> getAll();
 
-    public Artist getByName(String name);
+    Artist getByName(String name);
 }

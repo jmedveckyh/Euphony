@@ -24,8 +24,8 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountDAO accountDAO;
 
-    public void setAccountDAO(AccountDAO dao) {
-        this.accountDAO = dao;
+    public void setAccountDAO(AccountDAO accountDAO) {
+        this.accountDAO = accountDAO;
     }
 
     @Override
@@ -42,8 +42,11 @@ public class AccountServiceImpl implements AccountService {
         if (acc.getUsername().isEmpty() || acc.getPassword().isEmpty()) {
             throw new IllegalArgumentException("account username or password is empty");
         }
-
-        Account account = accountDAO.getByUsername(acc.getUsername());
+        Account account = null;
+        try{
+            account = accountDAO.getByUsername(acc.getUsername());
+        } catch (Exception e){}
+        
         if (account != null) {
             return null;
         } else {
