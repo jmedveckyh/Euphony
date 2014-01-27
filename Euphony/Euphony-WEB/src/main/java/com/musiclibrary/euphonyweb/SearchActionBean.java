@@ -4,11 +4,14 @@ import com.musiclibrary.euphonyapi.dto.AlbumDTO;
 import com.musiclibrary.euphonyapi.dto.ArtistDTO;
 import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
+import com.musiclibrary.euphonyapi.facade.MusicFacade;
+import com.musiclibrary.euphonyapi.services.AccountService;
 import com.musiclibrary.euphonyapi.services.AlbumService;
 import com.musiclibrary.euphonyapi.services.ArtistService;
 import com.musiclibrary.euphonyapi.services.PlaylistService;
 import com.musiclibrary.euphonyapi.services.SongService;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
@@ -33,6 +36,10 @@ public class SearchActionBean extends BaseActionBean implements ValidationErrorH
     protected AlbumService albumService;
     @SpringBean
     protected ArtistService artistService;
+    @SpringBean
+    private AccountService accountService; 
+    @SpringBean
+    protected MusicFacade facade;
     @Validate(on = {"search"}, required = true)
     private String phrase;
     private List<PlaylistDTO> playlists;
@@ -87,8 +94,10 @@ public class SearchActionBean extends BaseActionBean implements ValidationErrorH
 
     @DefaultHandler
     public Resolution search() {
-        playlists = playlistService.getAll();
-        songs = songService.getSongsByTitleSub(phrase);
+        facade.setPlaylistService(playlistService);
+        facade.setAccountService(accountService);
+        HttpSession session = getContext().getRequest().getSession();
+        playlists = facade.getPlaylistsByAccount((String)session.getAttribute("username"));         songs = songService.getSongsByTitleSub(phrase);
         albums = albumService.getAlbumsByTitleSub(phrase);
         artists = artistService.getArtistsByNameSub(phrase);
 
