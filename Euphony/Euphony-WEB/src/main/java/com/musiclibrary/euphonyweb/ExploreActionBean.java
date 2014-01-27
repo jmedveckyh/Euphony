@@ -73,7 +73,8 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
         facade.setPlaylistService(playlistService);
         facade.setAccountService(accountService);
         HttpSession session = getContext().getRequest().getSession();
-        playlists = facade.getPlaylistsByAccount((String)session.getAttribute("username"));        return new ForwardResolution("/explore/albums.jsp");
+        playlists = facade.getPlaylistsByAccount((String)session.getAttribute("username"));       
+        return new ForwardResolution("/explore/albums.jsp");
     }
 
     public Resolution artists() {
@@ -81,7 +82,8 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
         facade.setPlaylistService(playlistService);
         facade.setAccountService(accountService);
         HttpSession session = getContext().getRequest().getSession();
-        playlists = facade.getPlaylistsByAccount((String)session.getAttribute("username"));        return new ForwardResolution("/explore/artists.jsp");
+        playlists = facade.getPlaylistsByAccount((String)session.getAttribute("username"));        
+        return new ForwardResolution("/explore/artists.jsp");
     }
 
     @Override
@@ -99,7 +101,8 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
         facade.setPlaylistService(playlistService);
         facade.setAccountService(accountService);
         HttpSession session = getContext().getRequest().getSession();
-        playlists = facade.getPlaylistsByAccount((String)session.getAttribute("username"));        album = albumService.getById(Long.parseLong(ids));
+        playlists = facade.getPlaylistsByAccount((String)session.getAttribute("username"));        
+        album = albumService.getById(Long.parseLong(ids));
         songsInAlbum = songService.getByAlbum(album);
         
         return new ForwardResolution("/explore/album.jsp");
@@ -113,7 +116,8 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
         facade.setPlaylistService(playlistService);
         facade.setAccountService(accountService);
         HttpSession session = getContext().getRequest().getSession();
-        playlists = facade.getPlaylistsByAccount((String)session.getAttribute("username"));        artist = artistService.getById(Long.parseLong(ids));
+        playlists = facade.getPlaylistsByAccount((String)session.getAttribute("username"));        
+        artist = artistService.getById(Long.parseLong(ids));
         songsInArtist = songService.getByArtist(artist);
 
         return new ForwardResolution("/explore/artist.jsp");
@@ -127,7 +131,8 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
         facade.setPlaylistService(playlistService);
         facade.setAccountService(accountService);
         HttpSession session = getContext().getRequest().getSession();
-        playlists = facade.getPlaylistsByAccount((String)session.getAttribute("username"));        song = songService.getById(Long.parseLong(ids));
+        playlists = facade.getPlaylistsByAccount((String)session.getAttribute("username"));        
+        song = songService.getById(Long.parseLong(ids));
 
         return new ForwardResolution("/explore/song.jsp");
     }

@@ -22,42 +22,41 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Tomas Smetanka
  */
 @Service
-@Transactional
 public class MusicFacadeImpl implements MusicFacade {
 
     @Autowired
     private PlaylistService playlistService;
-
     @Autowired
     private AccountService accountService;
 
     @Override
+    @Transactional
     public void setAccountService(AccountService accountService) {
         this.accountService = accountService;
     }
-    
+
     @Override
-    public List<PlaylistDTO> getPlaylistsByAccount(String username){
+    public List<PlaylistDTO> getPlaylistsByAccount(String username) {
         if (username == null) {
             throw new IllegalArgumentException("username is null");
         }
         AccountDTO acc = accountService.getByUsername(username);
         if (acc.getIsAdmin()) {
             return playlistService.getAll();
-        } 
-        else 
-            return acc.getPlaylists();    
+        } else {
+            return acc.getPlaylists();
+        }
     }
-    
+
     @Override
-    public void addPlaylistByAccount(String username, PlaylistDTO playlist){
+    public void addPlaylistByAccount(String username, PlaylistDTO playlist) {
         if (username == null) {
             throw new IllegalArgumentException("username is null");
         }
         if (playlist == null) {
             throw new IllegalArgumentException("playlist is null");
         }
-        
+
         playlistService.create(playlist);
         AccountDTO acc = accountService.getByUsername(username);
         List<PlaylistDTO> pLists = acc.getPlaylists();
@@ -65,13 +64,15 @@ public class MusicFacadeImpl implements MusicFacade {
         acc.setPlaylists(pLists);
         accountService.update(acc);
     }
-    
+
     @Override
+    @Transactional
     public void setPlaylistService(PlaylistService playlistService) {
         this.playlistService = playlistService;
     }
 
     @Override
+    @Transactional
     public Boolean isSongInPlaylist(SongDTO song, PlaylistDTO playlist) {
 
         Util.validatePlaylist(DTOMapper.toEntity(playlist));
@@ -97,6 +98,7 @@ public class MusicFacadeImpl implements MusicFacade {
     }
 
     @Override
+    @Transactional
     public void addSongToPlaylist(SongDTO song, PlaylistDTO playlist) {
 
         if (isSongInPlaylist(song, playlist)) {
@@ -119,6 +121,7 @@ public class MusicFacadeImpl implements MusicFacade {
     }
 
     @Override
+    @Transactional
     public void removeSongFromPlaylist(SongDTO song, PlaylistDTO playlist) {
 
         if (isSongInPlaylist(song, playlist)) {
