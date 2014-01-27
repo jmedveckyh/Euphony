@@ -12,9 +12,11 @@ public interface AccountService {
 
     AccountDTO login (String username, String password);
     
-    AccountDTO get(Long id);
-    
-    AccountDTO getByUsername(String username);
+    void create(AccountDTO account);
     
     void update(AccountDTO account);
+ 
+    void delete(AccountDTO account);
+    
+    AccountDTO getByUsername(String username);
 }

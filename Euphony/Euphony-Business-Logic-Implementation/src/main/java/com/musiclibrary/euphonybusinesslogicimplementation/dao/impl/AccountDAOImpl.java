@@ -54,43 +54,7 @@ public class AccountDAOImpl implements AccountDAO {
             };
         }
     }
-
-    @Override
-    public Account get(Long id) {
-        try {
-            if (id == null) {
-                throw new IllegalArgumentException("Id cannot be null.");
-            }
-
-            Account objectTemp = (Account) em.find(Account.class, id);
-            return objectTemp;
-        } catch (PersistenceException | IllegalArgumentException ex) {
-            throw new DataAccessException(ex.getMessage(), ex) {
-            };
-        }
-    }
-
-    @Override
-    public Account getByUsername(String username) {
-        try {
-            if (username == null) {
-                throw new IllegalArgumentException("Name cannot be null.");
-            }
-
-            Query q = em.createQuery("FROM Account WHERE username=:username");
-            q.setParameter("username", username);
-            try{
-                Account acc = (Account) q.getSingleResult();
-                return acc;
-            }catch (NoResultException ex) {
-                return null;
-            }            
-        } catch (PersistenceException | IllegalArgumentException ex) {
-            throw new DataAccessException(ex.getMessage(), ex) {
-            };
-        }
-    }
-
+    
     @Override
     public void update(Account entity) {
         try {
@@ -132,4 +96,41 @@ public class AccountDAOImpl implements AccountDAO {
             };
         }
     }
+
+    @Override
+    public Account getByUsername(String username) {
+        try {
+            if (username == null) {
+                throw new IllegalArgumentException("Name cannot be null.");
+            }
+
+            Query q = em.createQuery("FROM Account WHERE username=:username");
+            q.setParameter("username", username);
+            try{
+                Account acc = (Account) q.getSingleResult();
+                return acc;
+            }catch (NoResultException ex) {
+                return null;
+            }            
+        } catch (PersistenceException | IllegalArgumentException ex) {
+            throw new DataAccessException(ex.getMessage(), ex) {
+            };
+        }
+    }
+    
+    @Override
+    public Account getById(Long id) {
+        try {
+            if (id == null) {
+                throw new IllegalArgumentException("Id cannot be null.");
+            }
+
+            Account objectTemp = (Account) em.find(Account.class, id);
+            return objectTemp;
+        } catch (PersistenceException | IllegalArgumentException ex) {
+            throw new DataAccessException(ex.getMessage(), ex) {
+            };
+        }
+    }
+
 }

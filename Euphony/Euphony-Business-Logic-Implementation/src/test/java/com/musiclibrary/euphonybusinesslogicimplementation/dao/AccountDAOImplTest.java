@@ -165,7 +165,7 @@ public class AccountDAOImplTest extends TestCase {
 
         Long id = account.getId();
         assertNotNull(id);
-        Account account2 = accountDAOImpl.get(id);
+        Account account2 = accountDAOImpl.getById(id);
         assertDeepEquals(account, account2);
     }
 
@@ -272,7 +272,7 @@ public class AccountDAOImplTest extends TestCase {
         accountDAOImpl.update(acc);
         em.getTransaction().commit();
         em.clear();
-        Account acc2 = accountDAOImpl.get(acc.getId());
+        Account acc2 = accountDAOImpl.getById(acc.getId());
         assertDeepEquals(acc, acc2);
 
 
@@ -297,7 +297,7 @@ public class AccountDAOImplTest extends TestCase {
         em.getTransaction().commit();
         em.clear();
 
-        if (accountDAOImpl.get(id) != null) {
+        if (accountDAOImpl.getById(id) != null) {
             fail("Delete failed.");
         }
 
@@ -308,7 +308,7 @@ public class AccountDAOImplTest extends TestCase {
         //test with null id
         em.getTransaction().begin();
         try {
-            accountDAOImpl.get(null);
+            accountDAOImpl.getById(null);
             fail("id null get!");
         } catch (DataAccessException ex) {
             //ok
@@ -318,7 +318,7 @@ public class AccountDAOImplTest extends TestCase {
 
         //test id not assigned by db
         em.getTransaction().begin();
-        Account acc0 = accountDAOImpl.get(new Long(6543));
+        Account acc0 = accountDAOImpl.getById(new Long(6543));
         em.getTransaction().commit();
         assertNull(acc0);
         
@@ -333,7 +333,7 @@ public class AccountDAOImplTest extends TestCase {
         Long accId = acc.getId();
         
         em.getTransaction().begin();
-        Account res = accountDAOImpl.get(accId);
+        Account res = accountDAOImpl.getById(accId);
         em.getTransaction().commit();
         em.clear();
 

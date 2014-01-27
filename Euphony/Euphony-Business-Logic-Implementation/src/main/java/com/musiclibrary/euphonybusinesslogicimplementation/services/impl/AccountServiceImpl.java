@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class AccountServiceImpl implements AccountService {
-
+ 
     @Autowired
     private AccountDAO accountDAO;
 
@@ -69,12 +69,23 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountDTO get(Long id) {
-        if (id == null) {
-            throw new DataAccessException("id is null") {
-            };
-        }
-        return DTOMapper.ToDTO(accountDAO.get(id));
+    public void create(AccountDTO accountDTO) {
+        Account account = DTOMapper.toEntity(accountDTO);
+        accountDAO.create(account);
+        accountDTO.setId(account.getId());
+    }
+
+    @Override
+    public void update(AccountDTO accountDTO) {
+        Account accountEntity = DTOMapper.toEntity(accountDTO);
+        accountDAO.update(accountEntity);
+        accountDTO = DTOMapper.ToDTO(accountEntity);
+    }
+
+    @Override
+    public void delete(AccountDTO accountDTO) {
+        Account account = DTOMapper.toEntity(accountDTO);
+        accountDAO.delete(account);
     }
 
     @Override
@@ -85,11 +96,5 @@ public class AccountServiceImpl implements AccountService {
         }
         return DTOMapper.ToDTO(accountDAO.getByUsername(username));
     }
-
-    @Override
-    public void update(AccountDTO account) {
-        Account accountEntity = DTOMapper.toEntity(account);
-        accountDAO.update(accountEntity);
-        account = DTOMapper.ToDTO(accountEntity);
-    }
+    
 }
