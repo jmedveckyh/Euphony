@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.musiclibrary.euphonybusinesslogicimplementation.services.impl;
 
 import com.musiclibrary.euphonyapi.dto.AccountDTO;
@@ -10,65 +6,48 @@ import com.musiclibrary.euphonybusinesslogicimplementation.dao.AccountDAO;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Account;
 import com.musiclibrary.euphonybusinesslogicimplementation.util.DTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.dao.DataAccessException;
 
 /**
  *
  * @author Brano
  */
-@Service
-@Transactional
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private AccountDAO accountDAO;
 
-    public void setAccountDAO(AccountDAO accountDAO) {
+    public void setDAO(AccountDAO accountDAO) {
         this.accountDAO = accountDAO;
     }
 
     @Override
-    public AccountDTO register(AccountDTO acc) {
-        
-        if (acc == null) {
-           throw new IllegalArgumentException("account is null");
-        }
-        
-        if (acc.getIsAdmin() == null || acc.getPassword() == null || acc.getUsername() == null) {
-            throw new IllegalArgumentException("account isAdmin or pass or username is null");
-        }
+    public AccountDTO register(AccountDTO acc) throws DataAccessException {
 
-        if (acc.getUsername().isEmpty() || acc.getPassword().isEmpty()) {
-            throw new IllegalArgumentException("account username or password is empty");
+        if (acc == null) {
+           throw new DataAccessException("Account is null.") {};
         }
-        Account account = null;
-        try{
-            account = accountDAO.getByUsername(acc.getUsername());
-        } catch (Exception e){}
         
+        Account account = accountDAO.getByUsername(acc.getUsername());
         if (account != null) {
             return null;
         } else {
-            accountDAO.create(DTOMapper.accountDTOtoEntity(acc));
+            accountDAO.create(DTOMapper.toEntity(acc));
             account = accountDAO.getByUsername(acc.getUsername());
-            return (DTOMapper.accountEntityToDTOAccount(account));
+            return (DTOMapper.ToDTO(account));
         }
     }
 
     @Override
-    public AccountDTO login(String username, String password) {
-        if (username == null || password == null) {
-            throw new IllegalArgumentException("account username or password is nullt");
-        }
+    public AccountDTO login(String username, String password) throws DataAccessException {
 
         if (username.isEmpty() || password.isEmpty()) {
-            throw new IllegalArgumentException("account username or password is empty");
+            throw new DataAccessException("Account username or password is empty") {};
         }
-
+        
         Account account = accountDAO.getByUsername(username);
         if (account != null && account.getPassword().equals(password)) {
-            return DTOMapper.accountEntityToDTOAccount(account);
+            return DTOMapper.ToDTO(account);
         }
         return null;
     }
