@@ -42,7 +42,7 @@
             </tr>
         </table>
         <s:submit name="submitRegister"><f:message key="register"/></s:submit>
-        <s:submit name="login"><f:message key="genre.edit.cancel"/></s:submit>
+        <s:submit name="login"><f:message key="register.back"/></s:submit>
         </fieldset>
 </s:form>
 </body>
