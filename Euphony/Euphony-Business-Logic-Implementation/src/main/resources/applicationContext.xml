@@ -53,5 +53,6 @@
     <bean id="accountService" class="com.musiclibrary.euphonybusinesslogicimplementation.services.impl.AccountServiceImpl"/>   
     
     <bean id="musicFacadeImpl" class="com.musiclibrary.euphonybusinesslogicimplementation.facade.impl.MusicFacadeImpl" />
-
+    
+    <bean class="org.springframework.security.authentication.encoding.ShaPasswordEncoder" id="passwordEncoder" />
 </beans>

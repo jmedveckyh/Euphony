@@ -21,6 +21,7 @@ import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidationErrors;
 import net.sourceforge.stripes.validation.ValidationMethod;
 import net.sourceforge.stripes.validation.ValidationState;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 
 /**
  *
@@ -38,6 +39,8 @@ public class AuthActionBean extends BaseActionBean {
     private String password;
     @Validate(required = true, minlength=8, on = {"submitRegister"})
     private String passwordConfirm;
+    @SpringBean
+    PasswordEncoder passwordEncoder;
 
     public String getPasswordConfirm() {
         return passwordConfirm;
@@ -75,7 +78,7 @@ public class AuthActionBean extends BaseActionBean {
     public Resolution submitLogin() {
         HttpSession session = getContext().getRequest().getSession();
         String path = (String) session.getAttribute("userPath");
-        AccountDTO adto = accountService.login(username, password);
+        AccountDTO adto = accountService.login(username, passwordEncoder.encodePassword(password, "salt"));
         if (adto != null) {
             session.setAttribute("loggedIn", true);
             session.setAttribute("admin", adto.getIsAdmin());
@@ -91,7 +94,7 @@ public class AuthActionBean extends BaseActionBean {
         HttpSession session = getContext().getRequest().getSession();
         AccountDTO acc = new AccountDTO();
         acc.setIsAdmin(false);
-        acc.setPassword(password);
+        acc.setPassword(passwordEncoder.encodePassword(password, "salt"));
         acc.setUsername(username);
         acc.setPlaylists(new ArrayList<PlaylistDTO>());
 
