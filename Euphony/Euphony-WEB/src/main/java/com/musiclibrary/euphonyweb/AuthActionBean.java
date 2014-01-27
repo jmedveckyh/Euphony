@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.musiclibrary.euphonyweb;
 
 import com.musiclibrary.euphonyapi.dto.AccountDTO;
@@ -11,12 +7,10 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import net.sourceforge.stripes.validation.LocalizableError;
-import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidationErrors;
 import net.sourceforge.stripes.validation.ValidationMethod;
@@ -77,7 +71,6 @@ public class AuthActionBean extends BaseActionBean {
 
     public Resolution submitLogin() {
         HttpSession session = getContext().getRequest().getSession();
-        String path = (String) session.getAttribute("userPath");
         AccountDTO adto = accountService.login(username, passwordEncoder.encodePassword(password, "salt"));
         if (adto != null) {
             session.setAttribute("loggedIn", true);
@@ -102,6 +95,7 @@ public class AuthActionBean extends BaseActionBean {
         if (accFromDb != null) {
             session.setAttribute("loggedIn", true);
             session.setAttribute("admin", false);
+            session.setAttribute("username", username);
             return new ForwardResolution("index.jsp");
         } else {
             getContext().getValidationErrors().addGlobalError(new LocalizableError("register.error"));
@@ -118,7 +112,8 @@ public class AuthActionBean extends BaseActionBean {
     
     @ValidationMethod(when = ValidationState.ALWAYS, on = {"submitRegister"})
     public void validatePass(ValidationErrors errors) {
-        if(password==null || passwordConfirm==null) return;
+        if(password == null || passwordConfirm == null) 
+            return;
         if(!password.equals(passwordConfirm)){
             errors.add("cover", new LocalizableError("validation.passwordMatch"));
         }

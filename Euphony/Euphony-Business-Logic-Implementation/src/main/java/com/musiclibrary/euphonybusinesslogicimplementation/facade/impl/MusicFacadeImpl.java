@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Tomas Smetanka
  */
 @Service
+@Transactional
 public class MusicFacadeImpl implements MusicFacade {
 
     @Autowired
@@ -30,12 +31,16 @@ public class MusicFacadeImpl implements MusicFacade {
     @Autowired
     private AccountService accountService;
 
+    @Override
     public void setAccountService(AccountService accountService) {
         this.accountService = accountService;
     }
     
     @Override
     public List<PlaylistDTO> getPlaylistsByAccount(String username){
+        if (username == null) {
+            throw new IllegalArgumentException("username is null");
+        }
         AccountDTO acc = accountService.getByUsername(username);
         if (acc.getIsAdmin()) {
             return playlistService.getAll();
@@ -47,10 +52,10 @@ public class MusicFacadeImpl implements MusicFacade {
     @Override
     public void addPlaylistByAccount(String username, PlaylistDTO playlist){
         if (username == null) {
-            throw new NullPointerException("username is null");
+            throw new IllegalArgumentException("username is null");
         }
         if (playlist == null) {
-            throw new NullPointerException("playlist is null");
+            throw new IllegalArgumentException("playlist is null");
         }
         
         playlistService.create(playlist);
@@ -66,12 +71,7 @@ public class MusicFacadeImpl implements MusicFacade {
         this.playlistService = playlistService;
     }
 
-    public void createPlaylist(PlaylistDTO playlist) {
-        playlistService.create(playlist);
-    }
-
     @Override
-    @Transactional
     public Boolean isSongInPlaylist(SongDTO song, PlaylistDTO playlist) {
 
         Util.validatePlaylist(DTOMapper.toEntity(playlist));
@@ -97,7 +97,6 @@ public class MusicFacadeImpl implements MusicFacade {
     }
 
     @Override
-    @Transactional
     public void addSongToPlaylist(SongDTO song, PlaylistDTO playlist) {
 
         if (isSongInPlaylist(song, playlist)) {
@@ -120,7 +119,6 @@ public class MusicFacadeImpl implements MusicFacade {
     }
 
     @Override
-    @Transactional
     public void removeSongFromPlaylist(SongDTO song, PlaylistDTO playlist) {
 
         if (isSongInPlaylist(song, playlist)) {
