@@ -23,6 +23,7 @@ import net.sourceforge.stripes.validation.ValidationErrors;
  *
  * @author Sebastian
  */
+@AdminOnly
 @UrlBinding("/songs/{$event}/{song.id}")
 public class SongActionBean extends BaseActionBean implements ValidationErrorHandler {
 

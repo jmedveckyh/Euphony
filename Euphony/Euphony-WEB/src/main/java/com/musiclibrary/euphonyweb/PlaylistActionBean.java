@@ -24,6 +24,7 @@ import net.sourceforge.stripes.validation.ValidationErrors;
  *
  * @author Tomas Smetanka
  */
+@AdminOnly
 @UrlBinding("/playlist/else/{$event}/{playlist.id}")
 public class PlaylistActionBean extends BaseActionBean implements ValidationErrorHandler {
 

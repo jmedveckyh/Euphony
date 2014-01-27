@@ -38,6 +38,7 @@ import org.springframework.dao.DataAccessException;
  *
  * @author Sebastian Lazon
  */
+@AdminOnly
 @UrlBinding("/albums/{$event}/{album.id}")
 public class AlbumActionBean extends BaseActionBean implements ValidationErrorHandler {
 

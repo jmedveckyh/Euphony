@@ -57,6 +57,7 @@
             <div class="userPanel">
                 <ul>
                     <li><s:link beanclass="com.musiclibrary.euphonyweb.AuthActionBean" event="logout"><f:message key="menu.logout"/></s:link></li>
+                    <c:if test="${pageContext.session.getAttribute('admin')==true}">
                     <li class="drop">
                         <a href="#" class="username">Admin</a>
                         <div class="dropdownContain">
@@ -71,6 +72,7 @@
                                 </div>
                             </div>
                         </li>
+                    </c:if>
                     </ul>
                 </div>
                 <div class="content">

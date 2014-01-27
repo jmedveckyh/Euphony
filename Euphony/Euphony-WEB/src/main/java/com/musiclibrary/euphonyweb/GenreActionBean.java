@@ -25,6 +25,7 @@ import org.springframework.dao.DataAccessException;
  *
  * @author Medo
  */
+@AdminOnly
 @UrlBinding("/genres/{$event}/{genre.id}")
 public class GenreActionBean extends BaseActionBean implements ValidationErrorHandler {
 

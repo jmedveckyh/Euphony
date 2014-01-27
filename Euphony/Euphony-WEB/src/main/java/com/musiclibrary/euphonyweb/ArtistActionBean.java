@@ -24,6 +24,7 @@ import org.springframework.dao.DataAccessException;
  *
  * @author Medo
  */
+@AdminOnly
 @UrlBinding("/artists/{$event}/{artist.id}")
 public class ArtistActionBean extends BaseActionBean implements ValidationErrorHandler {
 
