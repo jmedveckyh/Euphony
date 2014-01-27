@@ -21,30 +21,38 @@
         <link rel="icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
         <script src="${pageContext.request.contextPath}/js/jquery-1.10.2.min.js" type="text/javascript"></script>
         <script src="${pageContext.request.contextPath}/js/global.js" type="text/javascript"></script>
+        <script src="${pageContext.request.contextPath}/js/random-bg.js" type="text/javascript"></script>
     </head>
     <body>
-        <s:useActionBean beanclass="com.musiclibrary.euphonyweb.AuthActionBean" var="actionBean"/>
-        <s:errors/>
-<s:form beanclass="com.musiclibrary.euphonyweb.AuthActionBean">
-    <fieldset><legend><f:message key="register"/></legend>
-        <table>
-            <tr>
-                <td class="labelTd"><s:label for="b1" name="${username}"/></td>
-                <td><s:text id="b1" name="username"/></td>
-            </tr>
-            <tr>
-                <td class="labelTd"><s:label for="b2" name="${password}"/></td>
-                <td><s:password id="b2" name="password"/></td>
-            </tr>
-            <tr>
-                <td class="labelTd"><s:label for="b3" name="${confirmPass}"/></td>
-                <td><s:password id="b3" name="passwordConfirm"/></td>
-            </tr>
-        </table>
-        <s:submit name="submitRegister"><f:message key="register"/></s:submit>
-        <s:submit name="login"><f:message key="register.back"/></s:submit>
-        </fieldset>
-</s:form>
-</body>
+        <div class="dots">
+            <s:useActionBean beanclass="com.musiclibrary.euphonyweb.AuthActionBean" var="actionBean"/>
+            <s:form beanclass="com.musiclibrary.euphonyweb.AuthActionBean" name="registerWithPass" onsubmit="return validatePasswordMinChars()">
+                <div class="login">
+                    <div class="logo"><h1>Euphony</h1></div>
+                    <h3><f:message key="register"/></h3>
+                    <s:errors/>
+                    <table>
+                        <tr>
+                            <td class="labelTdLog"><s:label for="b1" name="${username}"/></td>
+                            <td><s:text id="b1" name="username"/></td>
+                        </tr>
+                        <tr>
+                            <td class="labelTdLog"><s:label for="b2" name="${password}"/> (<f:message key="min.chars"/>)</td>
+                            <td><s:password id="b2" name="password"/></td>
+                        </tr>
+                        <tr>
+                            <td class="labelTdLog"><s:label for="b3" name="${confirmPass}"/></td>
+                            <td><s:password id="b3" name="passwordConfirm"/></td>
+                        </tr>
+                        <tr>
+                            <td class="labelTdLog"></td>
+                            <td><s:submit name="submitRegister"><f:message key="register.do"/></s:submit></td>
+                            </tr>
+                        </table>
+                            <s:link beanclass="com.musiclibrary.euphonyweb.AuthActionBean" event="login"><f:message key="register.back"/></s:link>                        </fieldset>
+                </s:form>
+            </div>
+        </div>
+    </body>
 </html>
 

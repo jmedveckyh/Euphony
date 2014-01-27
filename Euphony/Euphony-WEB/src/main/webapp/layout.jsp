@@ -28,9 +28,9 @@
                 <div class="cl"></div>
                 <div class="search">
                     <table border="0">
-                        <s:form beanclass="com.musiclibrary.euphonyweb.SearchActionBean">
+                        <s:form beanclass="com.musiclibrary.euphonyweb.SearchActionBean" name="searchForm" onsubmit="return validateSearch()">
                             <tr>
-                                <td><s:text name="phrase" class="search"/></td>
+                                <td><s:text name="phrase" class="search" id="sp"/></td>
                                 <td><s:submit name="search" value=""></s:submit></td>
                                 </tr>
                         </s:form>

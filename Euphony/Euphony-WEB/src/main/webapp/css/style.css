@@ -24,6 +24,87 @@ body {
     font-weight: bold;
 }
 
+/**** LOGIN/REGISTER PAGE ****/
+.dots {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("./../img/dot.png");
+    z-index: 1;
+}
+
+.intro1 {
+    background: url("./../img/login/01.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.intro2 {
+    background: url("./../img/login/02.jpg");
+    background-repeat:no-repeat;
+    background-size:cover;
+}
+
+.intro3 {
+    background: url("./../img/login/03.jpg");
+    background-repeat:no-repeat;
+    background-size:cover;
+}
+
+.intro4 {
+    background: url("./../img/login/04.jpg");
+    background-repeat:no-repeat;
+    background-size:cover;
+}
+
+.login {
+    background: url("./../img/euphony-logo.png");
+    background-position: center 20px;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-color: #ebebeb;
+    width: 25%;
+    height: 150%;    
+    margin: 5% 0 0 8%;    
+    padding: 60px 20px 20px 20px;
+}
+
+.labelTdLog {
+    width: 50%;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.login input[type="submit"] {
+    height: 26px;
+    background-color: white;
+    border: 1px solid #b6b6b6;
+    color: #444242;
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+.login input[type="text"], input[type="password"] {
+    width: 130px;
+    height: 26px;
+    padding: 0 15px 0 15px;
+    background-color: white;
+    border: 1px solid #b6b6b6;
+    color: #444242;
+    font-size: 15px;
+}
+
+.login a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.login a:hover {
+    text-decoration: underline;
+}
+
 
 /**** LEFT PANEL ****/
 .home { 
@@ -449,6 +530,15 @@ fieldset textarea {
     padding: 10px 22px 10px 30px;
     cursor: pointer;
     z-index: 10;
+}
+
+.userPanel ul li a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.userPanel ul li a:hover {
+    text-decoration: underline;
 }
 
 .userPanel ul li {

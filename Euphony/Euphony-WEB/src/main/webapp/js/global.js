@@ -40,11 +40,32 @@ function showDivDelete() {
     }
 }
 
+/* Validates empty search box */
+function validateSearch() {
+    var x = document.forms["searchForm"]["phrase"].value;
+    if (x == null || x == "") {
+        document.getElementById("sp").style.borderColor = "red";
+        return false;
+    }
+    return true;
+}
+
 /* Validates empty playlist */
 function validateAddPlaylistForm() {
     var x = document.forms["quickAddPlaylist"]["playlist.name"].value;
     if (x == null || x == "") {
         document.getElementById("pn").style.borderColor = "red";
+        return false;
+    }
+    return true;
+}
+
+/* Validates password (min. 8 chars) */
+function validatePasswordMinChars() {
+    var y = document.forms["registerWithPass"]["password"].value;
+    if (y.length < 8) {
+        document.getElementById("b2").style.borderColor = "red";
+        document.getElementById("b3").style.borderColor = "red";
         return false;
     }
     return true;
