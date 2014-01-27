@@ -8,6 +8,7 @@ import com.musiclibrary.euphonybusinesslogicimplementation.dao.AccountDAO;
 import com.musiclibrary.euphonybusinesslogicimplementation.entities.Account;
 import com.musiclibrary.euphonybusinesslogicimplementation.util.Util;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.persistence.PersistenceException;
@@ -78,9 +79,12 @@ public class AccountDAOImpl implements AccountDAO {
 
             Query q = em.createQuery("FROM Account WHERE username=:username");
             q.setParameter("username", username);
-            Account acc = (Account) q.getSingleResult();
-
-            return acc;
+            try{
+                Account acc = (Account) q.getSingleResult();
+                return acc;
+            }catch (NoResultException ex) {
+                return null;
+            }            
         } catch (PersistenceException | IllegalArgumentException ex) {
             throw new DataAccessException(ex.getMessage(), ex) {
             };
