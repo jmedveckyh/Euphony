@@ -38,7 +38,7 @@
             </tr>
             <tr>
                 <td class="labelTd"><s:label for="b3" name="${confirmPass}"/></td>
-                <td><s:password id="b3" name="password"/></td>
+                <td><s:password id="b3" name="passwordConfirm"/></td>
             </tr>
         </table>
         <s:submit name="submitRegister"><f:message key="register"/></s:submit>

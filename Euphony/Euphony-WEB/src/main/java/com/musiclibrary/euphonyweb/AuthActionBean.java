@@ -18,6 +18,9 @@ import net.sourceforge.stripes.integration.spring.SpringBean;
 import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.Validate;
+import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMethod;
+import net.sourceforge.stripes.validation.ValidationState;
 
 /**
  *
@@ -31,8 +34,18 @@ public class AuthActionBean extends BaseActionBean {
     protected AccountService accountService;
     @Validate(required = true, on = {"submitLogin", "submitRegister"})
     private String username;
-    @Validate(required = true, on = {"submitLogin", "submitRegister"})
+    @Validate(required = true, minlength=8, on = {"submitLogin", "submitRegister"})
     private String password;
+    @Validate(required = true, minlength=8, on = {"submitRegister"})
+    private String passwordConfirm;
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
 
     public String getUsername() {
         return username;
@@ -96,5 +109,13 @@ public class AuthActionBean extends BaseActionBean {
         getContext().getRequest().getSession().setAttribute("loggedIn", false);
         getContext().getRequest().getSession().setAttribute("admin", false);
         return new ForwardResolution("login.jsp");
+    }
+    
+    @ValidationMethod(when = ValidationState.ALWAYS, on = {"submitRegister"})
+    public void validatePass(ValidationErrors errors) {
+        if(password==null || passwordConfirm==null) return;
+        if(!password.equals(passwordConfirm)){
+            errors.add("cover", new LocalizableError("validation.passwordMatch"));
+        }
     }
 }
