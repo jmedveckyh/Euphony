@@ -29,9 +29,10 @@ public class AccountServiceImpl implements AccountService {
     public AccountDTO register(AccountDTO acc) throws DataAccessException {
 
         if (acc == null) {
-           throw new DataAccessException("Account is null.") {};
+            throw new DataAccessException("Account is null.") {
+            };
         }
-        
+
         Account account = accountDAO.getByUsername(acc.getUsername());
         if (account != null) {
             return null;
@@ -45,14 +46,50 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountDTO login(String username, String password) throws DataAccessException {
 
-        if (username.isEmpty() || password.isEmpty()) {
-            throw new DataAccessException("Account username or password is empty") {};
+        if (username == null) {
+            throw new DataAccessException("Account username is null") {
+            };
         }
-        
+
+        if (password == null) {
+            throw new DataAccessException("Account password is null") {
+            };
+        }
+
+        if (username.isEmpty() || password.isEmpty()) {
+            throw new DataAccessException("Account username or password is empty") {
+            };
+        }
+
         Account account = accountDAO.getByUsername(username);
         if (account != null && account.getPassword().equals(password)) {
             return DTOMapper.ToDTO(account);
         }
         return null;
+    }
+
+    @Override
+    public AccountDTO get(Long id) {
+        if (id == null) {
+            throw new DataAccessException("id is null") {
+            };
+        }
+        return DTOMapper.ToDTO(accountDAO.get(id));
+    }
+
+    @Override
+    public AccountDTO getByUsername(String username) {
+        if (username == null) {
+            throw new DataAccessException("username is null") {
+            };
+        }
+        return DTOMapper.ToDTO(accountDAO.getByUsername(username));
+    }
+
+    @Override
+    public void update(AccountDTO account) {
+        Account accountEntity = DTOMapper.toEntity(account);
+        accountDAO.update(accountEntity);
+        account = DTOMapper.ToDTO(accountEntity);
     }
 }
