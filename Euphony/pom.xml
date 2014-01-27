@@ -37,6 +37,7 @@
             <email>branno@mail.muni.cz</email>
         </developer>
     </developers>
+    
     <build>
         <plugins>
             <plugin>

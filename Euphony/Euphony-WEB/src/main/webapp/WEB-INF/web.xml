@@ -95,10 +95,4 @@
             org.springframework.web.context.support.HttpRequestHandlerServlet
         </servlet-class>
     </servlet>
-
-    <servlet>
-        <servlet-name>user-webservice</servlet-name>
-        <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
 </web-app>

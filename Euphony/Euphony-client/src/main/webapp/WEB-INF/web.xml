@@ -21,7 +21,6 @@
         <description>Spring configuration file</description>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath:applicationContext.xml
             /WEB-INF/applicationContext.xml
         </param-value>
     </context-param>
@@ -68,7 +67,7 @@
     </filter-mapping>
 
     <filter>
-        <description>dynamically maps URL to ActionBeans</description>
+        <description>Dynamically maps URL to ActionBeans</description>
         <display-name>Stripes Dynamic Mapping Filter</display-name>
         <filter-name>DynamicMappingFilter</filter-name>
         <filter-class>net.sourceforge.stripes.controller.DynamicMappingFilter</filter-class>
