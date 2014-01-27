@@ -79,6 +79,7 @@ public class AuthActionBean extends BaseActionBean {
         if (adto != null) {
             session.setAttribute("loggedIn", true);
             session.setAttribute("admin", adto.getIsAdmin());
+            session.setAttribute("username", adto.getUsername());
             return new ForwardResolution("index.jsp");
         } else {
             getContext().getValidationErrors().addGlobalError(new LocalizableError("login.error"));
@@ -108,6 +109,7 @@ public class AuthActionBean extends BaseActionBean {
     public Resolution logout() {
         getContext().getRequest().getSession().setAttribute("loggedIn", false);
         getContext().getRequest().getSession().setAttribute("admin", false);
+        getContext().getRequest().getSession().invalidate();
         return new ForwardResolution("login.jsp");
     }
     
