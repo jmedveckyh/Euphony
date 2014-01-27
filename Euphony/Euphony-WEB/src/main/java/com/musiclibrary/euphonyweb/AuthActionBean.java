@@ -5,7 +5,9 @@
 package com.musiclibrary.euphonyweb;
 
 import com.musiclibrary.euphonyapi.dto.AccountDTO;
+import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.services.AccountService;
+import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -73,6 +75,7 @@ public class AuthActionBean extends BaseActionBean {
         acc.setIsAdmin(false);
         acc.setPassword(password);
         acc.setUsername(username);
+        acc.setPlaylists(new ArrayList<PlaylistDTO>());
 
         AccountDTO accFromDb = accountService.register(acc);
         if (accFromDb != null) {
