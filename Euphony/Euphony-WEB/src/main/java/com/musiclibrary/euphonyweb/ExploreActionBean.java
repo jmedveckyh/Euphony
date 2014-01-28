@@ -7,12 +7,6 @@ import com.musiclibrary.euphonyapi.dto.GenreDTO;
 import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
 import com.musiclibrary.euphonyapi.facade.MusicFacade;
-import com.musiclibrary.euphonyapi.services.AccountService;
-import com.musiclibrary.euphonyapi.services.AlbumService;
-import com.musiclibrary.euphonyapi.services.ArtistService;
-import com.musiclibrary.euphonyapi.services.GenreService;
-import com.musiclibrary.euphonyapi.services.PlaylistService;
-import com.musiclibrary.euphonyapi.services.SongService;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -32,18 +26,8 @@ import net.sourceforge.stripes.validation.ValidationErrors;
 public class ExploreActionBean extends BaseActionBean implements ValidationErrorHandler {
 
     @SpringBean
-    protected MusicFacade facade;
-    @SpringBean
-    protected SongService songService;
-    protected GenreService genreService;
-    @SpringBean
-    protected AlbumService albumService;
-    @SpringBean
-    protected ArtistService artistService;
-    @SpringBean
-    protected PlaylistService playlistService;
-    @SpringBean
-    private AccountService accountService; 
+    protected MusicFacade musicFacade;
+
     private GenreDTO genre;
     private SongDTO song;
     private AlbumDTO album;
@@ -60,35 +44,29 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
 
     @DefaultHandler
     public Resolution songs() {
-        songs = songService.getAll();
-        facade.setPlaylistService(playlistService);
-        facade.setAccountService(accountService);
+        songs = musicFacade.getAllSongs();
         HttpSession session = getContext().getRequest().getSession();
-        playlists = facade.getPlaylistsByAccount((String)session.getAttribute("username"));
+        playlists = musicFacade.getPlaylistsByAccount((String) session.getAttribute("username"));
         return new ForwardResolution("/explore/songs.jsp");
     }
 
     public Resolution albums() {
-        albums = albumService.getAllAlbums();
-        facade.setPlaylistService(playlistService);
-        facade.setAccountService(accountService);
+        albums = musicFacade.getAllAlbums();
         HttpSession session = getContext().getRequest().getSession();
-        playlists = facade.getPlaylistsByAccount((String)session.getAttribute("username"));       
+        playlists = musicFacade.getPlaylistsByAccount((String) session.getAttribute("username"));
         return new ForwardResolution("/explore/albums.jsp");
     }
 
     public Resolution artists() {
-        artists = artistService.getAll();
-        facade.setPlaylistService(playlistService);
-        facade.setAccountService(accountService);
+        artists = musicFacade.getAllArtists();
         HttpSession session = getContext().getRequest().getSession();
-        playlists = facade.getPlaylistsByAccount((String)session.getAttribute("username"));        
+        playlists = musicFacade.getPlaylistsByAccount((String) session.getAttribute("username"));
         return new ForwardResolution("/explore/artists.jsp");
     }
 
     @Override
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
-        songs = songService.getAll();
+        songs = musicFacade.getAllSongs();
         return null;
     }
 
@@ -98,13 +76,10 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
             return new ForwardResolution("/explore");
         }
 
-        facade.setPlaylistService(playlistService);
-        facade.setAccountService(accountService);
         HttpSession session = getContext().getRequest().getSession();
-        playlists = facade.getPlaylistsByAccount((String)session.getAttribute("username"));        
-        album = albumService.getById(Long.parseLong(ids));
-        songsInAlbum = songService.getByAlbum(album);
-        
+        playlists = musicFacade.getPlaylistsByAccount((String) session.getAttribute("username"));
+        album = musicFacade.getAlbumById(Long.parseLong(ids));
+        songsInAlbum = musicFacade.getSongsByAlbum(album);
         return new ForwardResolution("/explore/album.jsp");
     }
 
@@ -113,12 +88,11 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
         if (ids == null) {
             return new ForwardResolution("/explore");
         }
-        facade.setPlaylistService(playlistService);
-        facade.setAccountService(accountService);
+
         HttpSession session = getContext().getRequest().getSession();
-        playlists = facade.getPlaylistsByAccount((String)session.getAttribute("username"));        
-        artist = artistService.getById(Long.parseLong(ids));
-        songsInArtist = songService.getByArtist(artist);
+        playlists = musicFacade.getPlaylistsByAccount((String) session.getAttribute("username"));
+        artist = musicFacade.getArtistById(Long.parseLong(ids));
+        songsInArtist = musicFacade.getSongsByArtist(artist);
 
         return new ForwardResolution("/explore/artist.jsp");
     }
@@ -128,11 +102,10 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
         if (ids == null) {
             return new ForwardResolution("/explore");
         }
-        facade.setPlaylistService(playlistService);
-        facade.setAccountService(accountService);
+
         HttpSession session = getContext().getRequest().getSession();
-        playlists = facade.getPlaylistsByAccount((String)session.getAttribute("username"));        
-        song = songService.getById(Long.parseLong(ids));
+        playlists = musicFacade.getPlaylistsByAccount((String) session.getAttribute("username"));
+        song = musicFacade.getSongById(Long.parseLong(ids));
 
         return new ForwardResolution("/explore/song.jsp");
     }
@@ -216,7 +189,7 @@ public class ExploreActionBean extends BaseActionBean implements ValidationError
     public void setSongsInArtist(List<SongDTO> songsInArtist) {
         this.songsInArtist = songsInArtist;
     }
-    
+
     public AccountDTO getAccount() {
         return account;
     }

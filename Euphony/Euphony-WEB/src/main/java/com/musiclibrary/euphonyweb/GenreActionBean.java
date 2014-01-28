@@ -2,9 +2,9 @@ package com.musiclibrary.euphonyweb;
 
 import com.musiclibrary.euphonyapi.dto.GenreDTO;
 import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
-import com.musiclibrary.euphonyapi.services.GenreService;
-import com.musiclibrary.euphonyapi.services.PlaylistService;
+import com.musiclibrary.euphonyapi.facade.MusicFacade;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import net.sourceforge.stripes.action.After;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -30,9 +30,8 @@ import org.springframework.dao.DataAccessException;
 public class GenreActionBean extends BaseActionBean implements ValidationErrorHandler {
 
     @SpringBean
-    protected GenreService genreService;
-    @SpringBean
-    protected PlaylistService playlistService;
+    protected MusicFacade musicFacade;
+
     private List<PlaylistDTO> playlists;
     private PlaylistDTO playlist;
 
@@ -51,8 +50,9 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
 
     @DefaultHandler
     public Resolution list() {
-        genres = genreService.getAll();
-        playlists = playlistService.getAll();
+        genres = musicFacade.getAllGenres();
+        HttpSession session = getContext().getRequest().getSession();        
+        playlists = musicFacade.getPlaylistsByAccount((String) session.getAttribute("username"));
         return new ForwardResolution("/genre/list.jsp");
     }
 
@@ -65,7 +65,7 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
     private GenreDTO genre;
 
     public Resolution add() {
-        genreService.create(genre);
+        musicFacade.create(genre);
         return new RedirectResolution(this.getClass(), "list");
     }
 
@@ -76,8 +76,9 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
     @Override
     @After(stages = LifecycleStage.RequestComplete, on = {"delete"})
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
-        genres = genreService.getAll();
-        playlists = playlistService.getAll();
+        genres = musicFacade.getAllGenres();
+        HttpSession session = getContext().getRequest().getSession();        
+        playlists = musicFacade.getPlaylistsByAccount((String) session.getAttribute("username"));
         return null;
     }
 
@@ -90,9 +91,9 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
     }
 
     public Resolution delete() throws Exception {
-        genre = genreService.getById(genre.getId());
+        genre = musicFacade.getGenreById(genre.getId());
         try {
-            genreService.delete(genre);
+            musicFacade.delete(genre);
         } catch (DataAccessException ex) {
         }
         return new RedirectResolution(this.getClass(), "list");
@@ -104,16 +105,17 @@ public class GenreActionBean extends BaseActionBean implements ValidationErrorHa
         if (ids == null) {
             return;
         }
-        genre = genreService.getById(Long.parseLong(ids));
+        genre = musicFacade.getGenreById(Long.parseLong(ids));
     }
 
     public Resolution edit() {
-        playlists = playlistService.getAll();
+        HttpSession session = getContext().getRequest().getSession();        
+        playlists = musicFacade.getPlaylistsByAccount((String) session.getAttribute("username"));
         return new ForwardResolution("/genre/edit.jsp");
     }
 
     public Resolution save() {
-        genreService.update(genre);
+        musicFacade.update(genre);
         return new RedirectResolution(this.getClass(), "list");
     }
 }

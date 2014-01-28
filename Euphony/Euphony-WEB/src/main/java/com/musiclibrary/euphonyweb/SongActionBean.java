@@ -5,12 +5,9 @@ import com.musiclibrary.euphonyapi.dto.ArtistDTO;
 import com.musiclibrary.euphonyapi.dto.GenreDTO;
 import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
-import com.musiclibrary.euphonyapi.services.AlbumService;
-import com.musiclibrary.euphonyapi.services.ArtistService;
-import com.musiclibrary.euphonyapi.services.GenreService;
-import com.musiclibrary.euphonyapi.services.PlaylistService;
-import com.musiclibrary.euphonyapi.services.SongService;
+import com.musiclibrary.euphonyapi.facade.MusicFacade;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
@@ -28,15 +25,8 @@ import net.sourceforge.stripes.validation.ValidationErrors;
 public class SongActionBean extends BaseActionBean implements ValidationErrorHandler {
 
     @SpringBean
-    protected SongService songService;
-    @SpringBean
-    protected AlbumService albumService;
-    @SpringBean
-    protected GenreService genreService;
-    @SpringBean
-    protected ArtistService artistService;
-    @SpringBean
-    protected PlaylistService playlistService;
+    protected MusicFacade musicFacade;
+
     private List<PlaylistDTO> playlists;
     private PlaylistDTO playlist;
     private List<SongDTO> songs;
@@ -70,11 +60,12 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
 
     @DefaultHandler
     public Resolution list() {
-        songs = songService.getAll();
-        albums = albumService.getAllAlbums();
-        genres = genreService.getAll();
-        artists = artistService.getAll();
-        playlists = playlistService.getAll();
+        songs = musicFacade.getAllSongs();
+        albums = musicFacade.getAllAlbums();
+        genres = musicFacade.getAllGenres();
+        artists = musicFacade.getAllArtists();
+        HttpSession session = getContext().getRequest().getSession();        
+        playlists = musicFacade.getPlaylistsByAccount((String) session.getAttribute("username"));
         return new ForwardResolution("/song/list.jsp");
     }
 
@@ -107,21 +98,22 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
     }
 
     public Resolution add() {
-        song.setAlbum(albumService.getById(album));
-        song.setArtist(artistService.getById(artist));
-        song.setGenre(genreService.getById(genre));
+        song.setAlbum(musicFacade.getAlbumById(album));
+        song.setArtist(musicFacade.getArtistById(artist));
+        song.setGenre(musicFacade.getGenreById(genre));
 
-        songService.create(song);
+        musicFacade.create(song);
         return new RedirectResolution(this.getClass(), "list");
     }
 
     @Override
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
-        songs = songService.getAll();
-        albums = albumService.getAllAlbums();
-        genres = genreService.getAll();
-        artists = artistService.getAll();
-        playlists = playlistService.getAll();
+        songs = musicFacade.getAllSongs();
+        albums = musicFacade.getAllAlbums();
+        genres = musicFacade.getAllGenres();
+        artists = musicFacade.getAllArtists();
+        HttpSession session = getContext().getRequest().getSession();        
+        playlists = musicFacade.getPlaylistsByAccount((String) session.getAttribute("username"));
         return null;
     }
 
@@ -134,8 +126,8 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
     }
 
     public Resolution delete() {
-        song = songService.getById(song.getId());
-        songService.delete(song);
+        song = musicFacade.getSongById(song.getId());
+        musicFacade.delete(song);
         return new RedirectResolution(this.getClass(), "list");
     }
 
@@ -145,22 +137,23 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
         if (ids == null) {
             return;
         }
-        song = songService.getById(Long.parseLong(ids));
+        song = musicFacade.getSongById(Long.parseLong(ids));
     }
 
     public Resolution edit() {
-        albums = albumService.getAllAlbums();
-        genres = genreService.getAll();
-        artists = artistService.getAll();
-        playlists = playlistService.getAll();
+        albums = musicFacade.getAllAlbums();
+        genres = musicFacade.getAllGenres();
+        artists = musicFacade.getAllArtists();
+        HttpSession session = getContext().getRequest().getSession();        
+        playlists = musicFacade.getPlaylistsByAccount((String) session.getAttribute("username"));
         return new ForwardResolution("/song/edit.jsp");
     }
 
     public Resolution save() {
-        song.setAlbum(albumService.getById(album));
-        song.setArtist(artistService.getById(artist));
-        song.setGenre(genreService.getById(genre));
-        songService.update(song);
+        song.setAlbum(musicFacade.getAlbumById(album));
+        song.setArtist(musicFacade.getArtistById(artist));
+        song.setGenre(musicFacade.getGenreById(genre));
+        musicFacade.update(song);
         return new RedirectResolution(this.getClass(), "list");
     }
 

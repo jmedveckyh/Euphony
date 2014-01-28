@@ -18,8 +18,8 @@ import net.sourceforge.stripes.validation.LocalizableError;
  * @author Sebastian
  */
 @Intercepts({LifecycleStage.ActionBeanResolution})
-public class SecurityInterceptor implements Interceptor{
-   
+public class SecurityInterceptor implements Interceptor {
+
     /**
      * Checks if a user is logged in. When not user is redirected to login page.
      *
@@ -30,12 +30,12 @@ public class SecurityInterceptor implements Interceptor{
     @Override
     public Resolution intercept(ExecutionContext ctxt) throws Exception {
         Resolution resolution = ctxt.proceed();
-        if(ctxt.getActionBean().getClass().isAnnotationPresent(DoesNotRequireLogin.class)) {
+        if (ctxt.getActionBean().getClass().isAnnotationPresent(DoesNotRequireLogin.class)) {
             return resolution;
         }
-        if(isLoggedIn(ctxt.getActionBeanContext())) {
-            if(ctxt.getActionBean().getClass().isAnnotationPresent(AdminOnly.class)) {
-                if(isAdmin(ctxt.getActionBeanContext())) {
+        if (isLoggedIn(ctxt.getActionBeanContext())) {
+            if (ctxt.getActionBean().getClass().isAnnotationPresent(AdminOnly.class)) {
+                if (isAdmin(ctxt.getActionBeanContext())) {
                     return resolution;
                 } else {
                     ctxt.getActionBeanContext().getValidationErrors().addGlobalError(new LocalizableError("adminOnly"));
@@ -50,20 +50,11 @@ public class SecurityInterceptor implements Interceptor{
 
     protected boolean isLoggedIn(ActionBeanContext ctxt) {
         Boolean loggedIn = (Boolean) ctxt.getRequest().getSession().getAttribute("loggedIn");
-        if(loggedIn != null && loggedIn) {
-            return true;
-        } else {
-            return false;
-        }
+        return loggedIn != null && loggedIn;
     }
-    
-    protected boolean isAdmin(ActionBeanContext ctxt){
+
+    protected boolean isAdmin(ActionBeanContext ctxt) {
         Boolean admin = (Boolean) ctxt.getRequest().getSession().getAttribute("admin");
-        if(admin != null && admin) {
-            return true;
-        } else {
-            return false;
-        }
+        return admin != null && admin;
     }
 }
-

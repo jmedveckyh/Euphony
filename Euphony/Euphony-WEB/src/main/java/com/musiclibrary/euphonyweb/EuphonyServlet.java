@@ -3,8 +3,7 @@ package com.musiclibrary.euphonyweb;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.musiclibrary.euphonyapi.dto.ArtistDTO;
 import com.musiclibrary.euphonyapi.dto.GenreDTO;
-import com.musiclibrary.euphonyapi.services.ArtistService;
-import com.musiclibrary.euphonyapi.services.GenreService;
+import com.musiclibrary.euphonyapi.facade.MusicFacade;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,10 +28,9 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 public class EuphonyServlet extends HttpServlet {
 
     private ResourceBundle properties;
+
     @Autowired
-    ArtistService artistService;
-    @Autowired
-    GenreService genreService;
+    MusicFacade musicFacade;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -54,16 +52,16 @@ public class EuphonyServlet extends HttpServlet {
             if (pathInfo.matches("/artists")) {
                 response.setContentType("application/json");
                 ObjectMapper mapper = new ObjectMapper();
-                mapper.writeValue(response.getOutputStream(), artistService.getAll());
+                mapper.writeValue(response.getOutputStream(), musicFacade.getAllArtists());
             } else if (pathInfo.matches("/genres")) {
                 response.setContentType("application/json");
                 ObjectMapper mapper = new ObjectMapper();
-                mapper.writeValue(response.getOutputStream(), genreService.getAll());
+                mapper.writeValue(response.getOutputStream(), musicFacade.getAllGenres());
             } else if (pathInfo.matches("/artist")) {
                 response.setContentType("application/json");
                 Long id = Long.parseLong(request.getParameter("id"));
                 if (id != null) {
-                    ArtistDTO artist = artistService.getById(id);
+                    ArtistDTO artist = musicFacade.getArtistById(id);
                     if (artist != null) {
                         ObjectMapper mapper = new ObjectMapper();
                         mapper.writeValue(response.getOutputStream(), artist);
@@ -75,7 +73,7 @@ public class EuphonyServlet extends HttpServlet {
                 response.setContentType("application/json");
                 Long id = Long.parseLong(request.getParameter("id"));
                 if (id != null) {
-                    GenreDTO genre = genreService.getById(id);
+                    GenreDTO genre = musicFacade.getGenreById(id);
                     if (genre != null) {
                         ObjectMapper mapper = new ObjectMapper();
                         mapper.writeValue(response.getOutputStream(), genre);
@@ -97,29 +95,29 @@ public class EuphonyServlet extends HttpServlet {
 
         if (map.get("event").equals("updateArtist")) {
             ArtistDTO artist = mapper.convertValue(map.get("artist"), ArtistDTO.class);
-            if (artist != null && artistService.getById(artist.getId()) != null) {
-                artistService.update(artist);
+            if (artist != null && musicFacade.getArtistById(artist.getId()) != null) {
+                musicFacade.update(artist);
             } else {
                 response.sendError(404, properties.getString("error.invalidartist"));
             }
         } else if (map.get("event").equals("updateGenre")) {
             GenreDTO genre = mapper.convertValue(map.get("genre"), GenreDTO.class);
-            if (genre != null && genreService.getById(genre.getId()) != null) {
-                genreService.update(genre);
+            if (genre != null && musicFacade.getGenreById(genre.getId()) != null) {
+                musicFacade.update(genre);
             } else {
                 response.sendError(404, properties.getString("error.invalidgenre"));
             }
         } else if (map.get("event").equals("addArtist")) {
             ArtistDTO artist = mapper.convertValue(map.get("artist"), ArtistDTO.class);
             if (artist != null && artist.getId() == null) {
-                artistService.create(artist);
+                musicFacade.create(artist);
             } else {
                 response.sendError(404, properties.getString("error.invalidartist"));
             }
         } else if (map.get("event").equals("addGenre")) {
             GenreDTO genre = mapper.convertValue(map.get("genre"), GenreDTO.class);
             if (genre != null && genre.getId() == null) {
-                genreService.create(genre);
+                musicFacade.create(genre);
             } else {
                 response.sendError(404, properties.getString("error.invalidgenre"));
             }
@@ -137,9 +135,9 @@ public class EuphonyServlet extends HttpServlet {
         if (pathInfo != null) {
             if (pathInfo.contains("/deleteArtist")) {
                 Long id = Long.parseLong(pathInfo.substring(14));
-                if (id != null && artistService.getById(id) != null) {
+                if (id != null && musicFacade.getArtistById(id) != null) {
                     try {
-                        artistService.delete(artistService.getById(id));
+                        musicFacade.delete(musicFacade.getArtistById(id));
                     } catch (DataAccessException ex) {
                         response.sendError(404, properties.getString("error.assignedartist"));
                     }
@@ -149,9 +147,9 @@ public class EuphonyServlet extends HttpServlet {
             }
             if (pathInfo.contains("/deleteGenre")) {
                 Long id = Long.parseLong(pathInfo.substring(13));
-                if (id != null && genreService.getById(id) != null) {
+                if (id != null && musicFacade.getGenreById(id) != null) {
                     try {
-                        genreService.delete(genreService.getById(id));
+                        musicFacade.delete(musicFacade.getGenreById(id));
                     } catch (DataAccessException ex) {
                         response.sendError(404, properties.getString("error.assignedgenre"));
                     }

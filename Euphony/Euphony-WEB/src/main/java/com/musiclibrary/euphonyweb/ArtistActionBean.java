@@ -2,9 +2,9 @@ package com.musiclibrary.euphonyweb;
 
 import com.musiclibrary.euphonyapi.dto.ArtistDTO;
 import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
-import com.musiclibrary.euphonyapi.services.ArtistService;
-import com.musiclibrary.euphonyapi.services.PlaylistService;
+import com.musiclibrary.euphonyapi.facade.MusicFacade;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -29,9 +29,8 @@ import org.springframework.dao.DataAccessException;
 public class ArtistActionBean extends BaseActionBean implements ValidationErrorHandler {
 
     @SpringBean
-    protected ArtistService artistService;
-    @SpringBean
-    protected PlaylistService playlistService;
+    protected MusicFacade musicFacade;
+
     private List<PlaylistDTO> playlists;
     private PlaylistDTO playlist;
 
@@ -50,8 +49,9 @@ public class ArtistActionBean extends BaseActionBean implements ValidationErrorH
 
     @DefaultHandler
     public Resolution list() {
-        artists = artistService.getAll();
-        playlists = playlistService.getAll();
+        artists = musicFacade.getAllArtists();
+        HttpSession session = getContext().getRequest().getSession();        
+        playlists = musicFacade.getPlaylistsByAccount((String) session.getAttribute("username"));
         return new ForwardResolution("/artist/list.jsp");
     }
 
@@ -64,7 +64,7 @@ public class ArtistActionBean extends BaseActionBean implements ValidationErrorH
     private ArtistDTO artist;
 
     public Resolution add() {
-        artistService.create(artist);
+        musicFacade.create(artist);
         return new RedirectResolution(this.getClass(), "list");
     }
 
@@ -74,8 +74,9 @@ public class ArtistActionBean extends BaseActionBean implements ValidationErrorH
 
     @Override
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
-        artists = artistService.getAll();
-        playlists = playlistService.getAll();
+        artists = musicFacade.getAllArtists();
+        HttpSession session = getContext().getRequest().getSession();        
+        playlists = musicFacade.getPlaylistsByAccount((String) session.getAttribute("username"));
         return null;
     }
 
@@ -88,9 +89,9 @@ public class ArtistActionBean extends BaseActionBean implements ValidationErrorH
     }
 
     public Resolution delete() {
-        artist = artistService.getById(artist.getId());
+        artist = musicFacade.getArtistById(artist.getId());
         try {
-            artistService.delete(artist);
+            musicFacade.delete(artist);
         } catch (DataAccessException ex) {
         }
         return new RedirectResolution(this.getClass(), "list");
@@ -102,16 +103,17 @@ public class ArtistActionBean extends BaseActionBean implements ValidationErrorH
         if (ids == null) {
             return;
         }
-        artist = artistService.getById(Long.parseLong(ids));
+        artist = musicFacade.getArtistById(Long.parseLong(ids));
     }
 
     public Resolution edit() {
-        playlists = playlistService.getAll();
+        HttpSession session = getContext().getRequest().getSession();        
+        playlists = musicFacade.getPlaylistsByAccount((String) session.getAttribute("username"));
         return new ForwardResolution("/artist/edit.jsp");
     }
 
     public Resolution save() {
-        artistService.update(artist);
+        musicFacade.update(artist);
         return new RedirectResolution(this.getClass(), "list");
     }
 }

@@ -2,7 +2,7 @@ package com.musiclibrary.euphonyweb;
 
 import com.musiclibrary.euphonyapi.dto.AccountDTO;
 import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
-import com.musiclibrary.euphonyapi.services.AccountService;
+import com.musiclibrary.euphonyapi.facade.MusicFacade;
 import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -26,12 +26,12 @@ import org.springframework.security.authentication.encoding.PasswordEncoder;
 public class AuthActionBean extends BaseActionBean {
 
     @SpringBean
-    protected AccountService accountService;
+    protected MusicFacade musicFacade;
     @Validate(required = true, on = {"submitLogin", "submitRegister"})
     private String username;
-    @Validate(required = true, minlength=8, on = {"submitLogin", "submitRegister"})
+    @Validate(required = true, minlength = 8, on = {"submitLogin", "submitRegister"})
     private String password;
-    @Validate(required = true, minlength=8, on = {"submitRegister"})
+    @Validate(required = true, minlength = 8, on = {"submitRegister"})
     private String passwordConfirm;
     @SpringBean
     PasswordEncoder passwordEncoder;
@@ -64,14 +64,14 @@ public class AuthActionBean extends BaseActionBean {
     public Resolution login() {
         return new ForwardResolution("login.jsp");
     }
-    
-    public Resolution register(){
+
+    public Resolution register() {
         return new ForwardResolution("register.jsp");
     }
 
     public Resolution submitLogin() {
         HttpSession session = getContext().getRequest().getSession();
-        AccountDTO adto = accountService.login(username, passwordEncoder.encodePassword(password, "salt"));
+        AccountDTO adto = musicFacade.login(username, passwordEncoder.encodePassword(password, "salt"));
         if (adto != null) {
             session.setAttribute("loggedIn", true);
             session.setAttribute("admin", adto.getIsAdmin());
@@ -91,7 +91,7 @@ public class AuthActionBean extends BaseActionBean {
         acc.setUsername(username);
         acc.setPlaylists(new ArrayList<PlaylistDTO>());
 
-        AccountDTO accFromDb = accountService.register(acc);
+        AccountDTO accFromDb = musicFacade.register(acc);
         if (accFromDb != null) {
             session.setAttribute("loggedIn", true);
             session.setAttribute("admin", false);
@@ -109,12 +109,13 @@ public class AuthActionBean extends BaseActionBean {
         getContext().getRequest().getSession().invalidate();
         return new ForwardResolution("login.jsp");
     }
-    
+
     @ValidationMethod(when = ValidationState.ALWAYS, on = {"submitRegister"})
     public void validatePass(ValidationErrors errors) {
-        if(password == null || passwordConfirm == null) 
+        if (password == null || passwordConfirm == null) {
             return;
-        if(!password.equals(passwordConfirm)){
+        }
+        if (!password.equals(passwordConfirm)) {
             errors.add("cover", new LocalizableError("validation.passwordMatch"));
         }
     }

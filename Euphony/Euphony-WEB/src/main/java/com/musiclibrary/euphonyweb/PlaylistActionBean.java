@@ -4,9 +4,6 @@ import com.musiclibrary.euphonyapi.dto.AccountDTO;
 import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
 import com.musiclibrary.euphonyapi.facade.MusicFacade;
-import com.musiclibrary.euphonyapi.services.AccountService;
-import com.musiclibrary.euphonyapi.services.PlaylistService;
-import com.musiclibrary.euphonyapi.services.SongService;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
@@ -32,21 +29,14 @@ import net.sourceforge.stripes.validation.ValidationErrors;
 public class PlaylistActionBean extends BaseActionBean implements ValidationErrorHandler {
 
     @SpringBean
-    protected PlaylistService playlistService;
-    @SpringBean
-    protected MusicFacade facade;
+    protected MusicFacade musicFacade;
     @ValidateNestedProperties(value = {
         @Validate(on = {"add", "save"}, field = "name", required = true)
     })
     private PlaylistDTO playlist;
     private List<PlaylistDTO> playlists;
-    
-    @SpringBean
-    private AccountService accountService; 
-    
+
     private AccountDTO account;
-    
-    //private List<PlaylistDTO> accPlaylists;
 
     public AccountDTO getAccount() {
         return account;
@@ -67,8 +57,9 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
     public void setPlaylist(PlaylistDTO playlist) {
         this.playlist = playlist;
     }
-    protected SongService songService;
+
     private SongDTO song;
+
     private Map<Integer, SongDTO> songs;
 
     public SongDTO getSong() {
@@ -89,21 +80,15 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
 
     @DefaultHandler
     public Resolution show() {
-        facade.setPlaylistService(playlistService);
-        facade.setAccountService(accountService);
         HttpSession session = getContext().getRequest().getSession();
-        playlists = facade.getPlaylistsByAccount((String)session.getAttribute("username"));
-        //playlists = playlistService.getAll();
+        playlists = musicFacade.getPlaylistsByAccount((String) session.getAttribute("username"));
         songs = playlist.getSongs();
         return new ForwardResolution("/playlist/id.jsp");
     }
 
     public Resolution add() {
-        facade.setPlaylistService(playlistService);
-        facade.setAccountService(accountService);
         HttpSession session = getContext().getRequest().getSession();
-        facade.addPlaylistByAccount((String)session.getAttribute("username"), playlist);
-        //playlistService.create(playlist);
+        musicFacade.addPlaylistToAccount((String) session.getAttribute("username"), playlist);
         Long ids = playlist.getId();
         return new RedirectResolution("/playlist/else/show/" + ids);
     }
@@ -114,13 +99,13 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
 
     @Override
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
-        playlists = playlistService.getAll();
+        playlists = musicFacade.getAllPlaylists();
         return null;
     }
 
     public Resolution delete() {
-        playlist = playlistService.getById(playlist.getId());
-        playlistService.delete(playlist);
+        playlist = musicFacade.getPlaylistById(playlist.getId());
+        musicFacade.delete(playlist);
         return new RedirectResolution("/explore");
     }
 
@@ -130,11 +115,11 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
         if (ids == null) {
             return;
         }
-        playlist = playlistService.getById(Long.parseLong(ids));
+        playlist = musicFacade.getPlaylistById(Long.parseLong(ids));
     }
 
     public Resolution save() {
-        playlistService.update(playlist);
+        musicFacade.update(playlist);
         Long ids = playlist.getId();
         return new RedirectResolution("/playlist/else/show/" + ids);
     }
