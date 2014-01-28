@@ -40,8 +40,6 @@ public interface MusicFacade {
     
     AccountDTO getAccountByUsername(String username);
     
-    void update(AccountDTO account);
-    
     void create(AlbumDTO albumDTO);
 
     void update(AlbumDTO albumDTO);
