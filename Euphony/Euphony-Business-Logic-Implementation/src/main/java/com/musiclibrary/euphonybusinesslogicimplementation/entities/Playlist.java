@@ -21,7 +21,7 @@ public class Playlist implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String name;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private Map<Integer, Song> songs;
 
     public Playlist() {
