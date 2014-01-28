@@ -3,9 +3,11 @@ package com.musiclibrary.euphonyweb;
 import com.musiclibrary.euphonyapi.dto.PlaylistDTO;
 import com.musiclibrary.euphonyapi.dto.SongDTO;
 import com.musiclibrary.euphonyapi.facade.MusicFacade;
+import com.musiclibrary.euphonyapi.services.AccountService;
 import com.musiclibrary.euphonyapi.services.PlaylistService;
 import com.musiclibrary.euphonyapi.services.SongService;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
@@ -53,7 +55,8 @@ public class Song2PlaylistActionBean extends BaseActionBean implements Validatio
             return new RedirectResolution("/explore");
         }
         songs = songService.getAll();
-        playlists = playlistService.getAll();
+        HttpSession session = getContext().getRequest().getSession();
+        playlists = facade.getPlaylistsByAccount((String) session.getAttribute("username"));        
         for (Long selectedSong : selectedSongs) {
             facade.addSongToPlaylist(songService.getById(selectedSong), playlistService.getById(selectedPlaylist));
         }
@@ -63,7 +66,8 @@ public class Song2PlaylistActionBean extends BaseActionBean implements Validatio
 
     public Resolution songFromPlaylist() {
         songs = songService.getAll();
-        playlists = playlistService.getAll();
+        HttpSession session = getContext().getRequest().getSession();
+        playlists = facade.getPlaylistsByAccount((String) session.getAttribute("username"));   
         if (selectedSongs == null) {
             return new ForwardResolution("/playlist/else/show/" + selectedPlaylist);
         }
@@ -76,7 +80,8 @@ public class Song2PlaylistActionBean extends BaseActionBean implements Validatio
 
     @Override
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
-
+        HttpSession session = getContext().getRequest().getSession();
+        playlists = facade.getPlaylistsByAccount((String) session.getAttribute("username"));        
         return null;
     }
     private List<PlaylistDTO> playlists;

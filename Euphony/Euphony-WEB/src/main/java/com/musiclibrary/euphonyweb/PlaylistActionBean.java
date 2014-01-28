@@ -36,7 +36,6 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
     })
     private PlaylistDTO playlist;
     private List<PlaylistDTO> playlists;
-
     private AccountDTO account;
 
     public AccountDTO getAccount() {
@@ -58,9 +57,7 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
     public void setPlaylist(PlaylistDTO playlist) {
         this.playlist = playlist;
     }
-
     private SongDTO song;
-
     private Map<Integer, SongDTO> songs;
 
     public SongDTO getSong() {
@@ -100,16 +97,17 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
 
     @Override
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
-        playlists = musicFacade.getAllPlaylists();
+        HttpSession session = getContext().getRequest().getSession();
+        playlists = musicFacade.getPlaylistsByAccount((String) session.getAttribute("username"));
         return null;
     }
- 
+
     public Resolution delete() {
         playlist = musicFacade.getPlaylistById(playlist.getId());
         HttpSession session = getContext().getRequest().getSession();
         playlist.setSongs(new TreeMap<Integer, SongDTO>());
         musicFacade.removePlaylistFromAccount((String) session.getAttribute("username"), playlist);
-        musicFacade.delete(playlist); 
+        musicFacade.delete(playlist);
         return new RedirectResolution("/explore");
     }
 
