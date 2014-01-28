@@ -99,7 +99,7 @@ public class AuthActionBean extends BaseActionBean {
             return new ForwardResolution("index.jsp");
         } else {
             getContext().getValidationErrors().addGlobalError(new LocalizableError("register.error"));
-            return new ForwardResolution("login.jsp");
+            return new ForwardResolution("register.jsp");
         }
     }
 
