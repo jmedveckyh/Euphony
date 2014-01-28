@@ -102,9 +102,11 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
         playlists = musicFacade.getAllPlaylists();
         return null;
     }
-
+ 
     public Resolution delete() {
         playlist = musicFacade.getPlaylistById(playlist.getId());
+        HttpSession session = getContext().getRequest().getSession();
+        musicFacade.removePlaylistFromAccount((String) session.getAttribute("username"), playlist);
         musicFacade.delete(playlist);
         return new RedirectResolution("/explore");
     }

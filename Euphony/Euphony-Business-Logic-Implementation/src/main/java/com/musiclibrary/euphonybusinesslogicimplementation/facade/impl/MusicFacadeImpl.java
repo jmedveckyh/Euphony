@@ -50,7 +50,6 @@ public class MusicFacadeImpl implements MusicFacade {
     private PlaylistService playlistService;
 
     @Override
-    @Transactional
     public List<PlaylistDTO> getPlaylistsByAccount(String username) {
         if (username == null) {
             throw new IllegalArgumentException("username is null");
@@ -60,7 +59,6 @@ public class MusicFacadeImpl implements MusicFacade {
     }
 
     @Override
-    @Transactional
     public void addPlaylistToAccount(String username, PlaylistDTO playlist) {
         if (username == null) {
             throw new IllegalArgumentException("username is null");
@@ -77,6 +75,21 @@ public class MusicFacadeImpl implements MusicFacade {
         accountService.update(acc);
     }
 
+    @Override
+    public void removePlaylistFromAccount(String username, PlaylistDTO playlist){
+        if (username == null) {
+            throw new IllegalArgumentException("username is null");
+        }
+        if (playlist == null) {
+            throw new IllegalArgumentException("playlist is null");
+        }
+        AccountDTO acc = accountService.getByUsername(username);
+        List<PlaylistDTO> pLists = acc.getPlaylists();
+        pLists.remove(playlist);
+        acc.setPlaylists(pLists);
+        accountService.update(acc);        
+    }
+    
     @Override
     @Transactional
     public Boolean isSongInPlaylist(SongDTO song, PlaylistDTO playlist) {

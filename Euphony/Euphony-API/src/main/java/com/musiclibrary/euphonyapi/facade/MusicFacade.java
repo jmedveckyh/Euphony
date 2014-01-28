@@ -85,6 +85,8 @@ public interface MusicFacade {
     void update(PlaylistDTO playlistDTO);
 
     void delete(PlaylistDTO playlistDTO);
+    
+    void removePlaylistFromAccount(String username, PlaylistDTO playlist);
 
     PlaylistDTO getPlaylistById(Long id);
 
