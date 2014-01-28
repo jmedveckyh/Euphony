@@ -25,6 +25,7 @@ import org.springframework.security.authentication.encoding.PasswordEncoder;
 @UrlBinding("/auth/{event}")
 public class AuthActionBean extends BaseActionBean {
 
+    private static final String SALT="salt";
     @SpringBean
     protected MusicFacade musicFacade;
     @Validate(required = true, on = {"submitLogin", "submitRegister"})
@@ -71,7 +72,7 @@ public class AuthActionBean extends BaseActionBean {
 
     public Resolution submitLogin() {
         HttpSession session = getContext().getRequest().getSession();
-        AccountDTO adto = musicFacade.login(username, passwordEncoder.encodePassword(password, "salt"));
+        AccountDTO adto = musicFacade.login(username, passwordEncoder.encodePassword(password, SALT));
         if (adto != null) {
             session.setAttribute("loggedIn", true);
             session.setAttribute("admin", adto.getIsAdmin());
@@ -87,7 +88,7 @@ public class AuthActionBean extends BaseActionBean {
         HttpSession session = getContext().getRequest().getSession();
         AccountDTO acc = new AccountDTO();
         acc.setIsAdmin(false);
-        acc.setPassword(passwordEncoder.encodePassword(password, "salt"));
+        acc.setPassword(passwordEncoder.encodePassword(password, SALT));
         acc.setUsername(username);
         acc.setPlaylists(new ArrayList<PlaylistDTO>());
 
