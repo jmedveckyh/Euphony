@@ -1,6 +1,6 @@
 
 package com.musiclibrary.euphonyweb;
-/*
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.stripes.action.ActionBean;
@@ -10,12 +10,12 @@ import net.sourceforge.stripes.controller.StripesConstants;
 import net.sourceforge.stripes.exception.DefaultExceptionHandler;
 import net.sourceforge.stripes.validation.LocalizableError;
 import org.springframework.dao.DataAccessException;
-*/
+
 /**
  *
  * @author Medo
  */
-/*
+
 public class DatabaseExceptionHandler extends DefaultExceptionHandler {
 
     public Resolution handleDatabaseException(DataAccessException exc, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -60,9 +60,9 @@ public class DatabaseExceptionHandler extends DefaultExceptionHandler {
 
         return new ForwardResolution("/");
     }
-*/
-    /*public Resolution handleGeneric(Exception exc, HttpServletRequest request, HttpServletResponse response) {
-        return new ForwardResolution("/");
-    }*/
 
-//}
+    public Resolution handleGeneric(Exception exc, HttpServletRequest request, HttpServletResponse response) {
+        return new ForwardResolution("/");
+    }
+
+}
