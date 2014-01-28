@@ -79,12 +79,7 @@ public class MusicFacadeImpl implements MusicFacade {
             throw new IllegalArgumentException("playlist is null");
         }
         AccountDTO acc = accountService.getByUsername(username);
-        for (PlaylistDTO p : acc.getPlaylists()) {
-            if (p.getId().equals(playlist.getId())) {
-                acc.getPlaylists().remove(p);
-                break;
-            }
-        }        
+        acc.getPlaylists().remove(playlist);
         accountService.update(acc);
     }
 
