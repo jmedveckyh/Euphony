@@ -34,6 +34,7 @@ public class DatabaseExceptionHandler extends DefaultExceptionHandler {
             bean.getContext().getValidationErrors().addGlobalError(new LocalizableError("validation.assignedgenre"));
             return new ForwardResolution("/genre/list.jsp");
         }
+        if (bean.getClass().equals(SongActionBean.class)) { bean.getContext().getValidationErrors().addGlobalError(new LocalizableError("validation.assignedsong")); return new ForwardResolution("/song/list.jsp"); }
         return null;
     }
 
