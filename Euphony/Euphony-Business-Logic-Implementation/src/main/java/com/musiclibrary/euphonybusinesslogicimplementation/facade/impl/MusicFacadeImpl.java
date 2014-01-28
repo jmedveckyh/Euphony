@@ -33,19 +33,14 @@ public class MusicFacadeImpl implements MusicFacade {
 
     @Autowired
     private AccountService accountService;
-
     @Autowired
     private AlbumService albumService;
-
     @Autowired
     private ArtistService artistService;
-
     @Autowired
     private GenreService genreService;
-
     @Autowired
     private SongService songService;
-
     @Autowired
     private PlaylistService playlistService;
 
@@ -76,7 +71,7 @@ public class MusicFacadeImpl implements MusicFacade {
     }
 
     @Override
-    public void removePlaylistFromAccount(String username, PlaylistDTO playlist){
+    public void removePlaylistFromAccount(String username, PlaylistDTO playlist) {
         if (username == null) {
             throw new IllegalArgumentException("username is null");
         }
@@ -84,12 +79,15 @@ public class MusicFacadeImpl implements MusicFacade {
             throw new IllegalArgumentException("playlist is null");
         }
         AccountDTO acc = accountService.getByUsername(username);
-        List<PlaylistDTO> pLists = acc.getPlaylists();
-        pLists.remove(playlist);
-        acc.setPlaylists(pLists);
-        accountService.update(acc);        
+        for (PlaylistDTO p : acc.getPlaylists()) {
+            if (p.getId().equals(playlist.getId())) {
+                acc.getPlaylists().remove(p);
+                break;
+            }
+        }        
+        accountService.update(acc);
     }
-    
+
     @Override
     @Transactional
     public Boolean isSongInPlaylist(SongDTO song, PlaylistDTO playlist) {
@@ -159,7 +157,7 @@ public class MusicFacadeImpl implements MusicFacade {
         }
 
     }
-    
+
     @Override
     public void setAccountService(AccountService accountService) {
         this.accountService = accountService;
