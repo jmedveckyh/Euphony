@@ -69,6 +69,27 @@ public class MusicFacadeImpl implements MusicFacade {
         acc.setPlaylists(pLists);
         accountService.update(acc);
     }
+    
+    @Override
+    public void renamePlaylistToAccount(String username, PlaylistDTO playlist) {
+        if (username == null) {
+            throw new IllegalArgumentException("username is null");
+        }
+        if (playlist == null) {
+            throw new IllegalArgumentException("playlist is null");
+        }
+        AccountDTO acc = accountService.getByUsername(username);
+        List<PlaylistDTO> pLists = acc.getPlaylists();
+        for(PlaylistDTO p : pLists){
+            if (p.equals(playlist)) {
+                p.setName(playlist.getName());
+                break;
+            }
+        }
+        acc.setPlaylists(pLists);
+        accountService.update(acc);
+
+    }
 
     @Override
     public void removePlaylistFromAccount(String username, PlaylistDTO playlist) {

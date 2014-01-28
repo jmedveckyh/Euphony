@@ -88,6 +88,8 @@ public interface MusicFacade {
     
     void removePlaylistFromAccount(String username, PlaylistDTO playlist);
 
+    void renamePlaylistToAccount(String username, PlaylistDTO playlist);
+    
     PlaylistDTO getPlaylistById(Long id);
 
     PlaylistDTO getPlaylistByName(String name);

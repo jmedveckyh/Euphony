@@ -121,6 +121,8 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
     }
 
     public Resolution save() {
+        HttpSession session = getContext().getRequest().getSession();
+        musicFacade.renamePlaylistToAccount((String) session.getAttribute("username"), playlist);
         musicFacade.update(playlist);
         Long ids = playlist.getId();
         return new RedirectResolution("/playlist/else/show/" + ids);
