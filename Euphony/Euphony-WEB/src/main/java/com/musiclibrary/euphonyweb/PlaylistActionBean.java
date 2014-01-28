@@ -6,6 +6,7 @@ import com.musiclibrary.euphonyapi.dto.SongDTO;
 import com.musiclibrary.euphonyapi.facade.MusicFacade;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import javax.servlet.http.HttpSession;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -106,6 +107,7 @@ public class PlaylistActionBean extends BaseActionBean implements ValidationErro
     public Resolution delete() {
         playlist = musicFacade.getPlaylistById(playlist.getId());
         HttpSession session = getContext().getRequest().getSession();
+        playlist.setSongs(new TreeMap<Integer, SongDTO>());
         musicFacade.removePlaylistFromAccount((String) session.getAttribute("username"), playlist);
         musicFacade.delete(playlist); 
         return new RedirectResolution("/explore");
