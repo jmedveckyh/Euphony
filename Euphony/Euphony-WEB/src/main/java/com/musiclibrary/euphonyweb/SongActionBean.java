@@ -15,6 +15,7 @@ import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationErrorHandler;
 import net.sourceforge.stripes.validation.ValidationErrors;
+import org.springframework.dao.DataAccessException;
 
 /**
  *
@@ -127,7 +128,10 @@ public class SongActionBean extends BaseActionBean implements ValidationErrorHan
 
     public Resolution delete() {
         song = musicFacade.getSongById(song.getId());
-        musicFacade.delete(song);
+        try {
+            musicFacade.delete(song);
+        } catch (DataAccessException ex) {
+        }
         return new RedirectResolution(this.getClass(), "list");
     }
 
